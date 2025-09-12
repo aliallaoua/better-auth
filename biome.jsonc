@@ -1,0 +1,78 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": false
+  },
+
+  "extends": ["ultracite"],
+  "files": {
+    "ignoreUnknown": false,
+    "includes": ["**", "!**/routeTree.gen.ts"]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "tab"
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "a11y": {
+        "noRedundantAlt": "off",
+        "noSvgWithoutTitle": "off",
+        "useValidAnchor": "off"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "off"
+      },
+      "correctness": {
+        "noChildrenProp": "off",
+        // "no-unused-vars": "off"
+        "noUnusedVariables": "off",
+        // "react-compiler/react-compiler": "error"
+        "noReactPropAssignments": "error",
+        // "react-hooks/rules-of-hooks": "error"
+        "useHookAtTopLevel": "error",
+        // "react-hooks/exhaustive-deps": "warn"
+        "useExhaustiveDependencies": "warn"
+      },
+      "performance": {
+        "noImgElement": "off",
+        "noNamespaceImport": "off",
+        "useTopLevelRegex": "off"
+      },
+      "nursery": {
+        "noShadow": "off",
+        "useConsistentTypeDefinitions": "off",
+        "useImageSize": "off",
+        "useSortedClasses": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
+      "style": {
+        "noHeadElement": "off",
+        "noMagicNumbers": "off",
+        "noNestedTernary": "off",
+        "noNonNullAssertion": "off",
+        "useBlockStatements": "off",
+        // eslint-plugin-react-refresh: react-refresh/only-export-components
+        "useComponentExportOnlyModules": "error"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "off",
+        // "@typescript-eslint/no-explicit-any": "warn"
+        "noExplicitAny": "warn",
+        "noEmptyBlockStatements": "off",
+        "noConsole": "off",
+        "useAwait": "off"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  }
+}

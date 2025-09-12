@@ -1,0 +1,206 @@
+import { formOptions } from '@tanstack/react-form';
+import { Link } from '@tanstack/react-router';
+// import { AlertCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from '@/components/ui/card';
+import { useAppForm } from '@/hooks/form';
+import useSignUpMutation from '@/hooks/mutations/useSignUpMutation';
+import { signInWithGoogle } from '@/lib/auth-functions';
+import { SignUpSchema } from '@/schema';
+// import { Alert, AlertDescription } from '../ui/alert';
+
+export function SignUpForm() {
+	// const signUpMutation = useSignUpMutation();
+	const { mutateAsync: signUpMutation } = useSignUpMutation();
+
+	const signUpFormOpts = formOptions({
+		defaultValues: {
+			name: '',
+			email: '',
+			password: '',
+			confirmPassword: '',
+		},
+	});
+
+	const form = useAppForm({
+		...signUpFormOpts,
+		validators: {
+			onChange: SignUpSchema,
+		},
+		onSubmit: async ({ value }) => {
+			try {
+				// await signUpMutation.mutateAsync(value);
+				await signUpMutation(value);
+				// } catch (e: any) {
+			} catch (e: any) {
+				// Set form-level error
+				form.setErrorMap({
+					onSubmit: e.message,
+				});
+			}
+		},
+	});
+
+	return (
+		<Card className="mx-auto w-[500px]">
+			<CardHeader className="text-center">
+				<CardTitle className="text-xl">Welcome</CardTitle>
+				<CardDescription>Sign up with your Google account</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<form
+					className="flex flex-col gap-4"
+					onSubmit={(e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						form.handleSubmit();
+					}}
+				>
+					<div className="grid gap-6">
+						<div className="flex flex-col gap-4">
+							<Button
+								className="w-full"
+								onClick={signInWithGoogle}
+								type="button"
+								variant="outline"
+							>
+								<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+									<path
+										d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
+										fill="currentColor"
+									/>
+								</svg>
+								Sign up with Google
+							</Button>
+						</div>
+
+						<div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-border after:border-t">
+							<span className="relative z-10 bg-card px-2 text-muted-foreground">
+								Or continue with
+							</span>
+						</div>
+
+						<div className="grid gap-3">
+							<form.AppField
+								children={(field) => (
+									<field.TextField
+										autoComplete="name"
+										label="Name"
+										placeholder="Name"
+										required
+									/>
+								)}
+								name="name"
+							/>
+						</div>
+
+						{/* <div className="grid gap-3">
+							<Label htmlFor="firstName">First name</Label>
+							<form.AppField
+								name="firstName"
+								children={(field) => (
+									<field.TextField
+										id="firstName"
+									/>
+								)}
+							/>
+						</div>
+						<div className="grid gap-3">
+							<Label htmlFor="lastName">Last name</Label>
+							<form.AppField
+								name="lastName"
+								children={(field) => (
+									<field.TextField
+										id="lastName"
+									/>
+								)}
+							/>
+						</div> */}
+						<div className="grid gap-3">
+							<form.AppField
+								children={(field) => (
+									<field.TextField
+										autoComplete="email"
+										label="Email"
+										placeholder="name@example.com"
+										required
+										type="email"
+									/>
+								)}
+								name="email"
+							/>
+						</div>
+						<div className="grid gap-3">
+							<form.AppField
+								children={(field) => (
+									<field.TextField
+										autoComplete="new-password"
+										label="Password"
+										placeholder="Password"
+										required
+										type="password"
+										withPasswordToggle
+									/>
+								)}
+								name="password"
+							/>
+						</div>
+
+						<div className="grid gap-3">
+							<form.AppField
+								children={(field) => (
+									<field.TextField
+										autoComplete="new-password"
+										label="Confirm password"
+										placeholder="Password"
+										required
+										type="password"
+										withPasswordToggle
+									/>
+								)}
+								name="confirmPassword"
+							/>
+						</div>
+
+						<form.AppForm>
+							<form.SubscribeButton label="Sign up" />
+						</form.AppForm>
+
+						<div className="text-center text-sm">
+							Already have an account?{' '}
+							<Link className="underline underline-offset-4" to="/signin">
+								Sign in
+							</Link>
+						</div>
+					</div>
+
+					{/* Display form-level errors */}
+					{/* <form.Subscribe
+						children={([errorMap]) =>
+							errorMap.onSubmit ? (
+								<Alert className="mt-4" variant="destructive">
+									<AlertCircle className="size-4" />
+									<AlertDescription>
+										{errorMap.onSubmit.toString()}
+									</AlertDescription>
+								</Alert>
+							) : null
+						}
+						selector={(state) => [state.errorMap]}
+					/> */}
+				</form>
+			</CardContent>
+
+			<div className="text-balance text-center text-muted-foreground text-xs *:[a]:underline *:[a]:underline-offset-4 *:[a]:hover:text-primary">
+				By clicking continue, you agree to our <a href="#">Terms of Service</a>{' '}
+				and <a href="#">Privacy Policy</a>.
+			</div>
+		</Card>
+	);
+}
