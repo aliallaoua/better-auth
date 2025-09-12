@@ -49,6 +49,7 @@ function BetterAuthPage() {
 							emailType: value.emailtype,
 						});
 				toast.success('Email sent successfully. Please check your email.');
+				form.reset();
 			} catch (e: any) {
 				// Set form-level error
 				form.setErrorMap({
@@ -163,7 +164,7 @@ function BetterAuthPage() {
 						</form.AppForm>
 					</div>
 				</form>
-				<div className="flex w-full max-w-md items-center gap-4">
+				<div className="flex w-full items-center gap-4">
 					<Separator className="flex-1" />
 					<span className="text-sm text-muted-foreground whitespace-nowrap">
 						Or use Better Auth
@@ -171,19 +172,21 @@ function BetterAuthPage() {
 					<Separator className="flex-1" />
 				</div>
 
-				{session?.user ? (
-					<Button size="sm">
-						<Link to="/dashboard">
-							<span>Dashboard</span>
-						</Link>
-					</Button>
-				) : (
-					<Button size="sm">
-						<Link to="/signin">
-							<span>Sign In</span>
-						</Link>
-					</Button>
-				)}
+				<div className="flex flex-col items-center gap-1 pt-4">
+					{session?.user ? (
+						<Button size="sm">
+							<Link to="/dashboard">
+								<span>Dashboard</span>
+							</Link>
+						</Button>
+					) : (
+						<Button size="sm">
+							<Link to="/signin">
+								<span>Sign In</span>
+							</Link>
+						</Button>
+					)}
+				</div>
 			</div>
 		</div>
 	);
