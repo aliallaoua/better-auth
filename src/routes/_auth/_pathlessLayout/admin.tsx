@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
 import { Badge, Ban, Download, Plus, Shield, Users } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Toaster, toast } from 'sonner';
@@ -44,6 +44,16 @@ import { BanUserSchema, CreateUserSchema } from '@/schema';
 // 	});
 
 export const Route = createFileRoute('/_auth/_pathlessLayout/admin')({
+	beforeLoad: ({ context, location }) => {
+		if (context.userSession.user.role !== 'admin') {
+			throw redirect({
+				to: '/unauthorized',
+				search: {
+					redirect: location.href,
+				},
+			});
+		}
+	},
 	// loader: async ({ context }) => {
 	// 	await context.queryClient.ensureQueryData(listUsersQueryOptions());
 	// },

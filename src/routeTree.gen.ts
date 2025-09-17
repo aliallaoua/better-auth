@@ -26,6 +26,7 @@ import { Route as DemoStartServerFuncsRouteImport } from './routes/demo.start.se
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo.start.api-request'
 import { Route as DemoFormSimpleRouteImport } from './routes/demo.form.simple'
 import { Route as DemoFormAddressRouteImport } from './routes/demo.form.address'
+import { Route as AuthPathlessLayoutUnauthorizedRouteImport } from './routes/_auth/_pathlessLayout/unauthorized'
 import { Route as AuthPathlessLayoutProfileRouteImport } from './routes/_auth/_pathlessLayout/profile'
 import { Route as AuthPathlessLayoutDashboardRouteImport } from './routes/_auth/_pathlessLayout/dashboard'
 import { Route as AuthPathlessLayoutAdmincopyRouteImport } from './routes/_auth/_pathlessLayout/admin copy'
@@ -110,6 +111,12 @@ const DemoFormAddressRoute = DemoFormAddressRouteImport.update({
   path: '/demo/form/address',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthPathlessLayoutUnauthorizedRoute =
+  AuthPathlessLayoutUnauthorizedRouteImport.update({
+    id: '/unauthorized',
+    path: '/unauthorized',
+    getParentRoute: () => AuthPathlessLayoutRouteRoute,
+  } as any)
 const AuthPathlessLayoutProfileRoute =
   AuthPathlessLayoutProfileRouteImport.update({
     id: '/profile',
@@ -168,6 +175,7 @@ export interface FileRoutesByFullPath {
   '/admin copy': typeof AuthPathlessLayoutAdmincopyRoute
   '/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/profile': typeof AuthPathlessLayoutProfileRoute
+  '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
   '/demo/form/address': typeof DemoFormAddressRoute
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -187,6 +195,7 @@ export interface FileRoutesByTo {
   '/admin copy': typeof AuthPathlessLayoutAdmincopyRoute
   '/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/profile': typeof AuthPathlessLayoutProfileRoute
+  '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
   '/demo/form/address': typeof DemoFormAddressRoute
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -209,6 +218,7 @@ export interface FileRoutesById {
   '/_auth/_pathlessLayout/admin copy': typeof AuthPathlessLayoutAdmincopyRoute
   '/_auth/_pathlessLayout/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/_auth/_pathlessLayout/profile': typeof AuthPathlessLayoutProfileRoute
+  '/_auth/_pathlessLayout/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
   '/demo/form/address': typeof DemoFormAddressRoute
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/admin copy'
     | '/dashboard'
     | '/profile'
+    | '/unauthorized'
     | '/demo/form/address'
     | '/demo/form/simple'
     | '/demo/start/api-request'
@@ -249,6 +260,7 @@ export interface FileRouteTypes {
     | '/admin copy'
     | '/dashboard'
     | '/profile'
+    | '/unauthorized'
     | '/demo/form/address'
     | '/demo/form/simple'
     | '/demo/start/api-request'
@@ -270,6 +282,7 @@ export interface FileRouteTypes {
     | '/_auth/_pathlessLayout/admin copy'
     | '/_auth/_pathlessLayout/dashboard'
     | '/_auth/_pathlessLayout/profile'
+    | '/_auth/_pathlessLayout/unauthorized'
     | '/demo/form/address'
     | '/demo/form/simple'
     | '/demo/start/api-request'
@@ -442,6 +455,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoFormAddressRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth/_pathlessLayout/unauthorized': {
+      id: '/_auth/_pathlessLayout/unauthorized'
+      path: '/unauthorized'
+      fullPath: '/unauthorized'
+      preLoaderRoute: typeof AuthPathlessLayoutUnauthorizedRouteImport
+      parentRoute: typeof AuthPathlessLayoutRouteRoute
+    }
     '/_auth/_pathlessLayout/profile': {
       id: '/_auth/_pathlessLayout/profile'
       path: '/profile'
@@ -510,6 +530,7 @@ interface AuthPathlessLayoutRouteRouteChildren {
   AuthPathlessLayoutAdmincopyRoute: typeof AuthPathlessLayoutAdmincopyRoute
   AuthPathlessLayoutDashboardRoute: typeof AuthPathlessLayoutDashboardRoute
   AuthPathlessLayoutProfileRoute: typeof AuthPathlessLayoutProfileRoute
+  AuthPathlessLayoutUnauthorizedRoute: typeof AuthPathlessLayoutUnauthorizedRoute
 }
 
 const AuthPathlessLayoutRouteRouteChildren: AuthPathlessLayoutRouteRouteChildren =
@@ -518,6 +539,7 @@ const AuthPathlessLayoutRouteRouteChildren: AuthPathlessLayoutRouteRouteChildren
     AuthPathlessLayoutAdmincopyRoute: AuthPathlessLayoutAdmincopyRoute,
     AuthPathlessLayoutDashboardRoute: AuthPathlessLayoutDashboardRoute,
     AuthPathlessLayoutProfileRoute: AuthPathlessLayoutProfileRoute,
+    AuthPathlessLayoutUnauthorizedRoute: AuthPathlessLayoutUnauthorizedRoute,
   }
 
 const AuthPathlessLayoutRouteRouteWithChildren =
