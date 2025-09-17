@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { Badge, Download, Plus, Users } from 'lucide-react';
+import { Badge, Ban, Download, Plus, Shield, Users } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Toaster, toast } from 'sonner';
 import {
@@ -22,7 +22,31 @@ import { useAppForm } from '@/hooks/form';
 import { authClient } from '@/lib/auth-client';
 import { BanUserSchema, CreateUserSchema } from '@/schema';
 
+// const fetchlistUsers = createServerFn({ method: 'GET' })
+// .middleware([userMiddleware])
+// .handler(async () => {
+// 	const users = await auth.api.listUsers({
+// 		query: {
+// 			limit: 50,
+// 			sortBy: 'createdAt',
+// 			sortDirection: 'desc',
+// 		},
+// 		headers: await getWebRequest().headers,
+// 	});
+
+// 	return users?.users;
+// });
+
+// const listUsersQueryOptions = () =>
+// 	queryOptions({
+// 		queryKey: ['users'],
+// 		queryFn: () => fetchlistUsers(),
+// 	});
+
 export const Route = createFileRoute('/_auth/_pathlessLayout/admin')({
+	// loader: async ({ context }) => {
+	// 	await context.queryClient.ensureQueryData(listUsersQueryOptions());
+	// },
 	component: AdminDashboard,
 });
 
@@ -54,6 +78,8 @@ function AdminDashboard() {
 			return data?.users || [];
 		},
 	});
+
+	// const { data: users = [] } = useSuspenseQuery(listUsersQueryOptions());
 
 	// Statistics derived from users data
 	const userStats = useMemo(() => {
@@ -134,6 +160,7 @@ function AdminDashboard() {
 
 	const handleDeleteUser = async (id: string) => {
 		setIsLoading(`delete-${id}`);
+
 		try {
 			await authClient.admin.removeUser({ userId: id });
 			toast.success('User deleted successfully');
@@ -397,7 +424,7 @@ function AdminDashboard() {
 
 			{/* Stats Cards */}
 			<div className="grid gap-4 md:grid-cols-4">
-				<Card>
+				<Card className="hover:shadow-stat-card/25 h-full w-full transition-all hover:shadow-lg">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Total Users</CardTitle>
 						<Users className="size-4 text-muted-foreground" />
@@ -406,24 +433,21 @@ function AdminDashboard() {
 						<div className="text-2xl font-bold">{userStats.total}</div>
 					</CardContent>
 				</Card>
-				<Card>
+				<Card className="hover:shadow-stat-card/25 h-full w-full transition-all hover:shadow-lg">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Admins</CardTitle>
-						<Badge className="text-xs" variant="default">
-							Admin
-						</Badge>
+						{/* <Badge className="text-xs" variant="default"> */}
+						<Shield className="text-xs">Admin</Shield>
+						{/* </Badge> */}
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">{userStats.admins}</div>
 					</CardContent>
 				</Card>
-				<Card>
+				<Card className="hover:shadow-stat-card/25 h-full w-full transition-all hover:shadow-lg">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Active</CardTitle>
-						<Badge
-							className="text-xs text-green-600 border-green-200"
-							variant="outline"
-						>
+						<Badge className="text-xs text-green-600 border-green-200">
 							Active
 						</Badge>
 					</CardHeader>
@@ -431,12 +455,14 @@ function AdminDashboard() {
 						<div className="text-2xl font-bold">{userStats.active}</div>
 					</CardContent>
 				</Card>
-				<Card>
+				<Card className="hover:shadow-stat-card/25 h-full w-full transition-all hover:shadow-lg">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Banned</CardTitle>
-						<Badge className="text-xs" variant="destructive">
+						{/* <Badge className="text-xs" variant="destructive"> */}
+						<Ban className="text-xs text-red-600">
 							Banned
-						</Badge>
+							{/* </Badge> */}
+						</Ban>
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">{userStats.banned}</div>
@@ -445,11 +471,18 @@ function AdminDashboard() {
 			</div>
 
 			{/* Data Table */}
-			<Card>
+			<Card className="hover:shadow-stat-card/25 w-full transition-all hover:shadow-lg">
 				<CardHeader>
 					<CardTitle>User Management</CardTitle>
 				</CardHeader>
 				<CardContent>
+					{/* <Suspense fallback={<DataTableSkeleton />}>
+						<DataTable
+							columns={columns}
+							data={users}
+							onExportData={handleExportData}
+						/>
+					</Suspense> */}
 					{isUsersLoading ? (
 						<DataTableSkeleton />
 					) : (

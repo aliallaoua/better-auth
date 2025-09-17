@@ -1,7 +1,7 @@
 import { formOptions } from '@tanstack/react-form';
 import { useRouter } from '@tanstack/react-router';
 import { Edit, X } from 'lucide-react';
-import { useState, useTransition } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,25 +16,15 @@ import {
 import { Label } from '@/components/ui/label';
 import { useAppForm } from '@/hooks/form';
 import { authClient, useSession } from '@/lib/auth-client';
+import { convertImageToBase64 } from '@/lib/utils/convert-image';
 import { EditUserSchema } from '@/schema';
-
-// import { Alert, AlertDescription } from '../ui/alert';
-
-async function convertImageToBase64(file: File): Promise<string> {
-	return new Promise((resolve, reject) => {
-		const reader = new FileReader();
-		reader.onloadend = () => resolve(reader.result as string);
-		reader.onerror = reject;
-		reader.readAsDataURL(file);
-	});
-}
 
 export function EditUserForm() {
 	const { data, isPending, error } = useSession();
 	const router = useRouter();
 	const [open, setOpen] = useState<boolean>(false);
-	const [isLoading, startTransition] = useTransition();
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
+	const [shouldDeleteImage, setShouldDeleteImage] = useState<boolean>(false);
 
 	const editUserFormOpts = formOptions({
 		defaultValues: {
@@ -49,35 +39,49 @@ export function EditUserForm() {
 			onChange: EditUserSchema,
 		},
 		onSubmit: async ({ value }) => {
-			startTransition(async () => {
-				await authClient.updateUser({
-					image: value.image
-						? await convertImageToBase64(value.image)
-						: undefined,
-					name: value.name || undefined,
-					fetchOptions: {
-						onSuccess: () => {
-							toast.success('User updated successfully');
-						},
-						onError: (error: any) => {
-							toast.error(error.error.message);
-						},
-					},
-				});
+			let imageToUpdate: string | undefined | null;
 
-				// Reset form and close dialog
-				form.reset();
-				setImagePreview(null);
-				router.invalidate();
-				setOpen(false);
+			if (shouldDeleteImage) {
+				imageToUpdate = null;
+			} else if (value.image) {
+				imageToUpdate = await convertImageToBase64(value.image);
+			}
+
+			await authClient.updateUser({
+				image: imageToUpdate,
+				name: value.name || undefined,
+				fetchOptions: {
+					onSuccess: () => {
+						toast.success('User updated successfully');
+					},
+					onError: (error: any) => {
+						toast.error(error.error.message);
+					},
+				},
 			});
+
+			form.reset();
+			setImagePreview(null);
+			setShouldDeleteImage(false);
+			router.invalidate();
+			setOpen(false);
 		},
 	});
+
+	useEffect(() => {
+		if (open && data?.user) {
+			// form.setFieldValue('name', data.user.name || '');
+			setImagePreview(data.user.image || null);
+			setShouldDeleteImage(false);
+		}
+	}, [open, data?.user]);
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (file) {
 			form.setFieldValue('image', file);
+			setShouldDeleteImage(false);
+
 			const reader = new FileReader();
 			reader.onloadend = () => {
 				setImagePreview(reader.result as string);
@@ -86,15 +90,33 @@ export function EditUserForm() {
 		}
 	};
 
-	const clearImage = () => {
-		form.setFieldValue('image', null);
+	const handleDeleteImage = () => {
+		setShouldDeleteImage(true);
 		setImagePreview(null);
-		// Reset the file input
+		form.setFieldValue('image', null);
+
 		const fileInput = document.getElementById('image') as HTMLInputElement;
 		if (fileInput) {
 			fileInput.value = '';
 		}
 	};
+
+	const handleClearNewImage = () => {
+		form.setFieldValue('image', null);
+		setImagePreview(data?.user.image || null);
+		setShouldDeleteImage(false);
+
+		const fileInput = document.getElementById('image') as HTMLInputElement;
+		if (fileInput) {
+			fileInput.value = '';
+		}
+	};
+
+	const hasExistingImage = !!data?.user.image;
+	const hasNewImage = !!form.getFieldValue('image');
+	const showDeleteButton =
+		hasExistingImage && !shouldDeleteImage && !hasNewImage;
+	const showClearButton = hasNewImage;
 
 	return (
 		<Dialog onOpenChange={setOpen} open={open}>
@@ -136,14 +158,12 @@ export function EditUserForm() {
 								<div className="grid gap-2">
 									<Label htmlFor="image">Profile Image</Label>
 									<div className="flex items-end gap-4">
-										{imagePreview && (
+										{imagePreview && !shouldDeleteImage && (
 											<div className="relative size-16 overflow-hidden rounded-sm">
 												<img
 													alt="Profile preview"
 													className="size-full object-cover"
-													// height={16}
 													src={imagePreview}
-													// width={16}
 												/>
 											</div>
 										)}
@@ -153,14 +173,28 @@ export function EditUserForm() {
 												id="image"
 												onChange={handleImageChange}
 											/>
-											{imagePreview && (
+											{showDeleteButton && (
 												<X
 													className="cursor-pointer"
-													onClick={clearImage}
-													size={20}
+													onClick={handleDeleteImage}
+												/>
+											)}
+
+											{showClearButton && (
+												<X
+													className="cursor-pointer"
+													onClick={handleClearNewImage}
 												/>
 											)}
 										</div>
+									</div>
+									{/* Action Buttons */}
+									<div className="flex gap-2">
+										{shouldDeleteImage && (
+											<div className="text-sm text-muted-foreground">
+												Photo will be removed when you save
+											</div>
+										)}
 									</div>
 								</div>
 							)}
@@ -173,20 +207,6 @@ export function EditUserForm() {
 							<form.SubscribeButton label="Update" />
 						</form.AppForm>
 					</DialogFooter>
-					{/* Display form-level errors */}
-					{/* <form.Subscribe
-						children={([errorMap]) =>
-							errorMap.onSubmit ? (
-								<Alert className="mt-4" variant="destructive">
-									<AlertCircle className="size-4" />
-									<AlertDescription>
-										{errorMap.onSubmit.toString()}
-									</AlertDescription>
-								</Alert>
-							) : null
-						}
-						selector={(state) => [state.errorMap]}
-					/> */}
 				</form>
 			</DialogContent>
 		</Dialog>

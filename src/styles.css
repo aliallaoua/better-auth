@@ -83,6 +83,7 @@ code {
     oklch(0.92 0.004 286.32);
   --sidebar-ring:
     oklch(0.705 0.015 286.067);
+  --stat-card-primary: oklch(0.554 0.2707 292.59);
 }
 
 .dark {
@@ -149,6 +150,7 @@ code {
     oklch(1 0 0 / 10%);
   --sidebar-ring:
     oklch(0.552 0.016 285.938);
+  --stat-card-primary: oklch(0.521 0.283 286.15);
 }
 
 @theme inline {
@@ -188,6 +190,7 @@ code {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-stat-card: var(--stat-card-primary);
 }
 
 @layer base {

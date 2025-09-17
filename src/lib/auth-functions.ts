@@ -3,6 +3,7 @@ import { getWebRequest } from '@tanstack/react-start/server';
 import { authClient } from '@/lib/auth-client';
 import type { SignInSchema, SignUpSchema } from '@/schema';
 import { auth } from './auth';
+import { convertImageToBase64 } from './utils/convert-image';
 
 export const signIn = async (data: SignInSchema) => {
 	const { error, data: response } = await authClient.signIn.email({
@@ -22,6 +23,7 @@ export const signUp = async (data: SignUpSchema) => {
 		email: data.email,
 		password: data.password,
 		name: data.name,
+		image: data.image ? await convertImageToBase64(data.image) : '',
 	});
 
 	if (error) {

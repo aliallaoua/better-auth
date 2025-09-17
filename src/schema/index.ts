@@ -26,6 +26,15 @@ export const SignUpSchema = z
 		email: z.email(),
 		password: z.string().min(8, 'Password must be at least 8 characters'),
 		confirmPassword: z.string(),
+		image: z
+			.file()
+			.max(5 * 1024 * 1024, 'Image must be less than 5MB')
+			.mime(
+				['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
+				'Image must be JPEG, PNG, WebP, or GIF format'
+			)
+			.optional()
+			.nullable(),
 	})
 	.refine((data) => data.password === data.confirmPassword, {
 		error: "Passwords don't match",

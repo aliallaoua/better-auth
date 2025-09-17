@@ -257,6 +257,7 @@ export function DataTable<User>({
 			rowSelection,
 			columnFilters,
 			pagination,
+			globalFilter,
 		},
 		getRowId: (row) => row.id.toString(),
 		enableRowSelection: true,
@@ -311,7 +312,8 @@ export function DataTable<User>({
 						<Search className="absolute left-2 top-2.5 size-4 text-muted-foreground" />
 						<Input
 							className="pl-8 w-[300px]"
-							onChange={(event) => setGlobalFilter(event.target.value)}
+							// onChange={(e) => setGlobalFilter(String(e.target.value))}
+							onChange={(e) => table.setGlobalFilter(String(e.target.value))}
 							placeholder="Search users..."
 							value={globalFilter}
 						/>

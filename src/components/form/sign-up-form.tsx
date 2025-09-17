@@ -1,5 +1,7 @@
 import { formOptions } from '@tanstack/react-form';
 import { Link } from '@tanstack/react-router';
+import { X } from 'lucide-react';
+import { useState } from 'react';
 // import { AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,9 +15,11 @@ import { useAppForm } from '@/hooks/form';
 import useSignUpMutation from '@/hooks/mutations/useSignUpMutation';
 import { signInWithGoogle } from '@/lib/auth-functions';
 import { SignUpSchema } from '@/schema';
+import { Label } from '../ui/label';
 // import { Alert, AlertDescription } from '../ui/alert';
 
 export function SignUpForm() {
+	const [imagePreview, setImagePreview] = useState<string | null>(null);
 	// const signUpMutation = useSignUpMutation();
 	const { mutateAsync: signUpMutation } = useSignUpMutation();
 
@@ -25,6 +29,7 @@ export function SignUpForm() {
 			email: '',
 			password: '',
 			confirmPassword: '',
+			image: null,
 		},
 	});
 
@@ -37,6 +42,7 @@ export function SignUpForm() {
 			try {
 				// await signUpMutation.mutateAsync(value);
 				await signUpMutation(value);
+
 				// } catch (e: any) {
 			} catch (e: any) {
 				// Set form-level error
@@ -46,6 +52,28 @@ export function SignUpForm() {
 			}
 		},
 	});
+
+	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (file) {
+			form.setFieldValue('image', file);
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				setImagePreview(reader.result as string);
+			};
+			reader.readAsDataURL(file);
+		}
+	};
+
+	const clearImage = () => {
+		form.setFieldValue('image', null);
+		setImagePreview(null);
+		// Reset the file input
+		const fileInput = document.getElementById('image') as HTMLInputElement;
+		if (fileInput) {
+			fileInput.value = '';
+		}
+	};
 
 	return (
 		<Card className="mx-auto w-[500px]">
@@ -165,6 +193,44 @@ export function SignUpForm() {
 									/>
 								)}
 								name="confirmPassword"
+							/>
+						</div>
+
+						<div className="grid gap-2">
+							<form.AppField
+								children={(field) => (
+									<div className="grid gap-2">
+										<Label htmlFor="image">Profile Image</Label>
+										<div className="flex items-end gap-4">
+											{imagePreview && (
+												<div className="relative size-16 overflow-hidden rounded-sm">
+													<img
+														alt="Profile preview"
+														className="size-full object-cover"
+														// height={16}
+														src={imagePreview}
+														// width={16}
+													/>
+												</div>
+											)}
+											<div className="flex w-full items-center gap-2">
+												<field.ImageField
+													className="w-full text-muted-foreground"
+													id="image"
+													onChange={handleImageChange}
+												/>
+												{imagePreview && (
+													<X
+														className="cursor-pointer"
+														onClick={clearImage}
+														size={20}
+													/>
+												)}
+											</div>
+										</div>
+									</div>
+								)}
+								name="image"
 							/>
 						</div>
 

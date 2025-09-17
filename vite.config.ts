@@ -4,7 +4,7 @@ import { devtools } from '@tanstack/devtools-vite';
 import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import viteReact from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import viteTsConfigPaths from 'vite-tsconfig-paths';
+import tsConfigPaths from 'vite-tsconfig-paths';
 
 const config = defineConfig({
 	plugins: [
@@ -16,8 +16,7 @@ const config = defineConfig({
 			referrer: 'create-tanstack',
 		}),
 
-		// this is the plugin that enables path aliases
-		viteTsConfigPaths({
+		tsConfigPaths({
 			projects: ['./tsconfig.json'],
 		}),
 		tanstackStart({
