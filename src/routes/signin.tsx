@@ -23,12 +23,6 @@ function SignInPage() {
 	return (
 		<div className="container flex h-screen items-center justify-center py-4">
 			<div className="flex w-full max-w-sm flex-col gap-6">
-				<Link
-					className="flex items-center gap-2 self-center font-medium"
-					to="/better-auth"
-				>
-					Better Auth Starter
-				</Link>
 				<SignInForm />
 			</div>
 		</div>

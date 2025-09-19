@@ -43,7 +43,7 @@ export default function UserCard(props: {
 	const { mutateAsync: signOutMutation } = useSignOutMutation();
 
 	return (
-		<Card className="hover:shadow-stat-card/25 h-full w-full transition-all hover:shadow-lg">
+		<Card>
 			<CardHeader>
 				<CardTitle>User</CardTitle>
 			</CardHeader>

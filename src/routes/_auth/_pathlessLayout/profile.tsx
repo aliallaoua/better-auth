@@ -10,15 +10,15 @@ import { userMiddleware } from '@/lib/auth-middleware';
 const getProfileData = createServerFn({ method: 'GET' })
 	.middleware([userMiddleware])
 	.handler(async () => {
-		const request = getWebRequest();
+		const { headers } = getWebRequest();
 
 		try {
 			const [session, activeSessions, deviceSessions, organization] =
 				await Promise.all([
-					auth.api.getSession({ headers: request.headers }),
-					auth.api.listSessions({ headers: request.headers }),
-					auth.api.listDeviceSessions({ headers: request.headers }),
-					auth.api.getFullOrganization({ headers: request.headers }),
+					auth.api.getSession({ headers }),
+					auth.api.listSessions({ headers }),
+					auth.api.listDeviceSessions({ headers }),
+					auth.api.getFullOrganization({ headers }),
 				]);
 
 			return {

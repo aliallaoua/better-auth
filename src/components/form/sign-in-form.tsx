@@ -11,7 +11,9 @@ import {
 } from '@/components/ui/card';
 import { useAppForm } from '@/hooks/form';
 import useSignInMutation from '@/hooks/mutations/useSignInMutation';
+import { authClient } from '@/lib/auth-client';
 import { signInWithGithub, signInWithGoogle } from '@/lib/auth-functions';
+import { cn } from '@/lib/utils';
 import { SignInSchema } from '@/schema';
 // import { Alert, AlertDescription } from '../ui/alert';
 
@@ -47,6 +49,12 @@ export function SignInForm() {
 	// 	search: { addAccount: true },
 	// };
 
+	const LastUsedIndicator = () => (
+		<span className="ml-auto absolute top-1 right-0 px-2 py-1 text-xs bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 rounded-md font-medium">
+			Last Used
+		</span>
+	);
+
 	return (
 		<Card className="mx-auto w-[500px]">
 			<CardHeader className="text-center">
@@ -67,7 +75,7 @@ export function SignInForm() {
 					<div className="grid gap-6">
 						<div className="flex flex-col gap-4">
 							<Button
-								className="w-full"
+								className={cn('w-full gap-2 flex items-center relative')}
 								onClick={signInWithGithub}
 								type="button"
 								variant="outline"
@@ -78,10 +86,13 @@ export function SignInForm() {
 										fill="currentColor"
 									/>
 								</svg>
-								Sign in with Github
+								<span>Sign in with GitHub</span>
+								{authClient.isLastUsedLoginMethod('github') && (
+									<LastUsedIndicator />
+								)}
 							</Button>
 							<Button
-								className="w-full"
+								className={cn('w-full gap-2 flex items-center relative')}
 								onClick={signInWithGoogle}
 								type="button"
 								variant="outline"
@@ -92,7 +103,10 @@ export function SignInForm() {
 										fill="currentColor"
 									/>
 								</svg>
-								Sign in with Google
+								<span>Sign in with Google</span>
+								{authClient.isLastUsedLoginMethod('google') && (
+									<LastUsedIndicator />
+								)}
 							</Button>
 						</div>
 
@@ -100,6 +114,9 @@ export function SignInForm() {
 							<span className="relative z-10 bg-card px-2 text-muted-foreground">
 								Or continue with
 							</span>
+							{authClient.isLastUsedLoginMethod('email') && (
+								<LastUsedIndicator />
+							)}
 						</div>
 
 						<div className="flex flex-col gap-6">

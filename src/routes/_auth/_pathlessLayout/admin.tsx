@@ -481,7 +481,7 @@ function AdminDashboard() {
 			</div>
 
 			{/* Data Table */}
-			<Card className="hover:shadow-stat-card/25 w-full transition-all hover:shadow-lg">
+			<Card>
 				<CardHeader>
 					<CardTitle>User Management</CardTitle>
 				</CardHeader>
