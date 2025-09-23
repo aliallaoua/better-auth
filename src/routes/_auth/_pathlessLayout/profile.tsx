@@ -1,16 +1,16 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
-import { getWebRequest } from '@tanstack/react-start/server';
+import { getRequest } from '@tanstack/react-start/server';
 import AccountSwitcher from '@/components/account-switch';
 import { OrganizationCard } from '@/components/dashboard/organization-card';
 import UserCard from '@/components/dashboard/user-card';
 import { auth } from '@/lib/auth';
 import { userMiddleware } from '@/lib/auth-middleware';
 
-const getProfileData = createServerFn({ method: 'GET' })
+const getProfileData = createServerFn()
 	.middleware([userMiddleware])
 	.handler(async () => {
-		const { headers } = getWebRequest();
+		const { headers } = getRequest();
 
 		try {
 			const [session, activeSessions, deviceSessions, organization] =

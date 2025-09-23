@@ -1,8 +1,11 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { IconDotsVertical, IconGripVertical } from '@tabler/icons-react';
 import { createColumnHelper, type Row } from '@tanstack/react-table';
+import type { UserWithRole } from 'better-auth/plugins/admin';
 import {
-	ArrowUpDown,
+	ArrowDown,
+	ArrowUp,
+	// ArrowUpDown,
 	Ban,
 	Loader2,
 	RefreshCw,
@@ -45,13 +48,13 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from '@/components/ui/tooltip';
-import type { Session } from '@/lib/auth-types';
+// import type { Session } from '@/lib/auth-types';
 
 // Define the User type based on your data
-export type User = Pick<
-	Session['user'],
-	'id' | 'email' | 'name' | 'role' | 'banned' | 'createdAt'
->;
+// export type User = Pick<
+// 	Session['user'],
+// 	'id' | 'email' | 'name' | 'role' | 'banned' | 'createdAt'
+// >;
 
 // Define action handlers type
 export type UserActionHandlers = {
@@ -65,11 +68,11 @@ export type UserActionHandlers = {
 };
 
 // Create the column helper with the User type
-const columnHelper = createColumnHelper<User>();
+const columnHelper = createColumnHelper<UserWithRole>();
 
 // Custom filter function for multi-select role filtering
 const roleFilter = (
-	row: Row<User>,
+	row: Row<UserWithRole>,
 	columnId: string,
 	filterValue: string[]
 ) => {
@@ -80,7 +83,7 @@ const roleFilter = (
 
 // Custom filter function for banned status
 const bannedFilter = (
-	row: Row<User>,
+	row: Row<UserWithRole>,
 	columnId: string,
 	filterValue: string
 ) => {
@@ -95,12 +98,22 @@ const bannedFilter = (
 const SortableHeader = ({ column, title }: { column: any; title: string }) => {
 	return (
 		<Button
-			className="h-8 px-2 -ml-2"
-			onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+			// className="h-8 px-2 -ml-2"
+			className={`h-8 px-2 -ml-2 ${
+				column.getCanSort()
+					? 'cursor-pointer select-none hover:text-blue-400 transition-colors'
+					: ''
+			}`}
+			// onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+			onClick={() => column.toggleSorting()}
 			variant="ghost"
 		>
 			{title}
-			<ArrowUpDown className="ml-2 size-4" />
+			{/* <ArrowUpDown className="ml-2 size-4" /> */}
+			{{
+				asc: <ArrowUp />,
+				desc: <ArrowDown />,
+			}[column.getIsSorted() as string] ?? null}
 		</Button>
 	);
 };
@@ -417,37 +430,39 @@ export const createColumns = (handlers: UserActionHandlers) => [
 
 	columnHelper.accessor('email', {
 		header: ({ column }) => <SortableHeader column={column} title="Email" />,
-		cell: ({ getValue }) => {
-			const email = getValue();
-			return (
-				<div className="font-medium">
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<span className="truncate max-w-[200px] block">{email}</span>
-						</TooltipTrigger>
-						<TooltipContent>
-							<p>{email}</p>
-						</TooltipContent>
-					</Tooltip>
-				</div>
-			);
-		},
+		// cell: ({ getValue }) => {
+		// 	const email = getValue();
+		// 	return (
+		// 		<div className="font-medium">
+		// 			<Tooltip>
+		// 				<TooltipTrigger asChild>
+		// 					<span className="truncate max-w-[200px] block">{email}</span>
+		// 				</TooltipTrigger>
+		// 				<TooltipContent>
+		// 					<p>{email}</p>
+		// 				</TooltipContent>
+		// 			</Tooltip>
+		// 		</div>
+		// 	);
+		// },
+		cell: (info) => info.getValue(),
 		enableColumnFilter: true,
 		filterFn: 'includesString',
 	}),
 
 	columnHelper.accessor('name', {
 		header: ({ column }) => <SortableHeader column={column} title="Name" />,
-		cell: ({ getValue }) => {
-			const name = getValue();
-			return (
-				<div className="font-medium">
-					{name || (
-						<span className="text-muted-foreground italic">No name</span>
-					)}
-				</div>
-			);
-		},
+		// cell: ({ getValue }) => {
+		// 	const name = getValue();
+		// 	return (
+		// 		<div className="font-medium">
+		// 			{name || (
+		// 				<span className="text-muted-foreground italic">No name</span>
+		// 			)}
+		// 		</div>
+		// 	);
+		// },
+		cell: (info) => info.getValue(),
 		enableColumnFilter: true,
 		filterFn: 'includesString',
 	}),

@@ -44,6 +44,7 @@
       },
       "nursery": {
         "noShadow": "off",
+        "useConsistentArrowReturn": "off",
         "useConsistentTypeDefinitions": "off",
         "useImageSize": "off",
         "useSortedClasses": "off"
@@ -58,7 +59,8 @@
         "noNonNullAssertion": "off",
         "useBlockStatements": "off",
         // eslint-plugin-react-refresh: react-refresh/only-export-components
-        "useComponentExportOnlyModules": "error"
+        "useComponentExportOnlyModules": "error",
+        "useNamingConvention": "off"
       },
       "suspicious": {
         "noArrayIndexKey": "off",
@@ -66,7 +68,8 @@
         "noExplicitAny": "warn",
         "noEmptyBlockStatements": "off",
         "noConsole": "off",
-        "useAwait": "off"
+        "useAwait": "off",
+        "useStaticResponseMethods": "off"
       }
     }
   },

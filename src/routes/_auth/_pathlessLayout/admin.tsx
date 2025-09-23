@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
 import { Badge, Ban, Download, Plus, Shield, Users } from 'lucide-react';
 import { useMemo, useState } from 'react';
@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { useAppForm } from '@/hooks/form';
+import useListUsersQuery from '@/hooks/queries/useListUsersQuery';
 import { authClient } from '@/lib/auth-client';
 import { BanUserSchema, CreateUserSchema } from '@/schema';
 
@@ -31,7 +32,7 @@ import { BanUserSchema, CreateUserSchema } from '@/schema';
 // 			sortBy: 'createdAt',
 // 			sortDirection: 'desc',
 // 		},
-// 		headers: await getWebRequest().headers,
+// 		headers: await getRequest().headers,
 // 	});
 
 // 	return users?.users;
@@ -45,11 +46,12 @@ import { BanUserSchema, CreateUserSchema } from '@/schema';
 
 export const Route = createFileRoute('/_auth/_pathlessLayout/admin')({
 	beforeLoad: ({ context, location }) => {
-		if (context.userSession.user.role !== 'admin') {
+		if (context.userSession?.user.role !== 'admin') {
 			throw redirect({
 				to: '/unauthorized',
 				search: {
 					redirect: location.href,
+					reason: 'insufficient_permissions',
 				},
 			});
 		}
@@ -70,24 +72,26 @@ function AdminDashboard() {
 
 	// const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-	const { data: users = [], isLoading: isUsersLoading } = useQuery({
-		queryKey: ['users'],
-		queryFn: async () => {
-			const data = await authClient.admin.listUsers(
-				{
-					query: {
-						limit: 50, // Increased for better pagination
-						sortBy: 'createdAt',
-						sortDirection: 'desc',
-					},
-				},
-				{
-					throw: true,
-				}
-			);
-			return data?.users || [];
-		},
-	});
+	// const { data: users = [], isLoading: isUsersLoading } = useQuery({
+	// 	queryKey: ['users'],
+	// 	queryFn: async () => {
+	// 		const data = await authClient.admin.listUsers(
+	// 			{
+	// 				query: {
+	// 					limit: 50, // Increased for better pagination
+	// 					sortBy: 'createdAt',
+	// 					sortDirection: 'desc',
+	// 				},
+	// 			},
+	// 			{
+	// 				throw: true,
+	// 			}
+	// 		);
+	// 		return data?.users || [];
+	// 	},
+	// });
+
+	const { data: users = [], isPending: isUsersLoading } = useListUsersQuery();
 
 	// const { data: users = [] } = useSuspenseQuery(listUsersQueryOptions());
 
@@ -125,9 +129,15 @@ function AdminDashboard() {
 				toast.success('User created successfully');
 				createUserForm.reset();
 				setIsDialogOpen(false);
-				queryClient.invalidateQueries({
+				queryClient.removeQueries({
 					queryKey: ['users'],
 				});
+				queryClient.refetchQueries({
+					queryKey: ['users'],
+				});
+				// queryClient.invalidateQueries({
+				// 	queryKey: ['users'],
+				// });
 			} catch (error: any) {
 				toast.error(error.message || 'Failed to create user');
 			} finally {

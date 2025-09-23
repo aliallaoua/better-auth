@@ -11,7 +11,7 @@ import WelcomeEmail from '@/components/emails/welcome.email';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendTestEmail = createServerFn({ method: 'POST' })
-	.validator(
+	.inputValidator(
 		z.object({
 			name: z.string(),
 			email: z.email(),
@@ -51,7 +51,7 @@ export const sendTestEmail = createServerFn({ method: 'POST' })
 	});
 
 export const sendVerificationEmail = createServerFn({ method: 'POST' })
-	.validator(
+	.inputValidator(
 		z.object({
 			name: z.string(),
 			email: z.email(),
@@ -83,7 +83,7 @@ export const sendVerificationEmail = createServerFn({ method: 'POST' })
 	});
 
 export const sendResetPasswordEmail = createServerFn({ method: 'POST' })
-	.validator(
+	.inputValidator(
 		z.object({
 			name: z.string(),
 			email: z.email(),
@@ -116,7 +116,7 @@ export const sendResetPasswordEmail = createServerFn({ method: 'POST' })
 	});
 
 export const sendInvitationEmail = createServerFn({ method: 'POST' })
-	.validator(
+	.inputValidator(
 		z.object({
 			id: z.string(),
 			username: z.email(),
@@ -153,7 +153,7 @@ export const sendInvitationEmail = createServerFn({ method: 'POST' })
 	});
 
 export const sendOTP = createServerFn({ method: 'POST' })
-	.validator(
+	.inputValidator(
 		z.object({
 			email: z.email(),
 			otp: z.string(),
@@ -180,7 +180,7 @@ export const sendOTP = createServerFn({ method: 'POST' })
 	});
 
 export const sendChangeEmailVerification = createServerFn({ method: 'POST' })
-	.validator(
+	.inputValidator(
 		z.object({
 			username: z.string(),
 			oldEmail: z.email(),
@@ -217,7 +217,7 @@ export const sendChangeEmailVerification = createServerFn({ method: 'POST' })
 	});
 
 export const sendDeleteAccountVerification = createServerFn({ method: 'POST' })
-	.validator(
+	.inputValidator(
 		z.object({
 			user: z.string(),
 			email: z.string(),

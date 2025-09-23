@@ -1,7 +1,7 @@
 import {
-	closestCenter,
-	DndContext,
-	type DragEndEvent,
+	// closestCenter,
+	// DndContext,
+	// type DragEndEvent,
 	KeyboardSensor,
 	MouseSensor,
 	TouchSensor,
@@ -9,9 +9,9 @@ import {
 	useSensor,
 	useSensors,
 } from '@dnd-kit/core';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+// import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import {
-	arrayMove,
+	// arrayMove,
 	SortableContext,
 	useSortable,
 	verticalListSortingStrategy,
@@ -38,14 +38,9 @@ import {
 	useReactTable,
 	type VisibilityState,
 } from '@tanstack/react-table';
+import type { UserWithRole } from 'better-auth/plugins/admin';
 import { ChevronDown, Download, Filter, Search, UserX, X } from 'lucide-react';
-import {
-	type Dispatch,
-	type SetStateAction,
-	useId,
-	useMemo,
-	useState,
-} from 'react';
+import { useId, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import {
@@ -74,11 +69,11 @@ import {
 	TableRow,
 } from '@/components/ui/table';
 import { Label } from '../ui/label';
-import { type User, userTableFilterFns } from './columns';
+import { userTableFilterFns } from './columns';
 
-interface DataTableProps<User> {
-	columns: ColumnDef<User>[];
-	data: User[];
+interface DataTableProps<UserWithRole> {
+	columns: ColumnDef<UserWithRole>[];
+	data: UserWithRole[];
 	onExportData?: () => void;
 }
 
@@ -192,7 +187,7 @@ export function DataTableSkeleton() {
 }
 
 // Row Component
-function DraggableRow({ row }: { row: Row<User> }) {
+function DraggableRow({ row }: { row: Row<UserWithRole> }) {
 	const { transform, transition, setNodeRef, isDragging } = useSortable({
 		id: row.original.id,
 	});
@@ -217,15 +212,18 @@ function DraggableRow({ row }: { row: Row<User> }) {
 	);
 }
 
-export function DataTable<User>({
+export function DataTable<UserWithRole>({
 	columns,
-	data: initialData,
+	// ! UNCOMMENT FOR DRAGGABEL ROW
+	// data: initialData,
+	data,
 	onExportData,
-}: DataTableProps<User>) {
+}: DataTableProps<UserWithRole>) {
 	// const [sorting, setSorting] = useState<SortingState>([
 	// 	{ id: 'createdAt', desc: true },
 	// ]);
-	const [data, setData] = useState(() => initialData);
+	// ! UNCOMMENT FOR DRAGGABEL ROW
+	// const [data, setData] = useState(() => initialData);
 	const [rowSelection, setRowSelection] = useState({});
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -284,17 +282,17 @@ export function DataTable<User>({
 			},
 		},
 	});
-
-	function handleDragEnd(event: DragEndEvent) {
-		const { active, over } = event;
-		if (active && over && active.id !== over.id) {
-			setData((data) => {
-				const oldIndex = dataIds.indexOf(active.id);
-				const newIndex = dataIds.indexOf(over.id);
-				return arrayMove(data, oldIndex, newIndex);
-			});
-		}
-	}
+	// ! UNCOMMENT FOR DRAGGABEL ROW
+	// function handleDragEnd(event: DragEndEvent) {
+	// 	const { active, over } = event;
+	// 	if (active && over && active.id !== over.id) {
+	// 		setData((data) => {
+	// 			const oldIndex = dataIds.indexOf(active.id);
+	// 			const newIndex = dataIds.indexOf(over.id);
+	// 			return arrayMove(data, oldIndex, newIndex);
+	// 		});
+	// 	}
+	// }
 
 	const isFiltered = columnFilters.length > 0 || globalFilter.length > 0;
 
@@ -354,20 +352,18 @@ export function DataTable<User>({
 										typeof column.accessorFn !== 'undefined' &&
 										column.getCanHide()
 								)
-								.map((column) => {
-									return (
-										<DropdownMenuCheckboxItem
-											checked={column.getIsVisible()}
-											className="capitalize"
-											key={column.id}
-											onCheckedChange={(value) =>
-												column.toggleVisibility(!!value)
-											}
-										>
-											{column.id}
-										</DropdownMenuCheckboxItem>
-									);
-								})}
+								.map((column) => (
+									<DropdownMenuCheckboxItem
+										checked={column.getIsVisible()}
+										className="capitalize"
+										key={column.id}
+										onCheckedChange={(value) =>
+											column.toggleVisibility(!!value)
+										}
+									>
+										{column.id}
+									</DropdownMenuCheckboxItem>
+								))}
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
@@ -404,71 +400,71 @@ export function DataTable<User>({
 
 			{/* Table */}
 			<div className="overflow-hidden rounded-lg border">
-				<DndContext
+				{/* // ! UNCOMMENT FOR DRAGGABEL ROW */}
+				{/* <DndContext
 					collisionDetection={closestCenter}
 					id={sortableId}
 					modifiers={[restrictToVerticalAxis]}
 					onDragEnd={handleDragEnd}
 					sensors={sensors}
-				>
-					<Table>
-						<TableHeader className="sticky top-0 z-10 bg-muted">
-							{table.getHeaderGroups().map((headerGroup) => (
-								<TableRow key={headerGroup.id}>
-									{headerGroup.headers.map((header) => {
-										return (
-											<TableHead colSpan={header.colSpan} key={header.id}>
-												{header.isPlaceholder
-													? null
-													: flexRender(
-															header.column.columnDef.header,
-															header.getContext()
-														)}
-											</TableHead>
-										);
-									})}
-								</TableRow>
-							))}
-						</TableHeader>
-						<TableBody className="**:data-[slot=table-cell]:first:w-8">
-							{table.getRowModel().rows?.length ? (
-								<SortableContext
-									items={dataIds}
-									strategy={verticalListSortingStrategy}
+				> */}
+				<Table>
+					<TableHeader className="sticky top-0 z-10 bg-muted">
+						{table.getHeaderGroups().map((headerGroup) => (
+							<TableRow key={headerGroup.id}>
+								{headerGroup.headers.map((header) => (
+									<TableHead colSpan={header.colSpan} key={header.id}>
+										{header.isPlaceholder
+											? null
+											: flexRender(
+													header.column.columnDef.header,
+													header.getContext()
+												)}
+									</TableHead>
+								))}
+							</TableRow>
+						))}
+					</TableHeader>
+					<TableBody className="**:data-[slot=table-cell]:first:w-8">
+						{table.getRowModel().rows?.length ? (
+							<SortableContext
+								items={dataIds}
+								strategy={verticalListSortingStrategy}
+							>
+								{table.getRowModel().rows.map((row) => (
+									<DraggableRow key={row.id} row={row} />
+								))}
+							</SortableContext>
+						) : (
+							<TableRow>
+								<TableCell
+									className="h-24 text-center"
+									colSpan={columns.length}
 								>
-									{table.getRowModel().rows.map((row) => (
-										<DraggableRow key={row.id} row={row} />
-									))}
-								</SortableContext>
-							) : (
-								<TableRow>
-									<TableCell
-										className="h-24 text-center"
-										colSpan={columns.length}
-									>
-										<div className="flex flex-col items-center justify-center space-y-2">
-											<UserX className="size-8 text-muted-foreground" />
-											<p className="text-muted-foreground">
-												{isFiltered
-													? 'No users match your filters.'
-													: 'No users found.'}
-											</p>
-											{isFiltered && (
-												<Button
-													onClick={clearAllFilters}
-													size="sm"
-													variant="outline"
-												>
-													Clear filters
-												</Button>
-											)}
-										</div>
-									</TableCell>
-								</TableRow>
-							)}
-						</TableBody>
-					</Table>
-				</DndContext>
+									<div className="flex flex-col items-center justify-center space-y-2">
+										<UserX className="size-8 text-muted-foreground" />
+										<p className="text-muted-foreground">
+											{isFiltered
+												? 'No users match your filters.'
+												: 'No users found.'}
+										</p>
+										{isFiltered && (
+											<Button
+												onClick={clearAllFilters}
+												size="sm"
+												variant="outline"
+											>
+												Clear filters
+											</Button>
+										)}
+									</div>
+								</TableCell>
+							</TableRow>
+						)}
+					</TableBody>
+				</Table>
+				{/* // ! UNCOMMENT FOR DRAGGABEL ROW */}
+				{/* </DndContext> */}
 			</div>
 
 			{/* Footer with Stats and Pagination */}

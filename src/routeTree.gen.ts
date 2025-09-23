@@ -8,8 +8,6 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createServerRootRoute } from '@tanstack/react-start/server'
-
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SigninRouteImport } from './routes/signin'
@@ -19,24 +17,23 @@ import { Route as BetterAuthRouteImport } from './routes/better-auth'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo.tanstack-query'
+import { Route as DemoTableRouteImport } from './routes/demo.table'
 import { Route as DemoNeonRouteImport } from './routes/demo.neon'
+import { Route as ApiSendRouteImport } from './routes/api/send'
+import { Route as ApiDemoTqTodosRouteImport } from './routes/api.demo-tq-todos'
+import { Route as ApiDemoNamesRouteImport } from './routes/api.demo-names'
 import { Route as AcceptInvitationIdRouteImport } from './routes/accept-invitation/$id'
 import { Route as AuthPathlessLayoutRouteRouteImport } from './routes/_auth/_pathlessLayout/route'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo.start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo.start.api-request'
 import { Route as DemoFormSimpleRouteImport } from './routes/demo.form.simple'
 import { Route as DemoFormAddressRouteImport } from './routes/demo.form.address'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthPathlessLayoutUnauthorizedRouteImport } from './routes/_auth/_pathlessLayout/unauthorized'
 import { Route as AuthPathlessLayoutProfileRouteImport } from './routes/_auth/_pathlessLayout/profile'
 import { Route as AuthPathlessLayoutDashboardRouteImport } from './routes/_auth/_pathlessLayout/dashboard'
 import { Route as AuthPathlessLayoutAdmincopyRouteImport } from './routes/_auth/_pathlessLayout/admin copy'
 import { Route as AuthPathlessLayoutAdminRouteImport } from './routes/_auth/_pathlessLayout/admin'
-import { ServerRoute as ApiSendServerRouteImport } from './routes/api/send'
-import { ServerRoute as ApiDemoTqTodosServerRouteImport } from './routes/api.demo-tq-todos'
-import { ServerRoute as ApiDemoNamesServerRouteImport } from './routes/api.demo-names'
-import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
-
-const rootServerRouteImport = createServerRootRoute()
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -77,9 +74,29 @@ const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   path: '/demo/tanstack-query',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemoTableRoute = DemoTableRouteImport.update({
+  id: '/demo/table',
+  path: '/demo/table',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemoNeonRoute = DemoNeonRouteImport.update({
   id: '/demo/neon',
   path: '/demo/neon',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSendRoute = ApiSendRouteImport.update({
+  id: '/api/send',
+  path: '/api/send',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiDemoTqTodosRoute = ApiDemoTqTodosRouteImport.update({
+  id: '/api/demo-tq-todos',
+  path: '/api/demo-tq-todos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiDemoNamesRoute = ApiDemoNamesRouteImport.update({
+  id: '/api/demo-names',
+  path: '/api/demo-names',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AcceptInvitationIdRoute = AcceptInvitationIdRouteImport.update({
@@ -111,6 +128,11 @@ const DemoFormAddressRoute = DemoFormAddressRouteImport.update({
   path: '/demo/form/address',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthPathlessLayoutUnauthorizedRoute =
   AuthPathlessLayoutUnauthorizedRouteImport.update({
     id: '/unauthorized',
@@ -140,26 +162,6 @@ const AuthPathlessLayoutAdminRoute = AuthPathlessLayoutAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthPathlessLayoutRouteRoute,
 } as any)
-const ApiSendServerRoute = ApiSendServerRouteImport.update({
-  id: '/api/send',
-  path: '/api/send',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
-const ApiDemoTqTodosServerRoute = ApiDemoTqTodosServerRouteImport.update({
-  id: '/api/demo-tq-todos',
-  path: '/api/demo-tq-todos',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
-const ApiDemoNamesServerRoute = ApiDemoNamesServerRouteImport.update({
-  id: '/api/demo-names',
-  path: '/api/demo-names',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
-const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -169,13 +171,18 @@ export interface FileRoutesByFullPath {
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
+  '/api/demo-names': typeof ApiDemoNamesRoute
+  '/api/demo-tq-todos': typeof ApiDemoTqTodosRoute
+  '/api/send': typeof ApiSendRoute
   '/demo/neon': typeof DemoNeonRoute
+  '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/admin': typeof AuthPathlessLayoutAdminRoute
   '/admin copy': typeof AuthPathlessLayoutAdmincopyRoute
   '/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/profile': typeof AuthPathlessLayoutProfileRoute
   '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/form/address': typeof DemoFormAddressRoute
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -189,13 +196,18 @@ export interface FileRoutesByTo {
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
+  '/api/demo-names': typeof ApiDemoNamesRoute
+  '/api/demo-tq-todos': typeof ApiDemoTqTodosRoute
+  '/api/send': typeof ApiSendRoute
   '/demo/neon': typeof DemoNeonRoute
+  '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/admin': typeof AuthPathlessLayoutAdminRoute
   '/admin copy': typeof AuthPathlessLayoutAdmincopyRoute
   '/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/profile': typeof AuthPathlessLayoutProfileRoute
   '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/form/address': typeof DemoFormAddressRoute
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -212,13 +224,18 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_auth/_pathlessLayout': typeof AuthPathlessLayoutRouteRouteWithChildren
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
+  '/api/demo-names': typeof ApiDemoNamesRoute
+  '/api/demo-tq-todos': typeof ApiDemoTqTodosRoute
+  '/api/send': typeof ApiSendRoute
   '/demo/neon': typeof DemoNeonRoute
+  '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/_auth/_pathlessLayout/admin': typeof AuthPathlessLayoutAdminRoute
   '/_auth/_pathlessLayout/admin copy': typeof AuthPathlessLayoutAdmincopyRoute
   '/_auth/_pathlessLayout/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/_auth/_pathlessLayout/profile': typeof AuthPathlessLayoutProfileRoute
   '/_auth/_pathlessLayout/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/form/address': typeof DemoFormAddressRoute
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -234,13 +251,18 @@ export interface FileRouteTypes {
     | '/signin'
     | '/signup'
     | '/accept-invitation/$id'
+    | '/api/demo-names'
+    | '/api/demo-tq-todos'
+    | '/api/send'
     | '/demo/neon'
+    | '/demo/table'
     | '/demo/tanstack-query'
     | '/admin'
     | '/admin copy'
     | '/dashboard'
     | '/profile'
     | '/unauthorized'
+    | '/api/auth/$'
     | '/demo/form/address'
     | '/demo/form/simple'
     | '/demo/start/api-request'
@@ -254,13 +276,18 @@ export interface FileRouteTypes {
     | '/signin'
     | '/signup'
     | '/accept-invitation/$id'
+    | '/api/demo-names'
+    | '/api/demo-tq-todos'
+    | '/api/send'
     | '/demo/neon'
+    | '/demo/table'
     | '/demo/tanstack-query'
     | '/admin'
     | '/admin copy'
     | '/dashboard'
     | '/profile'
     | '/unauthorized'
+    | '/api/auth/$'
     | '/demo/form/address'
     | '/demo/form/simple'
     | '/demo/start/api-request'
@@ -276,13 +303,18 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_auth/_pathlessLayout'
     | '/accept-invitation/$id'
+    | '/api/demo-names'
+    | '/api/demo-tq-todos'
+    | '/api/send'
     | '/demo/neon'
+    | '/demo/table'
     | '/demo/tanstack-query'
     | '/_auth/_pathlessLayout/admin'
     | '/_auth/_pathlessLayout/admin copy'
     | '/_auth/_pathlessLayout/dashboard'
     | '/_auth/_pathlessLayout/profile'
     | '/_auth/_pathlessLayout/unauthorized'
+    | '/api/auth/$'
     | '/demo/form/address'
     | '/demo/form/simple'
     | '/demo/start/api-request'
@@ -298,54 +330,17 @@ export interface RootRouteChildren {
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
   AcceptInvitationIdRoute: typeof AcceptInvitationIdRoute
+  ApiDemoNamesRoute: typeof ApiDemoNamesRoute
+  ApiDemoTqTodosRoute: typeof ApiDemoTqTodosRoute
+  ApiSendRoute: typeof ApiSendRoute
   DemoNeonRoute: typeof DemoNeonRoute
+  DemoTableRoute: typeof DemoTableRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   DemoFormAddressRoute: typeof DemoFormAddressRoute
   DemoFormSimpleRoute: typeof DemoFormSimpleRoute
   DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
   DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
-}
-export interface FileServerRoutesByFullPath {
-  '/api/demo-names': typeof ApiDemoNamesServerRoute
-  '/api/demo-tq-todos': typeof ApiDemoTqTodosServerRoute
-  '/api/send': typeof ApiSendServerRoute
-  '/api/auth/$': typeof ApiAuthSplatServerRoute
-}
-export interface FileServerRoutesByTo {
-  '/api/demo-names': typeof ApiDemoNamesServerRoute
-  '/api/demo-tq-todos': typeof ApiDemoTqTodosServerRoute
-  '/api/send': typeof ApiSendServerRoute
-  '/api/auth/$': typeof ApiAuthSplatServerRoute
-}
-export interface FileServerRoutesById {
-  __root__: typeof rootServerRouteImport
-  '/api/demo-names': typeof ApiDemoNamesServerRoute
-  '/api/demo-tq-todos': typeof ApiDemoTqTodosServerRoute
-  '/api/send': typeof ApiSendServerRoute
-  '/api/auth/$': typeof ApiAuthSplatServerRoute
-}
-export interface FileServerRouteTypes {
-  fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths:
-    | '/api/demo-names'
-    | '/api/demo-tq-todos'
-    | '/api/send'
-    | '/api/auth/$'
-  fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/demo-names' | '/api/demo-tq-todos' | '/api/send' | '/api/auth/$'
-  id:
-    | '__root__'
-    | '/api/demo-names'
-    | '/api/demo-tq-todos'
-    | '/api/send'
-    | '/api/auth/$'
-  fileServerRoutesById: FileServerRoutesById
-}
-export interface RootServerRouteChildren {
-  ApiDemoNamesServerRoute: typeof ApiDemoNamesServerRoute
-  ApiDemoTqTodosServerRoute: typeof ApiDemoTqTodosServerRoute
-  ApiSendServerRoute: typeof ApiSendServerRoute
-  ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -406,11 +401,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoTanstackQueryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/demo/table': {
+      id: '/demo/table'
+      path: '/demo/table'
+      fullPath: '/demo/table'
+      preLoaderRoute: typeof DemoTableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/neon': {
       id: '/demo/neon'
       path: '/demo/neon'
       fullPath: '/demo/neon'
       preLoaderRoute: typeof DemoNeonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/send': {
+      id: '/api/send'
+      path: '/api/send'
+      fullPath: '/api/send'
+      preLoaderRoute: typeof ApiSendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/demo-tq-todos': {
+      id: '/api/demo-tq-todos'
+      path: '/api/demo-tq-todos'
+      fullPath: '/api/demo-tq-todos'
+      preLoaderRoute: typeof ApiDemoTqTodosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/demo-names': {
+      id: '/api/demo-names'
+      path: '/api/demo-names'
+      fullPath: '/api/demo-names'
+      preLoaderRoute: typeof ApiDemoNamesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/accept-invitation/$id': {
@@ -455,6 +478,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoFormAddressRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_auth/_pathlessLayout/unauthorized': {
       id: '/_auth/_pathlessLayout/unauthorized'
       path: '/unauthorized'
@@ -489,38 +519,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin'
       preLoaderRoute: typeof AuthPathlessLayoutAdminRouteImport
       parentRoute: typeof AuthPathlessLayoutRouteRoute
-    }
-  }
-}
-declare module '@tanstack/react-start/server' {
-  interface ServerFileRoutesByPath {
-    '/api/send': {
-      id: '/api/send'
-      path: '/api/send'
-      fullPath: '/api/send'
-      preLoaderRoute: typeof ApiSendServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/api/demo-tq-todos': {
-      id: '/api/demo-tq-todos'
-      path: '/api/demo-tq-todos'
-      fullPath: '/api/demo-tq-todos'
-      preLoaderRoute: typeof ApiDemoTqTodosServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/api/demo-names': {
-      id: '/api/demo-names'
-      path: '/api/demo-names'
-      fullPath: '/api/demo-names'
-      preLoaderRoute: typeof ApiDemoNamesServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatServerRouteImport
-      parentRoute: typeof rootServerRouteImport
     }
   }
 }
@@ -566,8 +564,13 @@ const rootRouteChildren: RootRouteChildren = {
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
   AcceptInvitationIdRoute: AcceptInvitationIdRoute,
+  ApiDemoNamesRoute: ApiDemoNamesRoute,
+  ApiDemoTqTodosRoute: ApiDemoTqTodosRoute,
+  ApiSendRoute: ApiSendRoute,
   DemoNeonRoute: DemoNeonRoute,
+  DemoTableRoute: DemoTableRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
   DemoFormAddressRoute: DemoFormAddressRoute,
   DemoFormSimpleRoute: DemoFormSimpleRoute,
   DemoStartApiRequestRoute: DemoStartApiRequestRoute,
@@ -576,12 +579,11 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-const rootServerRouteChildren: RootServerRouteChildren = {
-  ApiDemoNamesServerRoute: ApiDemoNamesServerRoute,
-  ApiDemoTqTodosServerRoute: ApiDemoTqTodosServerRoute,
-  ApiSendServerRoute: ApiSendServerRoute,
-  ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
 }
-export const serverRouteTree = rootServerRouteImport
-  ._addFileChildren(rootServerRouteChildren)
-  ._addFileTypes<FileServerRouteTypes>()

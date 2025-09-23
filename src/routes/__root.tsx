@@ -44,7 +44,10 @@ export const Route = createRootRouteWithContext<{
 			}),
 		],
 		links: [
-			{ rel: 'stylesheet', href: appCss },
+			{
+				rel: 'stylesheet',
+				href: appCss,
+			},
 			{
 				rel: 'apple-touch-icon',
 				sizes: '180x180',
@@ -86,7 +89,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<ThemeProvider>
 					<Header />
 					{children}
-					<Scripts />
 					<Toaster closeButton richColors theme="system" />
 					<TanStackDevtools
 						plugins={[
@@ -98,9 +100,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 								name: 'TanStack Router',
 								render: <TanStackRouterDevtoolsPanel />,
 							},
+							FormDevtoolsPlugin(),
 						]}
 					/>
 				</ThemeProvider>
+				<Scripts />
 			</body>
 		</html>
 	);

@@ -16,8 +16,10 @@ const getTodos = createServerFn({
 	}>;
 });
 
-const insertTodo = createServerFn()
-	.validator((d: { title: string }) => d)
+const insertTodo = createServerFn({
+	method: 'POST',
+})
+	.inputValidator((d: { title: string }) => d)
 	.handler(async ({ data }) => {
 		const client = await getClient();
 		if (!client) {
@@ -52,54 +54,54 @@ function App() {
 
 	return (
 		<div
-			className="flex min-h-screen items-center justify-center bg-gradient-to-br from-purple-100 to-blue-100 p-4 text-white"
+			className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-4 text-white"
 			style={{
 				backgroundImage:
 					'radial-gradient(circle at 5% 40%, #63F655 0%, #00E0D9 40%, #1a0f0a 100%)',
 			}}
 		>
-			<div className="w-full max-w-2xl rounded-xl border-8 border-black/10 bg-black/50 p-8 shadow-xl backdrop-blur-md">
-				<div className="mb-8 flex items-center justify-center gap-4 rounded-lg bg-black/30 p-4">
+			<div className="w-full max-w-2xl p-8 rounded-xl backdrop-blur-md bg-black/50 shadow-xl border-8 border-black/10">
+				<div className="flex items-center justify-center gap-4 mb-8 bg-black/30 p-4 rounded-lg">
 					<div className="relative">
-						<div className="-inset-1 absolute rounded-lg bg-gradient-to-r from-emerald-400 to-cyan-400 opacity-75 blur transition duration-1000 group-hover:opacity-100" />
+						<div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000" />
 						<div className="relative">
 							<img
 								alt="Neon Logo"
-								className="h-12 w-12 transform transition-transform duration-200 hover:scale-110"
+								className="w-12 h-12 transform hover:scale-110 transition-transform duration-200"
 								src="/demo-neon.svg"
 							/>
 						</div>
 					</div>
-					<h1 className="bg-gradient-to-r from-emerald-200 to-cyan-200 bg-clip-text font-bold text-3xl text-transparent">
+					<h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-200 to-cyan-200 text-transparent bg-clip-text">
 						Neon Database Demo
 					</h1>
 				</div>
 				{todos && (
 					<>
-						<h1 className="mb-4 font-bold text-2xl">Todos</h1>
-						<ul className="mb-6 space-y-3">
+						<h1 className="text-2xl font-bold mb-4">Todos</h1>
+						<ul className="space-y-3 mb-6">
 							{todos.map((todo: { id: number; title: string }) => (
 								<li
-									className="group cursor-pointer rounded-lg border border-white/20 bg-white/10 p-4 shadow-sm backdrop-blur-sm transition-all hover:scale-[1.02] hover:bg-white/20"
+									className="bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-sm border border-white/20 transition-all hover:bg-white/20 hover:scale-[1.02] cursor-pointer group"
 									key={todo.id}
 								>
 									<div className="flex items-center justify-between">
-										<span className="font-medium text-lg group-hover:text-white/90">
+										<span className="text-lg font-medium group-hover:text-white/90">
 											{todo.title}
 										</span>
-										<span className="text-white/50 text-xs">#{todo.id}</span>
+										<span className="text-xs text-white/50">#{todo.id}</span>
 									</div>
 								</li>
 							))}
 						</ul>
 						<form className="mt-4 flex gap-2" onSubmit={handleSubmit}>
 							<input
-								className="w-full rounded-md border border-gray-300 bg-black/20 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#00E0D9]"
+								className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#00E0D9] bg-black/20"
 								name="title"
 								type="text"
 							/>
 							<button
-								className="whitespace-nowrap rounded-md bg-[#00E0D9] px-6 py-2 font-medium text-black transition-colors hover:bg-[#00E0D9]/80 focus:outline-none focus:ring-2 focus:ring-[#00E0D9] focus:ring-offset-2 disabled:opacity-50"
+								className="px-6 py-2 bg-[#00E0D9] text-black font-medium rounded-md hover:bg-[#00E0D9]/80 focus:outline-none focus:ring-2 focus:ring-[#00E0D9] focus:ring-offset-2 transition-colors disabled:opacity-50 whitespace-nowrap"
 								type="submit"
 							>
 								Add Todo
@@ -114,10 +116,10 @@ function App() {
 
 function DBConnectionError() {
 	return (
-		<div className="space-y-6 text-center">
-			<div className="mb-4 flex items-center justify-center">
+		<div className="text-center space-y-6">
+			<div className="flex items-center justify-center mb-4">
 				<svg
-					className="h-12 w-12 text-amber-500"
+					className="w-12 h-12 text-amber-500"
 					fill="none"
 					stroke="currentColor"
 					viewBox="0 0 24 24"
@@ -131,28 +133,28 @@ function DBConnectionError() {
 					/>
 				</svg>
 			</div>
-			<h2 className="mb-4 font-bold text-2xl">Database Connection Issue</h2>
-			<div className="mb-6 text-lg">The Neon database is not connected.</div>
-			<div className="mx-auto max-w-xl rounded-lg bg-black/30 p-6">
-				<h3 className="mb-4 font-semibold text-lg">Required Steps to Fix:</h3>
-				<ul className="list-none space-y-4 text-left">
+			<h2 className="text-2xl font-bold mb-4">Database Connection Issue</h2>
+			<div className="text-lg mb-6">The Neon database is not connected.</div>
+			<div className="bg-black/30 p-6 rounded-lg max-w-xl mx-auto">
+				<h3 className="text-lg font-semibold mb-4">Required Steps to Fix:</h3>
+				<ul className="space-y-4 text-left list-none">
 					<li className="flex items-start">
-						<span className="mr-3 inline-flex h-8 min-h-8 w-8 min-w-8 items-center justify-center rounded-full bg-amber-500 font-bold text-black">
+						<span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-amber-500 text-black font-bold mr-3 min-w-8 min-h-8">
 							1
 						</span>
 						<div>
 							Use the{' '}
-							<code className="rounded bg-black/30 px-2 py-1">db/init.sql</code>{' '}
+							<code className="bg-black/30 px-2 py-1 rounded">db/init.sql</code>{' '}
 							file to create the database
 						</div>
 					</li>
 					<li className="flex items-start">
-						<span className="mr-3 inline-flex h-8 min-h-8 w-8 min-w-8 items-center justify-center rounded-full bg-amber-500 font-bold text-black">
+						<span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-amber-500 text-black font-bold mr-3 min-w-8 min-h-8">
 							2
 						</span>
 						<div>
 							Set the{' '}
-							<code className="rounded bg-black/30 px-2 py-1">
+							<code className="bg-black/30 px-2 py-1 rounded">
 								DATABASE_URL
 							</code>{' '}
 							environment variable to the connection string of your Neon

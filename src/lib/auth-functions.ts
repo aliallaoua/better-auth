@@ -1,5 +1,5 @@
 import { createServerFn } from '@tanstack/react-start';
-import { getWebRequest } from '@tanstack/react-start/server';
+import { getRequest } from '@tanstack/react-start/server';
 import { authClient } from '@/lib/auth-client';
 import type { SignInSchema, SignUpSchema } from '@/schema';
 import { auth } from './auth';
@@ -46,16 +46,16 @@ export const signInWithGoogle = async () => {
 	});
 };
 
-export const getUserSession = createServerFn({ method: 'GET' }).handler(
-	async () => {
-		const request = getWebRequest();
+export const getUserSession = createServerFn({
+	method: 'GET',
+}).handler(async () => {
+	const request = getRequest();
 
-		if (!request.headers) {
-			return null;
-		}
-
-		const userSession = await auth.api.getSession({ headers: request.headers });
-
-		return userSession;
+	if (!request.headers) {
+		return null;
 	}
-);
+
+	const userSession = await auth.api.getSession({ headers: request.headers });
+
+	return userSession;
+});

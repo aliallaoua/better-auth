@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTheme } from './theme-provider';
+import { Button } from './ui/button';
 
 const themes = [
 	{
@@ -39,7 +40,7 @@ export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
 				const isActiveTheme = appTheme === theme;
 
 				return (
-					<button
+					<Button
 						aria-label={label}
 						className="relative size-6 cursor-pointer rounded-full"
 						key={theme}
@@ -62,7 +63,7 @@ export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
 								isActiveTheme ? 'text-foreground' : 'text-muted-foreground'
 							)}
 						/>
-					</button>
+					</Button>
 				);
 			})}
 		</div>

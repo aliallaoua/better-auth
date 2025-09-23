@@ -1,5 +1,5 @@
 import { ScriptOnce } from '@tanstack/react-router';
-import { clientOnly, createIsomorphicFn } from '@tanstack/react-start';
+import { createClientOnlyFn, createIsomorphicFn } from '@tanstack/react-start';
 import { createContext, type ReactNode, use, useEffect, useState } from 'react';
 import { z } from 'zod';
 
@@ -18,20 +18,21 @@ const getStoredUserTheme = createIsomorphicFn()
 		return UserThemeSchema.parse(stored);
 	});
 
-const setStoredTheme = clientOnly((theme: UserTheme) => {
+const setStoredTheme = createClientOnlyFn((theme: UserTheme) => {
 	const validatedTheme = UserThemeSchema.parse(theme);
 	localStorage.setItem(themeStorageKey, validatedTheme);
 });
 
 const getSystemTheme = createIsomorphicFn()
 	.server((): AppTheme => 'light')
-	.client((): AppTheme => {
-		return window.matchMedia('(prefers-color-scheme: dark)').matches
-			? 'dark'
-			: 'light';
-	});
+	.client(
+		(): AppTheme =>
+			window.matchMedia('(prefers-color-scheme: dark)').matches
+				? 'dark'
+				: 'light'
+	);
 
-const handleThemeChange = clientOnly((userTheme: UserTheme) => {
+const handleThemeChange = createClientOnlyFn((userTheme: UserTheme) => {
 	const validatedTheme = UserThemeSchema.parse(userTheme);
 
 	const root = document.documentElement;
@@ -45,7 +46,7 @@ const handleThemeChange = clientOnly((userTheme: UserTheme) => {
 	}
 });
 
-const setupPreferredListener = clientOnly(() => {
+const setupPreferredListener = createClientOnlyFn(() => {
 	const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 	const handler = () => handleThemeChange('system');
 	mediaQuery.addEventListener('change', handler);
