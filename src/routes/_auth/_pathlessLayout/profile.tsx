@@ -21,11 +21,22 @@ const getProfileData = createServerFn()
 					auth.api.getFullOrganization({ headers }),
 				]);
 
+			// return {
+			// 	session,
+			// 	activeSessions,
+			// 	deviceSessions,
+			// 	organization,
+			// };
 			return {
-				session,
-				activeSessions,
-				deviceSessions,
-				organization,
+				session: session
+					? {
+							user: session.user,
+							session: session.session,
+						}
+					: null,
+				activeSessions: activeSessions || [],
+				deviceSessions: deviceSessions || [],
+				organization: organization || null,
 			};
 		} catch (e) {
 			console.log(e);
@@ -53,24 +64,24 @@ function ProfilePage() {
 		Route.useLoaderData();
 
 	return (
-		// <div className="absolute inset-0 hidden items-start justify-center bg-white pt-16 md:flex dark:bg-black">
-		<div className="w-full pt-2 lg:w-7/12">
-			<div className="w-full">
-				<div className="flex flex-col gap-4">
-					<AccountSwitcher
-						sessions={JSON.parse(JSON.stringify(deviceSessions))}
-					/>
-					<UserCard
-						activeSessions={JSON.parse(JSON.stringify(activeSessions))}
-						session={JSON.parse(JSON.stringify(session))}
-					/>
-					<OrganizationCard
-						activeOrganization={JSON.parse(JSON.stringify(organization))}
-						session={JSON.parse(JSON.stringify(session))}
-					/>
+		<div className="absolute inset-0 hidden items-start justify-center bg-white pt-16 md:flex dark:bg-black">
+			<div className="w-full pt-2 lg:w-7/12">
+				<div className="w-full">
+					<div className="flex flex-col gap-4">
+						<AccountSwitcher
+							sessions={JSON.parse(JSON.stringify(deviceSessions))}
+						/>
+						<UserCard
+							activeSessions={JSON.parse(JSON.stringify(activeSessions))}
+							session={JSON.parse(JSON.stringify(session))}
+						/>
+						<OrganizationCard
+							activeOrganization={JSON.parse(JSON.stringify(organization))}
+							session={JSON.parse(JSON.stringify(session))}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>
-		// </div>
 	);
 }

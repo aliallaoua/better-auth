@@ -137,7 +137,7 @@ function AdminDashboard() {
 				});
 				// queryClient.invalidateQueries({
 				// 	queryKey: ['users'],
-				// });
+				// })
 			} catch (error: any) {
 				toast.error(error.message || 'Failed to create user');
 			} finally {
@@ -328,7 +328,7 @@ function AdminDashboard() {
 	);
 
 	return (
-		<div className="container mx-auto space-y-6 p-4">
+		<div className="container mx-auto space-y-6 px-4 pb-4 pt-15">
 			<Toaster position="top-right" richColors />
 
 			{/* Header with Stats */}

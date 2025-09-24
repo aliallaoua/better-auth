@@ -173,6 +173,35 @@ export const auth = betterAuth({
 
 	// To set active organization when a session is created you can use database hooks.
 	databaseHooks: {
+		user: {
+			// create: {
+			// 	before: async (user, ctx) => {
+			// 		// Modify the user object before it is created
+			// 		return {
+			// 			data: {
+			// 				...user,
+			// 				firstName: user.name.split(' ')[0],
+			// 				lastName: user.name.split(' ')[1],
+			// 			},
+			// 		};
+			// 	},
+			// 	after: async (user) => {
+			// 		//perform additional actions, like creating a stripe customer
+			// 	},
+			// },
+			// delete: {
+			// 	before: async (user, ctx) => {
+			// 		console.log(`User ${user.email} is being deleted`);
+			// 		if (user.email.includes('admin')) {
+			// 			return false; // Abort deletion
+			// 		}
+			// 		return true; // Allow deletion
+			// 	},
+			// 	after: async (user) => {
+			// 		console.log(`User ${user.email} has been deleted`);
+			// 	},
+			// },
+		},
 		session: {
 			create: {
 				before: async (session) => {

@@ -86,7 +86,7 @@ function InvitationPage() {
 	}, []);
 	return (
 		<div className="flex min-h-[80vh] items-center justify-center">
-			<div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black" />
+			<div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white mask-[radial-gradient(ellipse_at_center,transparent_20%,black)]" />
 			{invitation ? (
 				<Card className="w-full max-w-md">
 					<CardHeader>

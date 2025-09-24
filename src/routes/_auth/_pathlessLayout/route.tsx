@@ -28,7 +28,7 @@ function PathlessLayoutComponent() {
 				} as React.CSSProperties
 			}
 		>
-			<AppSidebar user={user} variant="inset" />
+			<AppSidebar className="pt-15" user={user} variant="inset" />
 			<Outlet />
 		</SidebarProvider>
 	);

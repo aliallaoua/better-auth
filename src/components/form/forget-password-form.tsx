@@ -86,58 +86,60 @@ export function ForgetPasswordForm() {
 	}
 
 	return (
-		<Card className="w-[350px]">
-			<CardHeader>
-				<CardTitle>Forgot password</CardTitle>
-				<CardDescription>
-					Enter your email to reset your password
-				</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<form
-					className="flex flex-col gap-4"
-					onSubmit={(e) => {
-						e.preventDefault();
-						e.stopPropagation();
-						form.handleSubmit();
-					}}
-				>
-					<div className="grid gap-6">
-						<div className="flex flex-col gap-6">
-							<div className="grid gap-3">
-								<form.AppField
-									children={(field) => (
-										<field.TextField
-											autoComplete="email"
-											label="Email"
-											placeholder="Enter your email"
-											required
-											type="email"
-										/>
-									)}
-									name="email"
-								/>
+		<main className="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)]">
+			<div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white mask-[radial-gradient(ellipse_at_center,transparent_20%,black)]" />
+			<Card className="w-[350px]">
+				<CardHeader>
+					<CardTitle>Forgot password</CardTitle>
+					<CardDescription>
+						Enter your email to reset your password
+					</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<form
+						className="flex flex-col gap-4"
+						onSubmit={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
+							form.handleSubmit();
+						}}
+					>
+						<div className="grid gap-6">
+							<div className="flex flex-col gap-6">
+								<div className="grid gap-3">
+									<form.AppField
+										children={(field) => (
+											<field.TextField
+												autoComplete="email"
+												label="Email"
+												placeholder="Enter your email"
+												required
+												type="email"
+											/>
+										)}
+										name="email"
+									/>
+								</div>
+
+								<div className="flex flex-col gap-3">
+									<form.AppForm>
+										<form.SubscribeButton label="Send reset link" />
+									</form.AppForm>
+								</div>
 							</div>
 
-							<div className="flex flex-col gap-3">
-								<form.AppForm>
-									<form.SubscribeButton label="Send reset link" />
-								</form.AppForm>
+							<div className="text-center text-sm">
+								<Link
+									className="hover:underline hover:underline-offset-4"
+									to="/signin"
+								>
+									Back to sign in
+								</Link>
 							</div>
 						</div>
 
-						<div className="text-center text-sm">
-							<Link
-								className="hover:underline hover:underline-offset-4"
-								to="/signin"
-							>
-								Back to sign in
-							</Link>
-						</div>
-					</div>
-
-					{/* Display form-level errors */}
-					{/* <form.Subscribe
+						{/* Display form-level errors */}
+						{/* <form.Subscribe
 						children={([errorMap]) =>
 							errorMap.onSubmit ? (
 								<Alert className="mt-4" variant="destructive">
@@ -150,8 +152,9 @@ export function ForgetPasswordForm() {
 						}
 						selector={(state) => [state.errorMap]}
 					/> */}
-				</form>
-			</CardContent>
-		</Card>
+					</form>
+				</CardContent>
+			</Card>
+		</main>
 	);
 }
