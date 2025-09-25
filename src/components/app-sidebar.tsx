@@ -15,7 +15,6 @@ import {
 	IconSettings,
 	IconUsers,
 } from '@tabler/icons-react';
-import { Link } from '@tanstack/react-router';
 import type * as React from 'react';
 import { NavDocuments } from '@/components/nav-documents';
 import { NavMain } from '@/components/nav-main';
@@ -40,7 +39,7 @@ const data = {
 	navMain: [
 		{
 			title: 'Dashboard',
-			url: '/admin',
+			url: '/dashboard',
 			icon: IconDashboard,
 		},
 		{
@@ -50,7 +49,7 @@ const data = {
 		},
 		{
 			title: 'Analytics',
-			url: '#',
+			url: '/admin',
 			icon: IconChartBar,
 		},
 		{
@@ -170,10 +169,10 @@ export function AppSidebar({
 							asChild
 							className="data-[slot=sidebar-menu-button]:!p-1.5"
 						>
-							<Link to={'/dashboard'}>
+							<a href="#">
 								<IconInnerShadowTop className="!size-5" />
 								<span className="font-semibold text-base">Acme Inc.</span>
-							</Link>
+							</a>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 				</SidebarMenu>

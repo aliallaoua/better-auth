@@ -1,5 +1,5 @@
 import { type Icon, IconCirclePlusFilled, IconMail } from '@tabler/icons-react';
-import { Link } from '@tanstack/react-router';
+import { createLink, Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import {
 	SidebarGroup,
@@ -44,7 +44,10 @@ export function NavMain({
 					{items.map((item) => (
 						<SidebarMenuItem key={item.title}>
 							<Link to={item.url}>
-								<SidebarMenuButton tooltip={item.title}>
+								<SidebarMenuButton
+									className="cursor-pointer"
+									tooltip={item.title}
+								>
 									{item.icon && <item.icon />}
 									<span>{item.title}</span>
 								</SidebarMenuButton>

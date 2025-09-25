@@ -8,6 +8,8 @@ import {
 	type UserActionHandlers,
 } from '@/components/admin/columns';
 import { DataTable, DataTableSkeleton } from '@/components/admin/data-table';
+import { StatCard } from '@/components/admin/stats-card';
+import { UserManagementCard } from '@/components/admin/user-management-card';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -69,6 +71,7 @@ function AdminDashboard() {
 	const [isLoading, setIsLoading] = useState<string | undefined>();
 	const [isBanDialogOpen, setIsBanDialogOpen] = useState(false);
 	const [selectedUserId, setSelectedUserId] = useState<string>('');
+	const [rowSelection, setRowSelection] = useState({});
 
 	// const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -91,7 +94,7 @@ function AdminDashboard() {
 	// 	},
 	// });
 
-	const { data: users = [], isPending: isUsersLoading } = useListUsersQuery();
+	const { data: users = [], isPending } = useListUsersQuery();
 
 	// const { data: users = [] } = useSuspenseQuery(listUsersQueryOptions());
 
@@ -415,14 +418,19 @@ function AdminDashboard() {
 								<div>
 									<createUserForm.AppField name="role">
 										{(field) => (
-											<field.SelectField
-												label="Role"
-												placeholder="Select a role"
-												values={[
-													{ label: 'Admin', value: 'admin' },
-													{ label: 'User', value: 'user' },
-												]}
-											/>
+											<>
+												<Label className="pb-2" htmlFor={field.name}>
+													Role
+												</Label>
+												<field.SelectField
+													label="Role"
+													placeholder="Select a role"
+													values={[
+														{ label: 'Admin', value: 'admin' },
+														{ label: 'User', value: 'user' },
+													]}
+												/>
+											</>
 										)}
 									</createUserForm.AppField>
 								</div>
@@ -443,7 +451,7 @@ function AdminDashboard() {
 			</div>
 
 			{/* Stats Cards */}
-			<div className="grid gap-4 md:grid-cols-4">
+			{/* <div className="grid gap-4 md:grid-cols-4">
 				<Card className="hover:shadow-stat-card/25 h-full w-full transition-all hover:shadow-lg">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Total Users</CardTitle>
@@ -456,9 +464,7 @@ function AdminDashboard() {
 				<Card className="hover:shadow-stat-card/25 h-full w-full transition-all hover:shadow-lg">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Admins</CardTitle>
-						{/* <Badge className="text-xs" variant="default"> */}
 						<Shield className="text-xs">Admin</Shield>
-						{/* </Badge> */}
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">{userStats.admins}</div>
@@ -478,32 +484,23 @@ function AdminDashboard() {
 				<Card className="hover:shadow-stat-card/25 h-full w-full transition-all hover:shadow-lg">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Banned</CardTitle>
-						{/* <Badge className="text-xs" variant="destructive"> */}
-						<Ban className="text-xs text-red-600">
-							Banned
-							{/* </Badge> */}
-						</Ban>
+						<Ban className="text-xs text-red-600">Banned</Ban>
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">{userStats.banned}</div>
 					</CardContent>
 				</Card>
-			</div>
+			</div> */}
+
+			<StatCard userStats={userStats} />
 
 			{/* Data Table */}
-			<Card>
+			{/* <Card>
 				<CardHeader>
 					<CardTitle>User Management</CardTitle>
 				</CardHeader>
 				<CardContent>
-					{/* <Suspense fallback={<DataTableSkeleton />}>
-						<DataTable
-							columns={columns}
-							data={users}
-							onExportData={handleExportData}
-						/>
-					</Suspense> */}
-					{isUsersLoading ? (
+					{isPending ? (
 						<DataTableSkeleton />
 					) : (
 						<DataTable
@@ -513,7 +510,22 @@ function AdminDashboard() {
 						/>
 					)}
 				</CardContent>
-			</Card>
+			</Card> */}
+			<UserManagementCard
+				filteredUsers={users?.length || 0}
+				selectedUsers={Object.keys(rowSelection).length}
+				totalUsers={userStats.total}
+			>
+				{isPending ? (
+					<DataTableSkeleton />
+				) : (
+					<DataTable
+						columns={columns}
+						data={users}
+						onExportData={handleExportData}
+					/>
+				)}
+			</UserManagementCard>
 
 			{/* Ban User Dialog */}
 			<Dialog onOpenChange={setIsBanDialogOpen} open={isBanDialogOpen}>

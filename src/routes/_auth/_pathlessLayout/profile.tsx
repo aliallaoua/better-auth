@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
-import { getRequest } from '@tanstack/react-start/server';
+import { getRequestHeaders } from '@tanstack/react-start/server';
 import AccountSwitcher from '@/components/account-switch';
 import { OrganizationCard } from '@/components/dashboard/organization-card';
 import UserCard from '@/components/dashboard/user-card';
@@ -10,15 +10,13 @@ import { userMiddleware } from '@/lib/auth-middleware';
 const getProfileData = createServerFn()
 	.middleware([userMiddleware])
 	.handler(async () => {
-		const { headers } = getRequest();
-
 		try {
 			const [session, activeSessions, deviceSessions, organization] =
 				await Promise.all([
-					auth.api.getSession({ headers }),
-					auth.api.listSessions({ headers }),
-					auth.api.listDeviceSessions({ headers }),
-					auth.api.getFullOrganization({ headers }),
+					auth.api.getSession({ headers: getRequestHeaders() }),
+					auth.api.listSessions({ headers: getRequestHeaders() }),
+					auth.api.listDeviceSessions({ headers: getRequestHeaders() }),
+					auth.api.getFullOrganization({ headers: getRequestHeaders() }),
 				]);
 
 			// return {
