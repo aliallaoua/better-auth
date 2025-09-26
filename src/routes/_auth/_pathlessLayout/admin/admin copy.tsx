@@ -42,7 +42,7 @@ import { useAppForm } from '@/hooks/form';
 import { authClient } from '@/lib/auth-client';
 import { BanUserSchema, CreateUserSchema } from '@/schema';
 
-export const Route = createFileRoute('/_auth/_pathlessLayout/admin copy')({
+export const Route = createFileRoute('/_auth/_pathlessLayout/admin/admin copy')({
 	component: AdminDashboard,
 });
 
@@ -89,7 +89,7 @@ function UserTableSkeleton() {
 				</Table>
 			</div>
 		</div>
-	);
+	)
 }
 
 function AdminDashboard() {
@@ -114,7 +114,7 @@ function AdminDashboard() {
 				{
 					throw: true,
 				}
-			);
+			)
 			return data?.users || [];
 		},
 	});
@@ -137,13 +137,13 @@ function AdminDashboard() {
 					password: value.password,
 					name: value.name,
 					role: value.role,
-				});
+				})
 				toast.success('User created successfully');
 				createUserForm.reset();
 				setIsDialogOpen(false);
 				queryClient.invalidateQueries({
 					queryKey: ['users'],
-				});
+				})
 			} catch (error: any) {
 				toast.error(error.message || 'Failed to create user');
 			} finally {
@@ -170,12 +170,12 @@ function AdminDashboard() {
 					userId: selectedUserId,
 					banReason: value.reason,
 					banExpiresIn: value.expirationDate.getTime() - Date.now(),
-				});
+				})
 				toast.success('User banned successfully');
 				setIsBanDialogOpen(false);
 				queryClient.invalidateQueries({
 					queryKey: ['users'],
-				});
+				})
 			} catch (error: any) {
 				toast.error(error.message || 'Failed to ban user');
 			} finally {
@@ -191,13 +191,13 @@ function AdminDashboard() {
 			toast.success('User deleted successfully');
 			queryClient.invalidateQueries({
 				queryKey: ['users'],
-			});
+			})
 		} catch (error: any) {
 			toast.error(error.message || 'Failed to delete user');
 		} finally {
 			setIsLoading(undefined);
 		}
-	};
+	}
 
 	const handleRevokeSessions = async (id: string) => {
 		setIsLoading(`revoke-${id}`);
@@ -209,7 +209,7 @@ function AdminDashboard() {
 		} finally {
 			setIsLoading(undefined);
 		}
-	};
+	}
 
 	const handleImpersonateUser = async (id: string) => {
 		setIsLoading(`impersonate-${id}`);
@@ -222,13 +222,13 @@ function AdminDashboard() {
 		} finally {
 			setIsLoading(undefined);
 		}
-	};
+	}
 
 	const handleBanClick = (userId: string) => {
 		setSelectedUserId(userId);
 		banUserForm.reset();
 		setIsBanDialogOpen(true);
-	};
+	}
 
 	const handleUnbanUser = async (userId: string) => {
 		setIsLoading(`ban-${userId}`);
@@ -245,22 +245,22 @@ function AdminDashboard() {
 					onSuccess() {
 						queryClient.invalidateQueries({
 							queryKey: ['users'],
-						});
+						})
 						toast.success('User unbanned successfully');
 						setIsLoading(undefined);
 					},
 				}
-			);
+			)
 		} catch (error: any) {
 			toast.error(error.message || 'Failed to unban user');
 			setIsLoading(undefined);
 		}
-	};
+	}
 
 	return (
-		<div className="container mx-auto space-y-8 p-4">
-			<Toaster richColors />
-			<Card>
+        <div className="container mx-auto space-y-8 p-4">
+            <Toaster richColors />
+            <Card>
 				<CardHeader className="flex flex-row items-center justify-between">
 					<CardTitle className="text-2xl">Admin Dashboard</CardTitle>
 					<Dialog onOpenChange={setIsDialogOpen} open={isDialogOpen}>
@@ -274,64 +274,64 @@ function AdminDashboard() {
 								<DialogTitle>Create New User</DialogTitle>
 							</DialogHeader>
 							<form
-								className="space-y-4"
+								className='space-y-4'
 								onSubmit={(e) => {
-									e.preventDefault();
-									e.stopPropagation();
+									e.preventDefault()
+									e.stopPropagation()
 									createUserForm.handleSubmit();
 								}}
 							>
 								<div>
 									<createUserForm.AppField
 										children={(field) => (
-											<div className="grid gap-2">
+											<div className='grid gap-2'>
 												<field.TextField
-													autoComplete="email"
-													label="Email"
+													autoComplete='email'
+													label='Email'
 													required
-													type="email"
+													type='email'
 												/>
 											</div>
 										)}
-										name="email"
+										name='email'
 									/>
 								</div>
 								<div>
 									<createUserForm.AppField
 										children={(field) => (
-											<div className="grid gap-2">
+											<div className='grid gap-2'>
 												<field.TextField
-													autoComplete="new-password"
-													label="Password"
+													autoComplete='new-password'
+													label='Password'
 													required
-													type="password"
+													type='password'
 													withPasswordToggle
 												/>
 											</div>
 										)}
-										name="password"
+										name='password'
 									/>
 								</div>
 								<div>
 									<createUserForm.AppField
 										children={(field) => (
-											<div className="grid gap-2">
+											<div className='grid gap-2'>
 												<field.TextField
-													autoComplete="name"
-													label="Name"
+													autoComplete='name'
+													label='Name'
 													required
 												/>
 											</div>
 										)}
-										name="name"
+										name='name'
 									/>
 								</div>
 								<div>
 									<createUserForm.AppField name="role">
 										{(field) => (
 											<field.SelectField
-												label="Role"
-												placeholder="Select a role"
+												label='Role'
+												placeholder='Select a role'
 												values={[
 													{ label: 'Admin', value: 'admin' },
 													{ label: 'User', value: 'user' },
@@ -343,11 +343,11 @@ function AdminDashboard() {
 
 								<createUserForm.AppForm>
 									<createUserForm.SubscribeButton
-										className="w-full"
+										className='w-full'
 										disabled={
 											isLoading === 'create' || !createUserForm.state.canSubmit
 										}
-										label="Create User"
+										label='Create User'
 									/>
 								</createUserForm.AppForm>
 							</form>
@@ -359,43 +359,43 @@ function AdminDashboard() {
 								<DialogTitle>Ban User</DialogTitle>
 							</DialogHeader>
 							<form
-								className="space-y-4"
+								className='space-y-4'
 								onSubmit={(e) => {
-									e.preventDefault();
-									e.stopPropagation();
+									e.preventDefault()
+									e.stopPropagation()
 									banUserForm.handleSubmit();
 								}}
 							>
 								<div>
 									<banUserForm.AppField
 										children={(field) => (
-											<div className="grid gap-2">
+											<div className='grid gap-2'>
 												<field.TextField label="Reason" required />
 											</div>
 										)}
-										name="reason"
+										name='reason'
 									/>
 								</div>
 								<div className="flex flex-col space-y-1.5">
 									<banUserForm.AppField
 										children={(field) => (
-											<div className="grid gap-2">
+											<div className='grid gap-2'>
 												<Label htmlFor={field.name}>Expiration Date</Label>
 												<field.DateField />
 											</div>
 										)}
-										name="expirationDate"
+										name='expirationDate'
 									/>
 								</div>
 
 								<createUserForm.AppForm>
 									<createUserForm.SubscribeButton
-										className="w-full"
+										className='w-full'
 										disabled={
 											isLoading === `ban-${selectedUserId}` ||
 											!banUserForm.state.canSubmit
 										}
-										label="Ban User"
+										label='Ban User'
 									/>
 								</createUserForm.AppForm>
 							</form>
@@ -407,7 +407,7 @@ function AdminDashboard() {
 						// <div className="flex h-64 items-center justify-center">
 						// 	<Loader2 className="size-8 animate-spin" />
 						// </div>
-						<UserTableSkeleton />
+						(<UserTableSkeleton />)
 					) : (
 						<Table>
 							<TableHeader>
@@ -429,18 +429,18 @@ function AdminDashboard() {
 											<Select
 												disabled={isLoading === `role-${user.id}`}
 												onValueChange={async (value) => {
-													setIsLoading('role-${user.id}');
+													setIsLoading('role-${user.id}')
 													try {
 														const { data, error } =
 															await authClient.admin.setRole({
 																userId: user.id,
 																role: value as 'admin' | 'user',
-															});
+															})
 
 														if (error) {
 															throw new Error(
 																error.message || 'Failed to update user role'
-															);
+															)
 														}
 
 														toast.success('User role updated successfully');
@@ -448,18 +448,18 @@ function AdminDashboard() {
 														// Invalidate the users query to refresh the UI
 														queryClient.invalidateQueries({
 															queryKey: ['users'],
-														});
+														})
 													} catch (error: any) {
 														toast.error(
 															error.message || 'Failed to update user role'
-														);
+														)
 													} finally {
-														setIsLoading(undefined);
+														setIsLoading(undefined)
 													}
 												}}
 												value={user.role}
 											>
-												<SelectTrigger className="w-full">
+												<SelectTrigger className='w-full'>
 													<SelectValue placeholder="Select a role" />
 													{isLoading === 'role-${user.id}' && (
 														<Loader2 className="ml-2 size-4 animate-spin" />
@@ -478,24 +478,24 @@ function AdminDashboard() {
 											{user.banned ? (
 												<Badge variant="destructive">Yes</Badge>
 											) : (
-												<Badge variant="outline">No</Badge>
+												<Badge variant='outline'>No</Badge>
 											)}
 										</TableCell>
 										<TableCell>
-											<div className="flex space-x-2">
+											<div className='flex space-x-2'>
 												<Tooltip>
 													<TooltipTrigger asChild>
 														<Button
-															className="cursor-pointer"
+															className='cursor-pointer'
 															disabled={isLoading?.startsWith('delete')}
 															onClick={() => handleDeleteUser(user.id)}
-															size="sm"
-															variant="destructive"
+															size='sm'
+															variant='destructive'
 														>
 															{isLoading === 'delete-${user.id}' ? (
-																<Loader2 className="size-4 animate-spin" />
+																<Loader2 className='size-4 animate-spin' />
 															) : (
-																<Trash className="size-4" />
+																<Trash className='size-4' />
 															)}
 														</Button>
 													</TooltipTrigger>
@@ -507,16 +507,16 @@ function AdminDashboard() {
 												<Tooltip>
 													<TooltipTrigger asChild>
 														<Button
-															className="cursor-pointer"
+															className='cursor-pointer'
 															disabled={isLoading?.startsWith('revoke')}
 															onClick={() => handleRevokeSessions(user.id)}
-															size="sm"
-															variant="outline"
+															size='sm'
+															variant='outline'
 														>
 															{isLoading === 'revoke-${user.id}' ? (
-																<Loader2 className="size-4 animate-spin" />
+																<Loader2 className='size-4 animate-spin' />
 															) : (
-																<RefreshCw className="size-4" />
+																<RefreshCw className='size-4' />
 															)}
 														</Button>
 													</TooltipTrigger>
@@ -526,33 +526,33 @@ function AdminDashboard() {
 												</Tooltip>
 
 												<Button
-													className="cursor-pointer"
+													className='cursor-pointer'
 													disabled={isLoading?.startsWith('impersonate')}
 													onClick={() => handleImpersonateUser(user.id)}
-													size="sm"
-													variant="secondary"
+													size='sm'
+													variant='secondary'
 												>
 													{isLoading === `impersonate-${user.id}` ? (
 														<Loader2 className="size-4 animate-spin" />
 													) : (
 														<>
-															<UserCircle className="mr-2 size-4" />
+															<UserCircle className='mr-2 size-4' />
 															Impersonate
 														</>
 													)}
 												</Button>
 												<Button
-													className="cursor-pointer"
+													className='cursor-pointer'
 													disabled={isLoading?.startsWith('ban')}
 													onClick={() => {
 														if (user.banned) {
-															handleUnbanUser(user.id);
+															handleUnbanUser(user.id)
 														} else {
-															handleBanClick(user.id);
+															handleBanClick(user.id)
 														}
 													}}
-													size="sm"
-													variant="outline"
+													size='sm'
+													variant='outline'
 												>
 													{isLoading === 'ban-${user.id}' ? (
 														<Loader2 className="size-4 animate-spin" />
@@ -571,6 +571,6 @@ function AdminDashboard() {
 					)}
 				</CardContent>
 			</Card>
-		</div>
-	);
+        </div>
+    )
 }

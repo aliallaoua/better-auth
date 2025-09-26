@@ -1,17 +1,9 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
-import { Badge, Ban, Download, Plus, Shield, Users } from 'lucide-react';
+import { Download, Plus } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Toaster, toast } from 'sonner';
-import {
-	createColumns,
-	type UserActionHandlers,
-} from '@/components/admin/columns';
-import { DataTable, DataTableSkeleton } from '@/components/admin/data-table';
-import { StatCard } from '@/components/admin/stats-card';
-import { UserManagementCard } from '@/components/admin/user-management-card';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
 	Dialog,
 	DialogContent,
@@ -23,6 +15,16 @@ import { Label } from '@/components/ui/label';
 import { useAppForm } from '@/hooks/form';
 import useListUsersQuery from '@/hooks/queries/useListUsersQuery';
 import { authClient } from '@/lib/auth-client';
+import {
+	createColumns,
+	type UserActionHandlers,
+} from '@/routes/_auth/_pathlessLayout/admin/-components/columns';
+import {
+	DataTable,
+	DataTableSkeleton,
+} from '@/routes/_auth/_pathlessLayout/admin/-components/data-table';
+import { StatCard } from '@/routes/_auth/_pathlessLayout/admin/-components/stats-card';
+import { UserManagementCard } from '@/routes/_auth/_pathlessLayout/admin/-components/user-management-card';
 import { BanUserSchema, CreateUserSchema } from '@/schema';
 
 // const fetchlistUsers = createServerFn({ method: 'GET' })
@@ -46,7 +48,7 @@ import { BanUserSchema, CreateUserSchema } from '@/schema';
 // 		queryFn: () => fetchlistUsers(),
 // 	});
 
-export const Route = createFileRoute('/_auth/_pathlessLayout/admin')({
+export const Route = createFileRoute('/_auth/_pathlessLayout/admin/')({
 	beforeLoad: ({ context, location }) => {
 		if (context.userSession?.user.role !== 'admin') {
 			throw redirect({

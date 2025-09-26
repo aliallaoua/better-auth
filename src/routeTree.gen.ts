@@ -26,9 +26,9 @@ import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthPathlessLayoutUnauthorizedRouteImport } from './routes/_auth/_pathlessLayout/unauthorized'
 import { Route as AuthPathlessLayoutProfileRouteImport } from './routes/_auth/_pathlessLayout/profile'
 import { Route as AuthPathlessLayoutDashboardRouteImport } from './routes/_auth/_pathlessLayout/dashboard'
-import { Route as AuthPathlessLayoutAdmincopyRouteImport } from './routes/_auth/_pathlessLayout/admin copy'
-import { Route as AuthPathlessLayoutAdminRouteImport } from './routes/_auth/_pathlessLayout/admin'
 import { Route as PostsPostIdCommentsIndexRouteImport } from './routes/posts.$postId.comments.index'
+import { Route as AuthPathlessLayoutAdminIndexRouteImport } from './routes/_auth/_pathlessLayout/admin/index'
+import { Route as AuthPathlessLayoutAdminAdmincopyRouteImport } from './routes/_auth/_pathlessLayout/admin/admin copy'
 import { Route as PostsPostIdCommentsCommentIdIndexRouteImport } from './routes/posts.$postId.comments.$commentId.index'
 
 const SignupRoute = SignupRouteImport.update({
@@ -117,22 +117,23 @@ const AuthPathlessLayoutDashboardRoute =
     path: '/dashboard',
     getParentRoute: () => AuthPathlessLayoutRouteRoute,
   } as any)
-const AuthPathlessLayoutAdmincopyRoute =
-  AuthPathlessLayoutAdmincopyRouteImport.update({
-    id: '/admin copy',
-    path: '/admin copy',
-    getParentRoute: () => AuthPathlessLayoutRouteRoute,
-  } as any)
-const AuthPathlessLayoutAdminRoute = AuthPathlessLayoutAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AuthPathlessLayoutRouteRoute,
-} as any)
 const PostsPostIdCommentsIndexRoute =
   PostsPostIdCommentsIndexRouteImport.update({
     id: '/$postId/comments/',
     path: '/$postId/comments/',
     getParentRoute: () => PostsRouteRoute,
+  } as any)
+const AuthPathlessLayoutAdminIndexRoute =
+  AuthPathlessLayoutAdminIndexRouteImport.update({
+    id: '/admin/',
+    path: '/admin/',
+    getParentRoute: () => AuthPathlessLayoutRouteRoute,
+  } as any)
+const AuthPathlessLayoutAdminAdmincopyRoute =
+  AuthPathlessLayoutAdminAdmincopyRouteImport.update({
+    id: '/admin/admin copy',
+    path: '/admin/admin copy',
+    getParentRoute: () => AuthPathlessLayoutRouteRoute,
   } as any)
 const PostsPostIdCommentsCommentIdIndexRoute =
   PostsPostIdCommentsCommentIdIndexRouteImport.update({
@@ -152,13 +153,13 @@ export interface FileRoutesByFullPath {
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
   '/posts/': typeof PostsIndexRoute
-  '/admin': typeof AuthPathlessLayoutAdminRoute
-  '/admin copy': typeof AuthPathlessLayoutAdmincopyRoute
   '/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/profile': typeof AuthPathlessLayoutProfileRoute
   '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/posts/$postId': typeof PostsPostIdIndexRoute
+  '/admin/admin copy': typeof AuthPathlessLayoutAdminAdmincopyRoute
+  '/admin': typeof AuthPathlessLayoutAdminIndexRoute
   '/posts/$postId/comments': typeof PostsPostIdCommentsIndexRoute
   '/posts/$postId/comments/$commentId': typeof PostsPostIdCommentsCommentIdIndexRoute
 }
@@ -172,13 +173,13 @@ export interface FileRoutesByTo {
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
   '/posts': typeof PostsIndexRoute
-  '/admin': typeof AuthPathlessLayoutAdminRoute
-  '/admin copy': typeof AuthPathlessLayoutAdmincopyRoute
   '/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/profile': typeof AuthPathlessLayoutProfileRoute
   '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/posts/$postId': typeof PostsPostIdIndexRoute
+  '/admin/admin copy': typeof AuthPathlessLayoutAdminAdmincopyRoute
+  '/admin': typeof AuthPathlessLayoutAdminIndexRoute
   '/posts/$postId/comments': typeof PostsPostIdCommentsIndexRoute
   '/posts/$postId/comments/$commentId': typeof PostsPostIdCommentsCommentIdIndexRoute
 }
@@ -196,13 +197,13 @@ export interface FileRoutesById {
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
   '/posts/': typeof PostsIndexRoute
-  '/_auth/_pathlessLayout/admin': typeof AuthPathlessLayoutAdminRoute
-  '/_auth/_pathlessLayout/admin copy': typeof AuthPathlessLayoutAdmincopyRoute
   '/_auth/_pathlessLayout/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/_auth/_pathlessLayout/profile': typeof AuthPathlessLayoutProfileRoute
   '/_auth/_pathlessLayout/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/posts/$postId/': typeof PostsPostIdIndexRoute
+  '/_auth/_pathlessLayout/admin/admin copy': typeof AuthPathlessLayoutAdminAdmincopyRoute
+  '/_auth/_pathlessLayout/admin/': typeof AuthPathlessLayoutAdminIndexRoute
   '/posts/$postId/comments/': typeof PostsPostIdCommentsIndexRoute
   '/posts/$postId/comments/$commentId/': typeof PostsPostIdCommentsCommentIdIndexRoute
 }
@@ -219,13 +220,13 @@ export interface FileRouteTypes {
     | '/accept-invitation/$id'
     | '/api/send'
     | '/posts/'
-    | '/admin'
-    | '/admin copy'
     | '/dashboard'
     | '/profile'
     | '/unauthorized'
     | '/api/auth/$'
     | '/posts/$postId'
+    | '/admin/admin copy'
+    | '/admin'
     | '/posts/$postId/comments'
     | '/posts/$postId/comments/$commentId'
   fileRoutesByTo: FileRoutesByTo
@@ -239,13 +240,13 @@ export interface FileRouteTypes {
     | '/accept-invitation/$id'
     | '/api/send'
     | '/posts'
-    | '/admin'
-    | '/admin copy'
     | '/dashboard'
     | '/profile'
     | '/unauthorized'
     | '/api/auth/$'
     | '/posts/$postId'
+    | '/admin/admin copy'
+    | '/admin'
     | '/posts/$postId/comments'
     | '/posts/$postId/comments/$commentId'
   id:
@@ -262,13 +263,13 @@ export interface FileRouteTypes {
     | '/accept-invitation/$id'
     | '/api/send'
     | '/posts/'
-    | '/_auth/_pathlessLayout/admin'
-    | '/_auth/_pathlessLayout/admin copy'
     | '/_auth/_pathlessLayout/dashboard'
     | '/_auth/_pathlessLayout/profile'
     | '/_auth/_pathlessLayout/unauthorized'
     | '/api/auth/$'
     | '/posts/$postId/'
+    | '/_auth/_pathlessLayout/admin/admin copy'
+    | '/_auth/_pathlessLayout/admin/'
     | '/posts/$postId/comments/'
     | '/posts/$postId/comments/$commentId/'
   fileRoutesById: FileRoutesById
@@ -408,26 +409,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthPathlessLayoutDashboardRouteImport
       parentRoute: typeof AuthPathlessLayoutRouteRoute
     }
-    '/_auth/_pathlessLayout/admin copy': {
-      id: '/_auth/_pathlessLayout/admin copy'
-      path: '/admin copy'
-      fullPath: '/admin copy'
-      preLoaderRoute: typeof AuthPathlessLayoutAdmincopyRouteImport
-      parentRoute: typeof AuthPathlessLayoutRouteRoute
-    }
-    '/_auth/_pathlessLayout/admin': {
-      id: '/_auth/_pathlessLayout/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthPathlessLayoutAdminRouteImport
-      parentRoute: typeof AuthPathlessLayoutRouteRoute
-    }
     '/posts/$postId/comments/': {
       id: '/posts/$postId/comments/'
       path: '/$postId/comments'
       fullPath: '/posts/$postId/comments'
       preLoaderRoute: typeof PostsPostIdCommentsIndexRouteImport
       parentRoute: typeof PostsRouteRoute
+    }
+    '/_auth/_pathlessLayout/admin/': {
+      id: '/_auth/_pathlessLayout/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthPathlessLayoutAdminIndexRouteImport
+      parentRoute: typeof AuthPathlessLayoutRouteRoute
+    }
+    '/_auth/_pathlessLayout/admin/admin copy': {
+      id: '/_auth/_pathlessLayout/admin/admin copy'
+      path: '/admin/admin copy'
+      fullPath: '/admin/admin copy'
+      preLoaderRoute: typeof AuthPathlessLayoutAdminAdmincopyRouteImport
+      parentRoute: typeof AuthPathlessLayoutRouteRoute
     }
     '/posts/$postId/comments/$commentId/': {
       id: '/posts/$postId/comments/$commentId/'
@@ -459,20 +460,21 @@ const PostsRouteRouteWithChildren = PostsRouteRoute._addFileChildren(
 )
 
 interface AuthPathlessLayoutRouteRouteChildren {
-  AuthPathlessLayoutAdminRoute: typeof AuthPathlessLayoutAdminRoute
-  AuthPathlessLayoutAdmincopyRoute: typeof AuthPathlessLayoutAdmincopyRoute
   AuthPathlessLayoutDashboardRoute: typeof AuthPathlessLayoutDashboardRoute
   AuthPathlessLayoutProfileRoute: typeof AuthPathlessLayoutProfileRoute
   AuthPathlessLayoutUnauthorizedRoute: typeof AuthPathlessLayoutUnauthorizedRoute
+  AuthPathlessLayoutAdminAdmincopyRoute: typeof AuthPathlessLayoutAdminAdmincopyRoute
+  AuthPathlessLayoutAdminIndexRoute: typeof AuthPathlessLayoutAdminIndexRoute
 }
 
 const AuthPathlessLayoutRouteRouteChildren: AuthPathlessLayoutRouteRouteChildren =
   {
-    AuthPathlessLayoutAdminRoute: AuthPathlessLayoutAdminRoute,
-    AuthPathlessLayoutAdmincopyRoute: AuthPathlessLayoutAdmincopyRoute,
     AuthPathlessLayoutDashboardRoute: AuthPathlessLayoutDashboardRoute,
     AuthPathlessLayoutProfileRoute: AuthPathlessLayoutProfileRoute,
     AuthPathlessLayoutUnauthorizedRoute: AuthPathlessLayoutUnauthorizedRoute,
+    AuthPathlessLayoutAdminAdmincopyRoute:
+      AuthPathlessLayoutAdminAdmincopyRoute,
+    AuthPathlessLayoutAdminIndexRoute: AuthPathlessLayoutAdminIndexRoute,
   }
 
 const AuthPathlessLayoutRouteRouteWithChildren =
