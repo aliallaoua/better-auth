@@ -12,6 +12,7 @@ import UserButton from './user-button';
 const menuItems = [
 	{ name: 'Home', to: '/' },
 	{ name: 'Better Auth - Resend', to: '/better-auth' },
+	{ name: 'Posts', to: '/posts' },
 ];
 
 export default function Header() {
@@ -28,7 +29,7 @@ export default function Header() {
 	}, [scrollYProgress]);
 
 	return (
-		<header>
+		<header className="pb-17">
 			<nav
 				className={cn(
 					'fixed z-20 w-full border-b transition-colors duration-150',

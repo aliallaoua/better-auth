@@ -12,7 +12,7 @@ export const Route = createFileRoute('/_auth/_pathlessLayout/dashboard')({
 
 function DashboardPage() {
 	return (
-		<SidebarInset className="pt-15">
+		<SidebarInset>
 			<SiteHeader />
 			<div className="flex flex-1 flex-col">
 				<div className="@container/main flex flex-1 flex-col gap-2">

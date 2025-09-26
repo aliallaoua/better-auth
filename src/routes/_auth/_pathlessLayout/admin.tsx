@@ -331,7 +331,7 @@ function AdminDashboard() {
 	);
 
 	return (
-		<div className="container mx-auto space-y-6 px-4 pb-4 pt-15">
+		<div className="container mx-auto space-y-6 p-2">
 			<Toaster position="top-right" richColors />
 
 			{/* Header with Stats */}

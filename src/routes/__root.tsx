@@ -69,12 +69,7 @@ export const Route = createRootRouteWithContext<{
 			{ rel: 'icon', href: '/favicon.ico' },
 		],
 	}),
-
-	errorComponent: (props) => {
-		<RootDocument>
-			<DefaultCatchBoundary {...props} />
-		</RootDocument>;
-	},
+	errorComponent: DefaultCatchBoundary,
 	notFoundComponent: () => <NotFound />,
 	shellComponent: RootDocument,
 });

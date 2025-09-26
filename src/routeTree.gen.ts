@@ -15,16 +15,21 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ForgetPasswordRouteImport } from './routes/forget-password'
 import { Route as BetterAuthRouteImport } from './routes/better-auth'
 import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as PostsRouteRouteImport } from './routes/posts.route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PostsIndexRouteImport } from './routes/posts.index'
 import { Route as ApiSendRouteImport } from './routes/api/send'
 import { Route as AcceptInvitationIdRouteImport } from './routes/accept-invitation/$id'
 import { Route as AuthPathlessLayoutRouteRouteImport } from './routes/_auth/_pathlessLayout/route'
+import { Route as PostsPostIdIndexRouteImport } from './routes/posts.$postId.index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthPathlessLayoutUnauthorizedRouteImport } from './routes/_auth/_pathlessLayout/unauthorized'
 import { Route as AuthPathlessLayoutProfileRouteImport } from './routes/_auth/_pathlessLayout/profile'
 import { Route as AuthPathlessLayoutDashboardRouteImport } from './routes/_auth/_pathlessLayout/dashboard'
 import { Route as AuthPathlessLayoutAdmincopyRouteImport } from './routes/_auth/_pathlessLayout/admin copy'
 import { Route as AuthPathlessLayoutAdminRouteImport } from './routes/_auth/_pathlessLayout/admin'
+import { Route as PostsPostIdCommentsIndexRouteImport } from './routes/posts.$postId.comments.index'
+import { Route as PostsPostIdCommentsCommentIdIndexRouteImport } from './routes/posts.$postId.comments.$commentId.index'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -55,10 +60,20 @@ const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PostsRouteRoute = PostsRouteRouteImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PostsIndexRoute = PostsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PostsRouteRoute,
 } as any)
 const ApiSendRoute = ApiSendRouteImport.update({
   id: '/api/send',
@@ -73,6 +88,11 @@ const AcceptInvitationIdRoute = AcceptInvitationIdRouteImport.update({
 const AuthPathlessLayoutRouteRoute = AuthPathlessLayoutRouteRouteImport.update({
   id: '/_pathlessLayout',
   getParentRoute: () => AuthRoute,
+} as any)
+const PostsPostIdIndexRoute = PostsPostIdIndexRouteImport.update({
+  id: '/$postId/',
+  path: '/$postId/',
+  getParentRoute: () => PostsRouteRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
@@ -108,9 +128,22 @@ const AuthPathlessLayoutAdminRoute = AuthPathlessLayoutAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthPathlessLayoutRouteRoute,
 } as any)
+const PostsPostIdCommentsIndexRoute =
+  PostsPostIdCommentsIndexRouteImport.update({
+    id: '/$postId/comments/',
+    path: '/$postId/comments/',
+    getParentRoute: () => PostsRouteRoute,
+  } as any)
+const PostsPostIdCommentsCommentIdIndexRoute =
+  PostsPostIdCommentsCommentIdIndexRouteImport.update({
+    id: '/$postId/comments/$commentId/',
+    path: '/$postId/comments/$commentId/',
+    getParentRoute: () => PostsRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/posts': typeof PostsRouteRouteWithChildren
   '/better-auth': typeof BetterAuthRoute
   '/forget-password': typeof ForgetPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -118,12 +151,16 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
+  '/posts/': typeof PostsIndexRoute
   '/admin': typeof AuthPathlessLayoutAdminRoute
   '/admin copy': typeof AuthPathlessLayoutAdmincopyRoute
   '/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/profile': typeof AuthPathlessLayoutProfileRoute
   '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/posts/$postId': typeof PostsPostIdIndexRoute
+  '/posts/$postId/comments': typeof PostsPostIdCommentsIndexRoute
+  '/posts/$postId/comments/$commentId': typeof PostsPostIdCommentsCommentIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -134,16 +171,21 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
+  '/posts': typeof PostsIndexRoute
   '/admin': typeof AuthPathlessLayoutAdminRoute
   '/admin copy': typeof AuthPathlessLayoutAdmincopyRoute
   '/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/profile': typeof AuthPathlessLayoutProfileRoute
   '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/posts/$postId': typeof PostsPostIdIndexRoute
+  '/posts/$postId/comments': typeof PostsPostIdCommentsIndexRoute
+  '/posts/$postId/comments/$commentId': typeof PostsPostIdCommentsCommentIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/posts': typeof PostsRouteRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
   '/better-auth': typeof BetterAuthRoute
   '/forget-password': typeof ForgetPasswordRoute
@@ -153,17 +195,22 @@ export interface FileRoutesById {
   '/_auth/_pathlessLayout': typeof AuthPathlessLayoutRouteRouteWithChildren
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
+  '/posts/': typeof PostsIndexRoute
   '/_auth/_pathlessLayout/admin': typeof AuthPathlessLayoutAdminRoute
   '/_auth/_pathlessLayout/admin copy': typeof AuthPathlessLayoutAdmincopyRoute
   '/_auth/_pathlessLayout/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/_auth/_pathlessLayout/profile': typeof AuthPathlessLayoutProfileRoute
   '/_auth/_pathlessLayout/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/posts/$postId/': typeof PostsPostIdIndexRoute
+  '/posts/$postId/comments/': typeof PostsPostIdCommentsIndexRoute
+  '/posts/$postId/comments/$commentId/': typeof PostsPostIdCommentsCommentIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/posts'
     | '/better-auth'
     | '/forget-password'
     | '/reset-password'
@@ -171,12 +218,16 @@ export interface FileRouteTypes {
     | '/signup'
     | '/accept-invitation/$id'
     | '/api/send'
+    | '/posts/'
     | '/admin'
     | '/admin copy'
     | '/dashboard'
     | '/profile'
     | '/unauthorized'
     | '/api/auth/$'
+    | '/posts/$postId'
+    | '/posts/$postId/comments'
+    | '/posts/$postId/comments/$commentId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -187,15 +238,20 @@ export interface FileRouteTypes {
     | '/signup'
     | '/accept-invitation/$id'
     | '/api/send'
+    | '/posts'
     | '/admin'
     | '/admin copy'
     | '/dashboard'
     | '/profile'
     | '/unauthorized'
     | '/api/auth/$'
+    | '/posts/$postId'
+    | '/posts/$postId/comments'
+    | '/posts/$postId/comments/$commentId'
   id:
     | '__root__'
     | '/'
+    | '/posts'
     | '/_auth'
     | '/better-auth'
     | '/forget-password'
@@ -205,16 +261,21 @@ export interface FileRouteTypes {
     | '/_auth/_pathlessLayout'
     | '/accept-invitation/$id'
     | '/api/send'
+    | '/posts/'
     | '/_auth/_pathlessLayout/admin'
     | '/_auth/_pathlessLayout/admin copy'
     | '/_auth/_pathlessLayout/dashboard'
     | '/_auth/_pathlessLayout/profile'
     | '/_auth/_pathlessLayout/unauthorized'
     | '/api/auth/$'
+    | '/posts/$postId/'
+    | '/posts/$postId/comments/'
+    | '/posts/$postId/comments/$commentId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PostsRouteRoute: typeof PostsRouteRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
   BetterAuthRoute: typeof BetterAuthRoute
   ForgetPasswordRoute: typeof ForgetPasswordRoute
@@ -270,12 +331,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/posts': {
+      id: '/posts'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/posts/': {
+      id: '/posts/'
+      path: '/'
+      fullPath: '/posts/'
+      preLoaderRoute: typeof PostsIndexRouteImport
+      parentRoute: typeof PostsRouteRoute
     }
     '/api/send': {
       id: '/api/send'
@@ -297,6 +372,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof AuthPathlessLayoutRouteRouteImport
       parentRoute: typeof AuthRoute
+    }
+    '/posts/$postId/': {
+      id: '/posts/$postId/'
+      path: '/$postId'
+      fullPath: '/posts/$postId'
+      preLoaderRoute: typeof PostsPostIdIndexRouteImport
+      parentRoute: typeof PostsRouteRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -340,8 +422,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthPathlessLayoutAdminRouteImport
       parentRoute: typeof AuthPathlessLayoutRouteRoute
     }
+    '/posts/$postId/comments/': {
+      id: '/posts/$postId/comments/'
+      path: '/$postId/comments'
+      fullPath: '/posts/$postId/comments'
+      preLoaderRoute: typeof PostsPostIdCommentsIndexRouteImport
+      parentRoute: typeof PostsRouteRoute
+    }
+    '/posts/$postId/comments/$commentId/': {
+      id: '/posts/$postId/comments/$commentId/'
+      path: '/$postId/comments/$commentId'
+      fullPath: '/posts/$postId/comments/$commentId'
+      preLoaderRoute: typeof PostsPostIdCommentsCommentIdIndexRouteImport
+      parentRoute: typeof PostsRouteRoute
+    }
   }
 }
+
+interface PostsRouteRouteChildren {
+  PostsIndexRoute: typeof PostsIndexRoute
+  PostsPostIdIndexRoute: typeof PostsPostIdIndexRoute
+  PostsPostIdCommentsIndexRoute: typeof PostsPostIdCommentsIndexRoute
+  PostsPostIdCommentsCommentIdIndexRoute: typeof PostsPostIdCommentsCommentIdIndexRoute
+}
+
+const PostsRouteRouteChildren: PostsRouteRouteChildren = {
+  PostsIndexRoute: PostsIndexRoute,
+  PostsPostIdIndexRoute: PostsPostIdIndexRoute,
+  PostsPostIdCommentsIndexRoute: PostsPostIdCommentsIndexRoute,
+  PostsPostIdCommentsCommentIdIndexRoute:
+    PostsPostIdCommentsCommentIdIndexRoute,
+}
+
+const PostsRouteRouteWithChildren = PostsRouteRoute._addFileChildren(
+  PostsRouteRouteChildren,
+)
 
 interface AuthPathlessLayoutRouteRouteChildren {
   AuthPathlessLayoutAdminRoute: typeof AuthPathlessLayoutAdminRoute
@@ -377,6 +492,7 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PostsRouteRoute: PostsRouteRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
   BetterAuthRoute: BetterAuthRoute,
   ForgetPasswordRoute: ForgetPasswordRoute,
@@ -395,6 +511,7 @@ import type { getRouter } from './router.tsx'
 import type { createStart } from '@tanstack/react-start'
 declare module '@tanstack/react-start' {
   interface Register {
+    ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
   }
 }
