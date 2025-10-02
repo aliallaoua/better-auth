@@ -5,6 +5,7 @@ import {
 	type ErrorComponentProps,
 	Link,
 } from '@tanstack/react-router';
+import { MoveLeft } from 'lucide-react';
 import {
 	Card,
 	CardContent,
@@ -16,7 +17,9 @@ import { commentQueryOptions } from '@/utils/commentQueryOptions';
 
 export const Route = createFileRoute('/posts/$postId/comments/$commentId/')({
 	loader: ({ context, params: { postId, commentId } }) => {
-		return context.queryClient.ensureQueryData(commentQueryOptions(postId, commentId));
+		return context.queryClient.ensureQueryData(
+			commentQueryOptions(postId, commentId)
+		);
 	},
 	errorComponent: CommentsErrorComponent,
 	component: CommentsComponent,
@@ -36,7 +39,11 @@ function CommentsComponent() {
 				className="block py-1 text-blue-800 hover:text-blue-600"
 				to="/posts"
 			>
-				← All Posts
+				{/* ← All Posts */}
+				<div className="flex items-center gap-2">
+					<MoveLeft className="size-5" />
+					<span>All Posts</span>
+				</div>
 			</Link>
 			<Card className="max-h-min hover:shadow-primary/25 transition-all hover:shadow-lg">
 				<CardHeader>

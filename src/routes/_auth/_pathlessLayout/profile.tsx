@@ -10,21 +10,16 @@ import { userMiddleware } from '@/lib/auth-middleware';
 const getProfileData = createServerFn()
 	.middleware([userMiddleware])
 	.handler(async () => {
+		const headers = getRequestHeaders();
 		try {
 			const [session, activeSessions, deviceSessions, organization] =
 				await Promise.all([
-					auth.api.getSession({ headers: getRequestHeaders() }),
-					auth.api.listSessions({ headers: getRequestHeaders() }),
-					auth.api.listDeviceSessions({ headers: getRequestHeaders() }),
-					auth.api.getFullOrganization({ headers: getRequestHeaders() }),
+					auth.api.getSession({ headers }),
+					auth.api.listSessions({ headers }),
+					auth.api.listDeviceSessions({ headers }),
+					auth.api.getFullOrganization({ headers }),
 				]);
 
-			// return {
-			// 	session,
-			// 	activeSessions,
-			// 	deviceSessions,
-			// 	organization,
-			// };
 			return {
 				session: session
 					? {
@@ -62,22 +57,20 @@ function ProfilePage() {
 		Route.useLoaderData();
 
 	return (
-		<div className="absolute inset-0 hidden items-start justify-center bg-white pt-16 md:flex dark:bg-black">
-			<div className="w-full pt-2 lg:w-7/12">
-				<div className="w-full">
-					<div className="flex flex-col gap-4">
-						<AccountSwitcher
-							sessions={JSON.parse(JSON.stringify(deviceSessions))}
-						/>
-						<UserCard
-							activeSessions={JSON.parse(JSON.stringify(activeSessions))}
-							session={JSON.parse(JSON.stringify(session))}
-						/>
-						<OrganizationCard
-							activeOrganization={JSON.parse(JSON.stringify(organization))}
-							session={JSON.parse(JSON.stringify(session))}
-						/>
-					</div>
+		<div className="min-h-screen w-full bg-white px-4 py-4 sm:px-6 dark:bg-black">
+			<div className="mx-auto w-full max-w-4xl">
+				<div className="flex flex-col gap-4 sm:gap-5 md:gap-6">
+					<AccountSwitcher
+						sessions={JSON.parse(JSON.stringify(deviceSessions))}
+					/>
+					<UserCard
+						activeSessions={JSON.parse(JSON.stringify(activeSessions))}
+						session={JSON.parse(JSON.stringify(session))}
+					/>
+					<OrganizationCard
+						activeOrganization={JSON.parse(JSON.stringify(organization))}
+						session={JSON.parse(JSON.stringify(session))}
+					/>
 				</div>
 			</div>
 		</div>

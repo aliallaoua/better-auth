@@ -4,9 +4,7 @@ import { Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-// import DevbarMenu from './devbar-menu';
 import { ModeToggle } from './mode-toggle';
-// import { ThemeSwitcher } from './theme-switcher';
 import UserButton from './user-button';
 
 const menuItems = [
@@ -29,15 +27,14 @@ export default function Header() {
 	}, [scrollYProgress]);
 
 	return (
-		<header className="pb-17">
+		<header className="h-16 lg:h-20">
 			<nav
 				className={cn(
-					'fixed z-20 w-full border-b transition-colors duration-150',
+					'fixed top-0 z-20 w-full border-b transition-colors duration-150',
 					scrolled && 'bg-background/50 backdrop-blur-3xl'
 				)}
 				data-state={menuState && 'active'}
 			>
-				{/* <div className="mx-auto max-w-5xl px-6 transition-all duration-300"> */}
 				<div className="mx-auto px-8 transition-all duration-300">
 					<div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
 						<div className="flex w-full items-center justify-between gap-12 lg:w-auto">
@@ -45,6 +42,7 @@ export default function Header() {
 								aria-label={menuState ? 'Close Menu' : 'Open Menu'}
 								className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
 								onClick={() => setMenuState(!menuState)}
+								variant="ghost"
 							>
 								<Menu className="in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 m-auto size-6 duration-200" />
 								<X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />

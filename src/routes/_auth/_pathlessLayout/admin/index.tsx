@@ -27,27 +27,6 @@ import { StatCard } from '@/routes/_auth/_pathlessLayout/admin/-components/stats
 import { UserManagementCard } from '@/routes/_auth/_pathlessLayout/admin/-components/user-management-card';
 import { BanUserSchema, CreateUserSchema } from '@/schema';
 
-// const fetchlistUsers = createServerFn({ method: 'GET' })
-// .middleware([userMiddleware])
-// .handler(async () => {
-// 	const users = await auth.api.listUsers({
-// 		query: {
-// 			limit: 50,
-// 			sortBy: 'createdAt',
-// 			sortDirection: 'desc',
-// 		},
-// 		headers: await getRequest().headers,
-// 	});
-
-// 	return users?.users;
-// });
-
-// const listUsersQueryOptions = () =>
-// 	queryOptions({
-// 		queryKey: ['users'],
-// 		queryFn: () => fetchlistUsers(),
-// 	});
-
 export const Route = createFileRoute('/_auth/_pathlessLayout/admin/')({
 	beforeLoad: ({ context, location }) => {
 		if (context.userSession?.user.role !== 'admin') {
@@ -60,9 +39,6 @@ export const Route = createFileRoute('/_auth/_pathlessLayout/admin/')({
 			});
 		}
 	},
-	// loader: async ({ context }) => {
-	// 	await context.queryClient.ensureQueryData(listUsersQueryOptions());
-	// },
 	component: AdminDashboard,
 });
 
@@ -73,32 +49,8 @@ function AdminDashboard() {
 	const [isLoading, setIsLoading] = useState<string | undefined>();
 	const [isBanDialogOpen, setIsBanDialogOpen] = useState(false);
 	const [selectedUserId, setSelectedUserId] = useState<string>('');
-	const [rowSelection, setRowSelection] = useState({});
-
-	// const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-
-	// const { data: users = [], isLoading: isUsersLoading } = useQuery({
-	// 	queryKey: ['users'],
-	// 	queryFn: async () => {
-	// 		const data = await authClient.admin.listUsers(
-	// 			{
-	// 				query: {
-	// 					limit: 50, // Increased for better pagination
-	// 					sortBy: 'createdAt',
-	// 					sortDirection: 'desc',
-	// 				},
-	// 			},
-	// 			{
-	// 				throw: true,
-	// 			}
-	// 		);
-	// 		return data?.users || [];
-	// 	},
-	// });
 
 	const { data: users = [], isPending } = useListUsersQuery();
-
-	// const { data: users = [] } = useSuspenseQuery(listUsersQueryOptions());
 
 	// Statistics derived from users data
 	const userStats = useMemo(() => {
@@ -134,15 +86,9 @@ function AdminDashboard() {
 				toast.success('User created successfully');
 				createUserForm.reset();
 				setIsDialogOpen(false);
-				queryClient.removeQueries({
+				queryClient.invalidateQueries({
 					queryKey: ['users'],
 				});
-				queryClient.refetchQueries({
-					queryKey: ['users'],
-				});
-				// queryClient.invalidateQueries({
-				// 	queryKey: ['users'],
-				// })
 			} catch (error: any) {
 				toast.error(error.message || 'Failed to create user');
 			} finally {
@@ -513,11 +459,7 @@ function AdminDashboard() {
 					)}
 				</CardContent>
 			</Card> */}
-			<UserManagementCard
-				filteredUsers={users?.length || 0}
-				selectedUsers={Object.keys(rowSelection).length}
-				totalUsers={userStats.total}
-			>
+			<UserManagementCard>
 				{isPending ? (
 					<DataTableSkeleton />
 				) : (

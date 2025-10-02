@@ -74,10 +74,9 @@ export default function TextField({
 				{type === 'password' && withPasswordToggle ? (
 					<Button
 						aria-label={showPassword ? 'Hide password' : 'Show password'}
-						className="-translate-y-1/2 absolute top-1/2 right-1"
+						className="absolute inset-y-0 end-0 hover:bg-transparent dark:hover:bg-transparent text-muted-foreground/80"
 						onClick={() => setShowPassword((s) => !s)}
 						size="icon"
-						type="button"
 						variant="ghost"
 					>
 						{showPassword ? (
