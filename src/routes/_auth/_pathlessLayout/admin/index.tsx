@@ -1,9 +1,10 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
-import { Download, Plus } from 'lucide-react';
+import { Download, Plus, Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Toaster, toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 import {
 	Dialog,
 	DialogContent,
@@ -11,6 +12,8 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog';
+import { FieldGroup, FieldSet } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAppForm } from '@/hooks/form';
 import useListUsersQuery from '@/hooks/queries/useListUsersQuery';
@@ -49,6 +52,7 @@ function AdminDashboard() {
 	const [isLoading, setIsLoading] = useState<string | undefined>();
 	const [isBanDialogOpen, setIsBanDialogOpen] = useState(false);
 	const [selectedUserId, setSelectedUserId] = useState<string>('');
+	const [searchQuery, setSearchQuery] = useState('');
 
 	const { data: users = [], isPending } = useListUsersQuery();
 
@@ -63,6 +67,19 @@ function AdminDashboard() {
 			active: users.filter((u) => !u.banned).length,
 		};
 	}, [users]);
+
+	// Filter users based on search query
+	const filteredUsers = useMemo(() => {
+		if (!searchQuery) return users;
+
+		const query = searchQuery.toLowerCase();
+		return users.filter(
+			(user) =>
+				user.email.toLowerCase().includes(query) ||
+				user.name?.toLowerCase().includes(query) ||
+				user.id.toLowerCase().includes(query)
+		);
+	}, [users, searchQuery]);
 
 	const createUserForm = useAppForm({
 		defaultValues: {
@@ -278,248 +295,208 @@ function AdminDashboard() {
 		[actionHandlers]
 	);
 
+	const [label, setLabel] = useState('personal');
+
 	return (
-		<div className="container mx-auto space-y-6 p-2">
+		<div className="min-h-screen w-full bg-gradient-to-b from-background to-muted/20">
 			<Toaster position="top-right" richColors />
 
-			{/* Header with Stats */}
-			<div className="flex items-center justify-between">
-				<div>
-					<h1 className="text-3xl font-bold tracking-tight">Admin Dashboard</h1>
-					<p className="text-muted-foreground">
-						Manage users, roles, and permissions
-					</p>
+			<div className="mx-auto max-w-7xl space-y-8 px-4 py-6 sm:px-6 lg:px-8">
+				{/* Header Section */}
+				<div className="space-y-4">
+					<div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+						<div className="space-y-1">
+							<h1 className="text-4xl font-bold tracking-tight">
+								Admin Dashboard
+							</h1>
+							<p className="text-muted-foreground">
+								Manage users, roles, and permissions across your organization
+							</p>
+						</div>
+						<ButtonGroup>
+							<ButtonGroup className="hidden sm:flex">
+								<Button
+									disabled={!users || users.length === 0}
+									onClick={handleExportData}
+									size="default"
+									variant="outline"
+								>
+									<Download className="mr-2 size-4" />
+									Export
+								</Button>
+							</ButtonGroup>
+							<ButtonGroup>
+								<Dialog onOpenChange={setIsDialogOpen} open={isDialogOpen}>
+									<DialogTrigger asChild>
+										<Button size="default">
+											<Plus className="mr-2 size-4" />
+											Create User
+										</Button>
+									</DialogTrigger>
+									<DialogContent className="sm:max-w-[425px]">
+										<DialogHeader>
+											<DialogTitle>Create New User</DialogTitle>
+										</DialogHeader>
+										<form
+											className="space-y-4"
+											onSubmit={(e) => {
+												e.preventDefault();
+												e.stopPropagation();
+												createUserForm.handleSubmit();
+											}}
+										>
+											<FieldGroup>
+												<FieldSet>
+													<createUserForm.AppField
+														children={(field) => (
+															<div className="grid gap-2">
+																<field.TextField
+																	autoComplete="email"
+																	label="Email"
+																	required
+																	type="email"
+																/>
+															</div>
+														)}
+														name="email"
+													/>
+													<createUserForm.AppField
+														children={(field) => (
+															<field.PasswordField
+																autoComplete="new-password"
+																label="Password"
+																required
+															/>
+														)}
+														name="password"
+													/>
+													<createUserForm.AppField
+														children={(field) => (
+															<div className="grid gap-2">
+																<field.TextField
+																	autoComplete="name"
+																	label="Name"
+																	required
+																/>
+															</div>
+														)}
+														name="name"
+													/>
+													<createUserForm.AppField name="role">
+														{(field) => (
+															<>
+																<Label className="pb-2" htmlFor={field.name}>
+																	Role
+																</Label>
+																<field.SelectField
+																	label="Role"
+																	placeholder="Select a role"
+																	values={[
+																		{ label: 'Admin', value: 'admin' },
+																		{ label: 'User', value: 'user' },
+																	]}
+																/>
+															</>
+														)}
+													</createUserForm.AppField>
+
+													<createUserForm.AppForm>
+														<createUserForm.SubscribeButton
+															className="w-full"
+															disabled={
+																isLoading === 'create' ||
+																!createUserForm.state.canSubmit
+															}
+															label="Create User"
+														/>
+													</createUserForm.AppForm>
+												</FieldSet>
+											</FieldGroup>
+										</form>
+									</DialogContent>
+								</Dialog>
+							</ButtonGroup>
+						</ButtonGroup>
+					</div>
+
+					{/* Search Bar */}
+					<div className="relative max-w-md">
+						<Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+						<Input
+							className="pl-10"
+							onChange={(e) => setSearchQuery(e.target.value)}
+							placeholder="Search users by name, email, or ID..."
+							value={searchQuery}
+						/>
+					</div>
 				</div>
-				<div className="flex items-center space-x-2">
-					<Button
-						disabled={!users || users.length === 0}
-						onClick={handleExportData}
-						variant="outline"
-					>
-						<Download className="mr-2 size-4" />
-						Export
-					</Button>
-					<Dialog onOpenChange={setIsDialogOpen} open={isDialogOpen}>
-						<DialogTrigger asChild>
-							<Button>
-								<Plus className="mr-2 size-4" />
-								Create User
-							</Button>
-						</DialogTrigger>
-						<DialogContent className="sm:max-w-[425px]">
-							<DialogHeader>
-								<DialogTitle>Create New User</DialogTitle>
-							</DialogHeader>
-							<form
-								className="space-y-4"
-								onSubmit={(e) => {
-									e.preventDefault();
-									e.stopPropagation();
-									createUserForm.handleSubmit();
-								}}
-							>
-								<div>
-									<createUserForm.AppField
-										children={(field) => (
-											<div className="grid gap-2">
-												<field.TextField
-													autoComplete="email"
-													label="Email"
-													required
-													type="email"
-												/>
-											</div>
-										)}
-										name="email"
-									/>
-								</div>
-								<div>
-									<createUserForm.AppField
-										children={(field) => (
-											<div className="grid gap-2">
-												<field.TextField
-													autoComplete="new-password"
-													label="Password"
-													required
-													type="password"
-													withPasswordToggle
-												/>
-											</div>
-										)}
-										name="password"
-									/>
-								</div>
-								<div>
-									<createUserForm.AppField
-										children={(field) => (
-											<div className="grid gap-2">
-												<field.TextField
-													autoComplete="name"
-													label="Name"
-													required
-												/>
-											</div>
-										)}
-										name="name"
-									/>
-								</div>
-								<div>
-									<createUserForm.AppField name="role">
-										{(field) => (
-											<>
-												<Label className="pb-2" htmlFor={field.name}>
-													Role
-												</Label>
-												<field.SelectField
-													label="Role"
-													placeholder="Select a role"
-													values={[
-														{ label: 'Admin', value: 'admin' },
-														{ label: 'User', value: 'user' },
-													]}
-												/>
-											</>
-										)}
-									</createUserForm.AppField>
-								</div>
 
-								<createUserForm.AppForm>
-									<createUserForm.SubscribeButton
-										className="w-full"
-										disabled={
-											isLoading === 'create' || !createUserForm.state.canSubmit
-										}
-										label="Create User"
-									/>
-								</createUserForm.AppForm>
-							</form>
-						</DialogContent>
-					</Dialog>
-				</div>
-			</div>
+				{/* Stats Cards */}
+				<StatCard userStats={userStats} />
 
-			{/* Stats Cards */}
-			{/* <div className="grid gap-4 md:grid-cols-4">
-				<Card className="hover:shadow-stat-card/25 h-full w-full transition-all hover:shadow-lg">
-					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-						<CardTitle className="text-sm font-medium">Total Users</CardTitle>
-						<Users className="size-4 text-muted-foreground" />
-					</CardHeader>
-					<CardContent>
-						<div className="text-2xl font-bold">{userStats.total}</div>
-					</CardContent>
-				</Card>
-				<Card className="hover:shadow-stat-card/25 h-full w-full transition-all hover:shadow-lg">
-					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-						<CardTitle className="text-sm font-medium">Admins</CardTitle>
-						<Shield className="text-xs">Admin</Shield>
-					</CardHeader>
-					<CardContent>
-						<div className="text-2xl font-bold">{userStats.admins}</div>
-					</CardContent>
-				</Card>
-				<Card className="hover:shadow-stat-card/25 h-full w-full transition-all hover:shadow-lg">
-					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-						<CardTitle className="text-sm font-medium">Active</CardTitle>
-						<Badge className="text-xs text-green-600 border-green-200">
-							Active
-						</Badge>
-					</CardHeader>
-					<CardContent>
-						<div className="text-2xl font-bold">{userStats.active}</div>
-					</CardContent>
-				</Card>
-				<Card className="hover:shadow-stat-card/25 h-full w-full transition-all hover:shadow-lg">
-					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-						<CardTitle className="text-sm font-medium">Banned</CardTitle>
-						<Ban className="text-xs text-red-600">Banned</Ban>
-					</CardHeader>
-					<CardContent>
-						<div className="text-2xl font-bold">{userStats.banned}</div>
-					</CardContent>
-				</Card>
-			</div> */}
-
-			<StatCard userStats={userStats} />
-
-			{/* Data Table */}
-			{/* <Card>
-				<CardHeader>
-					<CardTitle>User Management</CardTitle>
-				</CardHeader>
-				<CardContent>
+				{/* Data Table */}
+				<UserManagementCard>
 					{isPending ? (
 						<DataTableSkeleton />
 					) : (
 						<DataTable
 							columns={columns}
-							data={users}
+							data={filteredUsers}
 							onExportData={handleExportData}
 						/>
 					)}
-				</CardContent>
-			</Card> */}
-			<UserManagementCard>
-				{isPending ? (
-					<DataTableSkeleton />
-				) : (
-					<DataTable
-						columns={columns}
-						data={users}
-						onExportData={handleExportData}
-					/>
-				)}
-			</UserManagementCard>
+				</UserManagementCard>
 
-			{/* Ban User Dialog */}
-			<Dialog onOpenChange={setIsBanDialogOpen} open={isBanDialogOpen}>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle>Ban User</DialogTitle>
-					</DialogHeader>
-					<form
-						className="space-y-4"
-						onSubmit={(e) => {
-							e.preventDefault();
-							e.stopPropagation();
-							banUserForm.handleSubmit();
-						}}
-					>
-						<div>
-							<banUserForm.AppField
-								children={(field) => (
-									<div className="grid gap-2">
-										<field.TextField label="Reason" required />
-									</div>
-								)}
-								name="reason"
-							/>
-						</div>
-						<div className="flex flex-col space-y-1.5">
-							<banUserForm.AppField
-								children={(field) => (
-									<div className="grid gap-2">
-										<Label htmlFor={field.name}>Expiration Date</Label>
-										<field.DateField />
-									</div>
-								)}
-								name="expirationDate"
-							/>
-						</div>
+				{/* Ban User Dialog */}
+				<Dialog onOpenChange={setIsBanDialogOpen} open={isBanDialogOpen}>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>Ban User</DialogTitle>
+						</DialogHeader>
+						<form
+							className="space-y-4"
+							onSubmit={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+								banUserForm.handleSubmit();
+							}}
+						>
+							<div>
+								<banUserForm.AppField
+									children={(field) => (
+										<div className="grid gap-2">
+											<field.TextField label="Reason" required />
+										</div>
+									)}
+									name="reason"
+								/>
+							</div>
+							<div className="flex flex-col space-y-1.5">
+								<banUserForm.AppField
+									children={(field) => (
+										<div className="grid gap-2">
+											<Label htmlFor={field.name}>Expiration Date</Label>
+											<field.DateField />
+										</div>
+									)}
+									name="expirationDate"
+								/>
+							</div>
 
-						<banUserForm.AppForm>
-							<banUserForm.SubscribeButton
-								className="w-full"
-								disabled={
-									isLoading === `ban-${selectedUserId}` ||
-									!banUserForm.state.canSubmit
-								}
-								label="Ban User"
-							/>
-						</banUserForm.AppForm>
-					</form>
-				</DialogContent>
-			</Dialog>
+							<banUserForm.AppForm>
+								<banUserForm.SubscribeButton
+									className="w-full"
+									disabled={
+										isLoading === `ban-${selectedUserId}` ||
+										!banUserForm.state.canSubmit
+									}
+									label="Ban User"
+								/>
+							</banUserForm.AppForm>
+						</form>
+					</DialogContent>
+				</Dialog>
+			</div>
 		</div>
 	);
 }

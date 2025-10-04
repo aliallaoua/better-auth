@@ -1,5 +1,5 @@
 import { formOptions } from '@tanstack/react-form';
-import { Fingerprint, Loader2, Trash } from 'lucide-react';
+import { Fingerprint, Trash } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import {
@@ -26,6 +26,8 @@ import type { Passkey } from '@/lib/auth-types';
 import { AddPasskeySchema } from '@/schema';
 // import { Alert, AlertDescription } from '../ui/alert';
 import { Button } from '../ui/button';
+import { FieldGroup, FieldSet } from '../ui/field';
+import { Spinner } from '../ui/spinner';
 
 export function ListPasskeysForm() {
 	const { data } = authClient.useListPasskeys();
@@ -111,7 +113,7 @@ export function ListPasskeysForm() {
 											}}
 										>
 											{isDeletePasskey ? (
-												<Loader2 className="animate-spin" size={15} />
+												<Spinner />
 											) : (
 												<Trash
 													className="cursor-pointer text-red-600"
@@ -136,8 +138,8 @@ export function ListPasskeysForm() {
 							form.handleSubmit();
 						}}
 					>
-						<div className="flex flex-col gap-2">
-							<div className="flex flex-col gap-2">
+						<FieldGroup>
+							<FieldSet>
 								<form.AppField
 									children={(field) => (
 										<div className="grid gap-2">
@@ -150,20 +152,20 @@ export function ListPasskeysForm() {
 									)}
 									name="passkeyName"
 								/>
-							</div>
 
-							<form.AppForm>
-								<form.SubscribeButton
-									className="w-full cursor-pointer"
-									label={
-										<>
-											<Fingerprint className="mr-2 size-4" />
-											Create Passkey
-										</>
-									}
-								/>
-							</form.AppForm>
-						</div>
+								<form.AppForm>
+									<form.SubscribeButton
+										className="w-full cursor-pointer"
+										label={
+											<>
+												<Fingerprint className="mr-2 size-4" />
+												Create Passkey
+											</>
+										}
+									/>
+								</form.AppForm>
+							</FieldSet>
+						</FieldGroup>
 						{/* Display form-level errors */}
 						{/* <form.Subscribe
 							children={([errorMap]) =>

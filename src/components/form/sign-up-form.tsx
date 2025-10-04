@@ -15,7 +15,7 @@ import { useAppForm } from '@/hooks/form';
 import useSignUpMutation from '@/hooks/mutations/useSignUpMutation';
 import { signInWithGoogle } from '@/lib/auth-functions';
 import { SignUpSchema } from '@/schema';
-import { Label } from '../ui/label';
+import { Field, FieldGroup, FieldSeparator } from '../ui/field';
 // import { Alert, AlertDescription } from '../ui/alert';
 
 export function SignUpForm() {
@@ -90,10 +90,9 @@ export function SignUpForm() {
 						form.handleSubmit();
 					}}
 				>
-					<div className="grid gap-6">
-						<div className="flex flex-col gap-4">
+					<FieldGroup>
+						<Field>
 							<Button
-								className="w-full"
 								onClick={signInWithGoogle}
 								type="button"
 								variant="outline"
@@ -106,27 +105,23 @@ export function SignUpForm() {
 								</svg>
 								Sign up with Google
 							</Button>
-						</div>
+						</Field>
 
-						<div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-border after:border-t">
-							<span className="relative z-10 bg-card px-2 text-muted-foreground">
-								Or continue with
-							</span>
-						</div>
+						<FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
+							Or continue with
+						</FieldSeparator>
 
-						<div className="grid gap-3">
-							<form.AppField
-								children={(field) => (
-									<field.TextField
-										autoComplete="name"
-										label="Name"
-										placeholder="Name"
-										required
-									/>
-								)}
-								name="name"
-							/>
-						</div>
+						<form.AppField
+							children={(field) => (
+								<field.TextField
+									autoComplete="name"
+									label="Name"
+									placeholder="Name"
+									required
+								/>
+							)}
+							name="name"
+						/>
 
 						{/* <div className="grid gap-3">
 							<Label htmlFor="firstName">First name</Label>
@@ -150,57 +145,47 @@ export function SignUpForm() {
 								)}
 							/>
 						</div> */}
-						<div className="grid gap-3">
-							<form.AppField
-								children={(field) => (
-									<field.TextField
-										autoComplete="email"
-										label="Email"
-										placeholder="name@example.com"
-										required
-										type="email"
-									/>
-								)}
-								name="email"
-							/>
-						</div>
-						<div className="grid gap-3">
-							<form.AppField
-								children={(field) => (
-									<field.TextField
-										autoComplete="new-password"
-										label="Password"
-										placeholder="Password"
-										required
-										type="password"
-										withPasswordToggle
-									/>
-								)}
-								name="password"
-							/>
-						</div>
+						<form.AppField
+							children={(field) => (
+								<field.TextField
+									autoComplete="email"
+									label="Email"
+									placeholder="name@example.com"
+									required
+									type="email"
+								/>
+							)}
+							name="email"
+						/>
+						<form.AppField
+							children={(field) => (
+								<field.PasswordField
+									autoComplete="new-password"
+									label="Password"
+									placeholder="Password"
+									required
+								/>
+							)}
+							name="password"
+						/>
 
-						<div className="grid gap-3">
-							<form.AppField
-								children={(field) => (
-									<field.TextField
-										autoComplete="new-password"
-										label="Confirm password"
-										placeholder="Password"
-										required
-										type="password"
-										withPasswordToggle
-									/>
-								)}
-								name="confirmPassword"
-							/>
-						</div>
+						<form.AppField
+							children={(field) => (
+								<field.PasswordField
+									autoComplete="new-password"
+									label="Confirm password"
+									placeholder="Password"
+									required
+								/>
+							)}
+							name="confirmPassword"
+						/>
 
 						<div className="grid gap-2">
 							<form.AppField
 								children={(field) => (
 									<div className="grid gap-2">
-										<Label htmlFor="image">Profile Image</Label>
+										{/* <Label htmlFor="image">Profile Image</Label> */}
 										<div className="flex items-end gap-4">
 											{imagePreview && (
 												<div className="relative size-16 overflow-hidden rounded-sm">
@@ -217,6 +202,7 @@ export function SignUpForm() {
 												<field.ImageField
 													className="w-full text-muted-foreground"
 													id="image"
+													label="Profile Image"
 													onChange={handleImageChange}
 												/>
 												{imagePreview && (
@@ -244,7 +230,7 @@ export function SignUpForm() {
 								Sign in
 							</Link>
 						</div>
-					</div>
+					</FieldGroup>
 
 					{/* Display form-level errors */}
 					{/* <form.Subscribe

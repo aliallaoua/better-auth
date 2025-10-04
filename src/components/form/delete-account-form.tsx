@@ -16,6 +16,7 @@ import { authClient } from '@/lib/auth-client';
 import { DeleteAccountSchema } from '@/schema';
 // import { Alert, AlertDescription } from '../ui/alert';
 import { Button } from '../ui/button';
+import { FieldGroup, FieldSet } from '../ui/field';
 
 export function DeleteAccountForm() {
 	const [open, setOpen] = useState<boolean>(false);
@@ -77,31 +78,27 @@ export function DeleteAccountForm() {
 						form.handleSubmit();
 					}}
 				>
-					<div className="grid gap-6">
-						<div className="flex flex-col gap-6">
-							<div className="grid gap-3">
-								<form.AppField
-									children={(field) => (
-										<field.TextField
-											autoComplete="current-password"
-											label="Password"
-											placeholder="Enter your password"
-											required
-											type="password"
-											withPasswordToggle
-										/>
-									)}
-									name="password"
-								/>
-							</div>
+					<FieldGroup>
+						<FieldSet>
+							<form.AppField
+								children={(field) => (
+									<field.PasswordField
+										autoComplete="current-password"
+										label="Password"
+										placeholder="Enter your password"
+										required
+									/>
+								)}
+								name="password"
+							/>
 
 							<DialogFooter>
 								<form.AppForm>
 									<form.SubscribeButton label="Delete" variant="destructive" />
 								</form.AppForm>
 							</DialogFooter>
-						</div>
-					</div>
+						</FieldSet>
+					</FieldGroup>
 
 					{/* Display form-level errors */}
 					{/* <form.Subscribe

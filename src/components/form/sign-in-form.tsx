@@ -1,6 +1,5 @@
 import { formOptions } from '@tanstack/react-form';
 import { Link } from '@tanstack/react-router';
-// import { AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
 	Card,
@@ -9,13 +8,18 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
+import {
+	Field,
+	FieldDescription,
+	FieldGroup,
+	FieldSeparator,
+} from '@/components/ui/field';
 import { useAppForm } from '@/hooks/form';
 import useSignInMutation from '@/hooks/mutations/useSignInMutation';
 import { authClient } from '@/lib/auth-client';
 import { signInWithGithub, signInWithGoogle } from '@/lib/auth-functions';
 import { cn } from '@/lib/utils';
 import { SignInSchema } from '@/schema';
-// import { Alert, AlertDescription } from '../ui/alert';
 
 export function SignInForm() {
 	const { mutateAsync: signInMutation } = useSignInMutation();
@@ -36,18 +40,12 @@ export function SignInForm() {
 			try {
 				await signInMutation(value);
 			} catch (e: any) {
-				// Set form-level error
 				form.setErrorMap({
 					onSubmit: e.message,
 				});
 			}
 		},
 	});
-
-	// const signinLinkOptions = {
-	// 	to: '/signup',
-	// 	search: { addAccount: true },
-	// };
 
 	const LastUsedIndicator = () => (
 		<span className="ml-auto absolute top-1 right-0 px-2 py-1 text-xs bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 rounded-md font-medium">
@@ -65,17 +63,15 @@ export function SignInForm() {
 			</CardHeader>
 			<CardContent>
 				<form
-					className="flex flex-col gap-4"
 					onSubmit={(e) => {
 						e.preventDefault();
 						e.stopPropagation();
 						form.handleSubmit();
 					}}
 				>
-					<div className="grid gap-6">
-						<div className="flex flex-col gap-4">
+					<FieldGroup>
+						<Field>
 							<Button
-								className={cn('w-full gap-2 flex items-center relative')}
 								onClick={signInWithGithub}
 								type="button"
 								variant="outline"
@@ -92,7 +88,6 @@ export function SignInForm() {
 								)}
 							</Button>
 							<Button
-								className={cn('w-full gap-2 flex items-center relative')}
 								onClick={signInWithGoogle}
 								type="button"
 								variant="outline"
@@ -108,94 +103,69 @@ export function SignInForm() {
 									<LastUsedIndicator />
 								)}
 							</Button>
-						</div>
+						</Field>
 
-						<div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-border after:border-t">
-							<span className="relative z-10 bg-card px-2 text-muted-foreground">
+						<FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
+							<span className="relative">
 								Or continue with
+								{authClient.isLastUsedLoginMethod('email') && (
+									<LastUsedIndicator />
+								)}
 							</span>
-							{authClient.isLastUsedLoginMethod('email') && (
-								<LastUsedIndicator />
+						</FieldSeparator>
+
+						<form.AppField
+							children={(field) => (
+								<field.TextField
+									autoComplete="email"
+									label="Email"
+									placeholder="name@example.com"
+									required
+									type="email"
+								/>
 							)}
-						</div>
+							name="email"
+						/>
 
-						<div className="flex flex-col gap-6">
-							<div className="grid gap-3">
-								<form.AppField
-									children={(field) => (
-										<field.TextField
-											autoComplete="email"
-											label="Email"
-											placeholder="name@example.com"
-											required
-											type="email"
-										/>
-									)}
-									name="email"
+						<form.AppField
+							children={(field) => (
+								<field.PasswordField
+									autoComplete="current-password"
+									forgotPassword
+									label="Password"
+									placeholder="Password"
+									required
 								/>
-							</div>
-							<div className="grid gap-3">
-								<div className="flex items-center">
-									<Link
-										className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-										to="/forget-password"
-									>
-										Forgot your password?
-									</Link>
-								</div>
-								<form.AppField
-									children={(field) => (
-										<field.TextField
-											autoComplete="current-password"
-											label="Password"
-											placeholder="Password"
-											required
-											type="password"
-											withPasswordToggle
-										/>
-									)}
-									name="password"
-								/>
-							</div>
-							<div className="flex flex-col gap-3">
-								<form.AppForm>
-									<form.SubscribeButton label="Sign In" />
-								</form.AppForm>
-							</div>
-						</div>
+							)}
+							name="password"
+						/>
 
-						<div className="text-center text-sm">
+						<Field>
+							<form.AppForm>
+								<form.SubscribeButton label="Sign In" />
+							</form.AppForm>
+						</Field>
+
+						<FieldDescription className="text-center">
 							Don&apos;t have an account?{' '}
 							<Link className="underline underline-offset-4" to="/signup">
-								{/* <Link
-								className="underline underline-offset-4"
-								{...signinLinkOptions}
-							> */}
 								Sign up
 							</Link>
-						</div>
-					</div>
-
-					{/* Display form-level errors */}
-					{/* <form.Subscribe
-						children={([errorMap]) =>
-							errorMap.onSubmit ? (
-								<Alert className="mt-4" variant="destructive">
-									<AlertCircle className="size-4" />
-									<AlertDescription>
-										{errorMap.onSubmit.toString()}
-									</AlertDescription>
-								</Alert>
-							) : null
-						}
-						selector={(state) => [state.errorMap]}
-					/> */}
+						</FieldDescription>
+					</FieldGroup>
 				</form>
 			</CardContent>
 
-			<div className="text-balance text-center text-muted-foreground text-xs *:[a]:underline *:[a]:underline-offset-4 *:[a]:hover:text-primary">
-				By clicking continue, you agree to our <a href="#">Terms of Service</a>{' '}
-				and <a href="#">Privacy Policy</a>.
+			<div className="text-balance text-center text-muted-foreground text-xs px-6 pb-4">
+				By clicking continue, you agree to our{' '}
+				<a className="underline underline-offset-4 hover:text-primary" href="#">
+					Terms of Service
+				</a>{' '}
+				and{' '}
+				<a className="underline underline-offset-4 hover:text-primary" href="#">
+					Privacy Policy
+				</a>
+				.
 			</div>
 		</Card>
 	);

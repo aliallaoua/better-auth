@@ -12,6 +12,7 @@ import {
 import { useAppForm } from '@/hooks/form';
 import { authClient } from '@/lib/auth-client';
 import { ResetPasswordSchema } from '@/schema';
+import { FieldGroup, FieldSet } from '../ui/field';
 
 // import { Alert, AlertDescription } from '../ui/alert';
 
@@ -74,46 +75,38 @@ export function ResetPasswordForm() {
 							form.handleSubmit();
 						}}
 					>
-						<div className="grid gap-6">
-							<div className="flex flex-col gap-6">
-								<div className="grid gap-3">
-									<form.AppField
-										children={(field) => (
-											<field.TextField
-												autoComplete="new-password"
-												label="New password"
-												placeholder="Password"
-												required
-												type="password"
-												withPasswordToggle
-											/>
-										)}
-										name="password"
-									/>
-								</div>
-								<div className="grid gap-3">
-									<form.AppField
-										children={(field) => (
-											<field.TextField
-												autoComplete="new-password"
-												label="Confirm password"
-												placeholder="Confirm Password"
-												required
-												type="password"
-												withPasswordToggle
-											/>
-										)}
-										name="confirmPassword"
-									/>
-								</div>
+						<FieldGroup>
+							<FieldSet>
+								<form.AppField
+									children={(field) => (
+										<field.PasswordField
+											autoComplete="new-password"
+											label="New password"
+											placeholder="Password"
+											required
+										/>
+									)}
+									name="password"
+								/>
+								<form.AppField
+									children={(field) => (
+										<field.PasswordField
+											autoComplete="new-password"
+											label="Confirm password"
+											placeholder="Confirm Password"
+											required
+										/>
+									)}
+									name="confirmPassword"
+								/>
 
 								<div className="flex flex-col gap-3">
 									<form.AppForm>
 										<form.SubscribeButton label="Reset password" />
 									</form.AppForm>
 								</div>
-							</div>
-						</div>
+							</FieldSet>
+						</FieldGroup>
 
 						{/* Display form-level errors */}
 						{/* <form.Subscribe

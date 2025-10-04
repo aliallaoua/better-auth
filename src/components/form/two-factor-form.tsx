@@ -198,20 +198,18 @@ export function TwoFactorForm({ session }: { session: any }) {
 								otpForm.handleSubmit();
 							}}
 						>
-							<div className="flex flex-col gap-2">
-								<otpForm.AppField
-									children={(field) => (
-										<div className="grid gap-2">
-											<field.TextField
-												label="Scan the QR code with your TOTP app"
-												placeholder="Enter OTP"
-												required
-											/>
-										</div>
-									)}
-									name="code"
-								/>
-							</div>
+							<otpForm.AppField
+								children={(field) => (
+									<div className="grid gap-2">
+										<field.TextField
+											label="Scan the QR code with your TOTP app"
+											placeholder="Enter OTP"
+											required
+										/>
+									</div>
+								)}
+								name="code"
+							/>
 							<DialogFooter>
 								<otpForm.AppForm>
 									<otpForm.SubscribeButton
@@ -246,22 +244,16 @@ export function TwoFactorForm({ session }: { session: any }) {
 							passwordForm.handleSubmit();
 						}}
 					>
-						<div className="flex flex-col gap-2 pb-4">
-							<passwordForm.AppField
-								children={(field) => (
-									<div className="grid gap-2">
-										<field.TextField
-											label="Password"
-											placeholder="Password"
-											required
-											type="password"
-											withPasswordToggle
-										/>
-									</div>
-								)}
-								name="password"
-							/>
-						</div>
+						<passwordForm.AppField
+							children={(field) => (
+								<field.PasswordField
+									label="Password"
+									placeholder="Password"
+									required
+								/>
+							)}
+							name="password"
+						/>
 						<DialogFooter>
 							<passwordForm.AppForm>
 								<passwordForm.SubscribeButton

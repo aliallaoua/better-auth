@@ -2,7 +2,6 @@ import type { ColumnDef } from '@tanstack/react-table';
 import {
 	ArrowUpDown,
 	Ban,
-	Loader2,
 	MoreHorizontal,
 	RefreshCw,
 	Trash,
@@ -28,6 +27,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
+import { Spinner } from '@/components/ui/spinner';
 import {
 	Tooltip,
 	TooltipContent,
@@ -164,9 +164,7 @@ export const createColumns = (
 				>
 					<SelectTrigger className="w-full">
 						<SelectValue placeholder="Select a role" />
-						{handlers.isLoading === `role-${user.id}` && (
-							<Loader2 className="ml-2 size-4 animate-spin" />
-						)}
+						{handlers.isLoading === `role-${user.id}` && <Spinner />}
 					</SelectTrigger>
 					<SelectContent>
 						<SelectGroup>
@@ -282,7 +280,7 @@ export const createColumns = (
 							onClick={() => handlers.onImpersonateUser(user.id)}
 						>
 							{handlers.isLoading === `impersonate-${user.id}` ? (
-								<Loader2 className="mr-2 size-4 animate-spin" />
+								<Spinner />
 							) : (
 								<UserCircle className="mr-2 size-4" />
 							)}
@@ -293,7 +291,7 @@ export const createColumns = (
 							onClick={() => handlers.onRevokeSessions(user.id)}
 						>
 							{handlers.isLoading === `revoke-${user.id}` ? (
-								<Loader2 className="mr-2 size-4 animate-spin" />
+								<Spinner />
 							) : (
 								<RefreshCw className="mr-2 size-4" />
 							)}
@@ -311,7 +309,7 @@ export const createColumns = (
 							}}
 						>
 							{handlers.isLoading === `ban-${user.id}` ? (
-								<Loader2 className="mr-2 size-4 animate-spin" />
+								<Spinner />
 							) : (
 								<Ban className="mr-2 size-4" />
 							)}
@@ -323,7 +321,7 @@ export const createColumns = (
 							onClick={() => handlers.onDeleteUser(user.id)}
 						>
 							{handlers.isLoading === `delete-${user.id}` ? (
-								<Loader2 className="mr-2 size-4 animate-spin" />
+								<Spinner />
 							) : (
 								<Trash className="mr-2 size-4" />
 							)}

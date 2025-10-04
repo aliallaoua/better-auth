@@ -1,6 +1,6 @@
-import { Loader2 } from 'lucide-react';
 import { useFormContext } from '@/hooks/form-context';
 import { Button } from './ui/button';
+import { Spinner } from './ui/spinner';
 
 function SubscribeButton({
 	label,
@@ -23,11 +23,7 @@ function SubscribeButton({
 					type="submit"
 					{...props}
 				>
-					{isSubmitting ? (
-						<Loader2 className="animate-spin" size={15} />
-					) : (
-						label
-					)}
+					{isSubmitting ? <Spinner /> : label}
 				</Button>
 			)}
 			selector={(state) => [state.canSubmit, state.isSubmitting]}

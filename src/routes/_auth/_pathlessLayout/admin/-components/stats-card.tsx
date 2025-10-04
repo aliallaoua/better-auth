@@ -1,5 +1,5 @@
 import { Shield, TrendingUp, UserCheck, Users, UserX } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
 interface UserStats {
@@ -21,36 +21,48 @@ export function StatCard({ userStats, className }: StatCardProps) {
 			value: userStats.total,
 			icon: Users,
 			description: 'All registered users',
-			trend: '+12% from last month',
+			trend: '+12%',
+			trendLabel: 'from last month',
+			isPositive: true,
 			color: 'text-blue-600',
-			bgColor: 'bg-blue-50 dark:bg-blue-950/20',
+			bgColor: 'bg-blue-50 dark:bg-blue-950/30',
+			borderColor: 'border-blue-200 dark:border-blue-900',
 		},
 		{
 			title: 'Administrators',
 			value: userStats.admins,
 			icon: Shield,
 			description: 'Admin role users',
-			trend: 'No change',
+			trend: '0%',
+			trendLabel: 'No change',
+			isPositive: null,
 			color: 'text-purple-600',
-			bgColor: 'bg-purple-50 dark:bg-purple-950/20',
+			bgColor: 'bg-purple-50 dark:bg-purple-950/30',
+			borderColor: 'border-purple-200 dark:border-purple-900',
 		},
 		{
 			title: 'Active Users',
 			value: userStats.active,
 			icon: UserCheck,
 			description: 'Currently active',
-			trend: '+8% from last month',
+			trend: '+8%',
+			trendLabel: 'from last month',
+			isPositive: true,
 			color: 'text-green-600',
-			bgColor: 'bg-green-50 dark:bg-green-950/20',
+			bgColor: 'bg-green-50 dark:bg-green-950/30',
+			borderColor: 'border-green-200 dark:border-green-900',
 		},
 		{
 			title: 'Banned Users',
 			value: userStats.banned,
 			icon: UserX,
 			description: 'Suspended accounts',
-			trend: '-2% from last month',
+			trend: '-2%',
+			trendLabel: 'from last month',
+			isPositive: false,
 			color: 'text-red-600',
-			bgColor: 'bg-red-50 dark:bg-red-950/20',
+			bgColor: 'bg-red-50 dark:bg-red-950/30',
+			borderColor: 'border-red-200 dark:border-red-900',
 		},
 	];
 
@@ -60,33 +72,66 @@ export function StatCard({ userStats, className }: StatCardProps) {
 				const Icon = stat.icon;
 				return (
 					<Card
-						className="relative overflow-hidden hover:shadow-stat-card/25 h-full w-full transition-all hover:shadow-lg"
+						className={cn(
+							'group relative overflow-hidden border-2 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:shadow-stat-card/25',
+							stat.borderColor
+						)}
 						key={stat.title}
 					>
-						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-							<CardTitle className="text-sm font-medium text-muted-foreground">
-								{stat.title}
-							</CardTitle>
-							<div className={cn('rounded-full p-2', stat.bgColor)}>
-								<Icon className={cn('h-4 w-4', stat.color)} />
-							</div>
-						</CardHeader>
-						<CardContent>
-							<div className="text-2xl font-bold">
-								{stat.value.toLocaleString()}
-							</div>
-							<p className="text-xs text-muted-foreground mt-1">
-								{stat.description}
-							</p>
-							<div className="flex items-center mt-2">
-								<TrendingUp className="h-3 w-3 text-green-500 mr-1" />
-								<span className="text-xs text-green-600 font-medium">
-									{stat.trend}
-								</span>
+						<CardContent className="p-6">
+							<div className="flex items-start justify-between">
+								<div className="space-y-3 flex-1">
+									<p className="text-sm font-medium text-muted-foreground">
+										{stat.title}
+									</p>
+									<div className="space-y-1">
+										<p className="text-3xl font-bold tracking-tight">
+											{stat.value.toLocaleString()}
+										</p>
+										<p className="text-xs text-muted-foreground">
+											{stat.description}
+										</p>
+									</div>
+									<div className="flex items-center gap-1 text-xs">
+										{stat.isPositive !== null && (
+											<TrendingUp
+												className={cn(
+													'h-3 w-3',
+													stat.isPositive ? 'text-green-600' : 'text-red-600',
+													!stat.isPositive && 'rotate-180'
+												)}
+											/>
+										)}
+										<span
+											className={cn(
+												'font-medium',
+												stat.isPositive === true && 'text-green-600',
+												stat.isPositive === false && 'text-red-600',
+												stat.isPositive === null && 'text-muted-foreground'
+											)}
+										>
+											{stat.trend}
+										</span>
+										<span className="text-muted-foreground">
+											{stat.trendLabel}
+										</span>
+									</div>
+								</div>
+								<div
+									className={cn(
+										'rounded-xl p-3 transition-transform duration-300 group-hover:scale-110',
+										stat.bgColor
+									)}
+								>
+									<Icon className={cn('h-5 w-5', stat.color)} />
+								</div>
 							</div>
 						</CardContent>
 						<div
-							className={cn('absolute inset-x-0 bottom-0 h-1', stat.bgColor)}
+							className={cn(
+								'absolute bottom-0 inset-x-0 h-1 transition-all duration-300 group-hover:h-1.5',
+								stat.bgColor
+							)}
 						/>
 					</Card>
 				);

@@ -1,5 +1,5 @@
 import { useRouter } from '@tanstack/react-router';
-import { Laptop, Loader2, LogOut, PhoneIcon, StopCircle } from 'lucide-react';
+import { Laptop, LogOut, PhoneIcon, StopCircle } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { UAParser } from 'ua-parser-js';
@@ -24,6 +24,8 @@ import { EditUserForm } from '../form/edit-user-form';
 import { ListPasskeysForm } from '../form/list-passkeys-form';
 import { QRCodePasswordForm } from '../form/QR-code-password-form';
 import { TwoFactorForm } from '../form/two-factor-form';
+import { ButtonGroup } from '../ui/button-group';
+import { Spinner } from '../ui/spinner';
 
 export default function UserCard(props: {
 	session: Session | null;
@@ -70,10 +72,14 @@ export default function UserCard(props: {
 						</div>
 						<EditUserForm />
 					</div>
-					<div className="flex gap-2 ml-[52px]">
-						<ChangeEmailForm />
-						<DeleteAccountForm />
-					</div>
+					<ButtonGroup>
+						<ButtonGroup>
+							<ChangeEmailForm />
+						</ButtonGroup>
+						<ButtonGroup>
+							<DeleteAccountForm />
+						</ButtonGroup>
+					</ButtonGroup>
 				</div>
 
 				{session?.user.emailVerified ? null : (
@@ -110,7 +116,7 @@ export default function UserCard(props: {
 								variant="secondary"
 							>
 								{emailVerificationPending ? (
-									<Loader2 className="animate-spin" size={15} />
+									<Spinner />
 								) : (
 									'Resend Verification Email'
 								)}
@@ -157,7 +163,7 @@ export default function UserCard(props: {
 											}}
 										>
 											{isTerminating === session.id ? (
-												<Loader2 className="animate-spin" size={15} />
+												<Spinner />
 											) : session.id === props.session?.session.id ? (
 												'Sign Out'
 											) : (
@@ -173,8 +179,10 @@ export default function UserCard(props: {
 					<div className="flex flex-col gap-2">
 						<p className="text-sm">Passkeys</p>
 						<div className="flex flex-wrap gap-2">
-							<AddPasskeyForm />
-							<ListPasskeysForm />
+							<ButtonGroup>
+								<AddPasskeyForm />
+								<ListPasskeysForm />
+							</ButtonGroup>
 						</div>
 					</div>
 					<div className="flex flex-col gap-2">
@@ -209,7 +217,7 @@ export default function UserCard(props: {
 					>
 						<span className="text-sm">
 							{isSignOut ? (
-								<Loader2 className="animate-spin" size={15} />
+								<Spinner />
 							) : (
 								<div className="flex items-center gap-2">
 									<StopCircle color="red" size={16} />
@@ -231,7 +239,7 @@ export default function UserCard(props: {
 					>
 						<span className="text-sm">
 							{isSignOut ? (
-								<Loader2 className="animate-spin" size={15} />
+								<Spinner />
 							) : (
 								<div className="flex items-center gap-2">
 									<LogOut size={16} />

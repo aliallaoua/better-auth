@@ -1,9 +1,10 @@
 import { useStore } from '@tanstack/react-form';
 
 import { useFieldContext } from '@/hooks/form-context';
+import { cn } from '@/lib/utils';
 import { ErrorMessages } from './ErrorMessages';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
+import { Field, FieldLabel } from './ui/field';
+import { InputGroupInput } from './ui/input-group';
 
 type ImageFieldsProps = React.ComponentProps<'input'> & {
 	label?: string;
@@ -19,21 +20,19 @@ export default function ImageField({
 	const errors = useStore(field.store, (state) => state.meta.errors);
 
 	return (
-		<div>
-			<Label htmlFor={field.name}>
-				{label}
-				<Input
-					accept="image/*"
-					className={className}
-					data-slot="input"
-					onBlur={field.handleBlur}
-					onChange={(e) => field.handleChange(e.target.value)}
-					type="file"
-					// value={field.state.value}
-					{...props}
-				/>
-			</Label>
+		<Field>
+			<FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+			<InputGroupInput
+				accept="image/*"
+				className={cn(className)}
+				data-slot="input-group-control"
+				onBlur={field.handleBlur}
+				onChange={(e) => field.handleChange(e.target.value)}
+				type="file"
+				// value={field.state.value}
+				{...props}
+			/>
 			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
-		</div>
+		</Field>
 	);
 }

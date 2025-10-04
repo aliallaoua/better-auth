@@ -16,6 +16,7 @@ import { authClient } from '@/lib/auth-client';
 import { ChangePasswordSchema } from '@/schema';
 // import { Alert, AlertDescription } from '../ui/alert';
 import { Button } from '../ui/button';
+import { FieldGroup, FieldSet } from '../ui/field';
 
 export function ChangePasswordForm() {
 	const [open, setOpen] = useState<boolean>(false);
@@ -88,53 +89,41 @@ export function ChangePasswordForm() {
 						form.handleSubmit();
 					}}
 				>
-					<div className="grid gap-6">
-						<div className="flex flex-col gap-6">
-							<div className="grid gap-3">
-								<form.AppField
-									children={(field) => (
-										<field.TextField
-											autoComplete="current-password"
-											label="Current Password"
-											placeholder="Password"
-											required
-											type="password"
-											withPasswordToggle
-										/>
-									)}
-									name="currentPassword"
-								/>
-							</div>
-							<div className="grid gap-3">
-								<form.AppField
-									children={(field) => (
-										<field.TextField
-											autoComplete="new-password"
-											label="New Password"
-											placeholder="New Password"
-											required
-											type="password"
-											withPasswordToggle
-										/>
-									)}
-									name="newPassword"
-								/>
-							</div>
-							<div className="grid gap-3">
-								<form.AppField
-									children={(field) => (
-										<field.TextField
-											autoComplete="new-password"
-											label="Confirm Password"
-											placeholder="Confirm Password"
-											required
-											type="password"
-											withPasswordToggle
-										/>
-									)}
-									name="confirmPassword"
-								/>
-							</div>
+					<FieldGroup>
+						<FieldSet>
+							<form.AppField
+								children={(field) => (
+									<field.PasswordField
+										autoComplete="current-password"
+										label="Current Password"
+										placeholder="Password"
+										required
+									/>
+								)}
+								name="currentPassword"
+							/>
+							<form.AppField
+								children={(field) => (
+									<field.PasswordField
+										autoComplete="new-password"
+										label="New Password"
+										placeholder="New Password"
+										required
+									/>
+								)}
+								name="newPassword"
+							/>
+							<form.AppField
+								children={(field) => (
+									<field.PasswordField
+										autoComplete="new-password"
+										label="Confirm Password"
+										placeholder="Confirm Password"
+										required
+									/>
+								)}
+								name="confirmPassword"
+							/>
 							<div className="flex items-center gap-2">
 								<form.AppField
 									children={(field) => (
@@ -156,8 +145,8 @@ export function ChangePasswordForm() {
 									<form.SubscribeButton label="Change Password" />
 								</form.AppForm>
 							</DialogFooter>
-						</div>
-					</div>
+						</FieldSet>
+					</FieldGroup>
 
 					{/* Display form-level errors */}
 					{/* <form.Subscribe

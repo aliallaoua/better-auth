@@ -1,62 +1,81 @@
 import { useStore } from '@tanstack/react-form';
+import { Link } from '@tanstack/react-router';
 import { Eye, EyeOff } from 'lucide-react';
-import { useState } from 'react';
-
+import { type JSX, useState } from 'react';
 import { useFieldContext } from '@/hooks/form-context';
 import { cn } from '@/lib/utils';
 import { ErrorMessages } from './ErrorMessages';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
+import { Field, FieldLabel } from './ui/field';
+import {
+	InputGroup,
+	InputGroupAddon,
+	InputGroupButton,
+	InputGroupInput,
+} from './ui/input-group';
 
-type PasswordFieldProps = React.ComponentProps<'input'> & {
-	label?: string;
+type PasswordFieldProps = Omit<React.ComponentProps<'input'>, 'type'> & {
+	label: string | JSX.Element;
+	required?: boolean;
+	placeholder?: string;
+	autoComplete?: string;
+	forgotPassword?: boolean;
 };
 
 export default function PasswordField({
 	className,
-	label = '',
-	type = 'password',
+	label,
+	required,
+	placeholder,
+	autoComplete,
+	forgotPassword = false,
 	...props
 }: PasswordFieldProps) {
 	const field = useFieldContext<string>();
-
 	const errors = useStore(field.store, (state) => state.meta.errors);
-
 	const [showPassword, setShowPassword] = useState(false);
 
 	return (
-		<div>
-			<Label htmlFor={field.name}>{label}</Label>
-			<div className="relative">
-				<Input
-					className={cn('hide-password-toggle pr-10', className)}
-					data-slot="input"
-					name="password"
+		<Field>
+			<div className="flex items-center">
+				<FieldLabel htmlFor={field.name}>
+					{label}
+					{required ? ' *' : ''}
+				</FieldLabel>
+				{forgotPassword && (
+					<Link
+						className="ml-auto text-sm underline-offset-4 hover:underline"
+						to="/forget-password"
+					>
+						Forgot your password?
+					</Link>
+				)}
+			</div>
+			<InputGroup>
+				<InputGroupInput
+					aria-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
+					autoComplete={autoComplete}
+					className={cn(className)}
+					data-slot="input-group-control"
+					id={field.name}
+					name={field.name}
 					onBlur={field.handleBlur}
 					onChange={(e) => field.handleChange(e.target.value)}
+					placeholder={placeholder}
 					type={showPassword ? 'text' : 'password'}
-					value={field.state.value}
+					value={field.state.value ?? ''}
 					{...props}
 				/>
-				<Button
-					className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
-					onClick={() => setShowPassword((prev) => !prev)}
-					size="sm"
-					type="button"
-					variant="ghost"
-				>
-					{showPassword ? (
-						<EyeOff aria-hidden="true" className="size-4" />
-					) : (
-						<Eye aria-hidden="true" className="size-4" />
-					)}
-					<span className="sr-only">
-						{showPassword ? 'Hide password' : 'Show password'}
-					</span>
-				</Button>
-			</div>
-
+				<InputGroupAddon align="inline-end">
+					<InputGroupButton
+						aria-label={showPassword ? 'Hide password' : 'Show password'}
+						className="rounded-full"
+						onClick={() => setShowPassword((s) => !s)}
+						size="icon-xs"
+					>
+						{showPassword ? <EyeOff /> : <Eye />}
+					</InputGroupButton>
+				</InputGroupAddon>
+			</InputGroup>
 			{/* hides browsers password toggles */}
 			<style>{`
         .hide-password-toggle::-ms-reveal,
@@ -66,8 +85,7 @@ export default function PasswordField({
           display: none;
         }
       `}</style>
-
 			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
-		</div>
+		</Field>
 	);
 }

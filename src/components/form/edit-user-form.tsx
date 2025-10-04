@@ -18,6 +18,7 @@ import { useAppForm } from '@/hooks/form';
 import { authClient, useSession } from '@/lib/auth-client';
 import { convertImageToBase64 } from '@/lib/utils/convert-image';
 import { EditUserSchema } from '@/schema';
+import { FieldGroup, FieldSet } from '../ui/field';
 
 export function EditUserForm() {
 	const { data, isPending, error } = useSession();
@@ -138,69 +139,71 @@ export function EditUserForm() {
 						form.handleSubmit();
 					}}
 				>
-					<div className="grid gap-2">
-						<form.AppField
-							children={(field) => (
-								<div className="grid gap-2">
-									<field.TextField
-										autoComplete="name"
-										id="name"
-										label="Full Name"
-										placeholder={data?.user.name}
-									/>
-								</div>
-							)}
-							name="name"
-						/>
+					<FieldGroup>
+						<FieldSet>
+							<form.AppField
+								children={(field) => (
+									<div className="grid gap-2">
+										<field.TextField
+											autoComplete="name"
+											id="name"
+											label="Full Name"
+											placeholder={data?.user.name}
+										/>
+									</div>
+								)}
+								name="name"
+							/>
 
-						<form.AppField
-							children={(field) => (
-								<div className="grid gap-2">
-									<Label htmlFor="image">Profile Image</Label>
-									<div className="flex items-end gap-4">
-										{imagePreview && !shouldDeleteImage && (
-											<div className="relative size-16 overflow-hidden rounded-sm">
-												<img
-													alt="Profile preview"
-													className="size-full object-cover"
-													src={imagePreview}
-												/>
-											</div>
-										)}
-										<div className="flex w-full items-center gap-2">
-											<field.ImageField
-												className="w-full text-muted-foreground"
-												id="image"
-												onChange={handleImageChange}
-											/>
-											{showDeleteButton && (
-												<X
-													className="cursor-pointer"
-													onClick={handleDeleteImage}
-												/>
+							<form.AppField
+								children={(field) => (
+									<div className="grid gap-2">
+										<Label htmlFor="image">Profile Image</Label>
+										<div className="flex items-end gap-4">
+											{imagePreview && !shouldDeleteImage && (
+												<div className="relative size-16 overflow-hidden rounded-sm">
+													<img
+														alt="Profile preview"
+														className="size-full object-cover"
+														src={imagePreview}
+													/>
+												</div>
 											)}
-
-											{showClearButton && (
-												<X
-													className="cursor-pointer"
-													onClick={handleClearNewImage}
+											<div className="flex w-full items-center gap-2">
+												<field.ImageField
+													className="w-full text-muted-foreground"
+													id="image"
+													onChange={handleImageChange}
 												/>
+												{showDeleteButton && (
+													<X
+														className="cursor-pointer"
+														onClick={handleDeleteImage}
+													/>
+												)}
+
+												{showClearButton && (
+													<X
+														className="cursor-pointer"
+														onClick={handleClearNewImage}
+													/>
+												)}
+											</div>
+										</div>
+										{/* Action Buttons */}
+										<div className="flex gap-2">
+											{shouldDeleteImage && (
+												<div className="text-sm text-muted-foreground">
+													Photo will be removed when you save
+												</div>
 											)}
 										</div>
 									</div>
-									{/* Action Buttons */}
-									<div className="flex gap-2">
-										{shouldDeleteImage && (
-											<div className="text-sm text-muted-foreground">
-												Photo will be removed when you save
-											</div>
-										)}
-									</div>
-								</div>
-							)}
-							name="image"
-						/>
-					</div>
+								)}
+								name="image"
+							/>
+						</FieldSet>
+					</FieldGroup>
 
 					<DialogFooter className="mt-4">
 						<form.AppForm>

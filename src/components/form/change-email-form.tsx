@@ -72,20 +72,18 @@ export function ChangeEmailForm() {
 				>
 					<div className="grid gap-6">
 						<div className="flex flex-col gap-6">
-							<div className="grid gap-3">
-								<form.AppField
-									children={(field) => (
-										<field.TextField
-											autoComplete="email"
-											label="Email"
-											placeholder="Enter your email"
-											required
-											type="email"
-										/>
-									)}
-									name="newEmail"
-								/>
-							</div>
+							<form.AppField
+								children={(field) => (
+									<field.TextField
+										autoComplete="email"
+										label="Email"
+										placeholder="Enter your email"
+										required
+										type="email"
+									/>
+								)}
+								name="newEmail"
+							/>
 
 							<DialogFooter>
 								<form.AppForm>

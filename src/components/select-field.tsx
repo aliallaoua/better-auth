@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/select';
 import { useFieldContext } from '@/hooks/form-context';
 import { ErrorMessages } from './ErrorMessages';
+import { Field } from './ui/field';
 
 export function SelectField({
 	label,
@@ -24,7 +25,7 @@ export function SelectField({
 	const errors = useStore(field.store, (state) => state.meta.errors);
 
 	return (
-		<div>
+		<Field>
 			<Select
 				name={field.name}
 				onValueChange={(value) => field.handleChange(value)}
@@ -45,6 +46,6 @@ export function SelectField({
 				</SelectContent>
 			</Select>
 			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
-		</div>
+		</Field>
 	);
 }

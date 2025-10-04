@@ -1,9 +1,10 @@
 import type { CheckedState } from '@radix-ui/react-checkbox';
 import { useStore } from '@tanstack/react-form';
 import { useFieldContext } from '@/hooks/form-context';
+import { cn } from '@/lib/utils';
 import { ErrorMessages } from './ErrorMessages';
 import { Checkbox } from './ui/checkbox';
-import { Label } from './ui/label';
+import { Field, FieldContent, FieldDescription, FieldLabel } from './ui/field';
 
 type CheckboxFieldProps = {
 	label: string;
@@ -24,28 +25,33 @@ export const CheckboxField = ({
 	const errors = useStore(field.store, (state) => state.meta.errors);
 
 	return (
-		<div className="space-y-2">
-			<div className="flex items-center space-x-2">
+		<>
+			<Field orientation="horizontal">
 				<Checkbox
 					checked={field.state.value}
-					className={className}
+					className={cn(className)}
 					id={field.name}
 					onBlur={field.handleBlur}
 					onCheckedChange={(checked) => {
 						field.handleChange(checked === true);
+						onCheckedChange?.(checked);
 					}}
 					{...props}
 				/>
-				<div className="grid gap-1.5 leading-none">
-					<Label className="cursor-pointer" htmlFor={field.name}>
+				{description ? (
+					<FieldContent>
+						<FieldLabel className="font-normal" htmlFor={field.name}>
+							{label}
+						</FieldLabel>
+						<FieldDescription>{description}</FieldDescription>
+					</FieldContent>
+				) : (
+					<FieldLabel className="font-normal" htmlFor={field.name}>
 						{label}
-					</Label>
-					{description && (
-						<p className="text-muted-foreground text-sm">{description}</p>
-					)}
-				</div>
-			</div>
+					</FieldLabel>
+				)}
+			</Field>
 			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
-		</div>
+		</>
 	);
 };

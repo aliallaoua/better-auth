@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { ErrorMessages } from './ErrorMessages';
 import { Button } from './ui/button';
 import { Calendar } from './ui/calendar';
+import { Field } from './ui/field';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
 export default function DateField() {
@@ -14,7 +15,7 @@ export default function DateField() {
 	const errors = useStore(field.store, (state) => state.meta.errors);
 
 	return (
-		<div>
+		<Field>
 			<Popover>
 				<PopoverTrigger asChild>
 					<Button
@@ -43,6 +44,6 @@ export default function DateField() {
 				</PopoverContent>
 			</Popover>
 			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
-		</div>
+		</Field>
 	);
 }

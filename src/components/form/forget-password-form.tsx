@@ -16,6 +16,12 @@ import { authClient } from '@/lib/auth-client';
 import { ForgotPasswordSchema } from '@/schema';
 import { Alert, AlertDescription } from '../ui/alert';
 import { Button } from '../ui/button';
+import {
+	FieldDescription,
+	FieldGroup,
+	FieldSeparator,
+	FieldSet,
+} from '../ui/field';
 
 export function ForgetPasswordForm() {
 	const [isSubmitted, setIsSubmitted] = useState(false);
@@ -104,8 +110,8 @@ export function ForgetPasswordForm() {
 							form.handleSubmit();
 						}}
 					>
-						<div className="grid gap-6">
-							<div className="flex flex-col gap-6">
+						<FieldGroup>
+							<FieldSet>
 								<div className="grid gap-3">
 									<form.AppField
 										children={(field) => (
@@ -126,17 +132,17 @@ export function ForgetPasswordForm() {
 										<form.SubscribeButton label="Send reset link" />
 									</form.AppForm>
 								</div>
-							</div>
-
-							<div className="text-center text-sm">
+							</FieldSet>
+							<FieldSeparator />
+							<FieldDescription className="text-center">
 								<Link
 									className="hover:underline hover:underline-offset-4"
 									to="/signin"
 								>
 									Back to sign in
 								</Link>
-							</div>
-						</div>
+							</FieldDescription>
+						</FieldGroup>
 
 						{/* Display form-level errors */}
 						{/* <form.Subscribe

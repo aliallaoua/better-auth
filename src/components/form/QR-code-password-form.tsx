@@ -17,6 +17,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '../ui/dialog';
+import { FieldGroup, FieldSet } from '../ui/field';
 
 export function QRCodePasswordForm({
 	twoFactorVerifyURI,
@@ -95,29 +96,27 @@ export function QRCodePasswordForm({
 							form.handleSubmit();
 						}}
 					>
-						<div className="flex flex-col gap-2">
-							<form.AppField
-								children={(field) => (
-									<div className="grid gap-2">
-										<field.TextField
+						<FieldGroup>
+							<FieldSet>
+								<form.AppField
+									children={(field) => (
+										<field.PasswordField
 											label=""
 											placeholder="Enter Password"
 											required
-											type="password"
-											withPasswordToggle
 										/>
-									</div>
-								)}
-								name="password"
-							/>
-							<form.AppForm>
-								<form.SubscribeButton
-									className="cursor-pointer"
-									disabled={loading || !form.state.canSubmit}
-									label="Show QR Code"
+									)}
+									name="password"
 								/>
-							</form.AppForm>
-						</div>
+								<form.AppForm>
+									<form.SubscribeButton
+										className="cursor-pointer"
+										disabled={loading || !form.state.canSubmit}
+										label="Show QR Code"
+									/>
+								</form.AppForm>
+							</FieldSet>
+						</FieldGroup>
 						{/* Display form-level errors */}
 						{/* <form.Subscribe
 							children={([errorMap]) =>

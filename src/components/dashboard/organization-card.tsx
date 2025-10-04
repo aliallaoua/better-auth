@@ -1,6 +1,6 @@
 import { formOptions } from '@tanstack/react-form';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronDownIcon, Loader2, MailPlus } from 'lucide-react';
+import { ChevronDownIcon, MailPlus } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -38,6 +38,7 @@ import type {
 } from '@/lib/auth-types';
 import { InviteMemberSchema } from '@/schema';
 import { CreateOrganizationForm } from '../form/create-organization-form';
+import { Spinner } from '../ui/spinner';
 
 export function OrganizationCard(props: {
 	session: Session | null;
@@ -272,7 +273,7 @@ export function OrganizationCard(props: {
 													variant="destructive"
 												>
 													{isRevoking.includes(invitation.id) ? (
-														<Loader2 className="animate-spin" size={16} />
+														<Spinner />
 													) : (
 														'Revoke'
 													)}
@@ -408,10 +409,10 @@ function InviteMemberDialog({
 						<form.AppField
 							children={(field) => (
 								<div className="grid gap-2">
-									<Label htmlFor={field.name}>Email</Label>
 									<field.TextField
 										autoComplete="email"
 										id={field.name}
+										label="Email"
 										name={field.name}
 										required
 										type="email"

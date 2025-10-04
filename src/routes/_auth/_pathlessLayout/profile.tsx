@@ -23,8 +23,8 @@ const getProfileData = createServerFn()
 			return {
 				session: session
 					? {
-							user: session.user,
-							session: session.session,
+							user: session?.user,
+							session: session?.session,
 						}
 					: null,
 				activeSessions: activeSessions || [],

@@ -1,3 +1,5 @@
+import { FieldError } from './ui/field';
+
 export function ErrorMessages({
 	errors,
 }: {
@@ -6,12 +8,9 @@ export function ErrorMessages({
 	return (
 		<>
 			{errors.map((error) => (
-				<div
-					className="mt-1 font-bold text-red-500"
-					key={typeof error === 'string' ? error : error.message}
-				>
+				<FieldError key={typeof error === 'string' ? error : error.message}>
 					{typeof error === 'string' ? error : error.message}
-				</div>
+				</FieldError>
 			))}
 		</>
 	);

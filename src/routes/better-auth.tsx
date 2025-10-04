@@ -3,6 +3,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { toast } from 'sonner';
 import z from 'zod';
 import { Button } from '@/components/ui/button';
+import { FieldGroup } from '@/components/ui/field';
 import { Separator } from '@/components/ui/separator';
 import { sendTestEmail } from '@/functions/send';
 import { useAppForm } from '@/hooks/form';
@@ -119,50 +120,52 @@ function BetterAuthPage() {
 						form.handleSubmit();
 					}}
 				>
-					<form.AppField
-						children={(field) => (
-							<field.TextField
-								autoComplete="email"
-								label="Email"
-								placeholder="name@example.com"
-								required
-								type="email"
-							/>
-						)}
-						name="email"
-					/>
+					<FieldGroup>
+						<form.AppField
+							children={(field) => (
+								<field.TextField
+									autoComplete="email"
+									label="Email"
+									placeholder="name@example.com"
+									required
+									type="email"
+								/>
+							)}
+							name="email"
+						/>
 
-					<form.AppField name="emailtype">
-						{(field) => (
-							<field.SelectField
-								label="Email type"
-								placeholder="Select a type"
-								values={[
-									{ label: 'HTML', value: 'html' },
-									{ label: 'React', value: 'react' },
-								]}
-							/>
-						)}
-					</form.AppField>
+						<form.AppField name="emailtype">
+							{(field) => (
+								<field.SelectField
+									label="Email type"
+									placeholder="Select a type"
+									values={[
+										{ label: 'HTML', value: 'html' },
+										{ label: 'React', value: 'react' },
+									]}
+								/>
+							)}
+						</form.AppField>
 
-					<form.AppField name="emailmethod">
-						{(field) => (
-							<field.SelectField
-								label="Email method"
-								placeholder="Select a method"
-								values={[
-									{ label: 'Server Function', value: 'fn' },
-									{ label: 'Server Route', value: 'route' },
-								]}
-							/>
-						)}
-					</form.AppField>
+						<form.AppField name="emailmethod">
+							{(field) => (
+								<field.SelectField
+									label="Email method"
+									placeholder="Select a method"
+									values={[
+										{ label: 'Server Function', value: 'fn' },
+										{ label: 'Server Route', value: 'route' },
+									]}
+								/>
+							)}
+						</form.AppField>
 
-					<div className="flex justify-end">
-						<form.AppForm>
-							<form.SubscribeButton className="cursor-pointer" label="Send" />
-						</form.AppForm>
-					</div>
+						<div className="flex justify-end">
+							<form.AppForm>
+								<form.SubscribeButton className="cursor-pointer" label="Send" />
+							</form.AppForm>
+						</div>
+					</FieldGroup>
 				</form>
 				<div className="flex w-full items-center gap-4">
 					<Separator className="flex-1" />

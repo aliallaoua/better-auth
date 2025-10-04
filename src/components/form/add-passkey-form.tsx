@@ -77,16 +77,14 @@ export function AddPasskeyForm() {
 						form.handleSubmit();
 					}}
 				>
-					<div className="grid gap-2">
-						<form.AppField
-							children={(field) => (
-								<div className="grid gap-2">
-									<field.TextField label="Passkey Name" required />
-								</div>
-							)}
-							name="passkeyName"
-						/>
-					</div>
+					<form.AppField
+						children={(field) => (
+							<div className="grid gap-2">
+								<field.TextField label="Passkey Name" required />
+							</div>
+						)}
+						name="passkeyName"
+					/>
 					<DialogFooter>
 						<DialogFooter className="mt-4">
 							<form.AppForm>
