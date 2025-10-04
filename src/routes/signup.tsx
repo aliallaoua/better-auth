@@ -1,5 +1,4 @@
-import { createFileRoute, Link, redirect } from '@tanstack/react-router';
-import z from 'zod';
+import { createFileRoute } from '@tanstack/react-router';
 
 import { SignUpForm } from '@/components/form/sign-up-form';
 

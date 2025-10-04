@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
-import { Download, Plus, Search } from 'lucide-react';
+import { Download, Plus } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Toaster, toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,6 @@ import {
 	DialogTrigger,
 } from '@/components/ui/dialog';
 import { FieldGroup, FieldSet } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAppForm } from '@/hooks/form';
 import useListUsersQuery from '@/hooks/queries/useListUsersQuery';
@@ -52,7 +51,6 @@ function AdminDashboard() {
 	const [isLoading, setIsLoading] = useState<string | undefined>();
 	const [isBanDialogOpen, setIsBanDialogOpen] = useState(false);
 	const [selectedUserId, setSelectedUserId] = useState<string>('');
-	const [searchQuery, setSearchQuery] = useState('');
 
 	const { data: users = [], isPending } = useListUsersQuery();
 
@@ -67,19 +65,6 @@ function AdminDashboard() {
 			active: users.filter((u) => !u.banned).length,
 		};
 	}, [users]);
-
-	// Filter users based on search query
-	const filteredUsers = useMemo(() => {
-		if (!searchQuery) return users;
-
-		const query = searchQuery.toLowerCase();
-		return users.filter(
-			(user) =>
-				user.email.toLowerCase().includes(query) ||
-				user.name?.toLowerCase().includes(query) ||
-				user.id.toLowerCase().includes(query)
-		);
-	}, [users, searchQuery]);
 
 	const createUserForm = useAppForm({
 		defaultValues: {
@@ -418,17 +403,6 @@ function AdminDashboard() {
 							</ButtonGroup>
 						</ButtonGroup>
 					</div>
-
-					{/* Search Bar */}
-					<div className="relative max-w-md">
-						<Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-						<Input
-							className="pl-10"
-							onChange={(e) => setSearchQuery(e.target.value)}
-							placeholder="Search users by name, email, or ID..."
-							value={searchQuery}
-						/>
-					</div>
 				</div>
 
 				{/* Stats Cards */}
@@ -441,7 +415,7 @@ function AdminDashboard() {
 					) : (
 						<DataTable
 							columns={columns}
-							data={filteredUsers}
+							data={users}
 							onExportData={handleExportData}
 						/>
 					)}
@@ -461,7 +435,7 @@ function AdminDashboard() {
 								banUserForm.handleSubmit();
 							}}
 						>
-							<div>
+							<FieldGroup>
 								<banUserForm.AppField
 									children={(field) => (
 										<div className="grid gap-2">
@@ -470,8 +444,6 @@ function AdminDashboard() {
 									)}
 									name="reason"
 								/>
-							</div>
-							<div className="flex flex-col space-y-1.5">
 								<banUserForm.AppField
 									children={(field) => (
 										<div className="grid gap-2">
@@ -481,18 +453,18 @@ function AdminDashboard() {
 									)}
 									name="expirationDate"
 								/>
-							</div>
 
-							<banUserForm.AppForm>
-								<banUserForm.SubscribeButton
-									className="w-full"
-									disabled={
-										isLoading === `ban-${selectedUserId}` ||
-										!banUserForm.state.canSubmit
-									}
-									label="Ban User"
-								/>
-							</banUserForm.AppForm>
+								<banUserForm.AppForm>
+									<banUserForm.SubscribeButton
+										className="w-full"
+										disabled={
+											isLoading === `ban-${selectedUserId}` ||
+											!banUserForm.state.canSubmit
+										}
+										label="Ban User"
+									/>
+								</banUserForm.AppForm>
+							</FieldGroup>
 						</form>
 					</DialogContent>
 				</Dialog>

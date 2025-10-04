@@ -123,28 +123,6 @@ export function SignUpForm() {
 							name="name"
 						/>
 
-						{/* <div className="grid gap-3">
-							<Label htmlFor="firstName">First name</Label>
-							<form.AppField
-								name="firstName"
-								children={(field) => (
-									<field.TextField
-										id="firstName"
-									/>
-								)}
-							/>
-						</div>
-						<div className="grid gap-3">
-							<Label htmlFor="lastName">Last name</Label>
-							<form.AppField
-								name="lastName"
-								children={(field) => (
-									<field.TextField
-										id="lastName"
-									/>
-								)}
-							/>
-						</div> */}
 						<form.AppField
 							children={(field) => (
 								<field.TextField

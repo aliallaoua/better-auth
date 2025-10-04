@@ -10,6 +10,13 @@ import {
 import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import {
+	Item,
+	ItemContent,
+	ItemDescription,
+	ItemMedia,
+	ItemTitle,
+} from '@/components/ui/item';
 import useSignOutMutation from '@/hooks/mutations/useSignOutMutation';
 import { useSession } from '@/lib/auth-client';
 import {
@@ -48,28 +55,33 @@ export default function UserButton() {
 					</Avatar>
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end" className="w-56" forceMount>
-				<DropdownMenuLabel className="font-normal">
+			<DropdownMenuContent align="end" className="w-72 [--radius:0.65rem]">
+				<DropdownMenuLabel className="p-0">
 					{session?.user ? (
-						<div className="flex items-center space-x-3">
-							<Avatar className="size-8">
-								<AvatarImage
-									alt="User avatar"
-									src={session?.user.image ?? ''}
-								/>
-								<AvatarFallback>{session?.user.name.charAt(0)}</AvatarFallback>
-							</Avatar>
-							<div className="flex flex-col space-y-1">
-								<p className="text-sm font-medium leading-none">
-									{session?.user.name}
-								</p>
-								<p className="text-xs leading-none text-muted-foreground">
-									{session?.user.email}
-								</p>
-							</div>
-						</div>
+						<Item className="w-full p-2" size="sm">
+							<ItemMedia>
+								<Avatar className="size-8">
+									<AvatarImage
+										alt="User avatar"
+										className="grayscale"
+										src={session?.user.image ?? ''}
+									/>
+									<AvatarFallback>
+										{session?.user.name.charAt(0)}
+									</AvatarFallback>
+								</Avatar>
+							</ItemMedia>
+							<ItemContent className="gap-0.5">
+								<ItemTitle>{session?.user.name}</ItemTitle>
+								<ItemDescription>{session?.user.email}</ItemDescription>
+							</ItemContent>
+						</Item>
 					) : (
-						<div className="-my-1 text-muted-foreground text-xs">Account</div>
+						<Item className="w-full p-2" size="sm">
+							<ItemContent>
+								<ItemDescription>Account</ItemDescription>
+							</ItemContent>
+						</Item>
 					)}
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
