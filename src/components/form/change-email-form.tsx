@@ -1,7 +1,7 @@
-import { formOptions } from '@tanstack/react-form';
+import { formOptions } from "@tanstack/react-form";
 // import { AlertCircle } from 'lucide-react';
-import { useState } from 'react';
-import { toast } from 'sonner';
+import { useState } from "react";
+import { toast } from "sonner";
 import {
 	Dialog,
 	DialogContent,
@@ -10,18 +10,18 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '@/components/ui/dialog';
-import { useAppForm } from '@/hooks/form';
-import { authClient } from '@/lib/auth-client';
-import { ChangeEmailSchema } from '@/schema';
+} from "@/components/ui/dialog";
+import { useAppForm } from "@/hooks/form";
+import { authClient } from "@/lib/auth-client";
+import { ChangeEmailSchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
-import { Button } from '../ui/button';
+import { Button } from "../ui/button";
 
 export function ChangeEmailForm() {
 	const [open, setOpen] = useState<boolean>(false);
 	const changeEmailFormOpts = formOptions({
 		defaultValues: {
-			newEmail: '',
+			newEmail: "",
 		},
 	});
 
@@ -41,7 +41,7 @@ export function ChangeEmailForm() {
 				);
 			} else {
 				setOpen(false);
-				toast.success('Email approval sent successfully');
+				toast.success("Email approval sent successfully");
 			}
 		},
 	});

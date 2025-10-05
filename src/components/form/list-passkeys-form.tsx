@@ -1,6 +1,6 @@
 import { formOptions } from '@tanstack/react-form';
 import { Fingerprint, Trash } from 'lucide-react';
-import { useState } from 'react';
+import { Activity, useState } from 'react';
 import { toast } from 'sonner';
 import {
 	Dialog,
@@ -129,7 +129,8 @@ export function ListPasskeysForm() {
 				) : (
 					<p className="text-muted-foreground text-sm">No passkeys found</p>
 				)}
-				{!data?.length && (
+				{/* {!data?.length && ( */}
+				<Activity mode={data?.length ? 'hidden' : 'visible'}>
 					<form
 						className="flex flex-col gap-4"
 						onSubmit={(e) => {
@@ -181,7 +182,8 @@ export function ListPasskeysForm() {
 							selector={(state) => [state.errorMap]}
 						/> */}
 					</form>
-				)}
+				</Activity>
+				{/* )} */}
 				<DialogFooter>
 					{/* <Button className="cursor-pointer" onClick={() => setIsOpen(false)}>
 						Close

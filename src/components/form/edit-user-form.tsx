@@ -1,9 +1,9 @@
-import { formOptions } from '@tanstack/react-form';
-import { useRouter } from '@tanstack/react-router';
-import { Edit, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
+import { formOptions } from "@tanstack/react-form";
+import { useRouter } from "@tanstack/react-router";
+import { Edit, X } from "lucide-react";
+import { Activity, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -12,13 +12,13 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { useAppForm } from '@/hooks/form';
-import { authClient, useSession } from '@/lib/auth-client';
-import { convertImageToBase64 } from '@/lib/utils/convert-image';
-import { EditUserSchema } from '@/schema';
-import { FieldGroup, FieldSet } from '../ui/field';
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { useAppForm } from "@/hooks/form";
+import { authClient, useSession } from "@/lib/auth-client";
+import { convertImageToBase64 } from "@/lib/utils/convert-image";
+import { EditUserSchema } from "@/schema";
+import { FieldGroup, FieldSet } from "../ui/field";
 
 export function EditUserForm() {
 	const { data, isPending, error } = useSession();
@@ -29,7 +29,7 @@ export function EditUserForm() {
 
 	const editUserFormOpts = formOptions({
 		defaultValues: {
-			name: '',
+			name: "",
 			image: null,
 		},
 	});
@@ -53,7 +53,7 @@ export function EditUserForm() {
 				name: value.name || undefined,
 				fetchOptions: {
 					onSuccess: () => {
-						toast.success('User updated successfully');
+						toast.success("User updated successfully");
 					},
 					onError: (error: any) => {
 						toast.error(error.error.message);
@@ -80,7 +80,7 @@ export function EditUserForm() {
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (file) {
-			form.setFieldValue('image', file);
+			form.setFieldValue("image", file);
 			setShouldDeleteImage(false);
 
 			const reader = new FileReader();
@@ -94,27 +94,27 @@ export function EditUserForm() {
 	const handleDeleteImage = () => {
 		setShouldDeleteImage(true);
 		setImagePreview(null);
-		form.setFieldValue('image', null);
+		form.setFieldValue("image", null);
 
-		const fileInput = document.getElementById('image') as HTMLInputElement;
+		const fileInput = document.getElementById("image") as HTMLInputElement;
 		if (fileInput) {
-			fileInput.value = '';
+			fileInput.value = "";
 		}
 	};
 
 	const handleClearNewImage = () => {
-		form.setFieldValue('image', null);
+		form.setFieldValue("image", null);
 		setImagePreview(data?.user.image || null);
 		setShouldDeleteImage(false);
 
-		const fileInput = document.getElementById('image') as HTMLInputElement;
+		const fileInput = document.getElementById("image") as HTMLInputElement;
 		if (fileInput) {
-			fileInput.value = '';
+			fileInput.value = "";
 		}
 	};
 
 	const hasExistingImage = !!data?.user.image;
-	const hasNewImage = !!form.getFieldValue('image');
+	const hasNewImage = !!form.getFieldValue("image");
 	const showDeleteButton =
 		hasExistingImage && !shouldDeleteImage && !hasNewImage;
 	const showClearButton = hasNewImage;
@@ -175,28 +175,47 @@ export function EditUserForm() {
 													id="image"
 													onChange={handleImageChange}
 												/>
-												{showDeleteButton && (
+												{/* {showDeleteButton && (
 													<X
 														className="cursor-pointer"
 														onClick={handleDeleteImage}
 													/>
-												)}
+												)} */}
+												<Activity
+													mode={showDeleteButton ? "visible" : "hidden"}
+												>
+													<X
+														className="cursor-pointer"
+														onClick={handleDeleteImage}
+													/>
+												</Activity>
 
-												{showClearButton && (
+												{/* {showClearButton && (
 													<X
 														className="cursor-pointer"
 														onClick={handleClearNewImage}
 													/>
-												)}
+												)} */}
+												<Activity mode={showClearButton ? "visible" : "hidden"}>
+													<X
+														className="cursor-pointer"
+														onClick={handleClearNewImage}
+													/>
+												</Activity>
 											</div>
 										</div>
 										{/* Action Buttons */}
 										<div className="flex gap-2">
-											{shouldDeleteImage && (
+											{/* {shouldDeleteImage && (
 												<div className="text-sm text-muted-foreground">
 													Photo will be removed when you save
 												</div>
-											)}
+											)} */}
+											<Activity mode={shouldDeleteImage ? "visible" : "hidden"}>
+												<div className="text-sm text-muted-foreground">
+													Photo will be removed when you save
+												</div>
+											</Activity>
 										</div>
 									</div>
 								)}

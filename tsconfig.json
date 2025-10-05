@@ -1,36 +1,34 @@
-// {
-//   "include": ["**/*.ts", "**/*.tsx"],
-//   "compilerOptions": {
-//     "types": ["vite/client"],
-//     "allowImportingTsExtensions": true,
-//     "verbatimModuleSyntax": false,
-//     "noUnusedLocals": true,
-//     "noUnusedParameters": true,
-//     "noFallthroughCasesInSwitch": true,
-//     "noUncheckedSideEffectImports": true,
-//     "strictNullChecks": true
-//   }
-// }
-
 {
   "include": ["**/*.ts", "**/*.tsx"],
   "compilerOptions": {
-    "strict": true,
-    "esModuleInterop": true,
+    "target": "ES2022",
     "jsx": "react-jsx",
     "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "lib": ["DOM", "DOM.Iterable", "ES2024"],
-    "isolatedModules": true,
-    "resolveJsonModule": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": false,
+    "noEmit": true,
+
+    /* Linting */
     "skipLibCheck": true,
-    "target": "es2024",
-    "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "noEmit": true
+    }
+
+    // "esModuleInterop": true,
+    // "isolatedModules": true,
+    // "resolveJsonModule": true,
+    // "allowJs": true,
+    // "forceConsistentCasingInFileNames": true,
   }
 }

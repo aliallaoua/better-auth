@@ -313,9 +313,9 @@ function AdminDashboard() {
 							<ButtonGroup>
 								<Dialog onOpenChange={setIsDialogOpen} open={isDialogOpen}>
 									<DialogTrigger asChild>
-										<Button size="default">
-											<Plus className="mr-2 size-4" />
-											Create User
+										<Button variant="outline">
+											<Plus />
+											<span className="hidden lg:inline">Create User</span>
 										</Button>
 									</DialogTrigger>
 									<DialogContent className="sm:max-w-[425px]">
@@ -370,9 +370,6 @@ function AdminDashboard() {
 													<createUserForm.AppField name="role">
 														{(field) => (
 															<>
-																<Label className="pb-2" htmlFor={field.name}>
-																	Role
-																</Label>
 																<field.SelectField
 																	label="Role"
 																	placeholder="Select a role"

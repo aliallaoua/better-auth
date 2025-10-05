@@ -1,5 +1,6 @@
 import type { CheckedState } from '@radix-ui/react-checkbox';
 import { useStore } from '@tanstack/react-form';
+import { Activity } from 'react';
 import { useFieldContext } from '@/hooks/form-context';
 import { cn } from '@/lib/utils';
 import { ErrorMessages } from './ErrorMessages';
@@ -51,7 +52,10 @@ export const CheckboxField = ({
 					</FieldLabel>
 				)}
 			</Field>
-			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
+			{/* {field.state.meta.isTouched && <ErrorMessages errors={errors} />} */}
+			<Activity mode={field.state.meta.isTouched ? 'visible' : 'hidden'}>
+				<ErrorMessages errors={errors} />
+			</Activity>
 		</>
 	);
 };

@@ -1,5 +1,6 @@
 import { formOptions } from '@tanstack/react-form';
 import { Link } from '@tanstack/react-router';
+import { Activity } from 'react';
 import { Button } from '@/components/ui/button';
 import {
 	Card,
@@ -82,9 +83,18 @@ export function SignInForm() {
 									/>
 								</svg>
 								<span>Sign in with GitHub</span>
-								{authClient.isLastUsedLoginMethod('github') && (
+								{/* {authClient.isLastUsedLoginMethod('github') && (
 									<LastUsedIndicator />
-								)}
+								)} */}
+								<Activity
+									mode={
+										authClient.isLastUsedLoginMethod('github')
+											? 'visible'
+											: 'hidden'
+									}
+								>
+									<LastUsedIndicator />
+								</Activity>
 							</Button>
 							<Button
 								onClick={signInWithGoogle}
@@ -98,21 +108,38 @@ export function SignInForm() {
 									/>
 								</svg>
 								<span>Sign in with Google</span>
-								{authClient.isLastUsedLoginMethod('google') && (
+								{/* {authClient.isLastUsedLoginMethod('google') && (
 									<LastUsedIndicator />
-								)}
+								)} */}
+								<Activity
+									mode={
+										authClient.isLastUsedLoginMethod('google')
+											? 'visible'
+											: 'hidden'
+									}
+								>
+									<LastUsedIndicator />
+								</Activity>
 							</Button>
 						</Field>
 
 						<FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-							<span className="relative">
-								Or continue with
-								{authClient.isLastUsedLoginMethod('email') && (
-									<LastUsedIndicator />
-								)}
-							</span>
+							Or continue with
 						</FieldSeparator>
-
+						<div className="relative">
+							{/* {authClient.isLastUsedLoginMethod('email') && (
+								<LastUsedIndicator />
+							)} */}
+							<Activity
+								mode={
+									authClient.isLastUsedLoginMethod('email')
+										? 'visible'
+										: 'hidden'
+								}
+							>
+								<LastUsedIndicator />
+							</Activity>
+						</div>
 						<form.AppField
 							children={(field) => (
 								<field.TextField

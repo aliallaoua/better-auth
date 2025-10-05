@@ -506,7 +506,7 @@
 // 					</div>
 // 					<div className="ml-auto flex items-center gap-2 lg:ml-0">
 // 						<Button
-// 							className="hidden h-8 w-8 p-0 lg:flex"
+// 							className="hidden size-8 p-0 lg:flex"
 // 							disabled={!table.getCanPreviousPage()}
 // 							onClick={() => table.setPageIndex(0)}
 // 							variant="outline"
@@ -602,7 +602,7 @@ import {
 	UserX,
 	X,
 } from 'lucide-react';
-import { useId, useMemo, useState } from 'react';
+import { Activity, useId, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { Card } from '@/components/ui/card';
@@ -890,7 +890,7 @@ export function DataTable<UserWithRole>({
 							<SearchIcon />
 						</InputGroupAddon>
 					</InputGroup>
-					{isFiltered && (
+					{/* {isFiltered && (
 						<Button
 							className="h-10 gap-2"
 							onClick={clearAllFilters}
@@ -899,11 +899,21 @@ export function DataTable<UserWithRole>({
 							Clear filters
 							<X className="size-4" />
 						</Button>
-					)}
+					)} */}
+					<Activity mode={isFiltered ? 'visible' : 'hidden'}>
+						<Button
+							className="h-10 gap-2"
+							onClick={clearAllFilters}
+							variant="outline"
+						>
+							Clear filters
+							<X className="size-4" />
+						</Button>
+					</Activity>
 				</div>
 				<ButtonGroup>
 					<ButtonGroup className="hidden sm:flex">
-						{onExportData && (
+						{/* {onExportData && (
 							<Button
 								className="gap-2"
 								onClick={onExportData}
@@ -913,7 +923,18 @@ export function DataTable<UserWithRole>({
 								<Download className="size-4" />
 								Export
 							</Button>
-						)}
+						)} */}
+						<Activity mode={onExportData ? 'visible' : 'hidden'}>
+							<Button
+								className="gap-2"
+								onClick={onExportData}
+								size="default"
+								variant="outline"
+							>
+								<Download className="size-4" />
+								Export
+							</Button>
+						</Activity>
 					</ButtonGroup>
 					<ButtonGroup>
 						<DropdownMenu>
@@ -973,16 +994,28 @@ export function DataTable<UserWithRole>({
 									</Label>
 									<div className="flex items-center gap-2">
 										<TableFilter column={column} />
-										{column.getIsFiltered() && (
+										{/* {column.getIsFiltered() && (
 											<Button
-												className="h-8 w-8 p-0"
+												className="size-8 p-0"
 												onClick={() => column.setFilterValue(undefined)}
 												size="sm"
 												variant="ghost"
 											>
 												<X className="size-3.5" />
 											</Button>
-										)}
+										)} */}
+										<Activity
+											mode={column.getIsFiltered() ? 'visible' : 'hidden'}
+										>
+											<Button
+												className="size-8 p-0"
+												onClick={() => column.setFilterValue(undefined)}
+												size="sm"
+												variant="ghost"
+											>
+												<X className="size-3.5" />
+											</Button>
+										</Activity>
 									</div>
 								</div>
 							))}
@@ -1053,7 +1086,7 @@ export function DataTable<UserWithRole>({
 													: 'Get started by creating your first user'}
 											</p>
 										</div>
-										{isFiltered && (
+										{/* {isFiltered && (
 											<Button
 												className="gap-2"
 												onClick={clearAllFilters}
@@ -1063,7 +1096,18 @@ export function DataTable<UserWithRole>({
 												<X className="size-4" />
 												Clear all filters
 											</Button>
-										)}
+										)} */}
+										<Activity mode={isFiltered ? 'visible' : 'hidden'}>
+											<Button
+												className="gap-2"
+												onClick={clearAllFilters}
+												size="sm"
+												variant="outline"
+											>
+												<X className="size-4" />
+												Clear all filters
+											</Button>
+										</Activity>
 									</div>
 								</TableCell>
 							</TableRow>
@@ -1111,7 +1155,7 @@ export function DataTable<UserWithRole>({
 					</div>
 					<div className="ml-auto flex items-center gap-2 lg:ml-0">
 						<Button
-							className="hidden h-8 w-8 p-0 lg:flex"
+							className="hidden size-8 p-0 lg:flex"
 							disabled={!table.getCanPreviousPage()}
 							onClick={() => table.setPageIndex(0)}
 							variant="outline"

@@ -1,6 +1,7 @@
 import { useStore } from '@tanstack/react-form';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
+import { Activity, useState } from 'react';
 import { useFieldContext } from '@/hooks/form-context';
 import { cn } from '@/lib/utils';
 import { ErrorMessages } from './ErrorMessages';
@@ -13,10 +14,11 @@ export default function DateField() {
 	const field = useFieldContext<string>();
 
 	const errors = useStore(field.store, (state) => state.meta.errors);
+	const [open, setOpen] = useState(false);
 
 	return (
 		<Field>
-			<Popover>
+			<Popover onOpenChange={setOpen} open={open}>
 				<PopoverTrigger asChild>
 					<Button
 						className={cn(
@@ -24,26 +26,34 @@ export default function DateField() {
 							!field.state.value && 'text-muted-foreground'
 						)}
 						id={field.name}
-						variant={'outline'}
+						variant="outline"
 					>
 						<CalendarIcon className="mr-2 size-4" />
-						{field.state.value ? (
-							format(field.state.value, 'PPP')
-						) : (
-							<span>Pick a date</span>
-						)}
+						{field.state.value
+							? format(field.state.value, 'PPP')
+							: 'Pick a date'}
 					</Button>
 				</PopoverTrigger>
-				<PopoverContent className="w-auto p-0">
+				<PopoverContent align="start" className="w-auto overflow-hidden p-0">
 					<Calendar
-						disabled={(date) => date < new Date()}
+						// disabled={(date) => date < new Date()}
+						captionLayout="dropdown"
+						disabled={{
+							before: new Date(),
+						}}
 						mode="single"
-						onSelect={(date) => field.handleChange(date)}
+						onSelect={(date) => {
+							field.handleChange(date);
+							setOpen(false);
+						}}
 						selected={field.state.value}
 					/>
 				</PopoverContent>
 			</Popover>
-			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
+			{/* {field.state.meta.isTouched && <ErrorMessages errors={errors} />} */}
+			<Activity mode={field.state.meta.isTouched ? 'visible' : 'hidden'}>
+				<ErrorMessages errors={errors} />
+			</Activity>
 		</Field>
 	);
 }

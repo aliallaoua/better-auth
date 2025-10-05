@@ -15,7 +15,7 @@ export function InvitationError() {
 		<Card className="mx-auto w-full max-w-md">
 			<CardHeader>
 				<div className="flex items-center space-x-2">
-					<AlertCircle className="h-6 w-6 text-destructive" />
+					<AlertCircle className="size-6 text-destructive" />
 					<CardTitle className="text-destructive text-xl">
 						Invitation Error
 					</CardTitle>

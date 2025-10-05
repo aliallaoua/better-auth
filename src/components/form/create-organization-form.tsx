@@ -1,7 +1,7 @@
-import { formOptions } from '@tanstack/react-form';
-import { PlusIcon } from 'lucide-react';
-import { useState } from 'react';
-import { toast } from 'sonner';
+import { formOptions } from "@tanstack/react-form";
+import { PlusIcon } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 import {
 	Dialog,
 	DialogContent,
@@ -10,20 +10,20 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '@/components/ui/dialog';
-import { useAppForm } from '@/hooks/form';
-import { organization } from '@/lib/auth-client';
-import { CreateOrganizationSchema } from '@/schema';
+} from "@/components/ui/dialog";
+import { useAppForm } from "@/hooks/form";
+import { organization } from "@/lib/auth-client";
+import { CreateOrganizationSchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
-import { Button } from '../ui/button';
-import { FieldGroup, FieldSet } from '../ui/field';
+import { Button } from "../ui/button";
+import { FieldGroup, FieldSet } from "../ui/field";
 
 export function CreateOrganizationForm() {
 	const [open, setOpen] = useState(false);
 	const signInFormOpts = formOptions({
 		defaultValues: {
-			name: '',
-			slug: '',
+			name: "",
+			slug: "",
 			isSlugEdited: false, // Track if user manually edited slug
 		},
 	});
@@ -41,7 +41,7 @@ export function CreateOrganizationForm() {
 				},
 				{
 					onSuccess: () => {
-						toast.success('Organization created successfully');
+						toast.success("Organization created successfully");
 						setOpen(false);
 						form.reset();
 					},
@@ -55,7 +55,7 @@ export function CreateOrganizationForm() {
 
 	// Helper function to generate slug from name
 	const generateSlug = (name: string) => {
-		return name.trim().toLowerCase().replace(/\s+/g, '-');
+		return name.trim().toLowerCase().replace(/\s+/g, "-");
 	};
 
 	return (
@@ -96,10 +96,10 @@ export function CreateOrganizationForm() {
 											field.handleChange(newName);
 
 											// Auto-generate slug only if user hasn't manually edited it
-											const isSlugEdited = form.getFieldValue('isSlugEdited');
+											const isSlugEdited = form.getFieldValue("isSlugEdited");
 											if (!isSlugEdited) {
 												const generatedSlug = generateSlug(newName);
-												form.setFieldValue('slug', generatedSlug);
+												form.setFieldValue("slug", generatedSlug);
 											}
 										}}
 										placeholder="Name"
@@ -115,7 +115,7 @@ export function CreateOrganizationForm() {
 										onChange={(e) => {
 											field.handleChange(e.target.value);
 											// Mark slug as manually edited
-											form.setFieldValue('isSlugEdited', true);
+											form.setFieldValue("isSlugEdited", true);
 										}}
 										placeholder="Slug"
 										required

@@ -10,14 +10,14 @@ const config = defineConfig({
 		tsConfigPaths({
 			projects: ['./tsconfig.json'],
 		}),
+		tailwindcss(),
 		tanstackStart(),
-		devtools(),
 		viteReact({
 			babel: {
 				plugins: ['babel-plugin-react-compiler'],
 			},
 		}),
-		tailwindcss(),
+		devtools(),
 	],
 });
 

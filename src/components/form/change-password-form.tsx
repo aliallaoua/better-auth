@@ -1,7 +1,7 @@
-import { formOptions } from '@tanstack/react-form';
+import { formOptions } from "@tanstack/react-form";
 // import { AlertCircle } from 'lucide-react';
-import { useState } from 'react';
-import { toast } from 'sonner';
+import { useState } from "react";
+import { toast } from "sonner";
 import {
 	Dialog,
 	DialogContent,
@@ -10,22 +10,22 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '@/components/ui/dialog';
-import { useAppForm } from '@/hooks/form';
-import { authClient } from '@/lib/auth-client';
-import { ChangePasswordSchema } from '@/schema';
+} from "@/components/ui/dialog";
+import { useAppForm } from "@/hooks/form";
+import { authClient } from "@/lib/auth-client";
+import { ChangePasswordSchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
-import { Button } from '../ui/button';
-import { FieldGroup, FieldSet } from '../ui/field';
+import { Button } from "../ui/button";
+import { FieldGroup, FieldSet } from "../ui/field";
 
 export function ChangePasswordForm() {
 	const [open, setOpen] = useState<boolean>(false);
 	const [signOutDevices, setSignOutDevices] = useState<boolean>(false);
 	const changePasswordFormOpts = formOptions({
 		defaultValues: {
-			currentPassword: '',
-			newPassword: '',
-			confirmPassword: '',
+			currentPassword: "",
+			newPassword: "",
+			confirmPassword: "",
 			signOutDevices: false,
 		},
 	});
@@ -48,7 +48,7 @@ export function ChangePasswordForm() {
 				);
 			} else {
 				setOpen(false);
-				toast.success('Password changed successfully');
+				toast.success("Password changed successfully");
 				form.reset();
 			}
 		},

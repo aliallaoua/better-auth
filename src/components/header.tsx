@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
-import { useScroll } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useScroll } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -27,7 +27,7 @@ export default function Header() {
 	}, [scrollYProgress]);
 
 	return (
-		<header className="h-16 lg:h-20">
+		<header className="h-16">
 			<nav
 				className={cn(
 					'fixed top-0 z-20 w-full border-b transition-colors duration-150',

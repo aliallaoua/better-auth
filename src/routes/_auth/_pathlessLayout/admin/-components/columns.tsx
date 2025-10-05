@@ -716,6 +716,7 @@ import {
 	UserCircle,
 	User as UserIcon,
 } from 'lucide-react';
+import { Activity } from 'react';
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -1193,7 +1194,14 @@ export const createColumns = (handlers: UserActionHandlers) => [
 				>
 					<SelectTrigger className="w-[140px] h-9">
 						<SelectValue placeholder="Select role" />
-						{handlers.isLoading === `role-${user.id}` && <Spinner />}
+						{/* {handlers.isLoading === `role-${user.id}` && <Spinner />} */}
+						<Activity
+							mode={
+								handlers.isLoading === `role-${user.id}` ? 'visible' : 'hidden'
+							}
+						>
+							<Spinner />
+						</Activity>
 					</SelectTrigger>
 					<SelectContent>
 						<SelectGroup>

@@ -1,7 +1,7 @@
-import { formOptions } from '@tanstack/react-form';
-import { Fingerprint, Plus } from 'lucide-react';
-import { useState } from 'react';
-import { toast } from 'sonner';
+import { formOptions } from "@tanstack/react-form";
+import { Fingerprint, Plus } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 import {
 	Dialog,
 	DialogContent,
@@ -10,19 +10,19 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '@/components/ui/dialog';
-import { useAppForm } from '@/hooks/form';
-import { authClient } from '@/lib/auth-client';
-import { AddPasskeySchema } from '@/schema';
+} from "@/components/ui/dialog";
+import { useAppForm } from "@/hooks/form";
+import { authClient } from "@/lib/auth-client";
+import { AddPasskeySchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
-import { Button } from '../ui/button';
+import { Button } from "../ui/button";
 
 export function AddPasskeyForm() {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const addPasskeyFormOpts = formOptions({
 		defaultValues: {
-			passkeyName: '',
+			passkeyName: "",
 		},
 	});
 
@@ -44,7 +44,7 @@ export function AddPasskeyForm() {
 			} else {
 				setIsOpen(false);
 				toast.success(
-					'Passkey added successfully. You can now use it to login.'
+					"Passkey added successfully. You can now use it to login."
 				);
 			}
 		},

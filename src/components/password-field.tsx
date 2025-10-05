@@ -1,7 +1,7 @@
 import { useStore } from '@tanstack/react-form';
 import { Link } from '@tanstack/react-router';
 import { Eye, EyeOff } from 'lucide-react';
-import { type JSX, useState } from 'react';
+import { Activity, type JSX, useState } from 'react';
 import { useFieldContext } from '@/hooks/form-context';
 import { cn } from '@/lib/utils';
 import { ErrorMessages } from './ErrorMessages';
@@ -85,7 +85,10 @@ export default function PasswordField({
           display: none;
         }
       `}</style>
-			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
+			{/* {field.state.meta.isTouched && <ErrorMessages errors={errors} />} */}
+			<Activity mode={field.state.meta.isTouched ? 'visible' : 'hidden'}>
+				<ErrorMessages errors={errors} />
+			</Activity>
 		</Field>
 	);
 }

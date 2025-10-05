@@ -1,12 +1,12 @@
-import { formOptions } from '@tanstack/react-form';
-import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronDownIcon, MailPlus } from 'lucide-react';
-import { useState } from 'react';
-import { toast } from 'sonner';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import CopyButton from '@/components/ui/copy-button';
+import { formOptions } from "@tanstack/react-form";
+import { ChevronDownIcon, MailPlus } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { Activity, useState } from "react";
+import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import CopyButton from "@/components/ui/copy-button";
 import {
 	Dialog,
 	DialogContent,
@@ -15,30 +15,30 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Label } from '@/components/ui/label';
-import { useAppForm } from '@/hooks/form';
+} from "@/components/ui/dropdown-menu";
+import { useAppForm } from "@/hooks/form";
 import {
 	organization,
 	useListOrganizations,
 	useSession,
-} from '@/lib/auth-client';
+} from "@/lib/auth-client";
 import type {
 	ActiveOrganization,
 	Invitation,
 	Member,
 	Organization,
 	Session,
-} from '@/lib/auth-types';
-import { InviteMemberSchema } from '@/schema';
-import { CreateOrganizationForm } from '../form/create-organization-form';
-import { Spinner } from '../ui/spinner';
+} from "@/lib/auth-types";
+import { InviteMemberSchema } from "@/schema";
+import { CreateOrganizationForm } from "../form/create-organization-form";
+import { Label } from "../ui/label";
+import { Spinner } from "../ui/spinner";
 
 export function OrganizationCard(props: {
 	session: Session | null;
@@ -51,7 +51,7 @@ export function OrganizationCard(props: {
 	const [isRevoking, setIsRevoking] = useState<string[]>([]);
 	const inviteVariants = {
 		hidden: { opacity: 0, height: 0 },
-		visible: { opacity: 1, height: 'auto' },
+		visible: { opacity: 1, height: "auto" },
 		exit: { opacity: 0, height: 0 },
 	};
 
@@ -71,8 +71,8 @@ export function OrganizationCard(props: {
 						<DropdownMenuTrigger asChild>
 							<div className="flex cursor-pointer items-center gap-1">
 								<p className="text-sm">
-									<span className="font-bold" />{' '}
-									{optimisticOrg?.name || 'Personal'}
+									<span className="font-bold" />{" "}
+									{optimisticOrg?.name || "Personal"}
 								</p>
 
 								<ChevronDownIcon />
@@ -125,11 +125,11 @@ export function OrganizationCard(props: {
 							src={optimisticOrg?.logo || undefined}
 						/>
 						<AvatarFallback className="rounded-none">
-							{optimisticOrg?.name?.charAt(0) || 'P'}
+							{optimisticOrg?.name?.charAt(0) || "P"}
 						</AvatarFallback>
 					</Avatar>
 					<div>
-						<p>{optimisticOrg?.name || 'Personal'}</p>
+						<p>{optimisticOrg?.name || "Personal"}</p>
 						<p className="text-muted-foreground text-xs">
 							{optimisticOrg?.members.length || 1} members
 						</p>
@@ -165,9 +165,9 @@ export function OrganizationCard(props: {
 											</p>
 										</div>
 									</div>
-									{member.role !== 'owner' &&
-										(currentMember?.role === 'owner' ||
-											currentMember?.role === 'admin') && (
+									{/* {member.role !== "owner" &&
+										(currentMember?.role === "owner" ||
+											currentMember?.role === "admin") && (
 											<Button
 												className="cursor-pointer"
 												onClick={() => {
@@ -178,12 +178,34 @@ export function OrganizationCard(props: {
 												size="sm"
 												variant="destructive"
 											>
-												{currentMember?.id === member.id ? 'Leave' : 'Remove'}
+												{currentMember?.id === member.id ? "Leave" : "Remove"}
 											</Button>
-										)}
+										)} */}
+									<Activity
+										mode={
+											member.role !== "owner" &&
+											(currentMember?.role === "owner" ||
+												currentMember?.role === "admin")
+												? "visible"
+												: "hidden"
+										}
+									>
+										<Button
+											className="cursor-pointer"
+											onClick={() => {
+												organization.removeMember({
+													memberIdOrEmail: member.id,
+												});
+											}}
+											size="sm"
+											variant="destructive"
+										>
+											{currentMember?.id === member.id ? "Leave" : "Remove"}
+										</Button>
+									</Activity>
 								</div>
 							))}
-							{!optimisticOrg?.id && (
+							{/* {!optimisticOrg?.id && (
 								<div>
 									<div className="flex items-center gap-2">
 										<Avatar>
@@ -198,7 +220,23 @@ export function OrganizationCard(props: {
 										</div>
 									</div>
 								</div>
-							)}
+							)} */}
+							<Activity mode={optimisticOrg?.id ? "hidden" : "visible"}>
+								<div>
+									<div className="flex items-center gap-2">
+										<Avatar>
+											<AvatarImage src={session?.user.image || undefined} />
+											<AvatarFallback>
+												{session?.user.name?.charAt(0)}
+											</AvatarFallback>
+										</Avatar>
+										<div>
+											<p className="text-sm">{session?.user.name}</p>
+											<p className="text-muted-foreground text-xs">Owner</p>
+										</div>
+									</div>
+								</div>
+							</Activity>
 						</div>
 					</div>
 					<div className="flex flex-col gap-2 grow">
@@ -209,7 +247,7 @@ export function OrganizationCard(props: {
 							<AnimatePresence>
 								{optimisticOrg?.invitations
 									.filter(
-										(invitation: Invitation) => invitation.status === 'pending'
+										(invitation: Invitation) => invitation.status === "pending"
 									)
 									.map((invitation: Invitation) => (
 										<motion.div
@@ -242,7 +280,7 @@ export function OrganizationCard(props: {
 																},
 																onSuccess: () => {
 																	toast.message(
-																		'Invitation revoked successfully'
+																		"Invitation revoked successfully"
 																	);
 																	setIsRevoking(
 																		isRevoking.filter(
@@ -275,7 +313,7 @@ export function OrganizationCard(props: {
 													{isRevoking.includes(invitation.id) ? (
 														<Spinner />
 													) : (
-														'Revoke'
+														"Revoke"
 													)}
 												</Button>
 												<div>
@@ -287,7 +325,7 @@ export function OrganizationCard(props: {
 										</motion.div>
 									))}
 							</AnimatePresence>
-							{optimisticOrg?.invitations.length === 0 && (
+							{/* {optimisticOrg?.invitations.length === 0 && (
 								<motion.p
 									animate={{ opacity: 1 }}
 									className="text-muted-foreground text-sm"
@@ -296,24 +334,49 @@ export function OrganizationCard(props: {
 								>
 									No Active Invitations
 								</motion.p>
-							)}
-							{!optimisticOrg?.id && (
+							)} */}
+							<Activity
+								mode={
+									optimisticOrg?.invitations.length === 0 ? "visible" : "hidden"
+								}
+							>
+								<motion.p
+									animate={{ opacity: 1 }}
+									className="text-muted-foreground text-sm"
+									exit={{ opacity: 0 }}
+									initial={{ opacity: 0 }}
+								>
+									No Active Invitations
+								</motion.p>
+							</Activity>
+							{/* {!optimisticOrg?.id && (
 								<Label className="text-muted-foreground text-xs">
 									You can&apos;t invite members to your personal workspace.
 								</Label>
-							)}
+							)} */}
+							<Activity mode={optimisticOrg?.id ? "hidden" : "visible"}>
+								<Label className="text-muted-foreground text-xs">
+									You can&apos;t invite members to your personal workspace.
+								</Label>
+							</Activity>
 						</div>
 					</div>
 				</div>
 				<div className="mt-4 flex w-full justify-end">
 					<div>
 						<div>
-							{optimisticOrg?.id && (
+							{/* {optimisticOrg?.id && (
 								<InviteMemberDialog
 									optimisticOrg={optimisticOrg}
 									setOptimisticOrg={setOptimisticOrg}
 								/>
-							)}
+							)} */}
+							<Activity mode={optimisticOrg?.id ? "visible" : "hidden"}>
+								<InviteMemberDialog
+									optimisticOrg={optimisticOrg}
+									setOptimisticOrg={setOptimisticOrg}
+								/>
+							</Activity>
 						</div>
 					</div>
 				</div>
@@ -334,8 +397,8 @@ function InviteMemberDialog({
 
 	const inviteMemberFormOpts = formOptions({
 		defaultValues: {
-			email: '',
-			role: 'member' as 'admin' | 'member',
+			email: "",
+			role: "member" as "admin" | "member",
 		},
 	});
 
@@ -369,8 +432,8 @@ function InviteMemberDialog({
 				});
 
 				toast.promise(invite, {
-					loading: 'Inviting member...',
-					success: 'Member invited successfully',
+					loading: "Inviting member...",
+					success: "Member invited successfully",
 					error: (error) => error.error.message,
 				});
 			} finally {
@@ -427,8 +490,8 @@ function InviteMemberDialog({
 									label="Role"
 									placeholder="Select a role"
 									values={[
-										{ label: 'Admin', value: 'admin' },
-										{ label: 'Member', value: 'member' },
+										{ label: "Admin", value: "admin" },
+										{ label: "Member", value: "member" },
 									]}
 								/>
 							)}

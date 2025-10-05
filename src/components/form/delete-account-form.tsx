@@ -1,7 +1,7 @@
-import { formOptions } from '@tanstack/react-form';
+import { formOptions } from "@tanstack/react-form";
 // import { AlertCircle } from 'lucide-react';
-import { useState } from 'react';
-import { toast } from 'sonner';
+import { useState } from "react";
+import { toast } from "sonner";
 import {
 	Dialog,
 	DialogContent,
@@ -10,19 +10,19 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '@/components/ui/dialog';
-import { useAppForm } from '@/hooks/form';
-import { authClient } from '@/lib/auth-client';
-import { DeleteAccountSchema } from '@/schema';
+} from "@/components/ui/dialog";
+import { useAppForm } from "@/hooks/form";
+import { authClient } from "@/lib/auth-client";
+import { DeleteAccountSchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
-import { Button } from '../ui/button';
-import { FieldGroup, FieldSet } from '../ui/field';
+import { Button } from "../ui/button";
+import { FieldGroup, FieldSet } from "../ui/field";
 
 export function DeleteAccountForm() {
 	const [open, setOpen] = useState<boolean>(false);
 	const deleteAccountFormOpts = formOptions({
 		defaultValues: {
-			password: '',
+			password: "",
 		},
 	});
 
@@ -45,7 +45,7 @@ export function DeleteAccountForm() {
 				// });
 			} else {
 				setOpen(false);
-				toast.success('Email confirmation sent successfully');
+				toast.success("Email confirmation sent successfully");
 				form.reset();
 			}
 		},
