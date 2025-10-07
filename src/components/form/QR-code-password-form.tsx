@@ -1,14 +1,15 @@
-import { formOptions } from '@tanstack/react-form';
-import { QrCode } from 'lucide-react';
-import { useState } from 'react';
-import QRCode from 'react-qr-code';
-import { toast } from 'sonner';
-import { useAppForm } from '@/hooks/form';
-import { authClient } from '@/lib/auth-client';
-import { TwoFactorPasswordSchema } from '@/schema';
+import { formOptions } from "@tanstack/react-form";
+import type { ErrorContext, SuccessContext } from "better-auth/react";
+import { QrCode } from "lucide-react";
+import { useState } from "react";
+import QRCode from "react-qr-code";
+import { toast } from "sonner";
+import { useAppForm } from "@/hooks/form";
+import { authClient } from "@/lib/auth-client";
+import { TwoFactorPasswordSchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
-import { Button } from '../ui/button';
-import CopyButton from '../ui/copy-button';
+import { Button } from "../ui/button";
+import CopyButton from "../ui/copy-button";
 import {
 	Dialog,
 	DialogContent,
@@ -16,8 +17,8 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '../ui/dialog';
-import { FieldGroup, FieldSet } from '../ui/field';
+} from "../ui/dialog";
+import { FieldGroup, FieldSet } from "../ui/field";
 
 export function QRCodePasswordForm({
 	twoFactorVerifyURI,
@@ -30,7 +31,7 @@ export function QRCodePasswordForm({
 
 	const passwordFormOpts = formOptions({
 		defaultValues: {
-			password: '',
+			password: "",
 		},
 	});
 
@@ -45,11 +46,11 @@ export function QRCodePasswordForm({
 				await authClient.twoFactor.getTotpUri(
 					{ password: value.password },
 					{
-						onSuccess(context: any) {
+						onSuccess(context: SuccessContext<any>) {
 							setTwoFactorVerifyURI(context.data.totpURI);
 							form.reset();
 						},
-						onError(context: any) {
+						onError(context: ErrorContext) {
 							toast.error(context.error.message);
 						},
 					}

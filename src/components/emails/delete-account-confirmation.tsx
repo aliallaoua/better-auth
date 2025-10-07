@@ -9,7 +9,7 @@ import {
 	Section,
 	Tailwind,
 	Text,
-} from '@react-email/components';
+} from "@react-email/components";
 
 interface DeleteAccountConfirmationProps {
 	username: string;
@@ -113,7 +113,7 @@ const DeleteAccountConfirmation = ({
 									href="mailto:support@company.com"
 								>
 									support@company.com
-								</a>{' '}
+								</a>{" "}
 								|
 								<a className="ml-[8px] text-gray-500 underline" href="#">
 									Unsubscribe
@@ -132,10 +132,10 @@ const DeleteAccountConfirmation = ({
 };
 
 DeleteAccountConfirmation.PreviewProps = {
-	username: 'John Doe',
-	userEmail: 'john.doe@example.com',
-	url: 'https://yourapp.com/confirm-delete',
-	token: 'abc123xyz789',
+	username: "John Doe",
+	userEmail: "john.doe@example.com",
+	url: "https://yourapp.com/confirm-delete",
+	token: "abc123xyz789",
 };
 
 export default DeleteAccountConfirmation;

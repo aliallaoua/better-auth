@@ -1,12 +1,12 @@
-import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
+import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { useTheme } from './theme-provider';
-import { Button } from './ui/button';
+} from "@/components/ui/dropdown-menu";
+import { useTheme } from "./theme-provider";
+import { Button } from "./ui/button";
 
 export function ModeToggle() {
 	const { setTheme } = useTheme();
@@ -31,7 +31,7 @@ export function ModeToggle() {
 			>
 				<DropdownMenuItem
 					className="cursor-pointer"
-					onClick={() => setTheme('light')}
+					onClick={() => setTheme("light")}
 				>
 					<SunIcon />
 					Light
@@ -39,7 +39,7 @@ export function ModeToggle() {
 
 				<DropdownMenuItem
 					className="cursor-pointer"
-					onClick={() => setTheme('dark')}
+					onClick={() => setTheme("dark")}
 				>
 					<MoonIcon />
 					Dark
@@ -47,7 +47,7 @@ export function ModeToggle() {
 
 				<DropdownMenuItem
 					className="cursor-pointer"
-					onClick={() => setTheme('system')}
+					onClick={() => setTheme("system")}
 				>
 					<MonitorIcon />
 					System

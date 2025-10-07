@@ -1,5 +1,5 @@
-import { betterAuth } from 'better-auth';
-import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+import { betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import {
 	admin,
 	bearer,
@@ -12,12 +12,12 @@ import {
 	openAPI,
 	organization,
 	twoFactor,
-} from 'better-auth/plugins';
-import { passkey } from 'better-auth/plugins/passkey';
-import { reactStartCookies } from 'better-auth/react-start';
-import { eq } from 'drizzle-orm';
-import { db } from '@/db/drizzle';
-import { member, schema } from '@/db/schema';
+} from "better-auth/plugins";
+import { passkey } from "better-auth/plugins/passkey";
+import { reactStartCookies } from "better-auth/react-start";
+import { eq } from "drizzle-orm";
+import { db } from "@/db/drizzle";
+import { member, schema } from "@/db/schema";
 import {
 	sendChangeEmailVerification,
 	sendDeleteAccountVerification,
@@ -25,7 +25,7 @@ import {
 	sendOTP,
 	sendResetPasswordEmail,
 	sendVerificationEmail,
-} from '@/functions/send';
+} from "@/functions/send";
 
 export const auth = betterAuth({
 	socialProviders: {
@@ -69,11 +69,11 @@ export const auth = betterAuth({
 	account: {
 		accountLinking: {
 			// enabled: true,
-			trustedProviders: ['google', 'github', 'email-password'],
+			trustedProviders: ["google", "github", "email-password"],
 		},
 	},
 	database: drizzleAdapter(db, {
-		provider: 'pg',
+		provider: "pg",
 		schema,
 	}),
 	plugins: [
@@ -106,7 +106,7 @@ export const auth = betterAuth({
 		openAPI(),
 		bearer(),
 		admin({
-			adminUserIds: ['acUVCvzRkNMdIPn7p6DgZ6Vz3TlrTiHi'],
+			adminUserIds: ["acUVCvzRkNMdIPn7p6DgZ6Vz3TlrTiHi"],
 		}),
 		multiSession(),
 		oAuthProxy(),
@@ -117,13 +117,13 @@ export const auth = betterAuth({
 				...session,
 				user: {
 					...session.user,
-					dd: 'test',
+					dd: "test",
 				},
 			};
 		}),
 		deviceAuthorization({
-			expiresIn: '3min',
-			interval: '5s',
+			expiresIn: "3min",
+			interval: "5s",
 		}),
 		lastLoginMethod(),
 		reactStartCookies(),
@@ -206,7 +206,7 @@ export const auth = betterAuth({
 			create: {
 				before: async (session) => {
 					const m = await db.query.member.findFirst({
-						where: eq(member.userId, session.userId ?? ''),
+						where: eq(member.userId, session.userId ?? ""),
 					});
 
 					return {

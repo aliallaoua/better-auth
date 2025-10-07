@@ -1,33 +1,33 @@
-import { formOptions } from '@tanstack/react-form';
-import { Link } from '@tanstack/react-router';
-import { Activity } from 'react';
-import { Button } from '@/components/ui/button';
+import { formOptions } from "@tanstack/react-form";
+import { Link } from "@tanstack/react-router";
+import { Activity } from "react";
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 import {
 	Field,
 	FieldDescription,
 	FieldGroup,
 	FieldSeparator,
-} from '@/components/ui/field';
-import { useAppForm } from '@/hooks/form';
-import useSignInMutation from '@/hooks/mutations/useSignInMutation';
-import { authClient } from '@/lib/auth-client';
-import { signInWithGithub, signInWithGoogle } from '@/lib/auth-functions';
-import { SignInSchema } from '@/schema';
+} from "@/components/ui/field";
+import { useAppForm } from "@/hooks/form";
+import useSignInMutation from "@/hooks/mutations/useSignInMutation";
+import { authClient } from "@/lib/auth-client";
+import { signInWithGithub, signInWithGoogle } from "@/lib/auth-functions";
+import { SignInSchema } from "@/schema";
 
 export function SignInForm() {
 	const { mutateAsync: signInMutation } = useSignInMutation();
 
 	const signInFormOpts = formOptions({
 		defaultValues: {
-			email: '',
-			password: '',
+			email: "",
+			password: "",
 		},
 	});
 
@@ -88,9 +88,9 @@ export function SignInForm() {
 								)} */}
 								<Activity
 									mode={
-										authClient.isLastUsedLoginMethod('github')
-											? 'visible'
-											: 'hidden'
+										authClient.isLastUsedLoginMethod("github")
+											? "visible"
+											: "hidden"
 									}
 								>
 									<LastUsedIndicator />
@@ -113,9 +113,9 @@ export function SignInForm() {
 								)} */}
 								<Activity
 									mode={
-										authClient.isLastUsedLoginMethod('google')
-											? 'visible'
-											: 'hidden'
+										authClient.isLastUsedLoginMethod("google")
+											? "visible"
+											: "hidden"
 									}
 								>
 									<LastUsedIndicator />
@@ -132,9 +132,9 @@ export function SignInForm() {
 							)} */}
 							<Activity
 								mode={
-									authClient.isLastUsedLoginMethod('email')
-										? 'visible'
-										: 'hidden'
+									authClient.isLastUsedLoginMethod("email")
+										? "visible"
+										: "hidden"
 								}
 							>
 								<LastUsedIndicator />
@@ -173,7 +173,7 @@ export function SignInForm() {
 						</Field>
 
 						<FieldDescription className="text-center">
-							Don&apos;t have an account?{' '}
+							Don&apos;t have an account?{" "}
 							<Link className="underline underline-offset-4" to="/signup">
 								Sign up
 							</Link>
@@ -183,11 +183,11 @@ export function SignInForm() {
 			</CardContent>
 
 			<div className="text-balance text-center text-muted-foreground text-xs px-6 pb-4">
-				By clicking continue, you agree to our{' '}
+				By clicking continue, you agree to our{" "}
 				<a className="underline underline-offset-4 hover:text-primary" href="#">
 					Terms of Service
-				</a>{' '}
-				and{' '}
+				</a>{" "}
+				and{" "}
 				<a className="underline underline-offset-4 hover:text-primary" href="#">
 					Privacy Policy
 				</a>

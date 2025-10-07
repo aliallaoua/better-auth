@@ -1,15 +1,15 @@
-import { formOptions } from '@tanstack/react-form';
-import { createFileRoute, Link } from '@tanstack/react-router';
-import { toast } from 'sonner';
-import z from 'zod';
-import { Button } from '@/components/ui/button';
-import { FieldGroup } from '@/components/ui/field';
-import { Separator } from '@/components/ui/separator';
-import { sendTestEmail } from '@/functions/send';
-import { useAppForm } from '@/hooks/form';
-import { useSession } from '@/lib/auth-client';
+import { formOptions } from "@tanstack/react-form";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { toast } from "sonner";
+import z from "zod";
+import { Button } from "@/components/ui/button";
+import { FieldGroup } from "@/components/ui/field";
+import { Separator } from "@/components/ui/separator";
+import { sendTestEmail } from "@/functions/send";
+import { useAppForm } from "@/hooks/form";
+import { useSession } from "@/lib/auth-client";
 
-export const Route = createFileRoute('/better-auth')({
+export const Route = createFileRoute("/better-auth")({
 	component: BetterAuthPage,
 });
 
@@ -18,9 +18,9 @@ function BetterAuthPage() {
 
 	const emailFormOpts = formOptions({
 		defaultValues: {
-			email: '',
-			emailtype: '',
-			emailmethod: '',
+			email: "",
+			emailtype: "",
+			emailmethod: "",
 		},
 	});
 
@@ -29,14 +29,14 @@ function BetterAuthPage() {
 		validators: {
 			onChange: z.object({
 				email: z.email(),
-				emailtype: z.enum(['html', 'react']),
-				emailmethod: z.enum(['fn', 'route']),
+				emailtype: z.enum(["html", "react"]),
+				emailmethod: z.enum(["fn", "route"]),
 			}),
 		},
 		onSubmit: async ({ value }) => {
-			const url = 'http://localhost:3000';
+			const url = "http://localhost:3000";
 			try {
-				value.emailmethod === 'fn'
+				await (value.emailmethod === "fn"
 					? handleSendEmailUsingServerFunction({
 							email: value.email,
 							name: value.email,
@@ -48,10 +48,10 @@ function BetterAuthPage() {
 							name: value.email,
 							url,
 							emailType: value.emailtype,
-						});
-				toast.success('Email sent successfully. Please check your email.');
+						}));
+				toast.success("Email sent successfully. Please check your email.");
 				form.reset();
-			} catch (e: any) {
+			} catch (e) {
 				// Set form-level error
 				form.setErrorMap({
 					onSubmit: e.message,
@@ -71,10 +71,10 @@ function BetterAuthPage() {
 		url: string;
 		emailType: string;
 	}) => {
-		await fetch('/api/send', {
-			method: 'POST',
+		await fetch("/api/send", {
+			method: "POST",
 			headers: {
-				'Content-Type': 'application/json',
+				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
 				name,
@@ -84,8 +84,8 @@ function BetterAuthPage() {
 			}),
 		})
 			.then((response) => response.json())
-			.then((data) => console.log('Success:', data))
-			.catch((error) => console.error('Error:', error));
+			.then((data) => console.log("Success:", data))
+			.catch((error) => console.error("Error:", error));
 	};
 
 	const handleSendEmailUsingServerFunction = async ({
@@ -140,8 +140,8 @@ function BetterAuthPage() {
 									label="Email type"
 									placeholder="Select a type"
 									values={[
-										{ label: 'HTML', value: 'html' },
-										{ label: 'React', value: 'react' },
+										{ label: "HTML", value: "html" },
+										{ label: "React", value: "react" },
 									]}
 								/>
 							)}
@@ -153,8 +153,8 @@ function BetterAuthPage() {
 									label="Email method"
 									placeholder="Select a method"
 									values={[
-										{ label: 'Server Function', value: 'fn' },
-										{ label: 'Server Route', value: 'route' },
+										{ label: "Server Function", value: "fn" },
+										{ label: "Server Route", value: "route" },
 									]}
 								/>
 							)}

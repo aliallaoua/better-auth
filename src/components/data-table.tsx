@@ -1,4 +1,4 @@
-'use no memo';
+"use no memo";
 
 import {
 	closestCenter,
@@ -10,15 +10,15 @@ import {
 	type UniqueIdentifier,
 	useSensor,
 	useSensors,
-} from '@dnd-kit/core';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+} from "@dnd-kit/core";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
 	arrayMove,
 	SortableContext,
 	useSortable,
 	verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import {
 	IconChevronDown,
 	IconChevronLeft,
@@ -32,7 +32,7 @@ import {
 	IconLoader,
 	IconPlus,
 	IconTrendingUp,
-} from '@tabler/icons-react';
+} from "@tabler/icons-react";
 import {
 	type ColumnDef,
 	type ColumnFiltersState,
@@ -47,20 +47,20 @@ import {
 	type SortingState,
 	useReactTable,
 	type VisibilityState,
-} from '@tanstack/react-table';
-import * as React from 'react';
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
-import { toast } from 'sonner';
-import { z } from 'zod';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+} from "@tanstack/react-table";
+import * as React from "react";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { toast } from "sonner";
+import { z } from "zod";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
 	type ChartConfig,
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
-} from '@/components/ui/chart';
-import { Checkbox } from '@/components/ui/checkbox';
+} from "@/components/ui/chart";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
 	Drawer,
 	DrawerClose,
@@ -70,7 +70,7 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from '@/components/ui/drawer';
+} from "@/components/ui/drawer";
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
@@ -78,17 +78,17 @@ import {
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import {
 	Table,
 	TableBody,
@@ -96,9 +96,9 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@/components/ui/table';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useIsMobile } from '@/hooks/use-mobile';
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const schema = z.object({
 	id: z.number(),
@@ -120,11 +120,11 @@ function DragHandle({ id }: { id: number }) {
 		<Button
 			{...attributes}
 			{...listeners}
-			className="size-7 text-muted-foreground hover:bg-transparent"
+			className="text-muted-foreground size-7 hover:bg-transparent"
 			size="icon"
 			variant="ghost"
 		>
-			<IconGripVertical className="size-3 text-muted-foreground" />
+			<IconGripVertical className="text-muted-foreground size-3" />
 			<span className="sr-only">Drag to reorder</span>
 		</Button>
 	);
@@ -132,19 +132,19 @@ function DragHandle({ id }: { id: number }) {
 
 const columns: ColumnDef<z.infer<typeof schema>>[] = [
 	{
-		id: 'drag',
+		id: "drag",
 		header: () => null,
 		cell: ({ row }) => <DragHandle id={row.original.id} />,
 	},
 	{
-		id: 'select',
+		id: "select",
 		header: ({ table }) => (
 			<div className="flex items-center justify-center">
 				<Checkbox
 					aria-label="Select all"
 					checked={
 						table.getIsAllPageRowsSelected() ||
-						(table.getIsSomePageRowsSelected() && 'indeterminate')
+						(table.getIsSomePageRowsSelected() && "indeterminate")
 					}
 					onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
 				/>
@@ -163,30 +163,30 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
 		enableHiding: false,
 	},
 	{
-		accessorKey: 'header',
-		header: 'Header',
+		accessorKey: "header",
+		header: "Header",
 		cell: ({ row }) => {
 			return <TableCellViewer item={row.original} />;
 		},
 		enableHiding: false,
 	},
 	{
-		accessorKey: 'type',
-		header: 'Section Type',
+		accessorKey: "type",
+		header: "Section Type",
 		cell: ({ row }) => (
 			<div className="w-32">
-				<Badge className="px-1.5 text-muted-foreground" variant="outline">
+				<Badge className="text-muted-foreground px-1.5" variant="outline">
 					{row.original.type}
 				</Badge>
 			</div>
 		),
 	},
 	{
-		accessorKey: 'status',
-		header: 'Status',
+		accessorKey: "status",
+		header: "Status",
 		cell: ({ row }) => (
-			<Badge className="px-1.5 text-muted-foreground" variant="outline">
-				{row.original.status === 'Done' ? (
+			<Badge className="text-muted-foreground px-1.5" variant="outline">
+				{row.original.status === "Done" ? (
 					<IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
 				) : (
 					<IconLoader />
@@ -196,7 +196,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
 		),
 	},
 	{
-		accessorKey: 'target',
+		accessorKey: "target",
 		header: () => <div className="w-full text-right">Target</div>,
 		cell: ({ row }) => (
 			<form
@@ -204,8 +204,8 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
 					e.preventDefault();
 					toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
 						loading: `Saving ${row.original.header}`,
-						success: 'Done',
-						error: 'Error',
+						success: "Done",
+						error: "Error",
 					});
 				}}
 			>
@@ -213,7 +213,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
 					Target
 				</Label>
 				<Input
-					className="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-input/30 focus-visible:border focus-visible:bg-background dark:bg-transparent dark:focus-visible:bg-input/30 dark:hover:bg-input/30"
+					className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent text-right shadow-none focus-visible:border dark:bg-transparent"
 					defaultValue={row.original.target}
 					id={`${row.original.id}-target`}
 				/>
@@ -221,7 +221,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
 		),
 	},
 	{
-		accessorKey: 'limit',
+		accessorKey: "limit",
 		header: () => <div className="w-full text-right">Limit</div>,
 		cell: ({ row }) => (
 			<form
@@ -229,8 +229,8 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
 					e.preventDefault();
 					toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
 						loading: `Saving ${row.original.header}`,
-						success: 'Done',
-						error: 'Error',
+						success: "Done",
+						error: "Error",
 					});
 				}}
 			>
@@ -238,7 +238,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
 					Limit
 				</Label>
 				<Input
-					className="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-input/30 focus-visible:border focus-visible:bg-background dark:bg-transparent dark:focus-visible:bg-input/30 dark:hover:bg-input/30"
+					className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent text-right shadow-none focus-visible:border dark:bg-transparent"
 					defaultValue={row.original.limit}
 					id={`${row.original.id}-limit`}
 				/>
@@ -246,10 +246,10 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
 		),
 	},
 	{
-		accessorKey: 'reviewer',
-		header: 'Reviewer',
+		accessorKey: "reviewer",
+		header: "Reviewer",
 		cell: ({ row }) => {
-			const isAssigned = row.original.reviewer !== 'Assign reviewer';
+			const isAssigned = row.original.reviewer !== "Assign reviewer";
 
 			if (isAssigned) {
 				return row.original.reviewer;
@@ -280,12 +280,12 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
 		},
 	},
 	{
-		id: 'actions',
+		id: "actions",
 		cell: () => (
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<Button
-						className="flex size-8 text-muted-foreground data-[state=open]:bg-muted"
+						className="data-[state=open]:bg-muted text-muted-foreground flex size-8"
 						size="icon"
 						variant="ghost"
 					>
@@ -314,7 +314,7 @@ function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
 		<TableRow
 			className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
 			data-dragging={isDragging}
-			data-state={row.getIsSelected() && 'selected'}
+			data-state={row.getIsSelected() && "selected"}
 			ref={setNodeRef}
 			style={{
 				transform: CSS.Transform.toString(transform),
@@ -406,7 +406,7 @@ export function DataTable({
 				</Label>
 				<Select defaultValue="outline">
 					<SelectTrigger
-						className="flex @4xl/main:hidden w-fit"
+						className="flex w-fit @4xl/main:hidden"
 						id="view-selector"
 						size="sm"
 					>
@@ -419,7 +419,7 @@ export function DataTable({
 						<SelectItem value="focus-documents">Focus Documents</SelectItem>
 					</SelectContent>
 				</Select>
-				<TabsList className="@4xl/main:flex hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:bg-muted-foreground/30 **:data-[slot=badge]:px-1">
+				<TabsList className="**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex">
 					<TabsTrigger value="outline">Outline</TabsTrigger>
 					<TabsTrigger value="past-performance">
 						Past Performance <Badge variant="secondary">3</Badge>
@@ -444,7 +444,7 @@ export function DataTable({
 								.getAllColumns()
 								.filter(
 									(column) =>
-										typeof column.accessorFn !== 'undefined' &&
+										typeof column.accessorFn !== "undefined" &&
 										column.getCanHide()
 								)
 								.map((column) => {
@@ -482,7 +482,7 @@ export function DataTable({
 						sensors={sensors}
 					>
 						<Table>
-							<TableHeader className="sticky top-0 z-10 bg-muted">
+							<TableHeader className="bg-muted sticky top-0 z-10">
 								{table.getHeaderGroups().map((headerGroup) => (
 									<TableRow key={headerGroup.id}>
 										{headerGroup.headers.map((header) => {
@@ -525,13 +525,13 @@ export function DataTable({
 					</DndContext>
 				</div>
 				<div className="flex items-center justify-between px-4">
-					<div className="hidden flex-1 text-muted-foreground text-sm lg:flex">
-						{table.getFilteredSelectedRowModel().rows.length} of{' '}
+					<div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
+						{table.getFilteredSelectedRowModel().rows.length} of{" "}
 						{table.getFilteredRowModel().rows.length} row(s) selected.
 					</div>
 					<div className="flex w-full items-center gap-8 lg:w-fit">
 						<div className="hidden items-center gap-2 lg:flex">
-							<Label className="font-medium text-sm" htmlFor="rows-per-page">
+							<Label className="text-sm font-medium" htmlFor="rows-per-page">
 								Rows per page
 							</Label>
 							<Select
@@ -554,8 +554,8 @@ export function DataTable({
 								</SelectContent>
 							</Select>
 						</div>
-						<div className="flex w-fit items-center justify-center font-medium text-sm">
-							Page {table.getState().pagination.pageIndex + 1} of{' '}
+						<div className="flex w-fit items-center justify-center text-sm font-medium">
+							Page {table.getState().pagination.pageIndex + 1} of{" "}
 							{table.getPageCount()}
 						</div>
 						<div className="ml-auto flex items-center gap-2 lg:ml-0">
@@ -622,22 +622,22 @@ export function DataTable({
 }
 
 const chartData = [
-	{ month: 'January', desktop: 186, mobile: 80 },
-	{ month: 'February', desktop: 305, mobile: 200 },
-	{ month: 'March', desktop: 237, mobile: 120 },
-	{ month: 'April', desktop: 73, mobile: 190 },
-	{ month: 'May', desktop: 209, mobile: 130 },
-	{ month: 'June', desktop: 214, mobile: 140 },
+	{ month: "January", desktop: 186, mobile: 80 },
+	{ month: "February", desktop: 305, mobile: 200 },
+	{ month: "March", desktop: 237, mobile: 120 },
+	{ month: "April", desktop: 73, mobile: 190 },
+	{ month: "May", desktop: 209, mobile: 130 },
+	{ month: "June", desktop: 214, mobile: 140 },
 ];
 
 const chartConfig = {
 	desktop: {
-		label: 'Desktop',
-		color: 'var(--primary)',
+		label: "Desktop",
+		color: "var(--primary)",
 	},
 	mobile: {
-		label: 'Mobile',
-		color: 'var(--primary)',
+		label: "Mobile",
+		color: "var(--primary)",
 	},
 } satisfies ChartConfig;
 
@@ -645,9 +645,9 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
 	const isMobile = useIsMobile();
 
 	return (
-		<Drawer direction={isMobile ? 'bottom' : 'right'}>
+		<Drawer direction={isMobile ? "bottom" : "right"}>
 			<DrawerTrigger asChild>
-				<Button className="w-fit px-0 text-left text-foreground" variant="link">
+				<Button className="text-foreground w-fit px-0 text-left" variant="link">
 					{item.header}
 				</Button>
 			</DrawerTrigger>
@@ -703,8 +703,8 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
 							</ChartContainer>
 							<Separator />
 							<div className="grid gap-2">
-								<div className="flex gap-2 font-medium leading-none">
-									Trending up by 5.2% this month{' '}
+								<div className="flex gap-2 leading-none font-medium">
+									Trending up by 5.2% this month{" "}
 									<IconTrendingUp className="size-4" />
 								</div>
 								<div className="text-muted-foreground">

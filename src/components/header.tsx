@@ -1,16 +1,16 @@
-import { Link } from '@tanstack/react-router';
-import { Menu, X } from 'lucide-react';
-import { useScroll } from 'motion/react';
-import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { ModeToggle } from './mode-toggle';
-import UserButton from './user-button';
+import { Link } from "@tanstack/react-router";
+import { Menu, X } from "lucide-react";
+import { useScroll } from "motion/react";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { ModeToggle } from "./mode-toggle";
+import UserButton from "./user-button";
 
 const menuItems = [
-	{ name: 'Home', to: '/' },
-	{ name: 'Better Auth - Resend', to: '/better-auth' },
-	{ name: 'Posts', to: '/posts' },
+	{ name: "Home", to: "/" },
+	{ name: "Better Auth - Resend", to: "/better-auth" },
+	{ name: "Posts", to: "/posts" },
 ];
 
 export default function Header() {
@@ -20,7 +20,7 @@ export default function Header() {
 	const { scrollYProgress } = useScroll();
 
 	useEffect(() => {
-		const unsubscribe = scrollYProgress.on('change', (latest) => {
+		const unsubscribe = scrollYProgress.on("change", (latest) => {
 			setScrolled(latest > 0.05);
 		});
 		return () => unsubscribe();
@@ -30,16 +30,16 @@ export default function Header() {
 		<header className="h-16">
 			<nav
 				className={cn(
-					'fixed top-0 z-20 w-full border-b transition-colors duration-150',
-					scrolled && 'bg-background/50 backdrop-blur-3xl'
+					"fixed top-0 z-20 w-full border-b transition-colors duration-150",
+					scrolled && "bg-background/50 backdrop-blur-3xl"
 				)}
-				data-state={menuState && 'active'}
+				data-state={menuState && "active"}
 			>
 				<div className="mx-auto px-8 transition-all duration-300">
 					<div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
 						<div className="flex w-full items-center justify-between gap-12 lg:w-auto">
 							<Button
-								aria-label={menuState ? 'Close Menu' : 'Open Menu'}
+								aria-label={menuState ? "Close Menu" : "Open Menu"}
 								className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
 								onClick={() => setMenuState(!menuState)}
 								variant="ghost"

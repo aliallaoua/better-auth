@@ -1,21 +1,21 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
 	createFileRoute,
 	ErrorComponent,
 	type ErrorComponentProps,
 	Link,
-} from '@tanstack/react-router';
-import { MoveLeft } from 'lucide-react';
+} from "@tanstack/react-router";
+import { MoveLeft } from "lucide-react";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@/components/ui/card';
-import { commentQueryOptions } from '@/utils/commentQueryOptions';
+} from "@/components/ui/card";
+import { commentQueryOptions } from "@/utils/commentQueryOptions";
 
-export const Route = createFileRoute('/posts/$postId/comments/$commentId/')({
+export const Route = createFileRoute("/posts/$postId/comments/$commentId/")({
 	loader: ({ context, params: { postId, commentId } }) => {
 		return context.queryClient.ensureQueryData(
 			commentQueryOptions(postId, commentId)

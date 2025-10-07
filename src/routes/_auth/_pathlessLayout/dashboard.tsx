@@ -1,12 +1,12 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { ChartAreaInteractive } from '@/components/chart-area-interactive';
-import { DataTable } from '@/components/data-table';
-import { SectionCards } from '@/components/section-cards';
-import { SiteHeader } from '@/components/site-header';
-import { SidebarInset } from '@/components/ui/sidebar';
-import data from '@/lib/data.json' with { type: 'json' };
+import { createFileRoute } from "@tanstack/react-router";
+import { ChartAreaInteractive } from "@/components/chart-area-interactive";
+import { DataTable } from "@/components/data-table";
+import { SectionCards } from "@/components/section-cards";
+import { SiteHeader } from "@/components/site-header";
+import { SidebarInset } from "@/components/ui/sidebar";
+import data from "@/lib/data.json" with { type: "json" };
 
-export const Route = createFileRoute('/_auth/_pathlessLayout/dashboard')({
+export const Route = createFileRoute("/_auth/_pathlessLayout/dashboard")({
 	component: DashboardPage,
 });
 

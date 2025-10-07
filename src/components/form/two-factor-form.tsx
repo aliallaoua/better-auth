@@ -1,13 +1,15 @@
-import { formOptions } from '@tanstack/react-form';
-import { ShieldCheck, ShieldOff } from 'lucide-react';
-import { useState } from 'react';
-import QRCode from 'react-qr-code';
-import { toast } from 'sonner';
-import { useAppForm } from '@/hooks/form';
-import { authClient } from '@/lib/auth-client';
-import { TwoFactorOTPSchema, TwoFactorPasswordSchema } from '@/schema';
+import { formOptions } from "@tanstack/react-form";
+import type { ErrorContext, SuccessContext } from "better-auth/react";
+import { ShieldCheck, ShieldOff } from "lucide-react";
+import { useState } from "react";
+import QRCode from "react-qr-code";
+import { toast } from "sonner";
+import { useAppForm } from "@/hooks/form";
+import { authClient } from "@/lib/auth-client";
+import type { Session } from "@/lib/auth-types";
+import { TwoFactorOTPSchema, TwoFactorPasswordSchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
-import { Button } from '../ui/button';
+import { Button } from "../ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -16,18 +18,18 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '../ui/dialog';
+} from "../ui/dialog";
 
-export function TwoFactorForm({ session }: { session: any }) {
+export function TwoFactorForm({ session }: { session: Session }) {
 	const [isPendingTwoFa, setIsPendingTwoFa] = useState<boolean>(false);
 	const [twoFactorDialog, setTwoFactorDialog] = useState<boolean>(false);
-	const [twoFactorVerifyURI, setTwoFactorVerifyURI] = useState<string>('');
-	const [twoFaPassword, setTwoFaPassword] = useState<string>('');
+	const [twoFactorVerifyURI, setTwoFactorVerifyURI] = useState<string>("");
+	const [twoFaPassword, setTwoFaPassword] = useState<string>("");
 
 	// Password form for enabling/disabling 2FA
 	const passwordFormOpts = formOptions({
 		defaultValues: {
-			password: '',
+			password: "",
 		},
 	});
 
@@ -44,11 +46,11 @@ export function TwoFactorForm({ session }: { session: any }) {
 					await authClient.twoFactor.disable({
 						password: value.password,
 						fetchOptions: {
-							onError(context: any) {
+							onError(context: ErrorContext) {
 								toast.error(context.error.message);
 							},
 							onSuccess() {
-								toast.success('2FA disabled successfully');
+								toast.success("2FA disabled successfully");
 								setTwoFactorDialog(false);
 								passwordForm.reset();
 							},
@@ -59,13 +61,13 @@ export function TwoFactorForm({ session }: { session: any }) {
 					await authClient.twoFactor.enable({
 						password: value.password,
 						fetchOptions: {
-							onError(context: any) {
+							onError(context: ErrorContext) {
 								toast.error(context.error.message);
 							},
-							onSuccess(ctx: any) {
+							onSuccess(ctx: SuccessContext<any>) {
 								setTwoFactorVerifyURI(ctx.data.totpURI);
 								setTwoFaPassword(value.password); // Store password for OTP verification
-								toast.success('Please scan the QR code and enter the OTP');
+								toast.success("Please scan the QR code and enter the OTP");
 								// Don't reset the form yet - we need the password
 							},
 						},
@@ -80,7 +82,7 @@ export function TwoFactorForm({ session }: { session: any }) {
 	// OTP form for verifying the 2FA setup
 	const otpFormOpts = formOptions({
 		defaultValues: {
-			code: '',
+			code: "",
 		},
 	});
 
@@ -96,16 +98,16 @@ export function TwoFactorForm({ session }: { session: any }) {
 				await authClient.twoFactor.verifyTotp({
 					code: value.code,
 					fetchOptions: {
-						onError(context: any) {
+						onError(context: ErrorContext) {
 							setIsPendingTwoFa(false);
 							otpForm.reset();
 							toast.error(context.error.message);
 						},
 						onSuccess() {
-							toast('2FA enabled successfully');
-							setTwoFactorVerifyURI('');
+							toast("2FA enabled successfully");
+							setTwoFactorVerifyURI("");
 							setIsPendingTwoFa(false);
-							setTwoFaPassword(''); // Clear stored password
+							setTwoFaPassword(""); // Clear stored password
 							otpForm.reset();
 							passwordForm.reset();
 							setTwoFactorDialog(false);
@@ -122,12 +124,12 @@ export function TwoFactorForm({ session }: { session: any }) {
 				await authClient.twoFactor.enable({
 					password: twoFaPassword,
 					fetchOptions: {
-						onError(context: any) {
+						onError(context: ErrorContext) {
 							toast.error(context.error.message);
 						},
-						onSuccess(ctx: any) {
+						onSuccess(ctx: SuccessContext<any>) {
 							setTwoFactorVerifyURI(ctx.data.totpURI);
-							toast.success('2FA enabled successfully');
+							toast.success("2FA enabled successfully");
 							otpForm.reset();
 						},
 					},
@@ -143,8 +145,8 @@ export function TwoFactorForm({ session }: { session: any }) {
 			// Reset all forms, state, and stored password when dialog closes
 			passwordForm.reset();
 			otpForm.reset();
-			setTwoFactorVerifyURI('');
-			setTwoFaPassword('');
+			setTwoFactorVerifyURI("");
+			setTwoFaPassword("");
 		}
 		setTwoFactorDialog(open);
 	};
@@ -154,7 +156,7 @@ export function TwoFactorForm({ session }: { session: any }) {
 			<DialogTrigger asChild>
 				<Button
 					className="cursor-pointer gap-2"
-					variant={session?.user.twoFactorEnabled ? 'destructive' : 'outline'}
+					variant={session?.user.twoFactorEnabled ? "destructive" : "outline"}
 				>
 					{session?.user.twoFactorEnabled ? (
 						<ShieldOff size={16} />
@@ -162,7 +164,7 @@ export function TwoFactorForm({ session }: { session: any }) {
 						<ShieldCheck size={16} />
 					)}
 					<span className="text-xs md:text-sm">
-						{session?.user.twoFactorEnabled ? 'Disable 2FA' : 'Enable 2FA'}
+						{session?.user.twoFactorEnabled ? "Disable 2FA" : "Enable 2FA"}
 					</span>
 				</Button>
 			</DialogTrigger>
@@ -170,17 +172,17 @@ export function TwoFactorForm({ session }: { session: any }) {
 				<DialogHeader>
 					<DialogTitle>
 						{session?.user.twoFactorEnabled
-							? 'Disable 2FA'
+							? "Disable 2FA"
 							: twoFactorVerifyURI
-								? 'Verify OTP'
-								: 'Enable 2FA'}
+								? "Verify OTP"
+								: "Enable 2FA"}
 					</DialogTitle>
 					<DialogDescription>
 						{session?.user.twoFactorEnabled
-							? 'Enter your password to disable two-factor authentication'
+							? "Enter your password to disable two-factor authentication"
 							: twoFactorVerifyURI
-								? 'Scan the QR code and enter the OTP from your authenticator app'
-								: 'Enter your password to enable two-factor authentication'}
+								? "Scan the QR code and enter the OTP from your authenticator app"
+								: "Enter your password to enable two-factor authentication"}
 					</DialogDescription>
 				</DialogHeader>
 
@@ -260,7 +262,7 @@ export function TwoFactorForm({ session }: { session: any }) {
 									className="cursor-pointer"
 									disabled={isPendingTwoFa || !passwordForm.state.canSubmit}
 									label={
-										session?.user.twoFactorEnabled ? 'Disable 2FA' : 'Continue'
+										session?.user.twoFactorEnabled ? "Disable 2FA" : "Continue"
 									}
 								/>
 							</passwordForm.AppForm>

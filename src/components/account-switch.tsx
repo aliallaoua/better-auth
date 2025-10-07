@@ -1,22 +1,22 @@
-import { useRouter } from '@tanstack/react-router';
-import { ChevronDown, PlusCircle } from 'lucide-react';
-import { useState } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { useRouter } from "@tanstack/react-router";
+import { ChevronDown, PlusCircle } from "lucide-react";
+import { useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
 	Command,
 	CommandGroup,
 	CommandItem,
 	CommandList,
 	CommandSeparator,
-} from '@/components/ui/command';
+} from "@/components/ui/command";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
-} from '@/components/ui/popover';
-import { authClient, useSession } from '@/lib/auth-client';
-import type { Session } from '@/lib/auth-types';
+} from "@/components/ui/popover";
+import { authClient, useSession } from "@/lib/auth-client";
+import type { Session } from "@/lib/auth-types";
 
 export default function AccountSwitcher({ sessions }: { sessions: Session[] }) {
 	const { data: currentUser } = useSession();
@@ -107,7 +107,7 @@ export default function AccountSwitcher({ sessions }: { sessions: Session[] }) {
 								className="cursor-pointer text-sm"
 								onSelect={() => {
 									router.navigate({
-										to: '/signin',
+										to: "/signin",
 										// search: { addAccount: true },
 									});
 									setOpen(false);

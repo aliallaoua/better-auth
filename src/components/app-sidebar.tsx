@@ -14,12 +14,13 @@ import {
 	IconSearch,
 	IconSettings,
 	IconUsers,
-} from '@tabler/icons-react';
-import type * as React from 'react';
-import { NavDocuments } from '@/components/nav-documents';
-import { NavMain } from '@/components/nav-main';
-import { NavSecondary } from '@/components/nav-secondary';
-import { NavUser } from '@/components/nav-user';
+} from "@tabler/icons-react";
+import type { User } from "better-auth";
+import type * as React from "react";
+import { NavDocuments } from "@/components/nav-documents";
+import { NavMain } from "@/components/nav-main";
+import { NavSecondary } from "@/components/nav-secondary";
+import { NavUser } from "@/components/nav-user";
 import {
 	Sidebar,
 	SidebarContent,
@@ -28,131 +29,127 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from "@/components/ui/sidebar";
 
 const data = {
 	user: {
-		name: 'shadcn',
-		email: 'm@example.com',
-		avatar: '/avatars/shadcn.jpg',
+		name: "shadcn",
+		email: "m@example.com",
+		avatar: "/avatars/shadcn.jpg",
 	},
 	navMain: [
 		{
-			title: 'Dashboard',
-			url: '/dashboard',
+			title: "Dashboard",
+			url: "/dashboard",
 			icon: IconDashboard,
 		},
 		{
-			title: 'Lifecycle',
-			url: '#',
+			title: "Lifecycle",
+			url: "#",
 			icon: IconListDetails,
 		},
 		{
-			title: 'Analytics',
-			url: '/admin',
+			title: "Analytics",
+			url: "/admin",
 			icon: IconChartBar,
 		},
 		{
-			title: 'Projects',
-			url: '#',
+			title: "Projects",
+			url: "#",
 			icon: IconFolder,
 		},
 		{
-			title: 'Team',
-			url: '#',
+			title: "Team",
+			url: "#",
 			icon: IconUsers,
 		},
 	],
 	navClouds: [
 		{
-			title: 'Capture',
+			title: "Capture",
 			icon: IconCamera,
 			isActive: true,
-			url: '#',
+			url: "#",
 			items: [
 				{
-					title: 'Active Proposals',
-					url: '#',
+					title: "Active Proposals",
+					url: "#",
 				},
 				{
-					title: 'Archived',
-					url: '#',
+					title: "Archived",
+					url: "#",
 				},
 			],
 		},
 		{
-			title: 'Proposal',
+			title: "Proposal",
 			icon: IconFileDescription,
-			url: '#',
+			url: "#",
 			items: [
 				{
-					title: 'Active Proposals',
-					url: '#',
+					title: "Active Proposals",
+					url: "#",
 				},
 				{
-					title: 'Archived',
-					url: '#',
+					title: "Archived",
+					url: "#",
 				},
 			],
 		},
 		{
-			title: 'Prompts',
+			title: "Prompts",
 			icon: IconFileAi,
-			url: '#',
+			url: "#",
 			items: [
 				{
-					title: 'Active Proposals',
-					url: '#',
+					title: "Active Proposals",
+					url: "#",
 				},
 				{
-					title: 'Archived',
-					url: '#',
+					title: "Archived",
+					url: "#",
 				},
 			],
 		},
 	],
 	navSecondary: [
 		{
-			title: 'Settings',
-			url: '#',
+			title: "Settings",
+			url: "#",
 			icon: IconSettings,
 		},
 		{
-			title: 'Get Help',
-			url: '#',
+			title: "Get Help",
+			url: "#",
 			icon: IconHelp,
 		},
 		{
-			title: 'Search',
-			url: '#',
+			title: "Search",
+			url: "#",
 			icon: IconSearch,
 		},
 	],
 	documents: [
 		{
-			name: 'Data Library',
-			url: '#',
+			name: "Data Library",
+			url: "#",
 			icon: IconDatabase,
 		},
 		{
-			name: 'Reports',
-			url: '#',
+			name: "Reports",
+			url: "#",
 			icon: IconReport,
 		},
 		{
-			name: 'Word Assistant',
-			url: '#',
+			name: "Word Assistant",
+			url: "#",
 			icon: IconFileWord,
 		},
 	],
 };
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-	user: {
-		name?: string;
-		email?: string;
-		image?: string | null;
-	};
+	user: User;
 }
 
 export function AppSidebar({
@@ -161,7 +158,7 @@ export function AppSidebar({
 }: React.ComponentProps<typeof Sidebar> & AppSidebarProps) {
 	return (
 		<Sidebar collapsible="icon" {...props}>
-			{/* <Sidebar collapsible="none" {...props}> */}
+			{/* <Sidebar collapsible="offcanvas" {...props}> */}
 			<SidebarHeader>
 				<SidebarMenu>
 					<SidebarMenuItem>
@@ -171,7 +168,7 @@ export function AppSidebar({
 						>
 							<a href="#">
 								<IconInnerShadowTop className="!size-5" />
-								<span className="font-semibold text-base">Acme Inc.</span>
+								<span className="text-base font-semibold">Acme Inc.</span>
 							</a>
 						</SidebarMenuButton>
 					</SidebarMenuItem>

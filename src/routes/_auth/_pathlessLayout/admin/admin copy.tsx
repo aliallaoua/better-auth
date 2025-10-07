@@ -1,20 +1,20 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { Plus, RefreshCw, Trash, UserCircle } from 'lucide-react';
-import { useState } from 'react';
-import { Toaster, toast } from 'sonner';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { Plus, RefreshCw, Trash, UserCircle } from "lucide-react";
+import { useState } from "react";
+import { Toaster, toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
 	Dialog,
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 
-import { Label } from '@/components/ui/label';
+import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -23,9 +23,9 @@ import {
 	SelectLabel,
 	SelectTrigger,
 	SelectValue,
-} from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
+} from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@/components/ui/spinner";
 import {
 	Table,
 	TableBody,
@@ -33,17 +33,17 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { useAppForm } from '@/hooks/form';
-import { authClient } from '@/lib/auth-client';
-import { BanUserSchema, CreateUserSchema } from '@/schema';
+} from "@/components/ui/tooltip";
+import { useAppForm } from "@/hooks/form";
+import { authClient } from "@/lib/auth-client";
+import { BanUserSchema, CreateUserSchema } from "@/schema";
 
-export const Route = createFileRoute('/_auth/_pathlessLayout/admin/admin copy')(
+export const Route = createFileRoute("/_auth/_pathlessLayout/admin/admin copy")(
 	{
 		component: AdminDashboard,
 	}
@@ -101,17 +101,17 @@ function AdminDashboard() {
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState<string | undefined>();
 	const [isBanDialogOpen, setIsBanDialogOpen] = useState(false);
-	const [selectedUserId, setSelectedUserId] = useState<string>('');
+	const [selectedUserId, setSelectedUserId] = useState<string>("");
 
 	const { data: users, isLoading: isUsersLoading } = useQuery({
-		queryKey: ['users'],
+		queryKey: ["users"],
 		queryFn: async () => {
 			const data = await authClient.admin.listUsers(
 				{
 					query: {
 						limit: 10,
-						sortBy: 'createdAt',
-						sortDirection: 'desc',
+						sortBy: "createdAt",
+						sortDirection: "desc",
 					},
 				},
 				{
@@ -124,16 +124,16 @@ function AdminDashboard() {
 
 	const createUserForm = useAppForm({
 		defaultValues: {
-			email: '',
-			password: '',
-			name: '',
-			role: 'user' as 'admin' | 'user',
+			email: "",
+			password: "",
+			name: "",
+			role: "user" as "admin" | "user",
 		},
 		validators: {
 			onChange: CreateUserSchema,
 		},
 		onSubmit: async ({ value }) => {
-			setIsLoading('create');
+			setIsLoading("create");
 			try {
 				await authClient.admin.createUser({
 					email: value.email,
@@ -141,14 +141,14 @@ function AdminDashboard() {
 					name: value.name,
 					role: value.role,
 				});
-				toast.success('User created successfully');
+				toast.success("User created successfully");
 				createUserForm.reset();
 				setIsDialogOpen(false);
 				queryClient.invalidateQueries({
-					queryKey: ['users'],
+					queryKey: ["users"],
 				});
 			} catch (error: any) {
-				toast.error(error.message || 'Failed to create user');
+				toast.error(error.message || "Failed to create user");
 			} finally {
 				setIsLoading(undefined);
 			}
@@ -157,7 +157,7 @@ function AdminDashboard() {
 
 	const banUserForm = useAppForm({
 		defaultValues: {
-			reason: '',
+			reason: "",
 			expirationDate: undefined as Date | undefined,
 		},
 		validators: {
@@ -167,20 +167,20 @@ function AdminDashboard() {
 			setIsLoading(`ban-${selectedUserId}`);
 			try {
 				if (!value.expirationDate) {
-					throw new Error('Expiration date is required');
+					throw new Error("Expiration date is required");
 				}
 				await authClient.admin.banUser({
 					userId: selectedUserId,
 					banReason: value.reason,
 					banExpiresIn: value.expirationDate.getTime() - Date.now(),
 				});
-				toast.success('User banned successfully');
+				toast.success("User banned successfully");
 				setIsBanDialogOpen(false);
 				queryClient.invalidateQueries({
-					queryKey: ['users'],
+					queryKey: ["users"],
 				});
 			} catch (error: any) {
-				toast.error(error.message || 'Failed to ban user');
+				toast.error(error.message || "Failed to ban user");
 			} finally {
 				setIsLoading(undefined);
 			}
@@ -191,12 +191,12 @@ function AdminDashboard() {
 		setIsLoading(`delete-${id}`);
 		try {
 			await authClient.admin.removeUser({ userId: id });
-			toast.success('User deleted successfully');
+			toast.success("User deleted successfully");
 			queryClient.invalidateQueries({
-				queryKey: ['users'],
+				queryKey: ["users"],
 			});
 		} catch (error: any) {
-			toast.error(error.message || 'Failed to delete user');
+			toast.error(error.message || "Failed to delete user");
 		} finally {
 			setIsLoading(undefined);
 		}
@@ -206,9 +206,9 @@ function AdminDashboard() {
 		setIsLoading(`revoke-${id}`);
 		try {
 			await authClient.admin.revokeUserSessions({ userId: id });
-			toast.success('Sessions revoked for user');
+			toast.success("Sessions revoked for user");
 		} catch (error: any) {
-			toast.error(error.message || 'Failed to revoke sessions');
+			toast.error(error.message || "Failed to revoke sessions");
 		} finally {
 			setIsLoading(undefined);
 		}
@@ -218,10 +218,10 @@ function AdminDashboard() {
 		setIsLoading(`impersonate-${id}`);
 		try {
 			await authClient.admin.impersonateUser({ userId: id });
-			toast.success('Impersonated user');
-			router.navigate({ to: '/dashboard' });
+			toast.success("Impersonated user");
+			router.navigate({ to: "/dashboard" });
 		} catch (error: any) {
-			toast.error(error.message || 'Failed to impersonate user');
+			toast.error(error.message || "Failed to impersonate user");
 		} finally {
 			setIsLoading(undefined);
 		}
@@ -242,20 +242,20 @@ function AdminDashboard() {
 				},
 				{
 					onError(context) {
-						toast.error(context.error.message || 'Failed to unban user');
+						toast.error(context.error.message || "Failed to unban user");
 						setIsLoading(undefined);
 					},
 					onSuccess() {
 						queryClient.invalidateQueries({
-							queryKey: ['users'],
+							queryKey: ["users"],
 						});
-						toast.success('User unbanned successfully');
+						toast.success("User unbanned successfully");
 						setIsLoading(undefined);
 					},
 				}
 			);
 		} catch (error: any) {
-			toast.error(error.message || 'Failed to unban user');
+			toast.error(error.message || "Failed to unban user");
 			setIsLoading(undefined);
 		}
 	};
@@ -332,8 +332,8 @@ function AdminDashboard() {
 												label="Role"
 												placeholder="Select a role"
 												values={[
-													{ label: 'Admin', value: 'admin' },
-													{ label: 'User', value: 'user' },
+													{ label: "Admin", value: "admin" },
+													{ label: "User", value: "user" },
 												]}
 											/>
 										)}
@@ -344,7 +344,7 @@ function AdminDashboard() {
 									<createUserForm.SubscribeButton
 										className="w-full"
 										disabled={
-											isLoading === 'create' || !createUserForm.state.canSubmit
+											isLoading === "create" || !createUserForm.state.canSubmit
 										}
 										label="Create User"
 									/>
@@ -433,24 +433,24 @@ function AdminDashboard() {
 														const { data, error } =
 															await authClient.admin.setRole({
 																userId: user.id,
-																role: value as 'admin' | 'user',
+																role: value as "admin" | "user",
 															});
 
 														if (error) {
 															throw new Error(
-																error.message || 'Failed to update user role'
+																error.message || "Failed to update user role"
 															);
 														}
 
-														toast.success('User role updated successfully');
+														toast.success("User role updated successfully");
 
 														// Invalidate the users query to refresh the UI
 														queryClient.invalidateQueries({
-															queryKey: ['users'],
+															queryKey: ["users"],
 														});
 													} catch (error: any) {
 														toast.error(
-															error.message || 'Failed to update user role'
+															error.message || "Failed to update user role"
 														);
 													} finally {
 														setIsLoading(undefined);
@@ -464,7 +464,7 @@ function AdminDashboard() {
 												</SelectTrigger>
 												<SelectContent>
 													<SelectGroup>
-														<SelectLabel>{'Role'}</SelectLabel>
+														<SelectLabel>{"Role"}</SelectLabel>
 														<SelectItem value="admin">Admin</SelectItem>
 														<SelectItem value="user">User</SelectItem>
 													</SelectGroup>
@@ -484,7 +484,7 @@ function AdminDashboard() {
 													<TooltipTrigger asChild>
 														<Button
 															className="cursor-pointer"
-															disabled={isLoading?.startsWith('delete')}
+															disabled={isLoading?.startsWith("delete")}
 															onClick={() => handleDeleteUser(user.id)}
 															size="sm"
 															variant="destructive"
@@ -505,7 +505,7 @@ function AdminDashboard() {
 													<TooltipTrigger asChild>
 														<Button
 															className="cursor-pointer"
-															disabled={isLoading?.startsWith('revoke')}
+															disabled={isLoading?.startsWith("revoke")}
 															onClick={() => handleRevokeSessions(user.id)}
 															size="sm"
 															variant="outline"
@@ -524,7 +524,7 @@ function AdminDashboard() {
 
 												<Button
 													className="cursor-pointer"
-													disabled={isLoading?.startsWith('impersonate')}
+													disabled={isLoading?.startsWith("impersonate")}
 													onClick={() => handleImpersonateUser(user.id)}
 													size="sm"
 													variant="secondary"
@@ -540,7 +540,7 @@ function AdminDashboard() {
 												</Button>
 												<Button
 													className="cursor-pointer"
-													disabled={isLoading?.startsWith('ban')}
+													disabled={isLoading?.startsWith("ban")}
 													onClick={() => {
 														if (user.banned) {
 															handleUnbanUser(user.id);
@@ -554,9 +554,9 @@ function AdminDashboard() {
 													{isLoading === `ban-${user.id}` ? (
 														<Spinner />
 													) : user.banned ? (
-														'Unban'
+														"Unban"
 													) : (
-														'Ban'
+														"Ban"
 													)}
 												</Button>
 											</div>

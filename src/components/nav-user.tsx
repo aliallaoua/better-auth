@@ -4,9 +4,9 @@ import {
 	IconLogout,
 	IconNotification,
 	IconUserCircle,
-} from '@tabler/icons-react';
-import { Link } from '@tanstack/react-router';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+} from "@tabler/icons-react";
+import { Link } from "@tanstack/react-router";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -15,14 +15,14 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
 	useSidebar,
-} from '@/components/ui/sidebar';
-import useSignOutMutation from '@/hooks/mutations/useSignOutMutation';
+} from "@/components/ui/sidebar";
+import useSignOutMutation from "@/hooks/mutations/useSignOutMutation";
 
 export function NavUser({
 	user,
@@ -52,7 +52,7 @@ export function NavUser({
 							</Avatar>
 							<div className="grid flex-1 text-left text-sm leading-tight">
 								<span className="truncate font-medium">{user.name}</span>
-								<span className="truncate text-muted-foreground text-xs">
+								<span className="text-muted-foreground truncate text-xs">
 									{user.email}
 								</span>
 							</div>
@@ -62,7 +62,7 @@ export function NavUser({
 					<DropdownMenuContent
 						align="end"
 						className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-						side={isMobile ? 'bottom' : 'right'}
+						side={isMobile ? "bottom" : "right"}
 						sideOffset={4}
 					>
 						<DropdownMenuLabel className="p-0 font-normal">

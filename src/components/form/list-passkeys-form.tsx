@@ -1,7 +1,8 @@
-import { formOptions } from '@tanstack/react-form';
-import { Fingerprint, Trash } from 'lucide-react';
-import { Activity, useState } from 'react';
-import { toast } from 'sonner';
+import { formOptions } from "@tanstack/react-form";
+import type { ErrorContext } from "better-auth/react";
+import { Fingerprint, Trash } from "lucide-react";
+import { Activity, useState } from "react";
+import { toast } from "sonner";
 import {
 	Dialog,
 	DialogClose,
@@ -11,7 +12,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
 	Table,
 	TableBody,
@@ -19,15 +20,15 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@/components/ui/table';
-import { useAppForm } from '@/hooks/form';
-import { authClient } from '@/lib/auth-client';
-import type { Passkey } from '@/lib/auth-types';
-import { AddPasskeySchema } from '@/schema';
+} from "@/components/ui/table";
+import { useAppForm } from "@/hooks/form";
+import { authClient } from "@/lib/auth-client";
+import type { Passkey } from "@/lib/auth-types";
+import { AddPasskeySchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
-import { Button } from '../ui/button';
-import { FieldGroup, FieldSet } from '../ui/field';
-import { Spinner } from '../ui/spinner';
+import { Button } from "../ui/button";
+import { FieldGroup, FieldSet } from "../ui/field";
+import { Spinner } from "../ui/spinner";
 
 export function ListPasskeysForm() {
 	const { data } = authClient.useListPasskeys();
@@ -35,7 +36,7 @@ export function ListPasskeysForm() {
 
 	const addPasskeyFormOpts = formOptions({
 		defaultValues: {
-			passkeyName: '',
+			passkeyName: "",
 		},
 	});
 
@@ -56,7 +57,7 @@ export function ListPasskeysForm() {
 				toast.error(res?.error.message);
 			} else {
 				toast.success(
-					'Passkey added successfully. You can now use it to login.'
+					"Passkey added successfully. You can now use it to login."
 				);
 			}
 		},
@@ -68,7 +69,7 @@ export function ListPasskeysForm() {
 			<DialogTrigger asChild>
 				<Button className="cursor-pointer text-xs md:text-sm" variant="outline">
 					<Fingerprint className="mr-2 size-4" />
-					<span>Passkeys {data?.length ? `[${data?.length}]` : ''}</span>
+					<span>Passkeys {data?.length ? `[${data?.length}]` : ""}</span>
 				</Button>
 			</DialogTrigger>
 			<DialogContent className="w-11/12 sm:max-w-[425px]">
@@ -89,7 +90,7 @@ export function ListPasskeysForm() {
 									className="flex items-center justify-between"
 									key={passkey.id}
 								>
-									<TableCell>{passkey.name || 'My Passkey'}</TableCell>
+									<TableCell>{passkey.name || "My Passkey"}</TableCell>
 									<TableCell className="text-right">
 										<Button
 											className="cursor-pointer"
@@ -101,10 +102,10 @@ export function ListPasskeysForm() {
 															setIsDeletePasskey(true);
 														},
 														onSuccess: () => {
-															toast('Passkey deleted successfully');
+															toast("Passkey deleted successfully");
 															setIsDeletePasskey(false);
 														},
-														onError: (error: any) => {
+														onError: (error: ErrorContext) => {
 															toast.error(error.error.message);
 															setIsDeletePasskey(false);
 														},
@@ -130,7 +131,7 @@ export function ListPasskeysForm() {
 					<p className="text-muted-foreground text-sm">No passkeys found</p>
 				)}
 				{/* {!data?.length && ( */}
-				<Activity mode={data?.length ? 'hidden' : 'visible'}>
+				<Activity mode={data?.length ? "hidden" : "visible"}>
 					<form
 						className="flex flex-col gap-4"
 						onSubmit={(e) => {

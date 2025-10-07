@@ -14,7 +14,7 @@ import {
 	Section,
 	Tailwind,
 	Text,
-} from '@react-email/components';
+} from "@react-email/components";
 
 interface InvitationEmailProps {
 	username?: string;
@@ -42,7 +42,7 @@ export const InvitationEmail = ({
 				<Body className="mx-auto my-auto bg-white px-2 font-sans">
 					<Container className="mx-auto my-[40px] max-w-[465px] rounded border border-[#eaeaea] border-solid p-[20px]">
 						<Heading className="mx-0 my-[30px] p-0 text-center font-normal text-[24px] text-black">
-							Join <strong>{invitedByUsername}</strong> on{' '}
+							Join <strong>{invitedByUsername}</strong> on{" "}
 							<strong>Better Auth.</strong>
 						</Heading>
 						<Text className="text-[14px] text-black leading-[24px]">
@@ -56,7 +56,7 @@ export const InvitationEmail = ({
 							>
 								{invitedByEmail}
 							</Link>
-							) has invited you to the <strong>{teamName}</strong> team on{' '}
+							) has invited you to the <strong>{teamName}</strong> team on{" "}
 							<strong>Better Auth</strong>.
 						</Text>
 						<Section>
@@ -83,14 +83,14 @@ export const InvitationEmail = ({
 							</Button>
 						</Section>
 						<Text className="text-[14px] text-black leading-[24px]">
-							or copy and paste this URL into your browser:{' '}
+							or copy and paste this URL into your browser:{" "}
 							<Link className="text-blue-600 no-underline" href={inviteLink}>
 								{inviteLink}
 							</Link>
 						</Text>
 						<Hr className="mx-0 my-[26px] w-full border border-[#eaeaea] border-solid" />
 						<Text className="text-[#666666] text-[12px] leading-[24px]">
-							This invitation was intended for{' '}
+							This invitation was intended for{" "}
 							<span className="text-black">{username}</span>. If you were not
 							expecting this invitation, you can ignore this email.
 						</Text>

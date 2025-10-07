@@ -1,12 +1,12 @@
-import { Check, Copy } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Check, Copy } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from "@/components/ui/tooltip";
 
 interface CopyButtonProps {
 	textToCopy: string;
@@ -27,7 +27,7 @@ export default function CopyButton({ textToCopy }: CopyButtonProps) {
 			await navigator.clipboard.writeText(textToCopy);
 			setIsCopied(true);
 		} catch (err) {
-			console.error('Failed to copy text: ', err);
+			console.error("Failed to copy text: ", err);
 		}
 	};
 
@@ -50,7 +50,7 @@ export default function CopyButton({ textToCopy }: CopyButtonProps) {
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent>
-					<p>{isCopied ? 'Copied!' : 'Copy to clipboard'}</p>
+					<p>{isCopied ? "Copied!" : "Copy to clipboard"}</p>
 				</TooltipContent>
 			</Tooltip>
 		</TooltipProvider>

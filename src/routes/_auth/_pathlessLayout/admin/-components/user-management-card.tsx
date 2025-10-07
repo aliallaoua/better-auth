@@ -1,13 +1,13 @@
-import { Users } from 'lucide-react';
-import type React from 'react';
+import { Users } from "lucide-react";
+import type React from "react";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@/components/ui/card';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 interface UserManagementCardProps {
 	children: React.ReactNode;
@@ -21,8 +21,8 @@ export function UserManagementCard({
 	return (
 		<Card
 			className={cn(
-				'col-span-full border-2 transition-all duration-300 hover:shadow-xl',
-				'bg-gradient-to-br from-background to-muted/5',
+				"col-span-full border-2 transition-all duration-300 hover:shadow-xl",
+				"bg-gradient-to-br from-background to-muted/5",
 				className
 			)}
 		>

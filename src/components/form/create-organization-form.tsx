@@ -1,4 +1,5 @@
 import { formOptions } from "@tanstack/react-form";
+import type { ErrorContext } from "better-auth/react";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -45,7 +46,7 @@ export function CreateOrganizationForm() {
 						setOpen(false);
 						form.reset();
 					},
-					onError: (error: any) => {
+					onError: (error: ErrorContext) => {
 						toast.error(error.error.message);
 					},
 				}

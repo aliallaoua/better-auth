@@ -1,23 +1,23 @@
-import { createAuthClient } from 'better-auth/react';
 import {
+	adminClient,
+	deviceAuthorizationClient,
+	genericOAuthClient,
+	lastLoginMethodClient,
+	multiSessionClient,
+	oidcClient,
+	oneTapClient,
 	organizationClient,
 	passkeyClient,
 	twoFactorClient,
-	adminClient,
-	multiSessionClient,
-	oneTapClient,
-	oidcClient,
-	genericOAuthClient,
-	deviceAuthorizationClient,
-	lastLoginMethodClient,
-} from 'better-auth/client/plugins';
-import { toast } from 'sonner';
+} from "better-auth/client/plugins";
+import { createAuthClient } from "better-auth/react";
+import { toast } from "sonner";
 export const authClient = createAuthClient({
 	plugins: [
 		organizationClient(),
 		twoFactorClient({
 			onTwoFactorRedirect() {
-				window.location.href = '/two-factor';
+				window.location.href = "/two-factor";
 			},
 		}),
 		passkeyClient(),
@@ -38,12 +38,12 @@ export const authClient = createAuthClient({
 	fetchOptions: {
 		onError(e) {
 			if (e.error.status === 429) {
-				toast.error('Too many requests. Please try again later.');
+				toast.error("Too many requests. Please try again later.");
 			}
 		},
 	},
 	/** The base URL of the server (optional if you're using the same domain) */
-	baseURL: 'http://localhost:3000',
+	baseURL: "http://localhost:3000",
 });
 
 export const {

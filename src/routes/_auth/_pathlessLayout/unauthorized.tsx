@@ -1,11 +1,11 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
-import { TriangleAlert } from 'lucide-react';
-import { useSession } from '@/lib/auth-client';
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { TriangleAlert } from "lucide-react";
+import { useSession } from "@/lib/auth-client";
 
-export const Route = createFileRoute('/_auth/_pathlessLayout/unauthorized')({
+export const Route = createFileRoute("/_auth/_pathlessLayout/unauthorized")({
 	validateSearch: (search) => ({
-		redirect: (search.redirect as string) || '/dashboard',
-		reason: (search.reason as string) || 'insufficient_permissions',
+		redirect: (search.redirect as string) || "/dashboard",
+		reason: (search.reason as string) || "insufficient_permissions",
 	}),
 	component: UnauthorizedPage,
 });
@@ -15,10 +15,10 @@ function UnauthorizedPage() {
 	const { data } = useSession();
 
 	const reasonMessages = {
-		insufficientRole: 'You do not have the required role to access this page.',
+		insufficientRole: "You do not have the required role to access this page.",
 		insufficientPermissions:
-			'You do not have the required permissions to access this page.',
-		default: 'You are not authorized to access this page.',
+			"You do not have the required permissions to access this page.",
+		default: "You are not authorized to access this page.",
 	};
 
 	const message =
@@ -54,7 +54,7 @@ function UnauthorizedPage() {
 
 				<div className="mb-6 text-sm text-gray-500">
 					<p>
-						<strong>Your roles:</strong> {data?.user?.role || 'None'}
+						<strong>Your roles:</strong> {data?.user?.role || "None"}
 					</p>
 					{/* <p>
 				<strong>Your permissions:</strong>{' '}

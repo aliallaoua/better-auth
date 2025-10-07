@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from '@tanstack/react-router';
-import { toast } from 'sonner';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "@tanstack/react-router";
+import { toast } from "sonner";
 
-import { signUp } from '@/lib/auth-functions';
+import { signUp } from "@/lib/auth-functions";
 
 const useSignUpMutation = () => {
 	const router = useRouter();
@@ -12,12 +12,12 @@ const useSignUpMutation = () => {
 		mutationFn: signUp,
 		onSuccess: () => {
 			toast.success(
-				'You have successfully signed up. Please check your email for verification.'
+				"You have successfully signed up. Please check your email for verification."
 			);
 			queryClient.resetQueries();
 			router.invalidate();
 			router.navigate({
-				to: '/dashboard',
+				to: "/dashboard",
 			});
 		},
 		onError: (error) => {

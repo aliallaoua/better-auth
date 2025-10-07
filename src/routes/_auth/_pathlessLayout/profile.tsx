@@ -1,11 +1,11 @@
-import { createFileRoute, redirect } from '@tanstack/react-router';
-import { createServerFn } from '@tanstack/react-start';
-import { getRequestHeaders } from '@tanstack/react-start/server';
-import AccountSwitcher from '@/components/account-switch';
-import { OrganizationCard } from '@/components/dashboard/organization-card';
-import UserCard from '@/components/dashboard/user-card';
-import { auth } from '@/lib/auth';
-import { userMiddleware } from '@/lib/auth-middleware';
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
+import { getRequestHeaders } from "@tanstack/react-start/server";
+import AccountSwitcher from "@/components/account-switch";
+import { OrganizationCard } from "@/components/dashboard/organization-card";
+import UserCard from "@/components/dashboard/user-card";
+import { auth } from "@/lib/auth";
+import { userMiddleware } from "@/lib/auth-middleware";
 
 const getProfileData = createServerFn()
 	.middleware([userMiddleware])
@@ -33,11 +33,11 @@ const getProfileData = createServerFn()
 			};
 		} catch (e) {
 			console.log(e);
-			throw redirect({ to: '/signin' });
+			throw redirect({ to: "/signin" });
 		}
 	});
 
-export const Route = createFileRoute('/_auth/_pathlessLayout/profile')({
+export const Route = createFileRoute("/_auth/_pathlessLayout/profile")({
 	loader: async () => {
 		const { session, activeSessions, deviceSessions, organization } =
 			await getProfileData();

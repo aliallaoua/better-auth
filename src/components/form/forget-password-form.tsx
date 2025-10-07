@@ -1,8 +1,8 @@
-import { formOptions } from '@tanstack/react-form';
-import { Link } from '@tanstack/react-router';
-import { ArrowLeft, CheckCircle2 } from 'lucide-react';
-import { useState } from 'react';
-import { toast } from 'sonner';
+import { formOptions } from "@tanstack/react-form";
+import { Link } from "@tanstack/react-router";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 import {
 	Card,
 	CardContent,
@@ -10,25 +10,25 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from '@/components/ui/card';
-import { useAppForm } from '@/hooks/form';
-import { authClient } from '@/lib/auth-client';
-import { ForgotPasswordSchema } from '@/schema';
-import { Alert, AlertDescription } from '../ui/alert';
-import { Button } from '../ui/button';
+} from "@/components/ui/card";
+import { useAppForm } from "@/hooks/form";
+import { authClient } from "@/lib/auth-client";
+import { ForgotPasswordSchema } from "@/schema";
+import { Alert, AlertDescription } from "../ui/alert";
+import { Button } from "../ui/button";
 import {
 	FieldDescription,
 	FieldGroup,
 	FieldSeparator,
 	FieldSet,
-} from '../ui/field';
+} from "../ui/field";
 
 export function ForgetPasswordForm() {
 	const [isSubmitted, setIsSubmitted] = useState(false);
 
 	const signInFormOpts = formOptions({
 		defaultValues: {
-			email: '',
+			email: "",
 		},
 	});
 
@@ -41,15 +41,15 @@ export function ForgetPasswordForm() {
 			try {
 				const { data, error } = await authClient.requestPasswordReset({
 					email: value.email,
-					redirectTo: '/reset-password',
+					redirectTo: "/reset-password",
 				});
 				if (error) {
 					toast.error(error.message);
 				} else {
-					toast.success('Password reset email sent');
+					toast.success("Password reset email sent");
 					setIsSubmitted(true);
 				}
-			} catch (e: any) {
+			} catch (e) {
 				// Set form-level error
 				form.setErrorMap({
 					onSubmit: e.message,

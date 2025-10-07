@@ -1,4 +1,4 @@
-import type { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef } from "@tanstack/react-table";
 import {
 	ArrowUpDown,
 	Ban,
@@ -6,10 +6,10 @@ import {
 	RefreshCw,
 	Trash,
 	UserCircle,
-} from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -17,7 +17,7 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 import {
 	Select,
 	SelectContent,
@@ -26,13 +26,13 @@ import {
 	SelectLabel,
 	SelectTrigger,
 	SelectValue,
-} from '@/components/ui/select';
-import { Spinner } from '@/components/ui/spinner';
+} from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from "@/components/ui/tooltip";
 
 // Define the User type based on your data
 export type User = {
@@ -52,7 +52,7 @@ export type UserActionHandlers = {
 	onImpersonateUser: (id: string) => void;
 	onBanClick: (id: string) => void;
 	onUnbanUser: (id: string) => void;
-	onRoleChange: (id: string, role: 'admin' | 'user') => void;
+	onRoleChange: (id: string, role: "admin" | "user") => void;
 	isLoading?: string;
 };
 
@@ -67,8 +67,8 @@ const roleFilter = (row: any, columnId: string, filterValue: string[]) => {
 const bannedFilter = (row: any, columnId: string, filterValue: string) => {
 	if (!filterValue) return true;
 	const value = row.getValue(columnId);
-	if (filterValue === 'banned') return value === true;
-	if (filterValue === 'active') return value === false;
+	if (filterValue === "banned") return value === true;
+	if (filterValue === "active") return value === false;
 	return true;
 };
 
@@ -77,7 +77,7 @@ const SortableHeader = ({ column, title }: { column: any; title: string }) => {
 	return (
 		<Button
 			className="h-8 px-2 -ml-2"
-			onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+			onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 			variant="ghost"
 		>
 			{title}
@@ -91,13 +91,13 @@ export const createColumns = (
 ): ColumnDef<User>[] => [
 	// Row selection column
 	{
-		id: 'select',
+		id: "select",
 		header: ({ table }) => (
 			<Checkbox
 				aria-label="Select all"
 				checked={
 					table.getIsAllPageRowsSelected() ||
-					(table.getIsSomePageRowsSelected() && 'indeterminate')
+					(table.getIsSomePageRowsSelected() && "indeterminate")
 				}
 				onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
 			/>
@@ -113,10 +113,10 @@ export const createColumns = (
 		enableHiding: false,
 	},
 	{
-		accessorKey: 'email',
+		accessorKey: "email",
 		header: ({ column }) => <SortableHeader column={column} title="Email" />,
 		cell: ({ row }) => {
-			const email = row.getValue('email') as string;
+			const email = row.getValue("email") as string;
 			return (
 				<div className="font-medium">
 					<Tooltip>
@@ -131,13 +131,13 @@ export const createColumns = (
 			);
 		},
 		enableColumnFilter: true,
-		filterFn: 'includesString',
+		filterFn: "includesString",
 	},
 	{
-		accessorKey: 'name',
+		accessorKey: "name",
 		header: ({ column }) => <SortableHeader column={column} title="Name" />,
 		cell: ({ row }) => {
-			const name = row.getValue('name') as string;
+			const name = row.getValue("name") as string;
 			return (
 				<div className="font-medium">
 					{name || (
@@ -147,10 +147,10 @@ export const createColumns = (
 			);
 		},
 		enableColumnFilter: true,
-		filterFn: 'includesString',
+		filterFn: "includesString",
 	},
 	{
-		accessorKey: 'role',
+		accessorKey: "role",
 		header: ({ column }) => <SortableHeader column={column} title="Role" />,
 		cell: ({ row }) => {
 			const user = row.original;
@@ -158,7 +158,7 @@ export const createColumns = (
 				<Select
 					disabled={handlers.isLoading === `role-${user.id}`}
 					onValueChange={(value) =>
-						handlers.onRoleChange(user.id, value as 'admin' | 'user')
+						handlers.onRoleChange(user.id, value as "admin" | "user")
 					}
 					value={user.role}
 				>
@@ -187,18 +187,18 @@ export const createColumns = (
 		enableColumnFilter: true,
 		filterFn: roleFilter,
 		meta: {
-			filterVariant: 'select',
+			filterVariant: "select",
 			filterOptions: [
-				{ label: 'Admin', value: 'admin' },
-				{ label: 'User', value: 'user' },
+				{ label: "Admin", value: "admin" },
+				{ label: "User", value: "user" },
 			],
 		},
 	},
 	{
-		accessorKey: 'banned',
+		accessorKey: "banned",
 		header: ({ column }) => <SortableHeader column={column} title="Status" />,
 		cell: ({ row }) => {
-			const banned = row.getValue('banned') as boolean;
+			const banned = row.getValue("banned") as boolean;
 			return banned ? (
 				<Badge variant="destructive">Banned</Badge>
 			) : (
@@ -210,36 +210,36 @@ export const createColumns = (
 		enableColumnFilter: true,
 		filterFn: bannedFilter,
 		meta: {
-			filterVariant: 'select',
+			filterVariant: "select",
 			filterOptions: [
-				{ label: 'Active', value: 'active' },
-				{ label: 'Banned', value: 'banned' },
+				{ label: "Active", value: "active" },
+				{ label: "Banned", value: "banned" },
 			],
 		},
 	},
 	{
-		accessorKey: 'createdAt',
+		accessorKey: "createdAt",
 		header: ({ column }) => <SortableHeader column={column} title="Created" />,
 		cell: ({ row }) => {
-			const date = row.getValue('createdAt') as Date;
+			const date = row.getValue("createdAt") as Date;
 			if (!date) return <span className="text-muted-foreground">-</span>;
 
 			return (
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<span className="text-sm">
-							{new Intl.DateTimeFormat('en-US', {
-								month: 'short',
-								day: 'numeric',
-								year: 'numeric',
+							{new Intl.DateTimeFormat("en-US", {
+								month: "short",
+								day: "numeric",
+								year: "numeric",
 							}).format(date)}
 						</span>
 					</TooltipTrigger>
 					<TooltipContent>
 						<p>
-							{new Intl.DateTimeFormat('en-US', {
-								dateStyle: 'full',
-								timeStyle: 'short',
+							{new Intl.DateTimeFormat("en-US", {
+								dateStyle: "full",
+								timeStyle: "short",
 							}).format(date)}
 						</p>
 					</TooltipContent>
@@ -250,8 +250,8 @@ export const createColumns = (
 		enableSorting: true,
 	},
 	{
-		id: 'actions',
-		header: 'Actions',
+		id: "actions",
+		header: "Actions",
 		cell: ({ row }) => {
 			const user = row.original;
 			return (
@@ -276,7 +276,7 @@ export const createColumns = (
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem
-							disabled={handlers.isLoading?.startsWith('impersonate')}
+							disabled={handlers.isLoading?.startsWith("impersonate")}
 							onClick={() => handlers.onImpersonateUser(user.id)}
 						>
 							{handlers.isLoading === `impersonate-${user.id}` ? (
@@ -287,7 +287,7 @@ export const createColumns = (
 							Impersonate
 						</DropdownMenuItem>
 						<DropdownMenuItem
-							disabled={handlers.isLoading?.startsWith('revoke')}
+							disabled={handlers.isLoading?.startsWith("revoke")}
 							onClick={() => handlers.onRevokeSessions(user.id)}
 						>
 							{handlers.isLoading === `revoke-${user.id}` ? (
@@ -299,7 +299,7 @@ export const createColumns = (
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem
-							disabled={handlers.isLoading?.startsWith('ban')}
+							disabled={handlers.isLoading?.startsWith("ban")}
 							onClick={() => {
 								if (user.banned) {
 									handlers.onUnbanUser(user.id);
@@ -313,11 +313,11 @@ export const createColumns = (
 							) : (
 								<Ban className="mr-2 size-4" />
 							)}
-							{user.banned ? 'Unban user' : 'Ban user'}
+							{user.banned ? "Unban user" : "Ban user"}
 						</DropdownMenuItem>
 						<DropdownMenuItem
 							className="text-red-600 focus:text-red-600"
-							disabled={handlers.isLoading?.startsWith('delete')}
+							disabled={handlers.isLoading?.startsWith("delete")}
 							onClick={() => handlers.onDeleteUser(user.id)}
 						>
 							{handlers.isLoading === `delete-${user.id}` ? (

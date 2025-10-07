@@ -1,14 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
-import type { UserWithRole } from 'better-auth/plugins/admin';
-import { authClient } from '@/lib/auth-client';
+import { useQuery } from "@tanstack/react-query";
+import type { UserWithRole } from "better-auth/plugins/admin";
+import { authClient } from "@/lib/auth-client";
 
 const fetchListUsers = async (): Promise<UserWithRole[]> => {
 	const data = await authClient.admin.listUsers(
 		{
 			query: {
 				limit: 50,
-				sortBy: 'createdAt',
-				sortDirection: 'desc',
+				sortBy: "createdAt",
+				sortDirection: "desc",
 			},
 		},
 		{
@@ -20,7 +20,7 @@ const fetchListUsers = async (): Promise<UserWithRole[]> => {
 
 const useListUsersQuery = () =>
 	useQuery({
-		queryKey: ['users'],
+		queryKey: ["users"],
 		queryFn: () => fetchListUsers(),
 	});
 

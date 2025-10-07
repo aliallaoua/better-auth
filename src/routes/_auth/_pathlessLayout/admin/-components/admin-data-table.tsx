@@ -10,7 +10,7 @@ import {
 	type SortingState,
 	useReactTable,
 	type VisibilityState,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
 import {
 	ChevronDown,
 	Download,
@@ -20,10 +20,10 @@ import {
 	Users,
 	UserX,
 	X,
-} from 'lucide-react';
-import { type Dispatch, type SetStateAction, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+} from "lucide-react";
+import { type Dispatch, type SetStateAction, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
@@ -31,16 +31,16 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
+} from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
 	Table,
 	TableBody,
@@ -48,9 +48,9 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@/components/ui/table';
-import { Label } from '../../../../../components/ui/label';
-import { userTableFilterFns } from './columns';
+} from "@/components/ui/table";
+import { Label } from "../../../../../components/ui/label";
+import { userTableFilterFns } from "./columns";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -67,13 +67,13 @@ function TableFilter({ column }: { column: any }) {
 	const filterOptions = column.columnDef.meta?.filterOptions;
 	const filterVariant = column.columnDef.meta?.filterVariant;
 
-	if (filterVariant === 'select' && filterOptions) {
+	if (filterVariant === "select" && filterOptions) {
 		return (
 			<Select
 				onValueChange={(value) =>
-					column.setFilterValue(value === 'all' ? undefined : value)
+					column.setFilterValue(value === "all" ? undefined : value)
 				}
-				value={filterValue || ''}
+				value={filterValue || ""}
 			>
 				<SelectTrigger className="w-[150px]">
 					<SelectValue placeholder={`Filter ${column.id}...`} />
@@ -95,7 +95,7 @@ function TableFilter({ column }: { column: any }) {
 			className="max-w-[200px]"
 			onChange={(event) => column.setFilterValue(event.target.value)}
 			placeholder={`Filter ${column.id}...`}
-			value={filterValue || ''}
+			value={filterValue || ""}
 		/>
 	);
 }
@@ -206,11 +206,11 @@ export function DataTable<TData, TValue>({
 	onExportData,
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = useState<SortingState>([
-		{ id: 'createdAt', desc: true },
+		{ id: "createdAt", desc: true },
 	]);
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-	const [globalFilter, setGlobalFilter] = useState('');
+	const [globalFilter, setGlobalFilter] = useState("");
 
 	const table = useReactTable({
 		data,
@@ -224,7 +224,7 @@ export function DataTable<TData, TValue>({
 		onColumnVisibilityChange: setColumnVisibility,
 		onRowSelectionChange: setRowSelection,
 		onGlobalFilterChange: setGlobalFilter,
-		globalFilterFn: 'includesString',
+		globalFilterFn: "includesString",
 		enableRowSelection: true,
 		enableColumnFilters: true,
 		filterFns: {
@@ -255,7 +255,7 @@ export function DataTable<TData, TValue>({
 
 	const clearAllFilters = () => {
 		table.resetColumnFilters();
-		setGlobalFilter('');
+		setGlobalFilter("");
 	};
 
 	if (isLoading) {
@@ -309,7 +309,7 @@ export function DataTable<TData, TValue>({
 								.getAllColumns()
 								.filter(
 									(column) =>
-										typeof column.accessorFn !== 'undefined' &&
+										typeof column.accessorFn !== "undefined" &&
 										column.getCanHide()
 								)
 								.map((column) => {
@@ -386,7 +386,7 @@ export function DataTable<TData, TValue>({
 							table.getRowModel().rows.map((row) => (
 								<TableRow
 									className="hover:bg-muted/50"
-									data-state={row.getIsSelected() && 'selected'}
+									data-state={row.getIsSelected() && "selected"}
 									key={row.id}
 								>
 									{row.getVisibleCells().map((cell) => (
@@ -409,8 +409,8 @@ export function DataTable<TData, TValue>({
 										<UserX className="size-8 text-muted-foreground" />
 										<p className="text-muted-foreground">
 											{isFiltered
-												? 'No users match your filters.'
-												: 'No users found.'}
+												? "No users match your filters."
+												: "No users found."}
 										</p>
 										{isFiltered && (
 											<Button
@@ -460,7 +460,7 @@ export function DataTable<TData, TValue>({
 						</Select>
 					</div>
 					<div className="flex w-[100px] items-center justify-center text-sm font-medium">
-						Page {table.getState().pagination.pageIndex + 1} of{' '}
+						Page {table.getState().pagination.pageIndex + 1} of{" "}
 						{table.getPageCount()}
 					</div>
 					<div className="flex items-center space-x-2">
@@ -471,7 +471,7 @@ export function DataTable<TData, TValue>({
 							variant="outline"
 						>
 							<span className="sr-only">Go to first page</span>
-							{'<<'}
+							{"<<"}
 						</Button>
 						<Button
 							className="size-8 p-0"
@@ -480,7 +480,7 @@ export function DataTable<TData, TValue>({
 							variant="outline"
 						>
 							<span className="sr-only">Go to previous page</span>
-							{'<'}
+							{"<"}
 						</Button>
 						<Button
 							className="size-8 p-0"
@@ -489,7 +489,7 @@ export function DataTable<TData, TValue>({
 							variant="outline"
 						>
 							<span className="sr-only">Go to next page</span>
-							{'>'}
+							{">"}
 						</Button>
 						<Button
 							className="size-8 p-0"
@@ -498,7 +498,7 @@ export function DataTable<TData, TValue>({
 							variant="outline"
 						>
 							<span className="sr-only">Go to last page</span>
-							{'>>'}
+							{">>"}
 						</Button>
 					</div>
 				</div>

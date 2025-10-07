@@ -1,9 +1,9 @@
-import { createServerFn } from '@tanstack/react-start';
-import { getRequestHeaders } from '@tanstack/react-start/server';
-import { authClient } from '@/lib/auth-client';
-import type { SignInSchema, SignUpSchema } from '@/schema';
-import { auth } from './auth';
-import { convertImageToBase64 } from './utils/convert-image';
+import { createServerFn } from "@tanstack/react-start";
+import { getRequestHeaders } from "@tanstack/react-start/server";
+import { authClient } from "@/lib/auth-client";
+import type { SignInSchema, SignUpSchema } from "@/schema";
+import { auth } from "./auth";
+import { convertImageToBase64 } from "./utils/convert-image";
 
 export const signIn = async (data: SignInSchema) => {
 	const { error, data: response } = await authClient.signIn.email({
@@ -23,7 +23,7 @@ export const signUp = async (data: SignUpSchema) => {
 		email: data.email,
 		password: data.password,
 		name: data.name,
-		image: data.image ? await convertImageToBase64(data.image) : '',
+		image: data.image ? await convertImageToBase64(data.image) : "",
 	});
 
 	if (error) {
@@ -35,19 +35,19 @@ export const signUp = async (data: SignUpSchema) => {
 
 export const signInWithGithub = async () => {
 	await authClient.signIn.social({
-		provider: 'github',
-		callbackURL: '/dashboard',
+		provider: "github",
+		callbackURL: "/dashboard",
 	});
 };
 export const signInWithGoogle = async () => {
 	await authClient.signIn.social({
-		provider: 'google',
-		callbackURL: '/dashboard',
+		provider: "google",
+		callbackURL: "/dashboard",
 	});
 };
 
 export const getUserSession = createServerFn({
-	method: 'GET',
+	method: "GET",
 }).handler(async () => {
 	const userSession = await auth.api.getSession({
 		headers: getRequestHeaders(),

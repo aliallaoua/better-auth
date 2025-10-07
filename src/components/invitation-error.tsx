@@ -1,6 +1,6 @@
-import { Link } from '@tanstack/react-router';
-import { AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Link } from "@tanstack/react-router";
+import { AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -8,7 +8,7 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 
 export function InvitationError() {
 	return (

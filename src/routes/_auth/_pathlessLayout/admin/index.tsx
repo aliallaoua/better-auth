@@ -1,42 +1,42 @@
-import { useQueryClient } from '@tanstack/react-query';
-import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
-import { Download, Plus } from 'lucide-react';
-import { useMemo, useState } from 'react';
-import { Toaster, toast } from 'sonner';
-import { Button } from '@/components/ui/button';
-import { ButtonGroup } from '@/components/ui/button-group';
+import { useQueryClient } from "@tanstack/react-query";
+import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import { Download, Plus } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Toaster, toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import {
 	Dialog,
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '@/components/ui/dialog';
-import { FieldGroup, FieldSet } from '@/components/ui/field';
-import { Label } from '@/components/ui/label';
-import { useAppForm } from '@/hooks/form';
-import useListUsersQuery from '@/hooks/queries/useListUsersQuery';
-import { authClient } from '@/lib/auth-client';
+} from "@/components/ui/dialog";
+import { FieldGroup, FieldSet } from "@/components/ui/field";
+import { Label } from "@/components/ui/label";
+import { useAppForm } from "@/hooks/form";
+import useListUsersQuery from "@/hooks/queries/useListUsersQuery";
+import { authClient } from "@/lib/auth-client";
 import {
 	createColumns,
 	type UserActionHandlers,
-} from '@/routes/_auth/_pathlessLayout/admin/-components/columns';
+} from "@/routes/_auth/_pathlessLayout/admin/-components/columns";
 import {
 	DataTable,
 	DataTableSkeleton,
-} from '@/routes/_auth/_pathlessLayout/admin/-components/data-table';
-import { StatCard } from '@/routes/_auth/_pathlessLayout/admin/-components/stats-card';
-import { UserManagementCard } from '@/routes/_auth/_pathlessLayout/admin/-components/user-management-card';
-import { BanUserSchema, CreateUserSchema } from '@/schema';
+} from "@/routes/_auth/_pathlessLayout/admin/-components/data-table";
+import { StatCard } from "@/routes/_auth/_pathlessLayout/admin/-components/stats-card";
+import { UserManagementCard } from "@/routes/_auth/_pathlessLayout/admin/-components/user-management-card";
+import { BanUserSchema, CreateUserSchema } from "@/schema";
 
-export const Route = createFileRoute('/_auth/_pathlessLayout/admin/')({
+export const Route = createFileRoute("/_auth/_pathlessLayout/admin/")({
 	beforeLoad: ({ context, location }) => {
-		if (context.userSession?.user.role !== 'admin') {
+		if (context.userSession?.user.role !== "admin") {
 			throw redirect({
-				to: '/unauthorized',
+				to: "/unauthorized",
 				search: {
 					redirect: location.href,
-					reason: 'insufficient_permissions',
+					reason: "insufficient_permissions",
 				},
 			});
 		}
@@ -50,7 +50,7 @@ function AdminDashboard() {
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState<string | undefined>();
 	const [isBanDialogOpen, setIsBanDialogOpen] = useState(false);
-	const [selectedUserId, setSelectedUserId] = useState<string>('');
+	const [selectedUserId, setSelectedUserId] = useState<string>("");
 
 	const { data: users = [], isPending } = useListUsersQuery();
 
@@ -60,7 +60,7 @@ function AdminDashboard() {
 
 		return {
 			total: users.length,
-			admins: users.filter((u) => u.role === 'admin').length,
+			admins: users.filter((u) => u.role === "admin").length,
 			banned: users.filter((u) => u.banned).length,
 			active: users.filter((u) => !u.banned).length,
 		};
@@ -68,16 +68,16 @@ function AdminDashboard() {
 
 	const createUserForm = useAppForm({
 		defaultValues: {
-			email: '',
-			password: '',
-			name: '',
-			role: 'user' as 'admin' | 'user',
+			email: "",
+			password: "",
+			name: "",
+			role: "user" as "admin" | "user",
 		},
 		validators: {
 			onChange: CreateUserSchema,
 		},
 		onSubmit: async ({ value }) => {
-			setIsLoading('create');
+			setIsLoading("create");
 			try {
 				await authClient.admin.createUser({
 					email: value.email,
@@ -85,14 +85,14 @@ function AdminDashboard() {
 					name: value.name,
 					role: value.role,
 				});
-				toast.success('User created successfully');
+				toast.success("User created successfully");
 				createUserForm.reset();
 				setIsDialogOpen(false);
 				queryClient.invalidateQueries({
-					queryKey: ['users'],
+					queryKey: ["users"],
 				});
-			} catch (error: any) {
-				toast.error(error.message || 'Failed to create user');
+			} catch (error) {
+				toast.error(error.message || "Failed to create user");
 			} finally {
 				setIsLoading(undefined);
 			}
@@ -101,7 +101,7 @@ function AdminDashboard() {
 
 	const banUserForm = useAppForm({
 		defaultValues: {
-			reason: '',
+			reason: "",
 			expirationDate: undefined as Date | undefined,
 		},
 		validators: {
@@ -111,20 +111,20 @@ function AdminDashboard() {
 			setIsLoading(`ban-${selectedUserId}`);
 			try {
 				if (!value.expirationDate) {
-					throw new Error('Expiration date is required');
+					throw new Error("Expiration date is required");
 				}
 				await authClient.admin.banUser({
 					userId: selectedUserId,
 					banReason: value.reason,
 					banExpiresIn: value.expirationDate.getTime() - Date.now(),
 				});
-				toast.success('User banned successfully');
+				toast.success("User banned successfully");
 				setIsBanDialogOpen(false);
 				queryClient.invalidateQueries({
-					queryKey: ['users'],
+					queryKey: ["users"],
 				});
-			} catch (error: any) {
-				toast.error(error.message || 'Failed to ban user');
+			} catch (error) {
+				toast.error(error.message || "Failed to ban user");
 			} finally {
 				setIsLoading(undefined);
 			}
@@ -136,12 +136,12 @@ function AdminDashboard() {
 
 		try {
 			await authClient.admin.removeUser({ userId: id });
-			toast.success('User deleted successfully');
+			toast.success("User deleted successfully");
 			queryClient.invalidateQueries({
-				queryKey: ['users'],
+				queryKey: ["users"],
 			});
-		} catch (error: any) {
-			toast.error(error.message || 'Failed to delete user');
+		} catch (error) {
+			toast.error(error.message || "Failed to delete user");
 		} finally {
 			setIsLoading(undefined);
 		}
@@ -151,9 +151,9 @@ function AdminDashboard() {
 		setIsLoading(`revoke-${id}`);
 		try {
 			await authClient.admin.revokeUserSessions({ userId: id });
-			toast.success('Sessions revoked for user');
-		} catch (error: any) {
-			toast.error(error.message || 'Failed to revoke sessions');
+			toast.success("Sessions revoked for user");
+		} catch (errors) {
+			toast.error(error.message || "Failed to revoke sessions");
 		} finally {
 			setIsLoading(undefined);
 		}
@@ -163,10 +163,10 @@ function AdminDashboard() {
 		setIsLoading(`impersonate-${id}`);
 		try {
 			await authClient.admin.impersonateUser({ userId: id });
-			toast.success('Impersonated user');
-			router.navigate({ to: '/dashboard' });
-		} catch (error: any) {
-			toast.error(error.message || 'Failed to impersonate user');
+			toast.success("Impersonated user");
+			router.navigate({ to: "/dashboard" });
+		} catch (error) {
+			toast.error(error.message || "Failed to impersonate user");
 		} finally {
 			setIsLoading(undefined);
 		}
@@ -187,25 +187,25 @@ function AdminDashboard() {
 				},
 				{
 					onError(context) {
-						toast.error(context.error.message || 'Failed to unban user');
+						toast.error(context.error.message || "Failed to unban user");
 						setIsLoading(undefined);
 					},
 					onSuccess() {
 						queryClient.invalidateQueries({
-							queryKey: ['users'],
+							queryKey: ["users"],
 						});
-						toast.success('User unbanned successfully');
+						toast.success("User unbanned successfully");
 						setIsLoading(undefined);
 					},
 				}
 			);
-		} catch (error: any) {
-			toast.error(error.message || 'Failed to unban user');
+		} catch (error) {
+			toast.error(error.message || "Failed to unban user");
 			setIsLoading(undefined);
 		}
 	};
 
-	const handleRoleChange = async (id: string, role: 'admin' | 'user') => {
+	const handleRoleChange = async (id: string, role: "admin" | "user") => {
 		setIsLoading(`role-${id}`);
 		try {
 			const { data, error } = await authClient.admin.setRole({
@@ -214,15 +214,15 @@ function AdminDashboard() {
 			});
 
 			if (error) {
-				throw new Error(error.message || 'Failed to update user role');
+				throw new Error(error.message || "Failed to update user role");
 			}
 
-			toast.success('User role updated successfully');
+			toast.success("User role updated successfully");
 			queryClient.invalidateQueries({
-				queryKey: ['users'],
+				queryKey: ["users"],
 			});
-		} catch (error: any) {
-			toast.error(error.message || 'Failed to update user role');
+		} catch (error) {
+			toast.error(error.message || "Failed to update user role");
 		} finally {
 			setIsLoading(undefined);
 		}
@@ -230,34 +230,34 @@ function AdminDashboard() {
 
 	const handleExportData = () => {
 		if (!users || users.length === 0) {
-			toast.error('No data to export');
+			toast.error("No data to export");
 			return;
 		}
 
 		const csvContent = [
-			['ID', 'Email', 'Name', 'Role', 'Status', 'Created'].join(','),
+			["ID", "Email", "Name", "Role", "Status", "Created"].join(","),
 			...users.map((user) =>
 				[
 					user.id,
 					user.email,
-					user.name || '',
-					user.role || 'user',
-					user.banned ? 'Banned' : 'Active',
-					user.createdAt ? new Date(user.createdAt).toISOString() : '',
-				].join(',')
+					user.name || "",
+					user.role || "user",
+					user.banned ? "Banned" : "Active",
+					user.createdAt ? new Date(user.createdAt).toISOString() : "",
+				].join(",")
 			),
-		].join('\n');
+		].join("\n");
 
-		const blob = new Blob([csvContent], { type: 'text/csv' });
+		const blob = new Blob([csvContent], { type: "text/csv" });
 		const url = window.URL.createObjectURL(blob);
-		const a = document.createElement('a');
+		const a = document.createElement("a");
 		a.href = url;
-		a.download = `users-export-${new Date().toISOString().split('T')[0]}.csv`;
+		a.download = `users-export-${new Date().toISOString().split("T")[0]}.csv`;
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);
 		window.URL.revokeObjectURL(url);
-		toast.success('User data exported successfully');
+		toast.success("User data exported successfully");
 	};
 
 	// Create action handlers object
@@ -279,8 +279,6 @@ function AdminDashboard() {
 		() => createColumns(actionHandlers),
 		[actionHandlers]
 	);
-
-	const [label, setLabel] = useState('personal');
 
 	return (
 		<div className="min-h-screen w-full bg-gradient-to-b from-background to-muted/20">
@@ -374,8 +372,8 @@ function AdminDashboard() {
 																	label="Role"
 																	placeholder="Select a role"
 																	values={[
-																		{ label: 'Admin', value: 'admin' },
-																		{ label: 'User', value: 'user' },
+																		{ label: "Admin", value: "admin" },
+																		{ label: "User", value: "user" },
 																	]}
 																/>
 															</>
@@ -386,7 +384,7 @@ function AdminDashboard() {
 														<createUserForm.SubscribeButton
 															className="w-full"
 															disabled={
-																isLoading === 'create' ||
+																isLoading === "create" ||
 																!createUserForm.state.canSubmit
 															}
 															label="Create User"

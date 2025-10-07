@@ -1,41 +1,42 @@
-import { useRouter } from '@tanstack/react-router';
-import { Laptop, LogOut, PhoneIcon, StopCircle } from 'lucide-react';
-import { Activity, useState } from 'react';
-import { toast } from 'sonner';
-import { UAParser } from 'ua-parser-js';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { useRouter } from "@tanstack/react-router";
+import type { ErrorContext } from "better-auth/react";
+import { Laptop, LogOut, PhoneIcon, StopCircle } from "lucide-react";
+import { Activity, useState } from "react";
+import { toast } from "sonner";
+import { UAParser } from "ua-parser-js";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from '@/components/ui/card';
-import useSignOutMutation from '@/hooks/mutations/useSignOutMutation';
-import { authClient, useSession } from '@/lib/auth-client';
-import type { Session } from '@/lib/auth-types';
-import { AddPasskeyForm } from '../form/add-passkey-form';
-import { ChangeEmailForm } from '../form/change-email-form';
-import { ChangePasswordForm } from '../form/change-password-form';
-import { DeleteAccountForm } from '../form/delete-account-form';
-import { EditUserForm } from '../form/edit-user-form';
-import { ListPasskeysForm } from '../form/list-passkeys-form';
-import { QRCodePasswordForm } from '../form/qr-code-password-form';
-import { TwoFactorForm } from '../form/two-factor-form';
-import { ButtonGroup } from '../ui/button-group';
-import { Spinner } from '../ui/spinner';
+} from "@/components/ui/card";
+import useSignOutMutation from "@/hooks/mutations/useSignOutMutation";
+import { authClient, useSession } from "@/lib/auth-client";
+import type { Session } from "@/lib/auth-types";
+import { AddPasskeyForm } from "../form/add-passkey-form";
+import { ChangeEmailForm } from "../form/change-email-form";
+import { ChangePasswordForm } from "../form/change-password-form";
+import { DeleteAccountForm } from "../form/delete-account-form";
+import { EditUserForm } from "../form/edit-user-form";
+import { ListPasskeysForm } from "../form/list-passkeys-form";
+import { QRCodePasswordForm } from "../form/qr-code-password-form";
+import { TwoFactorForm } from "../form/two-factor-form";
+import { ButtonGroup } from "../ui/button-group";
+import { Spinner } from "../ui/spinner";
 
 export default function UserCard(props: {
 	session: Session | null;
-	activeSessions: Session['session'][];
+	activeSessions: Session["session"][];
 }) {
 	const router = useRouter();
 	const { data, isPending } = useSession();
 	const session = data || props.session;
 	const [isTerminating, setIsTerminating] = useState<string>();
-	const [twoFactorVerifyURI, setTwoFactorVerifyURI] = useState<string>('');
+	const [twoFactorVerifyURI, setTwoFactorVerifyURI] = useState<string>("");
 	const [isSignOut, setIsSignOut] = useState<boolean>(false);
 	const [emailVerificationPending, setEmailVerificationPending] =
 		useState<boolean>(false);
@@ -94,19 +95,19 @@ export default function UserCard(props: {
 								onClick={async () => {
 									await authClient.sendVerificationEmail(
 										{
-											email: session?.user.email || '',
+											email: session?.user.email || "",
 										},
 										{
 											// onRequest(context: any) {
 											onRequest() {
 												setEmailVerificationPending(true);
 											},
-											onError(context: any) {
+											onError(context: ErrorContext) {
 												toast.error(context.error.message);
 												setEmailVerificationPending(false);
 											},
 											onSuccess() {
-												toast.success('Verification email sent successfully');
+												toast.success("Verification email sent successfully");
 												setEmailVerificationPending(false);
 											},
 										}
@@ -118,7 +119,7 @@ export default function UserCard(props: {
 								{emailVerificationPending ? (
 									<Spinner />
 								) : (
-									'Resend Verification Email'
+									"Resend Verification Email"
 								)}
 							</Button>
 						</AlertDescription>
@@ -133,15 +134,15 @@ export default function UserCard(props: {
 							return (
 								<div key={session.id}>
 									<div className="flex items-center gap-2 font-medium text-black text-sm dark:text-white">
-										{new UAParser(session.userAgent || '').getDevice().type ===
-										'mobile' ? (
+										{new UAParser(session.userAgent || "").getDevice().type ===
+										"mobile" ? (
 											<PhoneIcon />
 										) : (
 											<Laptop size={16} />
 										)}
-										{new UAParser(session.userAgent || '').getOS().name ||
+										{new UAParser(session.userAgent || "").getOS().name ||
 											session.userAgent}
-										, {new UAParser(session.userAgent || '').getBrowser().name}
+										, {new UAParser(session.userAgent || "").getBrowser().name}
 										<Button
 											className="cursor-pointer border-red-600 bg-transparent text-red-500 text-xs underline opacity-80 hover:bg-transparent"
 											onClick={async () => {
@@ -153,7 +154,7 @@ export default function UserCard(props: {
 												if (res.error) {
 													toast.error(res.error.message);
 												} else {
-													toast.success('Session terminated successfully');
+													toast.success("Session terminated successfully");
 													removeActiveSession(session.id);
 												}
 												if (session.id === props.session?.session.id) {
@@ -165,9 +166,9 @@ export default function UserCard(props: {
 											{isTerminating === session.id ? (
 												<Spinner />
 											) : session.id === props.session?.session.id ? (
-												'Sign Out'
+												"Sign Out"
 											) : (
-												'Terminate'
+												"Terminate"
 											)}
 										</Button>
 									</div>
@@ -195,7 +196,7 @@ export default function UserCard(props: {
 								/>
 							)} */}
 							<Activity
-								mode={session?.user.twoFactorEnabled ? 'visible' : 'hidden'}
+								mode={session?.user.twoFactorEnabled ? "visible" : "hidden"}
 							>
 								<QRCodePasswordForm
 									setTwoFactorVerifyURI={(uri) => setTwoFactorVerifyURI(uri)}
@@ -218,8 +219,8 @@ export default function UserCard(props: {
 							setIsSignOut(true);
 							await authClient.admin.stopImpersonating();
 							setIsSignOut(false);
-							toast.info('Impersonation stopped successfully');
-							router.navigate({ to: '/admin' });
+							toast.info("Impersonation stopped successfully");
+							router.navigate({ to: "/admin" });
 						}}
 						variant="secondary"
 					>

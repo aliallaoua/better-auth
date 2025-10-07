@@ -1,6 +1,6 @@
-import { Laptop, Menu, Moon, Sun } from 'lucide-react';
+import { Laptop, Menu, Moon, Sun } from "lucide-react";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -10,9 +10,9 @@ import {
 	DropdownMenuSubContent,
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 
-import { useTheme } from './theme-provider';
+import { useTheme } from "./theme-provider";
 
 const DevbarMenu = () => {
 	const { setTheme, appTheme } = useTheme();
@@ -28,7 +28,7 @@ const DevbarMenu = () => {
 			<DropdownMenuContent align="end">
 				<DropdownMenuSub>
 					<DropdownMenuSubTrigger>
-						{appTheme === 'light' ? (
+						{appTheme === "light" ? (
 							<Sun className="mr-2 size-4" />
 						) : (
 							<Moon className="mr-2 size-4" />
@@ -37,15 +37,15 @@ const DevbarMenu = () => {
 					</DropdownMenuSubTrigger>
 					<DropdownMenuPortal>
 						<DropdownMenuSubContent>
-							<DropdownMenuItem onClick={() => setTheme('light')}>
+							<DropdownMenuItem onClick={() => setTheme("light")}>
 								<Sun className="mr-2 size-4" />
 								Light
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={() => setTheme('dark')}>
+							<DropdownMenuItem onClick={() => setTheme("dark")}>
 								<Moon className="mr-2 size-4" />
 								Dark
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={() => setTheme('system')}>
+							<DropdownMenuItem onClick={() => setTheme("system")}>
 								<Laptop className="mr-2 size-4" />
 								System
 							</DropdownMenuItem>

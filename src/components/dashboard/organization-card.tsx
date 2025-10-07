@@ -1,4 +1,5 @@
 import { formOptions } from "@tanstack/react-form";
+import type { ErrorContext, SuccessContext } from "better-auth/react";
 import { ChevronDownIcon, MailPlus } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { Activity, useState } from "react";
@@ -296,7 +297,7 @@ export function OrganizationCard(props: {
 																			),
 																	});
 																},
-																onError: (ctx: any) => {
+																onError: (ctx: ErrorContext) => {
 																	toast.error(ctx.error.message);
 																	setIsRevoking(
 																		isRevoking.filter(
@@ -415,7 +416,7 @@ function InviteMemberDialog({
 					role: value.role,
 					fetchOptions: {
 						throw: true,
-						onSuccess: (ctx: any) => {
+						onSuccess: (ctx: SuccessContext<any>) => {
 							if (optimisticOrg) {
 								setOptimisticOrg({
 									...optimisticOrg,

@@ -1,9 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from "@tanstack/react-router";
 
-import { SignUpForm } from '@/components/form/sign-up-form';
+import { SignUpForm } from "@/components/form/sign-up-form";
 
-export const fallback = '/dashboard' as const;
-export const Route = createFileRoute('/signup')({
+export const fallback = "/dashboard" as const;
+export const Route = createFileRoute("/signup")({
 	// validateSearch: z.object({
 	// 	redirect: z.string().optional().catch(''),
 	// 	// addAccount: z.boolean().default(false),

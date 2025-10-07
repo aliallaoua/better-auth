@@ -1,6 +1,6 @@
-import { useFormContext } from '@/hooks/form-context';
-import { Button } from './ui/button';
-import { Spinner } from './ui/spinner';
+import { useFormContext } from "@/hooks/form-context";
+import { Button } from "./ui/button";
+import { Spinner } from "./ui/spinner";
 
 function SubscribeButton({
 	label,

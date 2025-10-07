@@ -1,19 +1,19 @@
-import { useStore } from '@tanstack/react-form';
-import { Link } from '@tanstack/react-router';
-import { Eye, EyeOff } from 'lucide-react';
-import { Activity, type JSX, useState } from 'react';
-import { useFieldContext } from '@/hooks/form-context';
-import { cn } from '@/lib/utils';
-import { ErrorMessages } from './ErrorMessages';
-import { Field, FieldLabel } from './ui/field';
+import { useStore } from "@tanstack/react-form";
+import { Link } from "@tanstack/react-router";
+import { Eye, EyeOff } from "lucide-react";
+import { Activity, type JSX, useState } from "react";
+import { useFieldContext } from "@/hooks/form-context";
+import { cn } from "@/lib/utils";
+import { ErrorMessages } from "./ErrorMessages";
+import { Field, FieldLabel } from "./ui/field";
 import {
 	InputGroup,
 	InputGroupAddon,
 	InputGroupButton,
 	InputGroupInput,
-} from './ui/input-group';
+} from "./ui/input-group";
 
-type PasswordFieldProps = Omit<React.ComponentProps<'input'>, 'type'> & {
+type PasswordFieldProps = Omit<React.ComponentProps<"input">, "type"> & {
 	label: string | JSX.Element;
 	required?: boolean;
 	placeholder?: string;
@@ -39,16 +39,24 @@ export default function PasswordField({
 			<div className="flex items-center">
 				<FieldLabel htmlFor={field.name}>
 					{label}
-					{required ? ' *' : ''}
+					{required ? " *" : ""}
 				</FieldLabel>
-				{forgotPassword && (
+				{/* {forgotPassword && (
 					<Link
 						className="ml-auto text-sm underline-offset-4 hover:underline"
 						to="/forget-password"
 					>
 						Forgot your password?
 					</Link>
-				)}
+				)} */}
+				<Activity mode={forgotPassword ? "visible" : "hidden"}>
+					<Link
+						className="ml-auto text-sm underline-offset-4 hover:underline"
+						to="/forget-password"
+					>
+						Forgot your password?
+					</Link>
+				</Activity>
 			</div>
 			<InputGroup>
 				<InputGroupInput
@@ -61,13 +69,13 @@ export default function PasswordField({
 					onBlur={field.handleBlur}
 					onChange={(e) => field.handleChange(e.target.value)}
 					placeholder={placeholder}
-					type={showPassword ? 'text' : 'password'}
-					value={field.state.value ?? ''}
+					type={showPassword ? "text" : "password"}
+					value={field.state.value ?? ""}
 					{...props}
 				/>
 				<InputGroupAddon align="inline-end">
 					<InputGroupButton
-						aria-label={showPassword ? 'Hide password' : 'Show password'}
+						aria-label={showPassword ? "Hide password" : "Show password"}
 						className="rounded-full"
 						onClick={() => setShowPassword((s) => !s)}
 						size="icon-xs"
@@ -86,7 +94,7 @@ export default function PasswordField({
         }
       `}</style>
 			{/* {field.state.meta.isTouched && <ErrorMessages errors={errors} />} */}
-			<Activity mode={field.state.meta.isTouched ? 'visible' : 'hidden'}>
+			<Activity mode={field.state.meta.isTouched ? "visible" : "hidden"}>
 				<ErrorMessages errors={errors} />
 			</Activity>
 		</Field>

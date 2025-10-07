@@ -1,8 +1,8 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { CheckIcon, XIcon } from 'lucide-react';
-import { Activity, useEffect, useState } from 'react';
-import { InvitationError } from '@/components/invitation-error';
-import { Button } from '@/components/ui/button';
+import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { CheckIcon, XIcon } from "lucide-react";
+import { Activity, useEffect, useState } from "react";
+import { InvitationError } from "@/components/invitation-error";
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -10,11 +10,11 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { authClient, organization } from '@/lib/auth-client';
+} from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { authClient, organization } from "@/lib/auth-client";
 
-export const Route = createFileRoute('/accept-invitation/$id')({
+export const Route = createFileRoute("/accept-invitation/$id")({
 	component: InvitationPage,
 });
 
@@ -22,8 +22,8 @@ function InvitationPage() {
 	const router = useRouter();
 	const { id } = Route.useParams();
 	const [invitationStatus, setInvitationStatus] = useState<
-		'pending' | 'accepted' | 'rejected'
-	>('pending');
+		"pending" | "accepted" | "rejected"
+	>("pending");
 
 	const handleAccept = async () => {
 		await organization
@@ -32,10 +32,10 @@ function InvitationPage() {
 			})
 			.then((res) => {
 				if (res.error) {
-					setError(res.error.message || 'An error occurred');
+					setError(res.error.message || "An error occurred");
 				} else {
-					setInvitationStatus('accepted');
-					router.navigate({ to: '/dashboard' });
+					setInvitationStatus("accepted");
+					router.navigate({ to: "/dashboard" });
 				}
 			});
 	};
@@ -47,9 +47,9 @@ function InvitationPage() {
 			})
 			.then((res) => {
 				if (res.error) {
-					setError(res.error.message || 'An error occurred');
+					setError(res.error.message || "An error occurred");
 				} else {
-					setInvitationStatus('rejected');
+					setInvitationStatus("rejected");
 				}
 			});
 	};
@@ -59,7 +59,7 @@ function InvitationPage() {
 		organizationSlug: string;
 		inviterEmail: string;
 		id: string;
-		status: 'pending' | 'accepted' | 'rejected' | 'canceled';
+		status: "pending" | "accepted" | "rejected" | "canceled";
 		email: string;
 		expiresAt: Date;
 		organizationId: string;
@@ -78,7 +78,7 @@ function InvitationPage() {
 			})
 			.then((res) => {
 				if (res.error) {
-					setError(res.error.message || 'An error occurred');
+					setError(res.error.message || "An error occurred");
 				} else {
 					setInvitation(res.data);
 				}
@@ -109,7 +109,7 @@ function InvitationPage() {
 							</div>
 						)} */}
 						<Activity
-							mode={invitationStatus === 'pending' ? 'visible' : 'hidden'}
+							mode={invitationStatus === "pending" ? "visible" : "hidden"}
 						>
 							<div className="space-y-4">
 								<p>
@@ -117,7 +117,7 @@ function InvitationPage() {
 									join <strong>{invitation?.organizationName}</strong>.
 								</p>
 								<p>
-									This invitation was sent to{' '}
+									This invitation was sent to{" "}
 									<strong>{invitation?.email}</strong>.
 								</p>
 							</div>
@@ -137,7 +137,7 @@ function InvitationPage() {
 							</div>
 						)} */}
 						<Activity
-							mode={invitationStatus === 'accepted' ? 'visible' : 'hidden'}
+							mode={invitationStatus === "accepted" ? "visible" : "hidden"}
 						>
 							<div className="space-y-4">
 								<div className="mx-auto flex size-16 items-center justify-center rounded-full bg-green-100">
@@ -167,7 +167,7 @@ function InvitationPage() {
 							</div>
 						)} */}
 						<Activity
-							mode={invitationStatus === 'rejected' ? 'visible' : 'hidden'}
+							mode={invitationStatus === "rejected" ? "visible" : "hidden"}
 						>
 							<div className="space-y-4">
 								<div className="mx-auto flex size-16 items-center justify-center rounded-full bg-red-100">
@@ -177,7 +177,7 @@ function InvitationPage() {
 									Invitation Declined
 								</h2>
 								<p className="text-center">
-									You&lsquo;ve declined the invitation to join{' '}
+									You&lsquo;ve declined the invitation to join{" "}
 									{invitation?.organizationName}.
 								</p>
 							</div>
@@ -192,7 +192,7 @@ function InvitationPage() {
 						</CardFooter>
 					)} */}
 					<Activity
-						mode={invitationStatus === 'pending' ? 'visible' : 'hidden'}
+						mode={invitationStatus === "pending" ? "visible" : "hidden"}
 					>
 						<CardFooter className="flex justify-between">
 							<Button onClick={handleReject} variant="outline">

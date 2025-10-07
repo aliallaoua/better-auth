@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from '@tanstack/react-router';
-import { toast } from 'sonner';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "@tanstack/react-router";
+import { toast } from "sonner";
 
-import { signIn } from '@/lib/auth-functions';
+import { signIn } from "@/lib/auth-functions";
 
 const useSignInMutation = () => {
 	const router = useRouter();
@@ -15,7 +15,7 @@ const useSignInMutation = () => {
 
 			queryClient.resetQueries();
 			// router.invalidate();
-			router.navigate({ to: '/dashboard' });
+			router.navigate({ to: "/dashboard" });
 		},
 		onError: (error) => {
 			toast.error(error.message);

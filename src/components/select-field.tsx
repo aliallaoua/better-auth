@@ -1,5 +1,5 @@
-import { useStore } from '@tanstack/react-form';
-import { Activity } from 'react';
+import { useStore } from "@tanstack/react-form";
+import { Activity } from "react";
 import {
 	Select,
 	SelectContent,
@@ -8,10 +8,10 @@ import {
 	SelectLabel,
 	SelectTrigger,
 	SelectValue,
-} from '@/components/ui/select';
-import { useFieldContext } from '@/hooks/form-context';
-import { ErrorMessages } from './ErrorMessages';
-import { Field } from './ui/field';
+} from "@/components/ui/select";
+import { useFieldContext } from "@/hooks/form-context";
+import { ErrorMessages } from "./ErrorMessages";
+import { Field } from "./ui/field";
 
 export function SelectField({
 	label,
@@ -47,7 +47,7 @@ export function SelectField({
 				</SelectContent>
 			</Select>
 			{/* {field.state.meta.isTouched && <ErrorMessages errors={errors} />} */}
-			<Activity mode={field.state.meta.isTouched ? 'visible' : 'hidden'}>
+			<Activity mode={field.state.meta.isTouched ? "visible" : "hidden"}>
 				<ErrorMessages errors={errors} />
 			</Activity>
 		</Field>

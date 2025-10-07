@@ -1,9 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { ForgetPasswordForm } from '@/components/form/forget-password-form';
+import { createFileRoute } from "@tanstack/react-router";
+import { ForgetPasswordForm } from "@/components/form/forget-password-form";
 
-export const fallback = '/dashboard' as const;
+export const fallback = "/dashboard" as const;
 
-export const Route = createFileRoute('/forget-password')({
+export const Route = createFileRoute("/forget-password")({
 	component: ForgetPasswordPage,
 });
 

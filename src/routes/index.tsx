@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from "@tanstack/react-router";
 
 import {
 	Route as RouteIcon,
@@ -7,9 +7,9 @@ import {
 	Sparkles,
 	Waves,
 	Zap,
-} from 'lucide-react';
+} from "lucide-react";
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
 	component: App,
 });
 
@@ -17,39 +17,39 @@ function App() {
 	const features = [
 		{
 			icon: <Zap className="w-12 h-12 text-cyan-400" />,
-			title: 'Powerful Server Functions',
+			title: "Powerful Server Functions",
 			description:
-				'Write server-side code that seamlessly integrates with your client components. Type-safe, secure, and simple.',
+				"Write server-side code that seamlessly integrates with your client components. Type-safe, secure, and simple.",
 		},
 		{
 			icon: <Server className="w-12 h-12 text-cyan-400" />,
-			title: 'Flexible Server Side Rendering',
+			title: "Flexible Server Side Rendering",
 			description:
-				'Full-document SSR, streaming, and progressive enhancement out of the box. Control exactly what renders where.',
+				"Full-document SSR, streaming, and progressive enhancement out of the box. Control exactly what renders where.",
 		},
 		{
 			icon: <RouteIcon className="w-12 h-12 text-cyan-400" />,
-			title: 'API Routes',
+			title: "API Routes",
 			description:
-				'Build type-safe API endpoints alongside your application. No separate backend needed.',
+				"Build type-safe API endpoints alongside your application. No separate backend needed.",
 		},
 		{
 			icon: <Shield className="w-12 h-12 text-cyan-400" />,
-			title: 'Strongly Typed Everything',
+			title: "Strongly Typed Everything",
 			description:
-				'End-to-end type safety from server to client. Catch errors before they reach production.',
+				"End-to-end type safety from server to client. Catch errors before they reach production.",
 		},
 		{
 			icon: <Waves className="w-12 h-12 text-cyan-400" />,
-			title: 'Full Streaming Support',
+			title: "Full Streaming Support",
 			description:
-				'Stream data from server to client progressively. Perfect for AI applications and real-time updates.',
+				"Stream data from server to client progressively. Perfect for AI applications and real-time updates.",
 		},
 		{
 			icon: <Sparkles className="w-12 h-12 text-cyan-400" />,
-			title: 'Next Generation Ready',
+			title: "Next Generation Ready",
 			description:
-				'Built from the ground up for modern web applications. Deploy anywhere JavaScript runs.',
+				"Built from the ground up for modern web applications. Deploy anywhere JavaScript runs.",
 		},
 	];
 
@@ -65,7 +65,7 @@ function App() {
 							src="/tanstack-circle-logo.png"
 						/>
 						<h1 className="text-6xl md:text-7xl font-bold text-white">
-							<span className="text-gray-300">TANSTACK</span>{' '}
+							<span className="text-gray-300">TANSTACK</span>{" "}
 							<span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
 								START
 							</span>
@@ -89,7 +89,7 @@ function App() {
 							Documentation
 						</a>
 						<p className="text-gray-400 text-sm mt-2">
-							Begin your TanStack Start journey by editing{' '}
+							Begin your TanStack Start journey by editing{" "}
 							<code className="px-2 py-1 bg-slate-700 rounded text-cyan-400">
 								/src/routes/index.tsx
 							</code>

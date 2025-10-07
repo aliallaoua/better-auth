@@ -1,7 +1,7 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from '@tanstack/react-router';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "@tanstack/react-router";
 
-import { authClient } from '@/lib/auth-client';
+import { authClient } from "@/lib/auth-client";
 
 const useSignOutMutation = () => {
 	const router = useRouter();

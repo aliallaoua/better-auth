@@ -11,7 +11,7 @@ import {
 	Section,
 	Tailwind,
 	Text,
-} from '@react-email/components';
+} from "@react-email/components";
 
 interface WelcomeEmailProps {
 	username?: string;
@@ -111,7 +111,7 @@ const WelcomeEmail = ({ username }: WelcomeEmailProps) => {
 								>
 									Unsubscribe
 								</Link>
-								{' • '}© 2025 Company Name. All rights reserved.
+								{" • "}© 2025 Company Name. All rights reserved.
 							</Text>
 						</Section>
 					</Container>

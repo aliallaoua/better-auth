@@ -1,5 +1,5 @@
-import type { auth } from './auth';
-import type { authClient } from './auth-client';
+import type { auth } from "./auth";
+import type { authClient } from "./auth-client";
 
 export type Session = typeof auth.$Infer.Session;
 export type ActiveOrganization = typeof authClient.$Infer.ActiveOrganization;

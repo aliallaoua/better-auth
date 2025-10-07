@@ -1,5 +1,6 @@
 import { formOptions } from "@tanstack/react-form";
 import { useRouter } from "@tanstack/react-router";
+import type { ErrorContext } from "better-auth/react";
 import { Edit, X } from "lucide-react";
 import { Activity, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -55,7 +56,7 @@ export function EditUserForm() {
 					onSuccess: () => {
 						toast.success("User updated successfully");
 					},
-					onError: (error: any) => {
+					onError: (error: ErrorContext) => {
 						toast.error(error.error.message);
 					},
 				},

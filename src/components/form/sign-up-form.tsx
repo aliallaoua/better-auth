@@ -1,21 +1,21 @@
-import { formOptions } from '@tanstack/react-form';
-import { Link } from '@tanstack/react-router';
-import { X } from 'lucide-react';
-import { useState } from 'react';
+import { formOptions } from "@tanstack/react-form";
+import { Link } from "@tanstack/react-router";
+import { X } from "lucide-react";
+import { useState } from "react";
 // import { AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@/components/ui/card';
-import { useAppForm } from '@/hooks/form';
-import useSignUpMutation from '@/hooks/mutations/useSignUpMutation';
-import { signInWithGoogle } from '@/lib/auth-functions';
-import { SignUpSchema } from '@/schema';
-import { Field, FieldGroup, FieldSeparator } from '../ui/field';
+} from "@/components/ui/card";
+import { useAppForm } from "@/hooks/form";
+import useSignUpMutation from "@/hooks/mutations/useSignUpMutation";
+import { signInWithGoogle } from "@/lib/auth-functions";
+import { SignUpSchema } from "@/schema";
+import { Field, FieldGroup, FieldSeparator } from "../ui/field";
 // import { Alert, AlertDescription } from '../ui/alert';
 
 export function SignUpForm() {
@@ -25,10 +25,10 @@ export function SignUpForm() {
 
 	const signUpFormOpts = formOptions({
 		defaultValues: {
-			name: '',
-			email: '',
-			password: '',
-			confirmPassword: '',
+			name: "",
+			email: "",
+			password: "",
+			confirmPassword: "",
 			image: null,
 		},
 	});
@@ -56,7 +56,7 @@ export function SignUpForm() {
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (file) {
-			form.setFieldValue('image', file);
+			form.setFieldValue("image", file);
 			const reader = new FileReader();
 			reader.onloadend = () => {
 				setImagePreview(reader.result as string);
@@ -66,12 +66,12 @@ export function SignUpForm() {
 	};
 
 	const clearImage = () => {
-		form.setFieldValue('image', null);
+		form.setFieldValue("image", null);
 		setImagePreview(null);
 		// Reset the file input
-		const fileInput = document.getElementById('image') as HTMLInputElement;
+		const fileInput = document.getElementById("image") as HTMLInputElement;
 		if (fileInput) {
-			fileInput.value = '';
+			fileInput.value = "";
 		}
 	};
 
@@ -203,7 +203,7 @@ export function SignUpForm() {
 						</form.AppForm>
 
 						<div className="text-center text-sm">
-							Already have an account?{' '}
+							Already have an account?{" "}
 							<Link className="underline underline-offset-4" to="/signin">
 								Sign in
 							</Link>
@@ -228,7 +228,7 @@ export function SignUpForm() {
 			</CardContent>
 
 			<div className="text-balance text-center text-muted-foreground text-xs *:[a]:underline *:[a]:underline-offset-4 *:[a]:hover:text-primary">
-				By clicking continue, you agree to our <a href="#">Terms of Service</a>{' '}
+				By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
 				and <a href="#">Privacy Policy</a>.
 			</div>
 		</Card>

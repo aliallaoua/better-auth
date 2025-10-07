@@ -699,10 +699,10 @@
 // 	bannedFilter,
 // };
 
-import { useSortable } from '@dnd-kit/sortable';
-import { IconDotsVertical, IconGripVertical } from '@tabler/icons-react';
-import { createColumnHelper, type Row } from '@tanstack/react-table';
-import type { UserWithRole } from 'better-auth/plugins/admin';
+import { useSortable } from "@dnd-kit/sortable";
+import { IconDotsVertical, IconGripVertical } from "@tabler/icons-react";
+import { createColumnHelper, type Row } from "@tanstack/react-table";
+import type { UserWithRole } from "better-auth/plugins/admin";
 import {
 	ArrowDown,
 	ArrowUp,
@@ -715,8 +715,8 @@ import {
 	Trash,
 	UserCircle,
 	User as UserIcon,
-} from 'lucide-react';
-import { Activity } from 'react';
+} from "lucide-react";
+import { Activity } from "react";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -727,10 +727,10 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+} from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -738,7 +738,7 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 import {
 	Select,
 	SelectContent,
@@ -747,13 +747,13 @@ import {
 	SelectLabel,
 	SelectTrigger,
 	SelectValue,
-} from '@/components/ui/select';
-import { Spinner } from '@/components/ui/spinner';
+} from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from "@/components/ui/tooltip";
 // import type { Session } from '@/lib/auth-types';
 
 // Define the User type based on your data
@@ -769,7 +769,7 @@ export type UserActionHandlers = {
 	onImpersonateUser: (id: string) => void;
 	onBanClick: (id: string) => void;
 	onUnbanUser: (id: string) => void;
-	onRoleChange: (id: string, role: 'admin' | 'user') => void;
+	onRoleChange: (id: string, role: "admin" | "user") => void;
 	isLoading?: string;
 };
 
@@ -795,8 +795,8 @@ const bannedFilter = (
 ) => {
 	if (!filterValue) return true;
 	const value = row.getValue(columnId);
-	if (filterValue === 'banned') return value === true;
-	if (filterValue === 'active') return value === false;
+	if (filterValue === "banned") return value === true;
+	if (filterValue === "active") return value === false;
 	return true;
 };
 
@@ -807,8 +807,8 @@ const SortableHeader = ({ column, title }: { column: any; title: string }) => {
 			// className="h-8 px-2 -ml-2"
 			className={`h-8 px-2 -ml-2 ${
 				column.getCanSort()
-					? 'cursor-pointer select-none hover:text-blue-400 transition-colors'
-					: ''
+					? "cursor-pointer select-none hover:text-blue-400 transition-colors"
+					: ""
 			}`}
 			// onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 			onClick={() => column.toggleSorting()}
@@ -1106,19 +1106,19 @@ function DragHandle({ id }: { id: string }) {
 
 export const createColumns = (handlers: UserActionHandlers) => [
 	columnHelper.display({
-		id: 'drag',
+		id: "drag",
 		header: () => null,
 		cell: ({ row }) => <DragHandle id={row.original.id} />,
 	}),
 
 	columnHelper.display({
-		id: 'select',
+		id: "select",
 		header: ({ table }) => (
 			<Checkbox
 				aria-label="Select all"
 				checked={
 					table.getIsAllPageRowsSelected() ||
-					(table.getIsSomePageRowsSelected() && 'indeterminate')
+					(table.getIsSomePageRowsSelected() && "indeterminate")
 				}
 				onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
 			/>
@@ -1134,7 +1134,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 		enableHiding: false,
 	}),
 
-	columnHelper.accessor('email', {
+	columnHelper.accessor("email", {
 		header: ({ column }) => <SortableHeader column={column} title="Email" />,
 		// 	cell: (info) => info.getValue(),
 		cell: ({ getValue }) => {
@@ -1158,10 +1158,10 @@ export const createColumns = (handlers: UserActionHandlers) => [
 			);
 		},
 		enableColumnFilter: true,
-		filterFn: 'includesString',
+		filterFn: "includesString",
 	}),
 
-	columnHelper.accessor('name', {
+	columnHelper.accessor("name", {
 		header: ({ column }) => <SortableHeader column={column} title="Name" />,
 		// 	cell: (info) => info.getValue(),
 		cell: ({ getValue }) => {
@@ -1177,10 +1177,10 @@ export const createColumns = (handlers: UserActionHandlers) => [
 			);
 		},
 		enableColumnFilter: true,
-		filterFn: 'includesString',
+		filterFn: "includesString",
 	}),
 
-	columnHelper.accessor('role', {
+	columnHelper.accessor("role", {
 		header: ({ column }) => <SortableHeader column={column} title="Role" />,
 		cell: ({ row }) => {
 			const user = row.original;
@@ -1188,7 +1188,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 				<Select
 					disabled={handlers.isLoading === `role-${user.id}`}
 					onValueChange={(value) =>
-						handlers.onRoleChange(user.id, value as 'admin' | 'user')
+						handlers.onRoleChange(user.id, value as "admin" | "user")
 					}
 					value={user.role ?? undefined}
 				>
@@ -1197,7 +1197,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 						{/* {handlers.isLoading === `role-${user.id}` && <Spinner />} */}
 						<Activity
 							mode={
-								handlers.isLoading === `role-${user.id}` ? 'visible' : 'hidden'
+								handlers.isLoading === `role-${user.id}` ? "visible" : "hidden"
 							}
 						>
 							<Spinner />
@@ -1230,15 +1230,15 @@ export const createColumns = (handlers: UserActionHandlers) => [
 		enableColumnFilter: true,
 		filterFn: roleFilter,
 		meta: {
-			filterVariant: 'select',
+			filterVariant: "select",
 			filterOptions: [
-				{ label: 'Admin', value: 'admin' },
-				{ label: 'User', value: 'user' },
+				{ label: "Admin", value: "admin" },
+				{ label: "User", value: "user" },
 			],
 		},
 	}),
 
-	columnHelper.accessor('banned', {
+	columnHelper.accessor("banned", {
 		header: ({ column }) => <SortableHeader column={column} title="Status" />,
 		cell: ({ getValue }) => {
 			const banned = getValue();
@@ -1260,15 +1260,15 @@ export const createColumns = (handlers: UserActionHandlers) => [
 		enableColumnFilter: true,
 		filterFn: bannedFilter,
 		meta: {
-			filterVariant: 'select',
+			filterVariant: "select",
 			filterOptions: [
-				{ label: 'Active', value: 'active' },
-				{ label: 'Banned', value: 'banned' },
+				{ label: "Active", value: "active" },
+				{ label: "Banned", value: "banned" },
 			],
 		},
 	}),
 
-	columnHelper.accessor('createdAt', {
+	columnHelper.accessor("createdAt", {
 		header: ({ column }) => <SortableHeader column={column} title="Created" />,
 		cell: ({ getValue }) => {
 			const date = getValue();
@@ -1279,18 +1279,18 @@ export const createColumns = (handlers: UserActionHandlers) => [
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<span className="text-sm font-medium cursor-default">
-							{new Intl.DateTimeFormat('en-US', {
-								month: 'short',
-								day: 'numeric',
-								year: 'numeric',
+							{new Intl.DateTimeFormat("en-US", {
+								month: "short",
+								day: "numeric",
+								year: "numeric",
 							}).format(date)}
 						</span>
 					</TooltipTrigger>
 					<TooltipContent>
 						<p>
-							{new Intl.DateTimeFormat('en-US', {
-								dateStyle: 'full',
-								timeStyle: 'short',
+							{new Intl.DateTimeFormat("en-US", {
+								dateStyle: "full",
+								timeStyle: "short",
 							}).format(date)}
 						</p>
 					</TooltipContent>
@@ -1302,8 +1302,8 @@ export const createColumns = (handlers: UserActionHandlers) => [
 	}),
 
 	columnHelper.display({
-		id: 'actions',
-		header: 'Actions',
+		id: "actions",
+		header: "Actions",
 		cell: ({ row }) => {
 			const user = row.original;
 			return (
@@ -1340,7 +1340,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 						<DropdownMenuSeparator />
 						<DropdownMenuItem
 							className="gap-2"
-							disabled={handlers.isLoading?.startsWith('impersonate')}
+							disabled={handlers.isLoading?.startsWith("impersonate")}
 							onClick={() => handlers.onImpersonateUser(user.id)}
 						>
 							{handlers.isLoading === `impersonate-${user.id}` ? (
@@ -1352,7 +1352,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 						</DropdownMenuItem>
 						<DropdownMenuItem
 							className="gap-2"
-							disabled={handlers.isLoading?.startsWith('revoke')}
+							disabled={handlers.isLoading?.startsWith("revoke")}
 							onClick={() => handlers.onRevokeSessions(user.id)}
 						>
 							{handlers.isLoading === `revoke-${user.id}` ? (
@@ -1365,7 +1365,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 						<DropdownMenuSeparator />
 						<DropdownMenuItem
 							className="gap-2"
-							disabled={handlers.isLoading?.startsWith('ban')}
+							disabled={handlers.isLoading?.startsWith("ban")}
 							onClick={() => {
 								if (user.banned) {
 									handlers.onUnbanUser(user.id);
@@ -1379,13 +1379,13 @@ export const createColumns = (handlers: UserActionHandlers) => [
 							) : (
 								<Ban className="size-4" />
 							)}
-							{user.banned ? 'Unban user' : 'Ban user'}
+							{user.banned ? "Unban user" : "Ban user"}
 						</DropdownMenuItem>
 						<AlertDialog>
 							<AlertDialogTrigger asChild>
 								<DropdownMenuItem
 									className="text-red-600 focus:text-red-600 focus:bg-red-50 dark:focus:bg-red-950/20 gap-2"
-									disabled={handlers.isLoading?.startsWith('delete')}
+									disabled={handlers.isLoading?.startsWith("delete")}
 									onSelect={(e) => e.preventDefault()}
 								>
 									{handlers.isLoading === `delete-${user.id}` ? (
@@ -1402,10 +1402,10 @@ export const createColumns = (handlers: UserActionHandlers) => [
 										Are you absolutely sure?
 									</AlertDialogTitle>
 									<AlertDialogDescription className="text-base">
-										This action cannot be undone. This will permanently delete{' '}
+										This action cannot be undone. This will permanently delete{" "}
 										<span className="font-semibold text-foreground">
 											{user.email}
-										</span>{' '}
+										</span>{" "}
 										and remove all their data from the servers.
 									</AlertDialogDescription>
 								</AlertDialogHeader>

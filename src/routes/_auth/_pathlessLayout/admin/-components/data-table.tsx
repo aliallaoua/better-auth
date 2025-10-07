@@ -551,7 +551,7 @@
 // 	);
 // }
 
-'use no memo';
+"use no memo";
 
 import {
 	// closestCenter,
@@ -563,20 +563,20 @@ import {
 	type UniqueIdentifier,
 	useSensor,
 	useSensors,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
 import {
 	// arrayMove,
 	SortableContext,
 	useSortable,
 	verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import {
 	IconChevronLeft,
 	IconChevronRight,
 	IconChevronsLeft,
 	IconChevronsRight,
-} from '@tabler/icons-react';
+} from "@tabler/icons-react";
 import {
 	type ColumnDef,
 	type ColumnFiltersState,
@@ -591,8 +591,8 @@ import {
 	type SortingState,
 	useReactTable,
 	type VisibilityState,
-} from '@tanstack/react-table';
-import type { UserWithRole } from 'better-auth/plugins/admin';
+} from "@tanstack/react-table";
+import type { UserWithRole } from "better-auth/plugins/admin";
 import {
 	ChevronDownIcon,
 	Download,
@@ -601,31 +601,31 @@ import {
 	SearchIcon,
 	UserX,
 	X,
-} from 'lucide-react';
-import { Activity, useId, useMemo, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { ButtonGroup } from '@/components/ui/button-group';
-import { Card } from '@/components/ui/card';
+} from "lucide-react";
+import { Activity, useId, useMemo, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Card } from "@/components/ui/card";
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
 	DropdownMenuContent,
 	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
 	InputGroup,
 	InputGroupAddon,
 	InputGroupInput,
-} from '@/components/ui/input-group';
+} from "@/components/ui/input-group";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
+} from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
 	Table,
 	TableBody,
@@ -633,9 +633,9 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@/components/ui/table';
-import { Label } from '../../../../../components/ui/label';
-import { userTableFilterFns } from './columns';
+} from "@/components/ui/table";
+import { Label } from "../../../../../components/ui/label";
+import { userTableFilterFns } from "./columns";
 
 interface DataTableProps<UserWithRole> {
 	columns: ColumnDef<UserWithRole>[];
@@ -649,13 +649,13 @@ function TableFilter({ column }: { column: any }) {
 	const filterOptions = column.columnDef.meta?.filterOptions;
 	const filterVariant = column.columnDef.meta?.filterVariant;
 
-	if (filterVariant === 'select' && filterOptions) {
+	if (filterVariant === "select" && filterOptions) {
 		return (
 			<Select
 				onValueChange={(value) =>
-					column.setFilterValue(value === 'all' ? undefined : value)
+					column.setFilterValue(value === "all" ? undefined : value)
 				}
-				value={filterValue || ''}
+				value={filterValue || ""}
 			>
 				<SelectTrigger className="w-[150px]">
 					<SelectValue placeholder={`Filter ${column.id}...`} />
@@ -677,7 +677,7 @@ function TableFilter({ column }: { column: any }) {
 			className="max-w-[200px]"
 			onChange={(event) => column.setFilterValue(event.target.value)}
 			placeholder={`Filter ${column.id}...`}
-			value={filterValue || ''}
+			value={filterValue || ""}
 		/>
 	);
 }
@@ -762,7 +762,7 @@ function DraggableRow({ row }: { row: Row<UserWithRole> }) {
 		<TableRow
 			className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
 			data-dragging={isDragging}
-			data-state={row.getIsSelected() && 'selected'}
+			data-state={row.getIsSelected() && "selected"}
 			ref={setNodeRef}
 			style={{
 				transform: CSS.Transform.toString(transform),
@@ -810,7 +810,7 @@ export function DataTable<UserWithRole>({
 		[data]
 	);
 
-	const [globalFilter, setGlobalFilter] = useState('');
+	const [globalFilter, setGlobalFilter] = useState("");
 
 	const table = useReactTable({
 		data,
@@ -837,7 +837,7 @@ export function DataTable<UserWithRole>({
 		getFacetedRowModel: getFacetedRowModel(),
 		getFacetedUniqueValues: getFacetedUniqueValues(),
 		onGlobalFilterChange: setGlobalFilter,
-		globalFilterFn: 'includesString',
+		globalFilterFn: "includesString",
 		enableColumnFilters: true,
 		filterFns: {
 			...userTableFilterFns,
@@ -864,7 +864,7 @@ export function DataTable<UserWithRole>({
 
 	const clearAllFilters = () => {
 		table.resetColumnFilters();
-		setGlobalFilter('');
+		setGlobalFilter("");
 	};
 
 	return (
@@ -900,7 +900,7 @@ export function DataTable<UserWithRole>({
 							<X className="size-4" />
 						</Button>
 					)} */}
-					<Activity mode={isFiltered ? 'visible' : 'hidden'}>
+					<Activity mode={isFiltered ? "visible" : "hidden"}>
 						<Button
 							className="h-10 gap-2"
 							onClick={clearAllFilters}
@@ -924,7 +924,7 @@ export function DataTable<UserWithRole>({
 								Export
 							</Button>
 						)} */}
-						<Activity mode={onExportData ? 'visible' : 'hidden'}>
+						<Activity mode={onExportData ? "visible" : "hidden"}>
 							<Button
 								className="gap-2"
 								onClick={onExportData}
@@ -950,7 +950,7 @@ export function DataTable<UserWithRole>({
 									.getAllColumns()
 									.filter(
 										(column) =>
-											typeof column.accessorFn !== 'undefined' &&
+											typeof column.accessorFn !== "undefined" &&
 											column.getCanHide()
 									)
 									.map((column) => (
@@ -1005,7 +1005,7 @@ export function DataTable<UserWithRole>({
 											</Button>
 										)} */}
 										<Activity
-											mode={column.getIsFiltered() ? 'visible' : 'hidden'}
+											mode={column.getIsFiltered() ? "visible" : "hidden"}
 										>
 											<Button
 												className="size-8 p-0"
@@ -1077,13 +1077,13 @@ export function DataTable<UserWithRole>({
 										<div className="space-y-1">
 											<p className="font-semibold">
 												{isFiltered
-													? 'No users match your filters'
-													: 'No users found'}
+													? "No users match your filters"
+													: "No users found"}
 											</p>
 											<p className="text-sm text-muted-foreground">
 												{isFiltered
-													? 'Try adjusting your search or filter criteria'
-													: 'Get started by creating your first user'}
+													? "Try adjusting your search or filter criteria"
+													: "Get started by creating your first user"}
 											</p>
 										</div>
 										{/* {isFiltered && (
@@ -1097,7 +1097,7 @@ export function DataTable<UserWithRole>({
 												Clear all filters
 											</Button>
 										)} */}
-										<Activity mode={isFiltered ? 'visible' : 'hidden'}>
+										<Activity mode={isFiltered ? "visible" : "hidden"}>
 											<Button
 												className="gap-2"
 												onClick={clearAllFilters}
@@ -1121,7 +1121,7 @@ export function DataTable<UserWithRole>({
 			{/* Footer with Stats and Pagination */}
 			<div className="flex items-center justify-between px-4">
 				<div className="hidden flex-1 text-muted-foreground text-sm lg:flex">
-					{table.getFilteredSelectedRowModel().rows.length} of{' '}
+					{table.getFilteredSelectedRowModel().rows.length} of{" "}
 					{table.getFilteredRowModel().rows.length} row(s) selected.
 				</div>
 				<div className="flex w-full items-center gap-8 lg:w-fit">
@@ -1150,7 +1150,7 @@ export function DataTable<UserWithRole>({
 						</Select>
 					</div>
 					<div className="flex w-fit items-center justify-center font-medium text-sm">
-						Page {table.getState().pagination.pageIndex + 1} of{' '}
+						Page {table.getState().pagination.pageIndex + 1} of{" "}
 						{table.getPageCount()}
 					</div>
 					<div className="ml-auto flex items-center gap-2 lg:ml-0">

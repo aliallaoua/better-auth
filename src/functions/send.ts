@@ -1,16 +1,16 @@
-import { createServerFn } from '@tanstack/react-start';
-import { Resend } from 'resend';
-import z from 'zod';
-import DeleteAccountConfirmation from '@/components/emails/delete-account-confirmation';
-import EmailChangeApproval from '@/components/emails/email-change-approval';
-import { InvitationEmail } from '@/components/emails/invitation-email';
-import ResetPasswordEmail from '@/components/emails/reset-password';
-import VerifyEmail from '@/components/emails/verify-email';
-import WelcomeEmail from '@/components/emails/welcome.email';
+import { createServerFn } from "@tanstack/react-start";
+import { Resend } from "resend";
+import z from "zod";
+import DeleteAccountConfirmation from "@/components/emails/delete-account-confirmation";
+import EmailChangeApproval from "@/components/emails/email-change-approval";
+import { InvitationEmail } from "@/components/emails/invitation-email";
+import ResetPasswordEmail from "@/components/emails/reset-password";
+import VerifyEmail from "@/components/emails/verify-email";
+import WelcomeEmail from "@/components/emails/welcome.email";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export const sendTestEmail = createServerFn({ method: 'POST' })
+export const sendTestEmail = createServerFn({ method: "POST" })
 	.inputValidator(
 		z.object({
 			name: z.string(),
@@ -22,9 +22,9 @@ export const sendTestEmail = createServerFn({ method: 'POST' })
 	.handler(async ({ data: handlerData }) => {
 		try {
 			const { data, error } =
-				handlerData.emailType === 'react'
+				handlerData.emailType === "react"
 					? await resend.emails.send({
-							from: 'onboarding@resend.dev',
+							from: "onboarding@resend.dev",
 							to: [handlerData.email],
 							subject: `Hello from Server Function + ${handlerData.emailType}`,
 							react: WelcomeEmail({
@@ -32,7 +32,7 @@ export const sendTestEmail = createServerFn({ method: 'POST' })
 							}),
 						})
 					: await resend.emails.send({
-							from: 'onboarding@resend.dev',
+							from: "onboarding@resend.dev",
 							to: [handlerData.email],
 							subject: `Hello from Server Function + ${handlerData.emailType}`,
 							html: `<p>Welcome ${handlerData.name}, please click on this link to verify your email: ${handlerData.url}`,
@@ -50,7 +50,7 @@ export const sendTestEmail = createServerFn({ method: 'POST' })
 		}
 	});
 
-export const sendVerificationEmail = createServerFn({ method: 'POST' })
+export const sendVerificationEmail = createServerFn({ method: "POST" })
 	.inputValidator(
 		z.object({
 			name: z.string(),
@@ -61,9 +61,9 @@ export const sendVerificationEmail = createServerFn({ method: 'POST' })
 	.handler(async ({ data: handlerData }) => {
 		try {
 			const { data, error } = await resend.emails.send({
-				from: 'onboarding@resend.dev',
+				from: "onboarding@resend.dev",
 				to: [handlerData.email],
-				subject: 'Verify your email address',
+				subject: "Verify your email address",
 				react: VerifyEmail({
 					username: handlerData.name,
 					verifyUrl: handlerData.url,
@@ -82,7 +82,7 @@ export const sendVerificationEmail = createServerFn({ method: 'POST' })
 		}
 	});
 
-export const sendResetPasswordEmail = createServerFn({ method: 'POST' })
+export const sendResetPasswordEmail = createServerFn({ method: "POST" })
 	.inputValidator(
 		z.object({
 			name: z.string(),
@@ -93,9 +93,9 @@ export const sendResetPasswordEmail = createServerFn({ method: 'POST' })
 	.handler(async ({ data: handlerData }) => {
 		try {
 			const { data, error } = await resend.emails.send({
-				from: 'onboarding@resend.dev',
+				from: "onboarding@resend.dev",
 				to: [handlerData.email],
-				subject: 'Reset your password',
+				subject: "Reset your password",
 				react: ResetPasswordEmail({
 					username: handlerData.name,
 					userEmail: handlerData.email,
@@ -115,7 +115,7 @@ export const sendResetPasswordEmail = createServerFn({ method: 'POST' })
 		}
 	});
 
-export const sendInvitationEmail = createServerFn({ method: 'POST' })
+export const sendInvitationEmail = createServerFn({ method: "POST" })
 	.inputValidator(
 		z.object({
 			id: z.string(),
@@ -128,7 +128,7 @@ export const sendInvitationEmail = createServerFn({ method: 'POST' })
 	.handler(async ({ data: handlerData }) => {
 		try {
 			const { data, error } = await resend.emails.send({
-				from: 'onboarding@resend.dev',
+				from: "onboarding@resend.dev",
 				to: handlerData.username,
 				subject: "You've been invited to join an organization",
 				react: InvitationEmail({
@@ -152,7 +152,7 @@ export const sendInvitationEmail = createServerFn({ method: 'POST' })
 		}
 	});
 
-export const sendOTP = createServerFn({ method: 'POST' })
+export const sendOTP = createServerFn({ method: "POST" })
 	.inputValidator(
 		z.object({
 			email: z.email(),
@@ -162,9 +162,9 @@ export const sendOTP = createServerFn({ method: 'POST' })
 	.handler(async ({ data: handlerData }) => {
 		try {
 			const { data, error } = await resend.emails.send({
-				from: 'onboarding@resend.dev',
+				from: "onboarding@resend.dev",
 				to: handlerData.email,
-				subject: 'Your OTP',
+				subject: "Your OTP",
 				html: `Your OTP is ${handlerData.otp}`,
 			});
 			if (error) {
@@ -179,7 +179,7 @@ export const sendOTP = createServerFn({ method: 'POST' })
 		}
 	});
 
-export const sendChangeEmailVerification = createServerFn({ method: 'POST' })
+export const sendChangeEmailVerification = createServerFn({ method: "POST" })
 	.inputValidator(
 		z.object({
 			username: z.string(),
@@ -192,9 +192,9 @@ export const sendChangeEmailVerification = createServerFn({ method: 'POST' })
 	.handler(async ({ data: handlerData }) => {
 		try {
 			const { data, error } = await resend.emails.send({
-				from: 'onboarding@resend.dev',
+				from: "onboarding@resend.dev",
 				to: handlerData.newEmail,
-				subject: 'Approve email change',
+				subject: "Approve email change",
 				react: EmailChangeApproval({
 					username: handlerData.username,
 					oldEmail: handlerData.oldEmail,
@@ -216,7 +216,7 @@ export const sendChangeEmailVerification = createServerFn({ method: 'POST' })
 		}
 	});
 
-export const sendDeleteAccountVerification = createServerFn({ method: 'POST' })
+export const sendDeleteAccountVerification = createServerFn({ method: "POST" })
 	.inputValidator(
 		z.object({
 			user: z.string(),
@@ -228,9 +228,9 @@ export const sendDeleteAccountVerification = createServerFn({ method: 'POST' })
 	.handler(async ({ data: handlerData }) => {
 		try {
 			const { data, error } = await resend.emails.send({
-				from: 'onboarding@resend.dev',
+				from: "onboarding@resend.dev",
 				to: handlerData.email,
-				subject: 'Approve email change',
+				subject: "Approve email change",
 				react: DeleteAccountConfirmation({
 					username: handlerData.user,
 					userEmail: handlerData.email,

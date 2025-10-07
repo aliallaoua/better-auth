@@ -1,5 +1,5 @@
-import { createServerFn } from '@tanstack/react-start';
-import z from 'zod';
+import { createServerFn } from "@tanstack/react-start";
+import z from "zod";
 
 export type CommentType = {
 	id: string;
@@ -10,7 +10,7 @@ export type CommentType = {
 
 export class CommentNotFoundError extends Error {}
 
-export const fetchComments = createServerFn({ method: 'GET' })
+export const fetchComments = createServerFn({ method: "GET" })
 	.inputValidator(
 		z.object({
 			postId: z.string(),
@@ -31,7 +31,7 @@ export const fetchComments = createServerFn({ method: 'GET' })
 		return response.json();
 	});
 
-export const fetchComment = createServerFn({ method: 'GET' })
+export const fetchComment = createServerFn({ method: "GET" })
 	.inputValidator(
 		z.object({
 			postId: z.string(),

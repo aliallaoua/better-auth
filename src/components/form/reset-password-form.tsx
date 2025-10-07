@@ -1,30 +1,30 @@
-import { formOptions } from '@tanstack/react-form';
-import { getRouteApi, useRouter } from '@tanstack/react-router';
+import { formOptions } from "@tanstack/react-form";
+import { getRouteApi, useRouter } from "@tanstack/react-router";
 // import { AlertCircle } from 'lucide-react';
-import { toast } from 'sonner';
+import { toast } from "sonner";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@/components/ui/card';
-import { useAppForm } from '@/hooks/form';
-import { authClient } from '@/lib/auth-client';
-import { ResetPasswordSchema } from '@/schema';
-import { FieldGroup, FieldSet } from '../ui/field';
+} from "@/components/ui/card";
+import { useAppForm } from "@/hooks/form";
+import { authClient } from "@/lib/auth-client";
+import { ResetPasswordSchema } from "@/schema";
+import { FieldGroup, FieldSet } from "../ui/field";
 
 // import { Alert, AlertDescription } from '../ui/alert';
 
-const routeApi = getRouteApi('/reset-password');
+const routeApi = getRouteApi("/reset-password");
 export function ResetPasswordForm() {
 	const router = useRouter();
 	const { token } = routeApi.useSearch();
 
 	const signInFormOpts = formOptions({
 		defaultValues: {
-			password: '',
-			confirmPassword: '',
+			password: "",
+			confirmPassword: "",
 		},
 	});
 
@@ -43,12 +43,12 @@ export function ResetPasswordForm() {
 				if (error) {
 					toast.error(error.message);
 				} else {
-					toast.success('Password reset successfully');
+					toast.success("Password reset successfully");
 					router.navigate({
-						to: '/signin',
+						to: "/signin",
 					});
 				}
-			} catch (e: any) {
+			} catch (e) {
 				// Set form-level error
 				form.setErrorMap({
 					onSubmit: e.message,

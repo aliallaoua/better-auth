@@ -1,18 +1,18 @@
-import { useStore } from '@tanstack/react-form';
-import { Activity } from 'react';
-import { useFieldContext } from '@/hooks/form-context';
-import { cn } from '@/lib/utils';
-import { ErrorMessages } from './ErrorMessages';
-import { Field, FieldLabel } from './ui/field';
-import { InputGroupInput } from './ui/input-group';
+import { useStore } from "@tanstack/react-form";
+import { Activity } from "react";
+import { useFieldContext } from "@/hooks/form-context";
+import { cn } from "@/lib/utils";
+import { ErrorMessages } from "./ErrorMessages";
+import { Field, FieldLabel } from "./ui/field";
+import { InputGroupInput } from "./ui/input-group";
 
-type ImageFieldsProps = React.ComponentProps<'input'> & {
+type ImageFieldsProps = React.ComponentProps<"input"> & {
 	label?: string;
 };
 
 export default function ImageField({
 	className,
-	label = '',
+	label = "",
 	...props
 }: ImageFieldsProps) {
 	const field = useFieldContext<string>();
@@ -33,7 +33,7 @@ export default function ImageField({
 				{...props}
 			/>
 			{/* {field.state.meta.isTouched && <ErrorMessages errors={errors} />} */}
-			<Activity mode={field.state.meta.isTouched ? 'visible' : 'hidden'}>
+			<Activity mode={field.state.meta.isTouched ? "visible" : "hidden"}>
 				<ErrorMessages errors={errors} />
 			</Activity>
 		</Field>

@@ -1,4 +1,4 @@
-import { createLink } from '@tanstack/react-router';
+import { createLink } from "@tanstack/react-router";
 import {
 	LogIn,
 	LogOut,
@@ -6,19 +6,19 @@ import {
 	User,
 	User2,
 	UserRoundPlus,
-} from 'lucide-react';
-import { Activity, useState } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+} from "lucide-react";
+import { Activity, useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
 	Item,
 	ItemContent,
 	ItemDescription,
 	ItemMedia,
 	ItemTitle,
-} from '@/components/ui/item';
-import useSignOutMutation from '@/hooks/mutations/useSignOutMutation';
-import { useSession } from '@/lib/auth-client';
+} from "@/components/ui/item";
+import useSignOutMutation from "@/hooks/mutations/useSignOutMutation";
+import { useSession } from "@/lib/auth-client";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -26,7 +26,7 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from './ui/dropdown-menu';
+} from "./ui/dropdown-menu";
 
 const ItemLink = createLink(DropdownMenuItem);
 
@@ -44,7 +44,7 @@ export default function UserButton() {
 					variant="outline"
 				>
 					<Avatar className="size-8">
-						<AvatarImage alt="User avatar" src={session?.user.image ?? ''} />
+						<AvatarImage alt="User avatar" src={session?.user.image ?? ""} />
 						<AvatarFallback>
 							{session?.user ? (
 								session?.user.name.charAt(0)
@@ -64,7 +64,7 @@ export default function UserButton() {
 									<AvatarImage
 										alt="User avatar"
 										className="grayscale"
-										src={session?.user.image ?? ''}
+										src={session?.user.image ?? ""}
 									/>
 									<AvatarFallback>
 										{session?.user.name.charAt(0)}
@@ -106,7 +106,7 @@ export default function UserButton() {
 							</ItemLink>
 						)} */}
 						<Activity
-							mode={session?.user.role === 'admin' ? 'visible' : 'hidden'}
+							mode={session?.user.role === "admin" ? "visible" : "hidden"}
 						>
 							<ItemLink
 								className="cursor-pointer"

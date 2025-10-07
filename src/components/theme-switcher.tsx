@@ -1,25 +1,25 @@
-import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
-import { motion } from 'motion/react';
-import { Activity } from 'react';
-import { cn } from '@/lib/utils';
-import { useTheme } from './theme-provider';
-import { Button } from './ui/button';
+import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
+import { motion } from "motion/react";
+import { Activity } from "react";
+import { cn } from "@/lib/utils";
+import { useTheme } from "./theme-provider";
+import { Button } from "./ui/button";
 
 const themes = [
 	{
-		theme: 'system',
+		theme: "system",
 		icon: MonitorIcon,
-		label: 'System theme',
+		label: "System theme",
 	},
 	{
-		theme: 'light',
+		theme: "light",
 		icon: SunIcon,
-		label: 'Light theme',
+		label: "Light theme",
 	},
 	{
-		theme: 'dark',
+		theme: "dark",
 		icon: MoonIcon,
-		label: 'Dark theme',
+		label: "Dark theme",
 	},
 ] as const;
 
@@ -33,7 +33,7 @@ export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
 	return (
 		<div
 			className={cn(
-				'relative isolate flex h-8 rounded-full bg-background p-1 ring-1 ring-border',
+				"relative isolate flex h-8 rounded-full bg-background p-1 ring-1 ring-border",
 				className
 			)}
 		>
@@ -58,17 +58,17 @@ export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
 								transition={{ type: 'spring', duration: 0.5 }}
 							/>
 						)} */}
-						<Activity mode={isActiveTheme ? 'visible' : 'hidden'}>
+						<Activity mode={isActiveTheme ? "visible" : "hidden"}>
 							<motion.div
 								className="absolute inset-0 rounded-full bg-secondary"
 								layoutId="activeTheme"
-								transition={{ type: 'spring', duration: 0.5 }}
+								transition={{ type: "spring", duration: 0.5 }}
 							/>
 						</Activity>
 						<Icon
 							className={cn(
-								'relative z-10 m-auto size-4',
-								isActiveTheme ? 'text-foreground' : 'text-muted-foreground'
+								"relative z-10 m-auto size-4",
+								isActiveTheme ? "text-foreground" : "text-muted-foreground"
 							)}
 						/>
 					</Button>
