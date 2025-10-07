@@ -8,6 +8,7 @@
   "files.readonlyInclude": {
     "**/routeTree.gen.ts": true
   },
+  "editor.defaultFormatter": "biomejs.biome",
   "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
