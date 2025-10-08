@@ -4,7 +4,7 @@ import { useScroll } from "motion/react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ModeToggle } from "./mode-toggle";
+import { ThemeToggle } from "./theme-toggle";
 import UserButton from "./user-button";
 
 const menuItems = [
@@ -99,7 +99,7 @@ export default function Header() {
 									</Button>
 								</a>
 
-								<ModeToggle />
+								<ThemeToggle />
 								<UserButton />
 							</div>
 						</div>

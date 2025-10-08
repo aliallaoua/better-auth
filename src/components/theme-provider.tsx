@@ -3,88 +3,98 @@ import { createClientOnlyFn, createIsomorphicFn } from "@tanstack/react-start";
 import { createContext, type ReactNode, use, useEffect, useState } from "react";
 import { z } from "zod";
 
-const UserThemeSchema = z.enum(["light", "dark", "system"]).catch("system");
-const AppThemeSchema = z.enum(["light", "dark"]).catch("light");
+const themeModeSchema = z.enum(["light", "dark", "system"]);
+const resolvedThemeSchema = z.enum(["light", "dark"]);
+const themeKey = "theme";
 
-export type UserTheme = z.infer<typeof UserThemeSchema>;
-export type AppTheme = z.infer<typeof AppThemeSchema>;
+type ThemeMode = z.infer<typeof themeModeSchema>;
+type ResolvedTheme = z.infer<typeof resolvedThemeSchema>;
 
-const themeStorageKey = "ui-theme";
-
-const getStoredUserTheme = createIsomorphicFn()
-	.server((): UserTheme => "system")
-	.client((): UserTheme => {
-		const stored = localStorage.getItem(themeStorageKey);
-		return UserThemeSchema.parse(stored);
+const getStoredThemeMode = createIsomorphicFn()
+	.server((): ThemeMode => "system")
+	.client((): ThemeMode => {
+		try {
+			const storedTheme = localStorage.getItem(themeKey);
+			return themeModeSchema.parse(storedTheme);
+		} catch {
+			return "system";
+		}
 	});
 
-const setStoredTheme = createClientOnlyFn((theme: UserTheme) => {
-	const validatedTheme = UserThemeSchema.parse(theme);
-	localStorage.setItem(themeStorageKey, validatedTheme);
+const setStoredThemeMode = createClientOnlyFn((theme: ThemeMode) => {
+	try {
+		const parsedTheme = themeModeSchema.parse(theme);
+		localStorage.setItem(themeKey, parsedTheme);
+	} catch {}
 });
 
 const getSystemTheme = createIsomorphicFn()
-	.server((): AppTheme => "light")
-	.client(
-		(): AppTheme =>
-			window.matchMedia("(prefers-color-scheme: dark)").matches
-				? "dark"
-				: "light"
-	);
+	.server((): ResolvedTheme => "light")
+	.client((): ResolvedTheme => {
+		return window.matchMedia("(prefers-color-scheme: dark)").matches
+			? "dark"
+			: "light";
+	});
 
-const handleThemeChange = createClientOnlyFn((userTheme: UserTheme) => {
-	const validatedTheme = UserThemeSchema.parse(userTheme);
-
+const updateThemeClass = createClientOnlyFn((themeMode: ThemeMode) => {
 	const root = document.documentElement;
 	root.classList.remove("light", "dark", "system");
+	const newTheme = themeMode === "system" ? getSystemTheme() : themeMode;
+	root.classList.add(newTheme);
 
-	if (validatedTheme === "system") {
-		const systemTheme = getSystemTheme();
-		root.classList.add(systemTheme, "system");
-	} else {
-		root.classList.add(validatedTheme);
+	if (themeMode === "system") {
+		root.classList.add("system");
 	}
 });
 
 const setupPreferredListener = createClientOnlyFn(() => {
 	const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-	const handler = () => handleThemeChange("system");
+	const handler = () => updateThemeClass("system");
 	mediaQuery.addEventListener("change", handler);
 	return () => mediaQuery.removeEventListener("change", handler);
 });
 
-const themeScript = (() => {
+const getNextTheme = createClientOnlyFn((current: ThemeMode): ThemeMode => {
+	const themes: ThemeMode[] =
+		getSystemTheme() === "dark"
+			? ["system", "light", "dark"]
+			: ["system", "dark", "light"];
+	return themes[(themes.indexOf(current) + 1) % themes.length];
+});
+
+const themeDetectorScript = (() => {
 	function themeFn() {
 		try {
-			const storedTheme = localStorage.getItem("ui-theme") || "system";
+			const storedTheme = localStorage.getItem("theme") || "system";
 			const validTheme = ["light", "dark", "system"].includes(storedTheme)
 				? storedTheme
 				: "system";
 
 			if (validTheme === "system") {
-				const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+				const autoTheme = window.matchMedia("(prefers-color-scheme: dark)")
 					.matches
 					? "dark"
 					: "light";
-				document.documentElement.classList.add(systemTheme, "system");
+				document.documentElement.classList.add(autoTheme, "system");
 			} else {
 				document.documentElement.classList.add(validTheme);
 			}
 		} catch (e) {
-			const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+			const autoTheme = window.matchMedia("(prefers-color-scheme: dark)")
 				.matches
 				? "dark"
 				: "light";
-			document.documentElement.classList.add(systemTheme, "system");
+			document.documentElement.classList.add(autoTheme, "system");
 		}
 	}
 	return `(${themeFn.toString()})();`;
 })();
 
 type ThemeContextProps = {
-	userTheme: UserTheme;
-	appTheme: AppTheme;
-	setTheme: (theme: UserTheme) => void;
+	themeMode: ThemeMode;
+	resolvedTheme: ResolvedTheme;
+	setTheme: (theme: ThemeMode) => void;
+	toggleMode: () => void;
 };
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
@@ -92,28 +102,32 @@ type ThemeProviderProps = {
 	children: ReactNode;
 };
 export function ThemeProvider({ children }: ThemeProviderProps) {
-	const [userTheme, setUserTheme] = useState<UserTheme>(getStoredUserTheme);
+	const [themeMode, setThemeMode] = useState<ThemeMode>(getStoredThemeMode);
 
 	useEffect(() => {
-		if (userTheme !== "system") return;
+		if (themeMode !== "system") return;
 		return setupPreferredListener();
-	}, [userTheme]);
+	}, [themeMode]);
 
-	const appTheme = userTheme === "system" ? getSystemTheme() : userTheme;
+	const resolvedTheme = themeMode === "system" ? getSystemTheme() : themeMode;
 
-	const setTheme = (newUserTheme: UserTheme) => {
-		const validatedTheme = UserThemeSchema.parse(newUserTheme);
-		setUserTheme(validatedTheme);
-		setStoredTheme(validatedTheme);
-		handleThemeChange(validatedTheme);
+	const setTheme = (newTheme: ThemeMode) => {
+		setThemeMode(newTheme);
+		setStoredThemeMode(newTheme);
+		updateThemeClass(newTheme);
+	};
+
+	const toggleMode = () => {
+		setTheme(getNextTheme(themeMode));
 	};
 
 	return (
-		<ThemeContext value={{ userTheme, appTheme, setTheme }}>
-			<ScriptOnce children={themeScript} />
-
+		<ThemeContext.Provider
+			value={{ themeMode, resolvedTheme, setTheme, toggleMode }}
+		>
+			<ScriptOnce children={themeDetectorScript} />
 			{children}
-		</ThemeContext>
+		</ThemeContext.Provider>
 	);
 }
 
