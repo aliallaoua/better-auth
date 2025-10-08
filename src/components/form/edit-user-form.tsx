@@ -2,7 +2,7 @@ import { formOptions } from "@tanstack/react-form";
 import { useRouter } from "@tanstack/react-router";
 import type { ErrorContext } from "better-auth/react";
 import { Edit, X } from "lucide-react";
-import { Activity, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -176,47 +176,28 @@ export function EditUserForm() {
 													id="image"
 													onChange={handleImageChange}
 												/>
-												{/* {showDeleteButton && (
+												{showDeleteButton && (
 													<X
 														className="cursor-pointer"
 														onClick={handleDeleteImage}
 													/>
-												)} */}
-												<Activity
-													mode={showDeleteButton ? "visible" : "hidden"}
-												>
-													<X
-														className="cursor-pointer"
-														onClick={handleDeleteImage}
-													/>
-												</Activity>
+												)}
 
-												{/* {showClearButton && (
+												{showClearButton && (
 													<X
 														className="cursor-pointer"
 														onClick={handleClearNewImage}
 													/>
-												)} */}
-												<Activity mode={showClearButton ? "visible" : "hidden"}>
-													<X
-														className="cursor-pointer"
-														onClick={handleClearNewImage}
-													/>
-												</Activity>
+												)}
 											</div>
 										</div>
 										{/* Action Buttons */}
 										<div className="flex gap-2">
-											{/* {shouldDeleteImage && (
+											{shouldDeleteImage && (
 												<div className="text-sm text-muted-foreground">
 													Photo will be removed when you save
 												</div>
-											)} */}
-											<Activity mode={shouldDeleteImage ? "visible" : "hidden"}>
-												<div className="text-sm text-muted-foreground">
-													Photo will be removed when you save
-												</div>
-											</Activity>
+											)}
 										</div>
 									</div>
 								)}

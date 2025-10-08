@@ -7,7 +7,7 @@ import {
 	User2,
 	UserRoundPlus,
 } from "lucide-react";
-import { Activity, useState } from "react";
+import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -95,7 +95,7 @@ export default function UserButton() {
 							<User2 className="mr-2 size-4" />
 							<span>Profile</span>
 						</ItemLink>
-						{/* {session?.user.role === 'admin' && (
+						{session?.user.role === "admin" && (
 							<ItemLink
 								className="cursor-pointer"
 								onClick={() => setOpen(false)}
@@ -104,19 +104,8 @@ export default function UserButton() {
 								<Shield className="mr-2 size-4" />
 								<span>Admin Panel</span>
 							</ItemLink>
-						)} */}
-						<Activity
-							mode={session?.user.role === "admin" ? "visible" : "hidden"}
-						>
-							<ItemLink
-								className="cursor-pointer"
-								onClick={() => setOpen(false)}
-								to="/admin"
-							>
-								<Shield className="mr-2 size-4" />
-								<span>Admin Panel</span>
-							</ItemLink>
-						</Activity>
+						)}
+
 						<DropdownMenuItem
 							className="text-red-600 cursor-pointer"
 							onSelect={async () => {

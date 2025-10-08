@@ -1,6 +1,5 @@
 import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { motion } from "motion/react";
-import { Activity } from "react";
 import { cn } from "@/lib/utils";
 import { useTheme } from "./theme-provider";
 import { Button } from "./ui/button";
@@ -51,20 +50,14 @@ export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
 						}}
 						type="button"
 					>
-						{/* {isActiveTheme && (
-							<motion.div
-								className="absolute inset-0 rounded-full bg-secondary"
-								layoutId="activeTheme"
-								transition={{ type: 'spring', duration: 0.5 }}
-							/>
-						)} */}
-						<Activity mode={isActiveTheme ? "visible" : "hidden"}>
+						{isActiveTheme && (
 							<motion.div
 								className="absolute inset-0 rounded-full bg-secondary"
 								layoutId="activeTheme"
 								transition={{ type: "spring", duration: 0.5 }}
 							/>
-						</Activity>
+						)}
+
 						<Icon
 							className={cn(
 								"relative z-10 m-auto size-4",

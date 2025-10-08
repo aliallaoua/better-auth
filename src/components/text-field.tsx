@@ -1,6 +1,5 @@
 import { useStore } from "@tanstack/react-form";
 import type { JSX } from "react";
-import { Activity } from "react";
 import { useFieldContext } from "@/hooks/form-context";
 import { cn } from "@/lib/utils";
 import { ErrorMessages } from "./ErrorMessages";
@@ -50,10 +49,7 @@ export default function TextField({
 					{...props}
 				/>
 			</InputGroup>
-			{/* {field.state.meta.isTouched && <ErrorMessages errors={errors} />} */}
-			<Activity mode={field.state.meta.isTouched ? "visible" : "hidden"}>
-				<ErrorMessages errors={errors} />
-			</Activity>
+			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
 		</Field>
 	);
 }

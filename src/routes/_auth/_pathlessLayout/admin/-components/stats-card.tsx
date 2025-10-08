@@ -1,5 +1,4 @@
 import { Shield, TrendingUp, UserCheck, Users, UserX } from "lucide-react";
-import { Activity } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
@@ -94,18 +93,7 @@ export function StatCard({ userStats, className }: StatCardProps) {
 										</p>
 									</div>
 									<div className="flex items-center gap-1 text-xs">
-										{/* {stat.isPositive !== null && (
-											<TrendingUp
-												className={cn(
-													'size-3',
-													stat.isPositive ? 'text-green-600' : 'text-red-600',
-													!stat.isPositive && 'rotate-180'
-												)}
-											/>
-										)} */}
-										<Activity
-											mode={stat.isPositive !== null ? "visible" : "hidden"}
-										>
+										{stat.isPositive !== null && (
 											<TrendingUp
 												className={cn(
 													"size-3",
@@ -113,7 +101,8 @@ export function StatCard({ userStats, className }: StatCardProps) {
 													!stat.isPositive && "rotate-180"
 												)}
 											/>
-										</Activity>
+										)}
+
 										<span
 											className={cn(
 												"font-medium",

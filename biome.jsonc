@@ -15,7 +15,9 @@
       "**/.vscode/**/*",
       "**/index.html",
       "**/vite.config.js",
-      "!**/src/routeTree.gen.ts"
+      "!**/src/routeTree.gen.ts",
+      "!**/src/components/ui",
+      "!**/src/hooks/use-mobile.ts"
     ]
   },
   "formatter": {

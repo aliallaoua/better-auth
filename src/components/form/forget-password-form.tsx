@@ -39,7 +39,7 @@ export function ForgetPasswordForm() {
 		},
 		onSubmit: async ({ value }) => {
 			try {
-				const { data, error } = await authClient.requestPasswordReset({
+				const { error } = await authClient.requestPasswordReset({
 					email: value.email,
 					redirectTo: "/reset-password",
 				});

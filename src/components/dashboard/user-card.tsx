@@ -1,7 +1,7 @@
 import { useRouter } from "@tanstack/react-router";
 import type { ErrorContext } from "better-auth/react";
 import { Laptop, LogOut, PhoneIcon, StopCircle } from "lucide-react";
-import { Activity, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { UAParser } from "ua-parser-js";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -189,20 +189,12 @@ export default function UserCard(props: {
 					<div className="flex flex-col gap-2">
 						<p className="text-sm">Two Factor</p>
 						<div className="flex gap-2">
-							{/* {!!session?.user.twoFactorEnabled && (
+							{!!session?.user.twoFactorEnabled && (
 								<QRCodePasswordForm
 									setTwoFactorVerifyURI={(uri) => setTwoFactorVerifyURI(uri)}
 									twoFactorVerifyURI={twoFactorVerifyURI}
 								/>
-							)} */}
-							<Activity
-								mode={session?.user.twoFactorEnabled ? "visible" : "hidden"}
-							>
-								<QRCodePasswordForm
-									setTwoFactorVerifyURI={(uri) => setTwoFactorVerifyURI(uri)}
-									twoFactorVerifyURI={twoFactorVerifyURI}
-								/>
-							</Activity>
+							)}
 
 							<TwoFactorForm session={session} />
 						</div>

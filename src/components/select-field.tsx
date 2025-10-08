@@ -1,5 +1,4 @@
 import { useStore } from "@tanstack/react-form";
-import { Activity } from "react";
 import {
 	Select,
 	SelectContent,
@@ -46,10 +45,7 @@ export function SelectField({
 					</SelectGroup>
 				</SelectContent>
 			</Select>
-			{/* {field.state.meta.isTouched && <ErrorMessages errors={errors} />} */}
-			<Activity mode={field.state.meta.isTouched ? "visible" : "hidden"}>
-				<ErrorMessages errors={errors} />
-			</Activity>
+			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
 		</Field>
 	);
 }

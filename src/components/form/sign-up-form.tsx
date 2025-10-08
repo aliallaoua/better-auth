@@ -44,7 +44,7 @@ export function SignUpForm() {
 				await signUpMutation(value);
 
 				// } catch (e: any) {
-			} catch (e: any) {
+			} catch (e) {
 				// Set form-level error
 				form.setErrorMap({
 					onSubmit: e.message,

@@ -1,6 +1,6 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { CheckIcon, XIcon } from "lucide-react";
-import { Activity, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { InvitationError } from "@/components/invitation-error";
 import { Button } from "@/components/ui/button";
 import {
@@ -96,21 +96,7 @@ function InvitationPage() {
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						{/* {invitationStatus === 'pending' && (
-							<div className="space-y-4">
-								<p>
-									<strong>{invitation?.inviterEmail}</strong> has invited you to
-									join <strong>{invitation?.organizationName}</strong>.
-								</p>
-								<p>
-									This invitation was sent to{' '}
-									<strong>{invitation?.email}</strong>.
-								</p>
-							</div>
-						)} */}
-						<Activity
-							mode={invitationStatus === "pending" ? "visible" : "hidden"}
-						>
+						{invitationStatus === "pending" && (
 							<div className="space-y-4">
 								<p>
 									<strong>{invitation?.inviterEmail}</strong> has invited you to
@@ -121,8 +107,9 @@ function InvitationPage() {
 									<strong>{invitation?.email}</strong>.
 								</p>
 							</div>
-						</Activity>
-						{/* {invitationStatus === 'accepted' && (
+						)}
+
+						{invitationStatus === "accepted" && (
 							<div className="space-y-4">
 								<div className="mx-auto flex size-16 items-center justify-center rounded-full bg-green-100">
 									<CheckIcon className="size-8 text-green-600" />
@@ -135,40 +122,9 @@ function InvitationPage() {
 									have you on board!
 								</p>
 							</div>
-						)} */}
-						<Activity
-							mode={invitationStatus === "accepted" ? "visible" : "hidden"}
-						>
-							<div className="space-y-4">
-								<div className="mx-auto flex size-16 items-center justify-center rounded-full bg-green-100">
-									<CheckIcon className="size-8 text-green-600" />
-								</div>
-								<h2 className="text-center font-bold text-2xl">
-									Welcome to {invitation?.organizationName}!
-								</h2>
-								<p className="text-center">
-									You've successfully joined the organization. We're excited to
-									have you on board!
-								</p>
-							</div>
-						</Activity>
-						{/* {invitationStatus === 'rejected' && (
-							<div className="space-y-4">
-								<div className="mx-auto flex size-16 items-center justify-center rounded-full bg-red-100">
-									<XIcon className="size-8 text-red-600" />
-								</div>
-								<h2 className="text-center font-bold text-2xl">
-									Invitation Declined
-								</h2>
-								<p className="text-center">
-									You&lsquo;ve declined the invitation to join{' '}
-									{invitation?.organizationName}.
-								</p>
-							</div>
-						)} */}
-						<Activity
-							mode={invitationStatus === "rejected" ? "visible" : "hidden"}
-						>
+						)}
+
+						{invitationStatus === "rejected" && (
 							<div className="space-y-4">
 								<div className="mx-auto flex size-16 items-center justify-center rounded-full bg-red-100">
 									<XIcon className="size-8 text-red-600" />
@@ -181,26 +137,16 @@ function InvitationPage() {
 									{invitation?.organizationName}.
 								</p>
 							</div>
-						</Activity>
+						)}
 					</CardContent>
-					{/* {invitationStatus === 'pending' && (
+					{invitationStatus === "pending" && (
 						<CardFooter className="flex justify-between">
 							<Button onClick={handleReject} variant="outline">
 								Decline
 							</Button>
 							<Button onClick={handleAccept}>Accept Invitation</Button>
 						</CardFooter>
-					)} */}
-					<Activity
-						mode={invitationStatus === "pending" ? "visible" : "hidden"}
-					>
-						<CardFooter className="flex justify-between">
-							<Button onClick={handleReject} variant="outline">
-								Decline
-							</Button>
-							<Button onClick={handleAccept}>Accept Invitation</Button>
-						</CardFooter>
-					</Activity>
+					)}
 				</Card>
 			) : error ? (
 				<InvitationError />

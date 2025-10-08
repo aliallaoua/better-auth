@@ -1,6 +1,5 @@
 import { formOptions } from "@tanstack/react-form";
 import { Link } from "@tanstack/react-router";
-import { Activity } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -39,7 +38,7 @@ export function SignInForm() {
 		onSubmit: async ({ value }) => {
 			try {
 				await signInMutation(value);
-			} catch (e: any) {
+			} catch (e) {
 				form.setErrorMap({
 					onSubmit: e.message,
 				});
@@ -83,18 +82,9 @@ export function SignInForm() {
 									/>
 								</svg>
 								<span>Sign in with GitHub</span>
-								{/* {authClient.isLastUsedLoginMethod('github') && (
+								{authClient.isLastUsedLoginMethod("github") && (
 									<LastUsedIndicator />
-								)} */}
-								<Activity
-									mode={
-										authClient.isLastUsedLoginMethod("github")
-											? "visible"
-											: "hidden"
-									}
-								>
-									<LastUsedIndicator />
-								</Activity>
+								)}
 							</Button>
 							<Button
 								onClick={signInWithGoogle}
@@ -108,18 +98,9 @@ export function SignInForm() {
 									/>
 								</svg>
 								<span>Sign in with Google</span>
-								{/* {authClient.isLastUsedLoginMethod('google') && (
+								{authClient.isLastUsedLoginMethod("google") && (
 									<LastUsedIndicator />
-								)} */}
-								<Activity
-									mode={
-										authClient.isLastUsedLoginMethod("google")
-											? "visible"
-											: "hidden"
-									}
-								>
-									<LastUsedIndicator />
-								</Activity>
+								)}
 							</Button>
 						</Field>
 
@@ -127,18 +108,9 @@ export function SignInForm() {
 							Or continue with
 						</FieldSeparator>
 						<div className="relative">
-							{/* {authClient.isLastUsedLoginMethod('email') && (
+							{authClient.isLastUsedLoginMethod("email") && (
 								<LastUsedIndicator />
-							)} */}
-							<Activity
-								mode={
-									authClient.isLastUsedLoginMethod("email")
-										? "visible"
-										: "hidden"
-								}
-							>
-								<LastUsedIndicator />
-							</Activity>
+							)}
 						</div>
 						<form.AppField
 							children={(field) => (

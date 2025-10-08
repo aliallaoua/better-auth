@@ -1,10 +1,9 @@
 import { useStore } from "@tanstack/react-form";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { Activity, useState } from "react";
+import { useState } from "react";
 import { useFieldContext } from "@/hooks/form-context";
 import { cn } from "@/lib/utils";
-import { ErrorMessages } from "./ErrorMessages";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 import { Field } from "./ui/field";
@@ -50,10 +49,7 @@ export default function DateField() {
 					/>
 				</PopoverContent>
 			</Popover>
-			{/* {field.state.meta.isTouched && <ErrorMessages errors={errors} />} */}
-			<Activity mode={field.state.meta.isTouched ? "visible" : "hidden"}>
-				<ErrorMessages errors={errors} />
-			</Activity>
+			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
 		</Field>
 	);
 }

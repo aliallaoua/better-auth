@@ -1,7 +1,7 @@
 import { formOptions } from "@tanstack/react-form";
 import type { ErrorContext } from "better-auth/react";
 import { Fingerprint, Trash } from "lucide-react";
-import { Activity, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import {
 	Dialog,
@@ -130,8 +130,7 @@ export function ListPasskeysForm() {
 				) : (
 					<p className="text-muted-foreground text-sm">No passkeys found</p>
 				)}
-				{/* {!data?.length && ( */}
-				<Activity mode={data?.length ? "hidden" : "visible"}>
+				{!data?.length && (
 					<form
 						className="flex flex-col gap-4"
 						onSubmit={(e) => {
@@ -183,8 +182,7 @@ export function ListPasskeysForm() {
 							selector={(state) => [state.errorMap]}
 						/> */}
 					</form>
-				</Activity>
-				{/* )} */}
+				)}
 				<DialogFooter>
 					{/* <Button className="cursor-pointer" onClick={() => setIsOpen(false)}>
 						Close

@@ -166,7 +166,7 @@ export function OrganizationCard(props: {
 											</p>
 										</div>
 									</div>
-									{/* {member.role !== "owner" &&
+									{member.role !== "owner" &&
 										(currentMember?.role === "owner" ||
 											currentMember?.role === "admin") && (
 											<Button
@@ -181,32 +181,10 @@ export function OrganizationCard(props: {
 											>
 												{currentMember?.id === member.id ? "Leave" : "Remove"}
 											</Button>
-										)} */}
-									<Activity
-										mode={
-											member.role !== "owner" &&
-											(currentMember?.role === "owner" ||
-												currentMember?.role === "admin")
-												? "visible"
-												: "hidden"
-										}
-									>
-										<Button
-											className="cursor-pointer"
-											onClick={() => {
-												organization.removeMember({
-													memberIdOrEmail: member.id,
-												});
-											}}
-											size="sm"
-											variant="destructive"
-										>
-											{currentMember?.id === member.id ? "Leave" : "Remove"}
-										</Button>
-									</Activity>
+										)}
 								</div>
 							))}
-							{/* {!optimisticOrg?.id && (
+							{!optimisticOrg?.id && (
 								<div>
 									<div className="flex items-center gap-2">
 										<Avatar>
@@ -221,23 +199,7 @@ export function OrganizationCard(props: {
 										</div>
 									</div>
 								</div>
-							)} */}
-							<Activity mode={optimisticOrg?.id ? "hidden" : "visible"}>
-								<div>
-									<div className="flex items-center gap-2">
-										<Avatar>
-											<AvatarImage src={session?.user.image || undefined} />
-											<AvatarFallback>
-												{session?.user.name?.charAt(0)}
-											</AvatarFallback>
-										</Avatar>
-										<div>
-											<p className="text-sm">{session?.user.name}</p>
-											<p className="text-muted-foreground text-xs">Owner</p>
-										</div>
-									</div>
-								</div>
-							</Activity>
+							)}
 						</div>
 					</div>
 					<div className="flex flex-col gap-2 grow">
@@ -326,7 +288,7 @@ export function OrganizationCard(props: {
 										</motion.div>
 									))}
 							</AnimatePresence>
-							{/* {optimisticOrg?.invitations.length === 0 && (
+							{optimisticOrg?.invitations.length === 0 && (
 								<motion.p
 									animate={{ opacity: 1 }}
 									className="text-muted-foreground text-sm"
@@ -335,31 +297,13 @@ export function OrganizationCard(props: {
 								>
 									No Active Invitations
 								</motion.p>
-							)} */}
-							<Activity
-								mode={
-									optimisticOrg?.invitations.length === 0 ? "visible" : "hidden"
-								}
-							>
-								<motion.p
-									animate={{ opacity: 1 }}
-									className="text-muted-foreground text-sm"
-									exit={{ opacity: 0 }}
-									initial={{ opacity: 0 }}
-								>
-									No Active Invitations
-								</motion.p>
-							</Activity>
-							{/* {!optimisticOrg?.id && (
+							)}
+
+							{!optimisticOrg?.id && (
 								<Label className="text-muted-foreground text-xs">
 									You can&apos;t invite members to your personal workspace.
 								</Label>
-							)} */}
-							<Activity mode={optimisticOrg?.id ? "hidden" : "visible"}>
-								<Label className="text-muted-foreground text-xs">
-									You can&apos;t invite members to your personal workspace.
-								</Label>
-							</Activity>
+							)}
 						</div>
 					</div>
 				</div>

@@ -1,7 +1,7 @@
 import { useStore } from "@tanstack/react-form";
 import { Link } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
-import { Activity, type JSX, useState } from "react";
+import { type JSX, useState } from "react";
 import { useFieldContext } from "@/hooks/form-context";
 import { cn } from "@/lib/utils";
 import { ErrorMessages } from "./ErrorMessages";
@@ -41,22 +41,14 @@ export default function PasswordField({
 					{label}
 					{required ? " *" : ""}
 				</FieldLabel>
-				{/* {forgotPassword && (
+				{forgotPassword && (
 					<Link
 						className="ml-auto text-sm underline-offset-4 hover:underline"
 						to="/forget-password"
 					>
 						Forgot your password?
 					</Link>
-				)} */}
-				<Activity mode={forgotPassword ? "visible" : "hidden"}>
-					<Link
-						className="ml-auto text-sm underline-offset-4 hover:underline"
-						to="/forget-password"
-					>
-						Forgot your password?
-					</Link>
-				</Activity>
+				)}
 			</div>
 			<InputGroup>
 				<InputGroupInput
@@ -93,10 +85,7 @@ export default function PasswordField({
           display: none;
         }
       `}</style>
-			{/* {field.state.meta.isTouched && <ErrorMessages errors={errors} />} */}
-			<Activity mode={field.state.meta.isTouched ? "visible" : "hidden"}>
-				<ErrorMessages errors={errors} />
-			</Activity>
+			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
 		</Field>
 	);
 }
