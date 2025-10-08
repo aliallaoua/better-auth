@@ -2,6 +2,7 @@ import type { CheckedState } from "@radix-ui/react-checkbox";
 import { useStore } from "@tanstack/react-form";
 import { useFieldContext } from "@/hooks/form-context";
 import { cn } from "@/lib/utils";
+import { ErrorMessages } from "./ErrorMessages";
 import { Checkbox } from "./ui/checkbox";
 import { Field, FieldContent, FieldDescription, FieldLabel } from "./ui/field";
 
