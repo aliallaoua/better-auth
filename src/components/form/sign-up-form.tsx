@@ -1,6 +1,5 @@
 import { formOptions } from "@tanstack/react-form";
 import { Link } from "@tanstack/react-router";
-import { X } from "lucide-react";
 import { useState } from "react";
 // import { AlertCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -177,7 +176,7 @@ export function SignUpForm() {
 												</div>
 											)}
 											<div className="flex w-full items-center gap-2">
-												<field.ImageField
+												{/* <field.ImageField
 													className="w-full text-muted-foreground"
 													id="image"
 													label="Profile Image"
@@ -189,7 +188,15 @@ export function SignUpForm() {
 														onClick={clearImage}
 														size={20}
 													/>
-												)}
+												)} */}
+												<field.ImageField
+													className="w-full text-muted-foreground"
+													id="image"
+													label="Profile Image"
+													onChange={handleImageChange}
+													showButton={!!imagePreview}
+													handleAction={clearImage}
+												/>
 											</div>
 										</div>
 									</div>

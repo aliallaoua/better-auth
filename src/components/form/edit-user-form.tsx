@@ -1,7 +1,7 @@
 import { formOptions } from "@tanstack/react-form";
 import { useRouter } from "@tanstack/react-router";
 import type { ErrorContext } from "better-auth/react";
-import { Edit, X } from "lucide-react";
+import { Edit } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -171,7 +171,7 @@ export function EditUserForm() {
 												</div>
 											)}
 											<div className="flex w-full items-center gap-2">
-												<field.ImageField
+												{/* <field.ImageField
 													className="w-full text-muted-foreground"
 													id="image"
 													onChange={handleImageChange}
@@ -188,7 +188,20 @@ export function EditUserForm() {
 														className="cursor-pointer"
 														onClick={handleClearNewImage}
 													/>
-												)}
+												)} */}
+												<field.ImageField
+													className="w-full text-muted-foreground"
+													id="image"
+													onChange={handleImageChange}
+													showButton={showDeleteButton || showClearButton}
+													handleAction={() => {
+														if (showDeleteButton) {
+															handleDeleteImage();
+														} else if (showClearButton) {
+															handleClearNewImage();
+														}
+													}}
+												/>
 											</div>
 										</div>
 										{/* Action Buttons */}
