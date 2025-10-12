@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
 import { Download, Plus } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import {
@@ -282,8 +282,6 @@ function AdminDashboard() {
 
 	return (
 		<div className="min-h-screen w-full bg-gradient-to-b from-background to-muted/20">
-			<Toaster position="top-right" richColors />
-
 			<div className="mx-auto max-w-7xl space-y-8 px-4 py-6 sm:px-6 lg:px-8">
 				{/* Header Section */}
 				<div className="space-y-4">
