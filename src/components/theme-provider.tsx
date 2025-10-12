@@ -71,20 +71,20 @@ const themeDetectorScript = (() => {
 				: "system";
 
 			if (validTheme === "system") {
-				const autoTheme = window.matchMedia("(prefers-color-scheme: dark)")
+				const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
 					.matches
 					? "dark"
 					: "light";
-				document.documentElement.classList.add(autoTheme, "system");
+				document.documentElement.classList.add(systemTheme, "system");
 			} else {
 				document.documentElement.classList.add(validTheme);
 			}
 		} catch (e) {
-			const autoTheme = window.matchMedia("(prefers-color-scheme: dark)")
+			const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
 				.matches
 				? "dark"
 				: "light";
-			document.documentElement.classList.add(autoTheme, "system");
+			document.documentElement.classList.add(systemTheme, "system");
 		}
 	}
 	return `(${themeFn.toString()})();`;
@@ -122,12 +122,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 	};
 
 	return (
-		<ThemeContext.Provider
-			value={{ themeMode, resolvedTheme, setTheme, toggleMode }}
-		>
+		<ThemeContext value={{ themeMode, resolvedTheme, setTheme, toggleMode }}>
 			<ScriptOnce children={themeDetectorScript} />
 			{children}
-		</ThemeContext.Provider>
+		</ThemeContext>
 	);
 }
 
