@@ -21,6 +21,7 @@ function PathlessLayoutComponent() {
 
 	return (
 		<SidebarProvider
+			className="pt-16"
 			style={
 				{
 					"--sidebar-width": "calc(var(--spacing) * 72)",

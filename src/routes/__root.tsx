@@ -10,7 +10,7 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
 import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary";
-import Header from "@/components/header";
+import { HeroHeader } from "@/components/header";
 import { NotFound } from "@/components/NotFound";
 import { ThemeProvider } from "@/components/theme-provider";
 import { useAuthQueries } from "@/hooks/queries/useAuthQueries";
@@ -82,7 +82,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			</head>
 			<body>
 				<ThemeProvider>
-					<Header />
+					{/* <Header /> */}
+					<HeroHeader />
 					{children}
 					<Toaster closeButton richColors theme="system" />
 					<TanStackDevtools
