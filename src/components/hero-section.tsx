@@ -17,10 +17,10 @@ const transitionVariants = {
 			filter: "blur(0px)",
 			y: 0,
 			transition: {
-				type: "spring",
-				bounce: 0.3,
-				duration: 1.5,
-			},
+				type: "tween",
+				duration: 0.4,
+				ease: "easeOut",
+			} as const,
 		},
 	},
 };
