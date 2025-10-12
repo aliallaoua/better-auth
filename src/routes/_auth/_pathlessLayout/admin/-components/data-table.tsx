@@ -553,17 +553,7 @@
 
 "use no memo";
 
-import {
-	// closestCenter,
-	// DndContext,
-	// type DragEndEvent,
-	KeyboardSensor,
-	MouseSensor,
-	TouchSensor,
-	type UniqueIdentifier,
-	useSensor,
-	useSensors,
-} from "@dnd-kit/core";
+import type { UniqueIdentifier } from "@dnd-kit/core";
 import {
 	// arrayMove,
 	SortableContext,
@@ -602,7 +592,7 @@ import {
 	UserX,
 	X,
 } from "lucide-react";
-import { useId, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Card } from "@/components/ui/card";
@@ -612,10 +602,18 @@ import {
 	DropdownMenuContent,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+import {
+	Empty,
+	EmptyContent,
+	EmptyDescription,
+	EmptyHeader,
+	EmptyMedia,
+	EmptyTitle,
+} from "@/components/ui/empty";
 import {
 	InputGroup,
 	InputGroupAddon,
+	InputGroupButton,
 	InputGroupInput,
 } from "@/components/ui/input-group";
 import {
@@ -673,12 +671,32 @@ function TableFilter({ column }: { column: any }) {
 	}
 
 	return (
-		<Input
-			className="max-w-[200px]"
-			onChange={(event) => column.setFilterValue(event.target.value)}
-			placeholder={`Filter ${column.id}...`}
-			value={filterValue || ""}
-		/>
+		// <Input
+		// 	className="max-w-[200px]"
+		// 	onChange={(event) => column.setFilterValue(event.target.value)}
+		// 	placeholder={`Filter ${column.id}...`}
+		// 	value={filterValue || ""}
+		// />
+		<InputGroup>
+			<InputGroupInput
+				className="max-w-[200px]"
+				onChange={(event) => column.setFilterValue(event.target.value)}
+				placeholder={`Filter ${column.id}...`}
+				value={filterValue || ""}
+			/>
+			{column.getIsFiltered() && (
+				<InputGroupAddon align="inline-end">
+					<InputGroupButton
+						className="size-8 p-0"
+						onClick={() => column.setFilterValue(undefined)}
+						size="sm"
+						variant="ghost"
+					>
+						<X className="size-3.5" />
+					</InputGroupButton>
+				</InputGroupAddon>
+			)}
+		</InputGroup>
 	);
 }
 
@@ -798,12 +816,13 @@ export function DataTable<UserWithRole>({
 		pageIndex: 0,
 		pageSize: 10,
 	});
-	const sortableId = useId();
-	const sensors = useSensors(
-		useSensor(MouseSensor, {}),
-		useSensor(TouchSensor, {}),
-		useSensor(KeyboardSensor, {})
-	);
+	// ! UNCOMMENT FOR DRAGGABEL ROW
+	// const sortableId = useId();
+	// const sensors = useSensors(
+	// 	useSensor(MouseSensor, {}),
+	// 	useSensor(TouchSensor, {}),
+	// 	useSensor(KeyboardSensor, {})
+	// );
 
 	const dataIds = useMemo<UniqueIdentifier[]>(
 		() => data?.map(({ id }) => id) || [],
@@ -889,17 +908,20 @@ export function DataTable<UserWithRole>({
 						<InputGroupAddon>
 							<SearchIcon />
 						</InputGroupAddon>
+						{/* {isFiltered && ( */}
+						{globalFilter.length > 0 && (
+							<InputGroupAddon align="inline-end">
+								<InputGroupButton
+									className="size-8 p-0"
+									onClick={clearAllFilters}
+									size="sm"
+									variant="ghost"
+								>
+									<X className="size-3.5" />
+								</InputGroupButton>
+							</InputGroupAddon>
+						)}
 					</InputGroup>
-					{isFiltered && (
-						<Button
-							className="h-10 gap-2"
-							onClick={clearAllFilters}
-							variant="outline"
-						>
-							Clear filters
-							<X className="size-4" />
-						</Button>
-					)}
 				</div>
 				<ButtonGroup>
 					<ButtonGroup className="hidden sm:flex">
@@ -973,7 +995,7 @@ export function DataTable<UserWithRole>({
 									</Label>
 									<div className="flex items-center gap-2">
 										<TableFilter column={column} />
-										{column.getIsFiltered() && (
+										{/* {column.getIsFiltered() && (
 											<Button
 												className="size-8 p-0"
 												onClick={() => column.setFilterValue(undefined)}
@@ -982,7 +1004,7 @@ export function DataTable<UserWithRole>({
 											>
 												<X className="size-3.5" />
 											</Button>
-										)}
+										)} */}
 									</div>
 								</div>
 							))}
@@ -1037,34 +1059,36 @@ export function DataTable<UserWithRole>({
 									className="h-48 text-center"
 									colSpan={columns.length}
 								>
-									<div className="flex flex-col items-center justify-center space-y-3">
-										<div className="rounded-full bg-muted p-4">
-											<UserX className="size-8 text-muted-foreground" />
-										</div>
-										<div className="space-y-1">
-											<p className="font-semibold">
+									<Empty>
+										<EmptyHeader>
+											<EmptyMedia variant="icon">
+												<UserX />
+											</EmptyMedia>
+											<EmptyTitle>
 												{isFiltered
 													? "No users match your filters"
 													: "No users found"}
-											</p>
-											<p className="text-sm text-muted-foreground">
+											</EmptyTitle>
+											<EmptyDescription>
 												{isFiltered
 													? "Try adjusting your search or filter criteria"
 													: "Get started by creating your first user"}
-											</p>
-										</div>
+											</EmptyDescription>
+										</EmptyHeader>
 										{isFiltered && (
-											<Button
-												className="gap-2"
-												onClick={clearAllFilters}
-												size="sm"
-												variant="outline"
-											>
-												<X className="size-4" />
-												Clear all filters
-											</Button>
+											<EmptyContent>
+												<Button
+													className="gap-2"
+													onClick={clearAllFilters}
+													size="sm"
+													variant="outline"
+												>
+													<X className="size-4" />
+													Clear all filters
+												</Button>
+											</EmptyContent>
 										)}
-									</div>
+									</Empty>
 								</TableCell>
 							</TableRow>
 						)}
