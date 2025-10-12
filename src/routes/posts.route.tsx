@@ -29,7 +29,7 @@ function PostsLayoutComponent() {
 								}}
 								to="/posts/$postId"
 							>
-								<div>{post.title.substring(0, 20)}</div>
+								{post.title.substring(0, 20)}
 							</Link>
 						</li>
 					);
