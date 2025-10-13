@@ -13,7 +13,6 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ForgetPasswordRouteImport } from './routes/forget-password'
-import { Route as BetterAuthRouteImport } from './routes/better-auth'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as PostsRouteRouteImport } from './routes/posts.route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -26,6 +25,7 @@ import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthPathlessLayoutUnauthorizedRouteImport } from './routes/_auth/_pathlessLayout/unauthorized'
 import { Route as AuthPathlessLayoutProfileRouteImport } from './routes/_auth/_pathlessLayout/profile'
 import { Route as AuthPathlessLayoutDashboardRouteImport } from './routes/_auth/_pathlessLayout/dashboard'
+import { Route as AuthPathlessLayoutBetterAuthRouteImport } from './routes/_auth/_pathlessLayout/better-auth'
 import { Route as PostsPostIdCommentsIndexRouteImport } from './routes/posts.$postId.comments.index'
 import { Route as AuthPathlessLayoutAdminIndexRouteImport } from './routes/_auth/_pathlessLayout/admin/index'
 import { Route as AuthPathlessLayoutAdminAdmincopyRouteImport } from './routes/_auth/_pathlessLayout/admin/admin copy'
@@ -49,11 +49,6 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const ForgetPasswordRoute = ForgetPasswordRouteImport.update({
   id: '/forget-password',
   path: '/forget-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BetterAuthRoute = BetterAuthRouteImport.update({
-  id: '/better-auth',
-  path: '/better-auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -117,6 +112,12 @@ const AuthPathlessLayoutDashboardRoute =
     path: '/dashboard',
     getParentRoute: () => AuthPathlessLayoutRouteRoute,
   } as any)
+const AuthPathlessLayoutBetterAuthRoute =
+  AuthPathlessLayoutBetterAuthRouteImport.update({
+    id: '/better-auth',
+    path: '/better-auth',
+    getParentRoute: () => AuthPathlessLayoutRouteRoute,
+  } as any)
 const PostsPostIdCommentsIndexRoute =
   PostsPostIdCommentsIndexRouteImport.update({
     id: '/$postId/comments/',
@@ -145,7 +146,6 @@ const PostsPostIdCommentsCommentIdIndexRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/posts': typeof PostsRouteRouteWithChildren
-  '/better-auth': typeof BetterAuthRoute
   '/forget-password': typeof ForgetPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signin': typeof SigninRoute
@@ -153,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
   '/posts/': typeof PostsIndexRoute
+  '/better-auth': typeof AuthPathlessLayoutBetterAuthRoute
   '/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/profile': typeof AuthPathlessLayoutProfileRoute
   '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
@@ -165,7 +166,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/better-auth': typeof BetterAuthRoute
   '/forget-password': typeof ForgetPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signin': typeof SigninRoute
@@ -173,6 +173,7 @@ export interface FileRoutesByTo {
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
   '/posts': typeof PostsIndexRoute
+  '/better-auth': typeof AuthPathlessLayoutBetterAuthRoute
   '/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/profile': typeof AuthPathlessLayoutProfileRoute
   '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
@@ -188,7 +189,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/posts': typeof PostsRouteRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
-  '/better-auth': typeof BetterAuthRoute
   '/forget-password': typeof ForgetPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signin': typeof SigninRoute
@@ -197,6 +197,7 @@ export interface FileRoutesById {
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
   '/posts/': typeof PostsIndexRoute
+  '/_auth/_pathlessLayout/better-auth': typeof AuthPathlessLayoutBetterAuthRoute
   '/_auth/_pathlessLayout/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/_auth/_pathlessLayout/profile': typeof AuthPathlessLayoutProfileRoute
   '/_auth/_pathlessLayout/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
@@ -212,7 +213,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/posts'
-    | '/better-auth'
     | '/forget-password'
     | '/reset-password'
     | '/signin'
@@ -220,6 +220,7 @@ export interface FileRouteTypes {
     | '/accept-invitation/$id'
     | '/api/send'
     | '/posts/'
+    | '/better-auth'
     | '/dashboard'
     | '/profile'
     | '/unauthorized'
@@ -232,7 +233,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/better-auth'
     | '/forget-password'
     | '/reset-password'
     | '/signin'
@@ -240,6 +240,7 @@ export interface FileRouteTypes {
     | '/accept-invitation/$id'
     | '/api/send'
     | '/posts'
+    | '/better-auth'
     | '/dashboard'
     | '/profile'
     | '/unauthorized'
@@ -254,7 +255,6 @@ export interface FileRouteTypes {
     | '/'
     | '/posts'
     | '/_auth'
-    | '/better-auth'
     | '/forget-password'
     | '/reset-password'
     | '/signin'
@@ -263,6 +263,7 @@ export interface FileRouteTypes {
     | '/accept-invitation/$id'
     | '/api/send'
     | '/posts/'
+    | '/_auth/_pathlessLayout/better-auth'
     | '/_auth/_pathlessLayout/dashboard'
     | '/_auth/_pathlessLayout/profile'
     | '/_auth/_pathlessLayout/unauthorized'
@@ -278,7 +279,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PostsRouteRoute: typeof PostsRouteRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
-  BetterAuthRoute: typeof BetterAuthRoute
   ForgetPasswordRoute: typeof ForgetPasswordRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SigninRoute: typeof SigninRoute
@@ -316,13 +316,6 @@ declare module '@tanstack/react-router' {
       path: '/forget-password'
       fullPath: '/forget-password'
       preLoaderRoute: typeof ForgetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/better-auth': {
-      id: '/better-auth'
-      path: '/better-auth'
-      fullPath: '/better-auth'
-      preLoaderRoute: typeof BetterAuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth': {
@@ -409,6 +402,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthPathlessLayoutDashboardRouteImport
       parentRoute: typeof AuthPathlessLayoutRouteRoute
     }
+    '/_auth/_pathlessLayout/better-auth': {
+      id: '/_auth/_pathlessLayout/better-auth'
+      path: '/better-auth'
+      fullPath: '/better-auth'
+      preLoaderRoute: typeof AuthPathlessLayoutBetterAuthRouteImport
+      parentRoute: typeof AuthPathlessLayoutRouteRoute
+    }
     '/posts/$postId/comments/': {
       id: '/posts/$postId/comments/'
       path: '/$postId/comments'
@@ -460,6 +460,7 @@ const PostsRouteRouteWithChildren = PostsRouteRoute._addFileChildren(
 )
 
 interface AuthPathlessLayoutRouteRouteChildren {
+  AuthPathlessLayoutBetterAuthRoute: typeof AuthPathlessLayoutBetterAuthRoute
   AuthPathlessLayoutDashboardRoute: typeof AuthPathlessLayoutDashboardRoute
   AuthPathlessLayoutProfileRoute: typeof AuthPathlessLayoutProfileRoute
   AuthPathlessLayoutUnauthorizedRoute: typeof AuthPathlessLayoutUnauthorizedRoute
@@ -469,6 +470,7 @@ interface AuthPathlessLayoutRouteRouteChildren {
 
 const AuthPathlessLayoutRouteRouteChildren: AuthPathlessLayoutRouteRouteChildren =
   {
+    AuthPathlessLayoutBetterAuthRoute: AuthPathlessLayoutBetterAuthRoute,
     AuthPathlessLayoutDashboardRoute: AuthPathlessLayoutDashboardRoute,
     AuthPathlessLayoutProfileRoute: AuthPathlessLayoutProfileRoute,
     AuthPathlessLayoutUnauthorizedRoute: AuthPathlessLayoutUnauthorizedRoute,
@@ -496,7 +498,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PostsRouteRoute: PostsRouteRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
-  BetterAuthRoute: BetterAuthRoute,
   ForgetPasswordRoute: ForgetPasswordRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SigninRoute: SigninRoute,

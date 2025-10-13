@@ -1,15 +1,18 @@
 import { formOptions } from "@tanstack/react-form";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
 import z from "zod";
-import { Button } from "@/components/ui/button";
-import { FieldGroup } from "@/components/ui/field";
-import { Separator } from "@/components/ui/separator";
+import {
+	FieldDescription,
+	FieldGroup,
+	FieldLegend,
+	FieldSet,
+} from "@/components/ui/field";
 import { sendTestEmail } from "@/functions/send";
 import { useAppForm } from "@/hooks/form";
 import { useSession } from "@/lib/auth-client";
 
-export const Route = createFileRoute("/better-auth")({
+export const Route = createFileRoute("/_auth/_pathlessLayout/better-auth")({
 	component: BetterAuthPage,
 });
 
@@ -110,7 +113,7 @@ function BetterAuthPage() {
 	};
 
 	return (
-		<div className="flex min-h-screen items-center justify-center">
+		<div className="flex min-h-screen w-full items-center justify-center">
 			<div className="w-full max-w-2xl rounded-xl dark:border-8 dark:border-black/10 dark:bg-black/50 p-8 shadow-xl backdrop-blur-md">
 				<form
 					className="space-y-6"
@@ -121,44 +124,53 @@ function BetterAuthPage() {
 					}}
 				>
 					<FieldGroup>
-						<form.AppField
-							children={(field) => (
-								<field.TextField
-									autoComplete="email"
-									label="Email"
-									placeholder="name@example.com"
-									required
-									type="email"
+						<FieldSet>
+							<FieldLegend>Send email</FieldLegend>
+							<FieldDescription>
+								Send email with Resend using TanStack Server Functions or Server
+								Routes
+							</FieldDescription>
+							<FieldGroup>
+								<form.AppField
+									children={(field) => (
+										<field.TextField
+											autoComplete="email"
+											label="Email"
+											placeholder="name@example.com"
+											required
+											type="email"
+										/>
+									)}
+									name="email"
 								/>
-							)}
-							name="email"
-						/>
 
-						<form.AppField name="emailtype">
-							{(field) => (
-								<field.SelectField
-									label="Email type"
-									placeholder="Select a type"
-									values={[
-										{ label: "HTML", value: "html" },
-										{ label: "React", value: "react" },
-									]}
-								/>
-							)}
-						</form.AppField>
+								<form.AppField name="emailtype">
+									{(field) => (
+										<field.SelectField
+											label="Email type"
+											placeholder="Select a type"
+											values={[
+												{ label: "HTML", value: "html" },
+												{ label: "React", value: "react" },
+											]}
+										/>
+									)}
+								</form.AppField>
 
-						<form.AppField name="emailmethod">
-							{(field) => (
-								<field.SelectField
-									label="Email method"
-									placeholder="Select a method"
-									values={[
-										{ label: "Server Function", value: "fn" },
-										{ label: "Server Route", value: "route" },
-									]}
-								/>
-							)}
-						</form.AppField>
+								<form.AppField name="emailmethod">
+									{(field) => (
+										<field.SelectField
+											label="Email method"
+											placeholder="Select a method"
+											values={[
+												{ label: "Server Function", value: "fn" },
+												{ label: "Server Route", value: "route" },
+											]}
+										/>
+									)}
+								</form.AppField>
+							</FieldGroup>
+						</FieldSet>
 
 						<div className="flex justify-end">
 							<form.AppForm>
@@ -167,7 +179,7 @@ function BetterAuthPage() {
 						</div>
 					</FieldGroup>
 				</form>
-				<div className="flex w-full items-center gap-4">
+				{/* <div className="flex w-full items-center gap-4">
 					<Separator className="flex-1" />
 					<span className="text-sm text-muted-foreground whitespace-nowrap">
 						Or use Better Auth
@@ -189,7 +201,7 @@ function BetterAuthPage() {
 							</Link>
 						</Button>
 					)}
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

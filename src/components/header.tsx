@@ -9,7 +9,7 @@ import { ThemeToggle } from "./theme-toggle";
 import UserButton from "./user-button";
 
 const menuItems = [
-	{ name: "Better Auth - Resend", href: "/better-auth" },
+	{ name: "Better Auth", href: "/dashboard" },
 	{ name: "Posts", href: "/posts" },
 ];
 

@@ -13,7 +13,7 @@ export default function CallToAction() {
 
 					<div className="mt-12 flex flex-wrap justify-center gap-4">
 						<Button asChild size="lg">
-							<Link to="/better-auth">
+							<Link to="/dashboard">
 								<span>Get Started</span>
 							</Link>
 						</Button>

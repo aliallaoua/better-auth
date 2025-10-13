@@ -3,8 +3,8 @@ import { Logo } from "@/components/logo";
 
 const links = [
 	{
-		title: "Better Auth - Resend",
-		href: "/better-auth",
+		title: "Better Auth",
+		href: "/dashboard",
 	},
 	{
 		title: "Posts",

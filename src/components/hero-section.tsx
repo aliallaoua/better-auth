@@ -87,7 +87,7 @@ export default function HeroSection() {
 											size="lg"
 											className="rounded-xl px-5 text-base"
 										>
-											<Link to="/better-auth">
+											<Link to="/dashboard">
 												<span className="text-nowrap">Start Building</span>
 											</Link>
 										</Button>

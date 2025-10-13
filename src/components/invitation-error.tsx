@@ -32,7 +32,7 @@ export function InvitationError() {
 				</p>
 			</CardContent>
 			<CardFooter>
-				<Link className="w-full" to="/better-auth">
+				<Link className="w-full" to="/dashboard">
 					<Button className="w-full" variant="outline">
 						Go back to home
 					</Button>

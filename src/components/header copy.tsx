@@ -9,7 +9,7 @@ import UserButton from "./user-button";
 
 const menuItems = [
 	{ name: "Home", to: "/" },
-	{ name: "Better Auth - Resend", to: "/better-auth" },
+	{ name: "Better Auth", to: "/dashboard" },
 	{ name: "Posts", to: "/posts" },
 ];
 
