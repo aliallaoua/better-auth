@@ -21,7 +21,7 @@ import { FieldGroup, FieldSet } from "../ui/field";
 
 export function CreateOrganizationForm() {
 	const [open, setOpen] = useState(false);
-	const signInFormOpts = formOptions({
+	const createOrganizationFormOpts = formOptions({
 		defaultValues: {
 			name: "",
 			slug: "",
@@ -30,7 +30,7 @@ export function CreateOrganizationForm() {
 	});
 
 	const form = useAppForm({
-		...signInFormOpts,
+		...createOrganizationFormOpts,
 		validators: {
 			onChange: CreateOrganizationSchema,
 		},

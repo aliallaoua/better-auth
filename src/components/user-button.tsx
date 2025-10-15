@@ -121,10 +121,10 @@ export default function UserButton() {
 						<ItemLink
 							className="cursor-pointer"
 							onClick={() => setOpen(false)}
-							to="/signin"
+							to="/login"
 						>
 							<LogIn className="mr-2 size-4" />
-							<span>Sign In</span>
+							<span>Log In</span>
 						</ItemLink>
 						<ItemLink
 							className="cursor-pointer"

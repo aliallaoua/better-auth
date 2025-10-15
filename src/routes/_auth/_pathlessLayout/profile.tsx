@@ -33,7 +33,7 @@ const getProfileData = createServerFn()
 			};
 		} catch (e) {
 			console.log(e);
-			throw redirect({ to: "/signin" });
+			throw redirect({ to: "/login" });
 		}
 	});
 

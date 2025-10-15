@@ -26,14 +26,14 @@ import {
 export function ForgetPasswordForm() {
 	const [isSubmitted, setIsSubmitted] = useState(false);
 
-	const signInFormOpts = formOptions({
+	const forgetPasswordFormOpts = formOptions({
 		defaultValues: {
 			email: "",
 		},
 	});
 
 	const form = useAppForm({
-		...signInFormOpts,
+		...forgetPasswordFormOpts,
 		validators: {
 			onChange: ForgotPasswordSchema,
 		},
@@ -137,7 +137,7 @@ export function ForgetPasswordForm() {
 							<FieldDescription className="text-center">
 								<Link
 									className="hover:underline hover:underline-offset-4"
-									to="/signin"
+									to="/login"
 								>
 									Back to sign in
 								</Link>

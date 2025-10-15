@@ -193,8 +193,8 @@ export function SignUpForm({
 								</form.AppForm>
 								<FieldDescription className="px-6 text-center">
 									Already have an account?{" "}
-									<Link className="underline underline-offset-4" to="/signin">
-										Sign in
+									<Link className="underline underline-offset-4" to="/login">
+										Log in
 									</Link>
 								</FieldDescription>
 							</Field>

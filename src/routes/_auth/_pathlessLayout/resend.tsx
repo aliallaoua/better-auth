@@ -50,14 +50,14 @@ function BetterAuthPage() {
 							name: value.email,
 							url,
 							emailType: value.emailtype,
-						}))
+						}));
 				toast.success("Email sent successfully. Please check your email.");
 				form.reset();
 			} catch (e) {
 				// Set form-level error
 				form.setErrorMap({
 					onSubmit: e.message,
-				})
+				});
 			}
 		},
 	});
@@ -88,7 +88,7 @@ function BetterAuthPage() {
 			.then((response) => response.json())
 			.then((data) => console.log("Success:", data))
 			.catch((error) => console.error("Error:", error));
-	}
+	};
 
 	const handleSendEmailUsingServerFunction = async ({
 		name,
@@ -108,8 +108,8 @@ function BetterAuthPage() {
 				url,
 				emailType,
 			},
-		})
-	}
+		});
+	};
 
 	return (
 		<div className="flex min-h-screen w-full items-center justify-center">
@@ -195,13 +195,13 @@ function BetterAuthPage() {
 						</Button>
 					) : (
 						<Button size="sm">
-							<Link to="/signin">
-								<span>Sign In</span>
+							<Link to="/login">
+								<span>Log In</span>
 							</Link>
 						</Button>
 					)}
 				</div> */}
 			</div>
 		</div>
-	)
+	);
 }

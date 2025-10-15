@@ -21,13 +21,13 @@ import { signInWithGithub, signInWithGoogle } from "@/lib/auth-functions";
 import { cn } from "@/lib/utils";
 import { SignInSchema } from "@/schema";
 
-export function SignInForm({
+export function LogInForm({
 	className,
 	...props
 }: React.ComponentProps<"div">) {
 	const { mutateAsync: signInMutation } = useSignInMutation();
 
-	const signInFormOpts = formOptions({
+	const logInFormOpts = formOptions({
 		defaultValues: {
 			email: "",
 			password: "",
@@ -35,7 +35,7 @@ export function SignInForm({
 	});
 
 	const form = useAppForm({
-		...signInFormOpts,
+		...logInFormOpts,
 		validators: {
 			onChange: SignInSchema,
 		},
@@ -146,7 +146,7 @@ export function SignInForm({
 
 							<Field>
 								<form.AppForm>
-									<form.SubscribeButton label="Sign In" />
+									<form.SubscribeButton label="Log In" />
 								</form.AppForm>
 								<FieldDescription className="text-center">
 									Don&apos;t have an account?{" "}

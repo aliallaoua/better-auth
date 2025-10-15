@@ -10,8 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
-import { Route as SigninRouteImport } from './routes/signin'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgetPasswordRouteImport } from './routes/forget-password'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as PostsRouteRouteImport } from './routes/posts.route'
@@ -36,14 +36,14 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SigninRoute = SigninRouteImport.update({
-  id: '/signin',
-  path: '/signin',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgetPasswordRoute = ForgetPasswordRouteImport.update({
@@ -147,8 +147,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/posts': typeof PostsRouteRouteWithChildren
   '/forget-password': typeof ForgetPasswordRoute
+  '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
@@ -167,8 +167,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/forget-password': typeof ForgetPasswordRoute
+  '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
@@ -190,8 +190,8 @@ export interface FileRoutesById {
   '/posts': typeof PostsRouteRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
   '/forget-password': typeof ForgetPasswordRoute
+  '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/_auth/_pathlessLayout': typeof AuthPathlessLayoutRouteRouteWithChildren
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
@@ -214,8 +214,8 @@ export interface FileRouteTypes {
     | '/'
     | '/posts'
     | '/forget-password'
+    | '/login'
     | '/reset-password'
-    | '/signin'
     | '/signup'
     | '/accept-invitation/$id'
     | '/api/send'
@@ -234,8 +234,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/forget-password'
+    | '/login'
     | '/reset-password'
-    | '/signin'
     | '/signup'
     | '/accept-invitation/$id'
     | '/api/send'
@@ -256,8 +256,8 @@ export interface FileRouteTypes {
     | '/posts'
     | '/_auth'
     | '/forget-password'
+    | '/login'
     | '/reset-password'
-    | '/signin'
     | '/signup'
     | '/_auth/_pathlessLayout'
     | '/accept-invitation/$id'
@@ -280,8 +280,8 @@ export interface RootRouteChildren {
   PostsRouteRoute: typeof PostsRouteRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
   ForgetPasswordRoute: typeof ForgetPasswordRoute
+  LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
-  SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
   AcceptInvitationIdRoute: typeof AcceptInvitationIdRoute
   ApiSendRoute: typeof ApiSendRoute
@@ -297,18 +297,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/signin': {
-      id: '/signin'
-      path: '/signin'
-      fullPath: '/signin'
-      preLoaderRoute: typeof SigninRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forget-password': {
@@ -499,8 +499,8 @@ const rootRouteChildren: RootRouteChildren = {
   PostsRouteRoute: PostsRouteRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
   ForgetPasswordRoute: ForgetPasswordRoute,
+  LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
-  SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
   AcceptInvitationIdRoute: AcceptInvitationIdRoute,
   ApiSendRoute: ApiSendRoute,

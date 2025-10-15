@@ -107,7 +107,7 @@ export default function AccountSwitcher({ sessions }: { sessions: Session[] }) {
 								className="cursor-pointer text-sm"
 								onSelect={() => {
 									router.navigate({
-										to: "/signin",
+										to: "/login",
 										// search: { addAccount: true },
 									});
 									setOpen(false);

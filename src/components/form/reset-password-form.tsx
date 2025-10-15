@@ -21,7 +21,7 @@ export function ResetPasswordForm() {
 	const router = useRouter();
 	const { token } = routeApi.useSearch();
 
-	const signInFormOpts = formOptions({
+	const resetPasswordFormOpts = formOptions({
 		defaultValues: {
 			password: "",
 			confirmPassword: "",
@@ -29,7 +29,7 @@ export function ResetPasswordForm() {
 	});
 
 	const form = useAppForm({
-		...signInFormOpts,
+		...resetPasswordFormOpts,
 		validators: {
 			onChange: ResetPasswordSchema,
 		},
@@ -45,7 +45,7 @@ export function ResetPasswordForm() {
 				} else {
 					toast.success("Password reset successfully");
 					router.navigate({
-						to: "/signin",
+						to: "/login",
 					});
 				}
 			} catch (e) {
