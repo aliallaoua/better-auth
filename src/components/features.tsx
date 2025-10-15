@@ -1,6 +1,10 @@
 import { Settings2, Sparkles, Zap } from "lucide-react";
 import type { ReactNode } from "react";
+// import { BorderTrail } from "@/components/ui/border-trail";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { GlowEffect } from "@/components/ui/glow-effect";
+import { BorderBeam } from "./ui/border-beam";
+import { ShineBorder } from "./ui/shine-border";
 
 export default function Features() {
 	return (
@@ -16,53 +20,106 @@ export default function Features() {
 					</p>
 				</div>
 				<div className="@min-4xl:max-w-full @min-4xl:grid-cols-3 mx-auto mt-8 grid max-w-sm gap-6 *:text-center md:mt-16">
-					<Card className="group bg-background">
+					<Card className="group relative bg-background">
+						{/* <BorderTrail
+							className={
+								"bg-linear-to-l from-green-300 via-green-500 to-green-300 transition-opacity duration-300 dark:from-green-700/30 dark:via-green-500 dark:to-green-700/30"
+							}
+							size={120}
+							transition={{
+								ease: [0, 0.5, 0.8, 0.5],
+								duration: 4,
+								repeat: Number.POSITIVE_INFINITY,
+							}}
+						/> */}
 						<CardHeader className="pb-3">
 							<CardDecorator>
 								<Zap className="size-6" aria-hidden />
 							</CardDecorator>
 
-							<h3 className="mt-6 font-medium">Customizable</h3>
+							<h3 className="mt-6 font-medium">Full-Stack Type Safety</h3>
 						</CardHeader>
 
 						<CardContent>
 							<p className="text-sm">
-								Extensive customization options, allowing you to tailor every
-								aspect to meet your specific needs.
+								End-to-end type safety across TanStack Start, Drizzle ORM, and
+								Better Auth ensures reliable, predictable apps.
 							</p>
 						</CardContent>
+						{/* <BorderBeam duration={8} size={100} /> */}
+						{/* <BorderBeam
+							duration={6}
+							size={400}
+							className="from-transparent via-red-500 to-transparent"
+						/> */}
+						<BorderBeam
+							size={400}
+							initialOffset={20}
+							className="from-transparent via-yellow-500 to-transparent"
+							transition={{
+								type: "spring",
+								stiffness: 60,
+								damping: 20,
+							}}
+						/>
+						<BorderBeam
+							duration={6}
+							delay={3}
+							size={400}
+							borderWidth={2}
+							initialOffset={70}
+							className="from-transparent via-blue-500 to-transparent"
+							transition={{
+								type: "spring",
+								stiffness: 60,
+								damping: 20,
+							}}
+						/>
 					</Card>
 
-					<Card className="group bg-background">
-						<CardHeader className="pb-3">
-							<CardDecorator>
-								<Settings2 className="size-6" aria-hidden />
-							</CardDecorator>
+					<div className="group relative bg-background">
+						{/* Glow Effect Layer */}
+						<div className="pointer-events-none absolute inset-0">
+							<GlowEffect
+								colors={["#0894FF", "#C959DD", "#FF2E54", "#FF9004"]}
+								mode="colorShift"
+								blur="medium"
+								duration={4}
+							/>
+						</div>
 
-							<h3 className="mt-6 font-medium">You have full control</h3>
-						</CardHeader>
+						<Card className="group relative h-full bg-background">
+							<CardHeader className="pb-3">
+								<CardDecorator>
+									<Settings2 className="h-6 w-6" aria-hidden />
+								</CardDecorator>
 
-						<CardContent>
-							<p className="mt-3 text-sm">
-								From design elements to functionality, you have complete control
-								to create a unique and personalized experience.
-							</p>
-						</CardContent>
-					</Card>
+								<h3 className="mt-6 font-medium">Universal Deployment</h3>
+							</CardHeader>
 
-					<Card className="group bg-background">
+							<CardContent>
+								<p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
+									Deploy seamlessly on any Vite-compatible provider. Neon's
+									serverless Postgres adapts automatically.
+								</p>
+							</CardContent>
+						</Card>
+					</div>
+
+					<Card className="group relative bg-background">
+						<ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
 						<CardHeader className="pb-3">
 							<CardDecorator>
 								<Sparkles className="size-6" aria-hidden />
 							</CardDecorator>
 
-							<h3 className="mt-6 font-medium">Powered By AI</h3>
+							<h3 className="mt-6 font-medium">AI-Optimized Dev Experience</h3>
 						</CardHeader>
 
 						<CardContent>
 							<p className="mt-3 text-sm">
-								Elements to functionality, you have complete control to create a
-								unique experience.
+								Ultracite and Biome keep your codebase consistent and AI-ready
+								for future development workflows.
 							</p>
 						</CardContent>
 					</Card>

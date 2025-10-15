@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 import { AnimatedGroup } from "@/components/ui/animated-group";
-import { Button } from "@/components/ui/button";
 import { TextEffect } from "@/components/ui/text-effect";
 import { HeroHeader } from "./header";
 
@@ -49,7 +48,7 @@ export default function HeroSection() {
 									as="h1"
 									className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16"
 								>
-									Build and Ship 10x faster with NS
+									Build modern full-stack apps with the TypeScript ecosystem.
 								</TextEffect>
 								<TextEffect
 									per="line"
@@ -59,9 +58,10 @@ export default function HeroSection() {
 									as="p"
 									className="mt-8 max-w-2xl text-pretty text-lg"
 								>
-									Tailwindcss highly customizable components for building modern
-									websites and applications that look and feel the way you mean
-									it.
+									TanStack Start powers your full-document SSR, Better Auth
+									secures your users, Drizzle and Neon manage your data, all
+									styled with Tailwind and Shadcn UI. Type-safe, universal, and
+									production-ready.
 								</TextEffect>
 
 								<AnimatedGroup
@@ -80,9 +80,9 @@ export default function HeroSection() {
 								>
 									<div
 										key={1}
-										className="bg-foreground/10 rounded-[calc(var(--radius-xl)+0.125rem)] border p-0.5"
+										// className="bg-foreground/10 rounded-[calc(var(--radius-xl)+0.125rem)] border p-0.5"
 									>
-										<Button
+										{/* <Button
 											asChild
 											size="lg"
 											className="rounded-xl px-5 text-base"
@@ -90,9 +90,15 @@ export default function HeroSection() {
 											<Link to="/dashboard">
 												<span className="text-nowrap">Start Building</span>
 											</Link>
-										</Button>
+										</Button> */}
+										<Link
+											className="relative inline-flex items-center justify-center select-none rounded-2xl disabled:cursor-not-allowed ease-in-out text-gray-900 dark:text-white border-[2px] border-gray-900/10 dark:border-white/5 backdrop-blur-[25px] bg-origin-border bg-[linear-gradient(104deg,rgba(253,253,253,0.05)_5%,rgba(240,240,228,0.1)_100%)] dark:bg-[linear-gradient(104deg,rgba(253,253,253,0.05)_5%,rgba(240,240,228,0.1)_100%)] shadow-sm not-disabled:hover:bg-gray-900 dark:not-disabled:hover:bg-white/90 not-disabled:hover:text-white dark:not-disabled:hover:text-black not-disabled:hover:shadow-button transition-all duration-200 disabled:opacity-30 disabled:text-gray-900/50 dark:disabled:text-white/50 focus-visible:ring-4 focus-visible:ring-gray-900/30 dark:focus-visible:ring-white/30 focus-visible:outline-hidden focus-visible:bg-gray-900 dark:focus-visible:bg-white/90 focus-visible:text-white dark:focus-visible:text-black after:absolute after:w-[calc(100%+4px)] after:h-[calc(100%+4px)] after:top-[-2px] after:left-[-2px] after:rounded-[1rem] after:bg-[url(&quot;/static/texture-btn.png&quot;)] after:bg-repeat after:pointer-events-none text-base h-12 gap-0 px-5 font-semibold"
+											to="/dashboard"
+										>
+											Get Started
+										</Link>
 									</div>
-									<Button
+									{/* <Button
 										key={2}
 										asChild
 										size="lg"
@@ -102,7 +108,13 @@ export default function HeroSection() {
 										<Link to="/posts">
 											<span className="text-nowrap">Request a demo</span>
 										</Link>
-									</Button>
+									</Button> */}
+									<Link
+										className="relative inline-flex items-center border justify-center select-none rounded-2xl disabled:cursor-not-allowed disabled:opacity-70 transition ease-in-out duration-200 bg-transparent border-transparent text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 focus-visible:ring-4 focus-visible:ring-gray-200 dark:focus-visible:ring-gray-a2 focus-visible:outline-hidden text-base h-12 gap-0 px-5 font-semibold"
+										to="/posts"
+									>
+										Request a demo
+									</Link>
 								</AnimatedGroup>
 							</div>
 						</div>
@@ -286,6 +298,65 @@ export default function HeroSection() {
 									/>{" "}
 								</svg>
 							</div>
+							{/* neon */}
+							<svg
+								className="mx-auto w-fit size-8 dark:invert"
+								xmlns="http://www.w3.org/2000/svg"
+								width="102"
+								height="28"
+								fill="none"
+							>
+								<path
+									fill="black"
+									fillRule="evenodd"
+									d="M0 4.828C0 2.16 2.172 0 4.851 0h18.436c2.679 0 4.85 2.161 4.85 4.828V20.43c0 2.758-3.507 3.955-5.208 1.778l-5.318-6.809v8.256c0 2.4-1.955 4.345-4.367 4.345H4.851C2.172 28 0 25.839 0 23.172zm4.851-.966a.97.97 0 0 0-.97.966v18.344c0 .534.435.966.97.966h8.539c.268 0 .34-.216.34-.483v-11.07c0-2.76 3.507-3.956 5.208-1.779l5.319 6.809V4.828c0-.534.05-.966-.485-.966z"
+									clipRule="evenodd"
+								/>
+								<path
+									fill="black"
+									fillRule="evenodd"
+									d="M0 4.828C0 2.16 2.172 0 4.851 0h18.436c2.679 0 4.85 2.161 4.85 4.828V20.43c0 2.758-3.507 3.955-5.208 1.778l-5.318-6.809v8.256c0 2.4-1.955 4.345-4.367 4.345H4.851C2.172 28 0 25.839 0 23.172zm4.851-.966a.97.97 0 0 0-.97.966v18.344c0 .534.435.966.97.966h8.539c.268 0 .34-.216.34-.483v-11.07c0-2.76 3.507-3.956 5.208-1.779l5.319 6.809V4.828c0-.534.05-.966-.485-.966z"
+									clipRule="evenodd"
+								/>
+								<path
+									fill="black"
+									fillRule="evenodd"
+									d="M0 4.828C0 2.16 2.172 0 4.851 0h18.436c2.679 0 4.85 2.161 4.85 4.828V20.43c0 2.758-3.507 3.955-5.208 1.778l-5.318-6.809v8.256c0 2.4-1.955 4.345-4.367 4.345H4.851C2.172 28 0 25.839 0 23.172zm4.851-.966a.97.97 0 0 0-.97.966v18.344c0 .534.435.966.97.966h8.539c.268 0 .34-.216.34-.483v-11.07c0-2.76 3.507-3.956 5.208-1.779l5.319 6.809V4.828c0-.534.05-.966-.485-.966z"
+									clipRule="evenodd"
+								/>
+								<path
+									fill="black"
+									d="M23.287 0c2.679 0 4.85 2.161 4.85 4.828V20.43c0 2.758-3.507 3.955-5.208 1.778l-5.319-6.809v8.256c0 2.4-1.954 4.345-4.366 4.345a.484.484 0 0 0 .485-.483V12.584c0-2.758 3.508-3.955 5.21-1.777l5.318 6.808V.965a.97.97 0 0 0-.97-.965"
+								/>
+								<path
+									fill="black"
+									d="M48.112 7.432v8.032l-7.355-8.032H36.93v13.136h3.49v-8.632l8.01 8.632h3.173V7.432zM58.075 17.64v-2.326h7.815v-2.797h-7.815V10.36h9.48V7.432H54.514v13.136H67.75v-2.927zM77.028 21c4.909 0 8.098-2.552 8.098-7s-3.19-7-8.098-7c-4.91 0-8.081 2.552-8.081 7s3.172 7 8.08 7m0-3.115c-2.73 0-4.413-1.408-4.413-3.885s1.701-3.885 4.413-3.885c2.729 0 4.412 1.408 4.412 3.885s-1.683 3.885-4.412 3.885M98.508 7.432v8.032l-7.355-8.032h-3.828v13.136h3.491v-8.632l8.01 8.632H102V7.432z"
+								/>
+								<defs>
+									<linearGradient
+										id="a"
+										x1="28.138"
+										x2="3.533"
+										y1="28"
+										y2="-.12"
+										gradientUnits="userSpaceOnUse"
+									>
+										<stop stopColor="#B9FFB3" />
+										<stop offset="1" stopColor="#B9FFB3" stopOpacity="0" />
+									</linearGradient>
+									<linearGradient
+										id="b"
+										x1="28.138"
+										x2="11.447"
+										y1="28"
+										y2="21.476"
+										gradientUnits="userSpaceOnUse"
+									>
+										<stop stopColor="#1A1A1A" stopOpacity=".9" />
+										<stop offset="1" stopColor="#1A1A1A" stopOpacity="0" />
+									</linearGradient>
+								</defs>
+							</svg>
 							{/* tailwindcss */}
 							<div className="flex">
 								<img
@@ -311,9 +382,9 @@ export default function HeroSection() {
 										y2="208"
 										fill="none"
 										stroke="currentColor"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="32"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth="32"
 									/>
 									<line
 										x1="192"
@@ -322,9 +393,9 @@ export default function HeroSection() {
 										y2="192"
 										fill="none"
 										stroke="currentColor"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="32"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth="32"
 									/>
 								</svg>
 							</div>
@@ -352,65 +423,6 @@ export default function HeroSection() {
 									Ultracite
 								</p>
 							</div>
-							{/* neon */}
-							<svg
-								className="mx-auto w-fit size-8 dark:invert"
-								xmlns="http://www.w3.org/2000/svg"
-								width="102"
-								height="28"
-								fill="none"
-							>
-								<path
-									fill="black"
-									fill-rule="evenodd"
-									d="M0 4.828C0 2.16 2.172 0 4.851 0h18.436c2.679 0 4.85 2.161 4.85 4.828V20.43c0 2.758-3.507 3.955-5.208 1.778l-5.318-6.809v8.256c0 2.4-1.955 4.345-4.367 4.345H4.851C2.172 28 0 25.839 0 23.172zm4.851-.966a.97.97 0 0 0-.97.966v18.344c0 .534.435.966.97.966h8.539c.268 0 .34-.216.34-.483v-11.07c0-2.76 3.507-3.956 5.208-1.779l5.319 6.809V4.828c0-.534.05-.966-.485-.966z"
-									clip-rule="evenodd"
-								/>
-								<path
-									fill="black"
-									fill-rule="evenodd"
-									d="M0 4.828C0 2.16 2.172 0 4.851 0h18.436c2.679 0 4.85 2.161 4.85 4.828V20.43c0 2.758-3.507 3.955-5.208 1.778l-5.318-6.809v8.256c0 2.4-1.955 4.345-4.367 4.345H4.851C2.172 28 0 25.839 0 23.172zm4.851-.966a.97.97 0 0 0-.97.966v18.344c0 .534.435.966.97.966h8.539c.268 0 .34-.216.34-.483v-11.07c0-2.76 3.507-3.956 5.208-1.779l5.319 6.809V4.828c0-.534.05-.966-.485-.966z"
-									clip-rule="evenodd"
-								/>
-								<path
-									fill="black"
-									fill-rule="evenodd"
-									d="M0 4.828C0 2.16 2.172 0 4.851 0h18.436c2.679 0 4.85 2.161 4.85 4.828V20.43c0 2.758-3.507 3.955-5.208 1.778l-5.318-6.809v8.256c0 2.4-1.955 4.345-4.367 4.345H4.851C2.172 28 0 25.839 0 23.172zm4.851-.966a.97.97 0 0 0-.97.966v18.344c0 .534.435.966.97.966h8.539c.268 0 .34-.216.34-.483v-11.07c0-2.76 3.507-3.956 5.208-1.779l5.319 6.809V4.828c0-.534.05-.966-.485-.966z"
-									clip-rule="evenodd"
-								/>
-								<path
-									fill="black"
-									d="M23.287 0c2.679 0 4.85 2.161 4.85 4.828V20.43c0 2.758-3.507 3.955-5.208 1.778l-5.319-6.809v8.256c0 2.4-1.954 4.345-4.366 4.345a.484.484 0 0 0 .485-.483V12.584c0-2.758 3.508-3.955 5.21-1.777l5.318 6.808V.965a.97.97 0 0 0-.97-.965"
-								/>
-								<path
-									fill="black"
-									d="M48.112 7.432v8.032l-7.355-8.032H36.93v13.136h3.49v-8.632l8.01 8.632h3.173V7.432zM58.075 17.64v-2.326h7.815v-2.797h-7.815V10.36h9.48V7.432H54.514v13.136H67.75v-2.927zM77.028 21c4.909 0 8.098-2.552 8.098-7s-3.19-7-8.098-7c-4.91 0-8.081 2.552-8.081 7s3.172 7 8.08 7m0-3.115c-2.73 0-4.413-1.408-4.413-3.885s1.701-3.885 4.413-3.885c2.729 0 4.412 1.408 4.412 3.885s-1.683 3.885-4.412 3.885M98.508 7.432v8.032l-7.355-8.032h-3.828v13.136h3.491v-8.632l8.01 8.632H102V7.432z"
-								/>
-								<defs>
-									<linearGradient
-										id="a"
-										x1="28.138"
-										x2="3.533"
-										y1="28"
-										y2="-.12"
-										gradientUnits="userSpaceOnUse"
-									>
-										<stop stop-color="#B9FFB3" />
-										<stop offset="1" stop-color="#B9FFB3" stop-opacity="0" />
-									</linearGradient>
-									<linearGradient
-										id="b"
-										x1="28.138"
-										x2="11.447"
-										y1="28"
-										y2="21.476"
-										gradientUnits="userSpaceOnUse"
-									>
-										<stop stop-color="#1A1A1A" stop-opacity=".9" />
-										<stop offset="1" stop-color="#1A1A1A" stop-opacity="0" />
-									</linearGradient>
-								</defs>
-							</svg>
 						</div>
 					</div>
 				</section>

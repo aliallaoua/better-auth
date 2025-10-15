@@ -19,7 +19,7 @@ export const Route = createFileRoute("/signup")({
 
 function SignupPage() {
 	return (
-		<div className="container flex h-screen items-center justify-center py-4">
+		<div className="flex min-h-svh flex-col items-center justify-center gap-6 p-14 md:p-20">
 			<div className="flex w-full max-w-sm flex-col gap-6">
 				<SignUpForm />
 			</div>

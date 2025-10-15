@@ -10,14 +10,13 @@ import {
 } from "@/components/ui/field";
 import { sendTestEmail } from "@/functions/send";
 import { useAppForm } from "@/hooks/form";
-import { useSession } from "@/lib/auth-client";
 
-export const Route = createFileRoute("/_auth/_pathlessLayout/better-auth")({
+export const Route = createFileRoute("/_auth/_pathlessLayout/resend")({
 	component: BetterAuthPage,
 });
 
 function BetterAuthPage() {
-	const { data: session } = useSession();
+	// const { data: session } = useSession();
 
 	const emailFormOpts = formOptions({
 		defaultValues: {
@@ -51,14 +50,14 @@ function BetterAuthPage() {
 							name: value.email,
 							url,
 							emailType: value.emailtype,
-						}));
+						}))
 				toast.success("Email sent successfully. Please check your email.");
 				form.reset();
 			} catch (e) {
 				// Set form-level error
 				form.setErrorMap({
 					onSubmit: e.message,
-				});
+				})
 			}
 		},
 	});
@@ -89,7 +88,7 @@ function BetterAuthPage() {
 			.then((response) => response.json())
 			.then((data) => console.log("Success:", data))
 			.catch((error) => console.error("Error:", error));
-	};
+	}
 
 	const handleSendEmailUsingServerFunction = async ({
 		name,
@@ -109,8 +108,8 @@ function BetterAuthPage() {
 				url,
 				emailType,
 			},
-		});
-	};
+		})
+	}
 
 	return (
 		<div className="flex min-h-screen w-full items-center justify-center">
@@ -204,5 +203,5 @@ function BetterAuthPage() {
 				</div> */}
 			</div>
 		</div>
-	);
+	)
 }

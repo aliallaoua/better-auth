@@ -23,9 +23,9 @@ import { Route as AuthPathlessLayoutRouteRouteImport } from './routes/_auth/_pat
 import { Route as PostsPostIdIndexRouteImport } from './routes/posts.$postId.index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthPathlessLayoutUnauthorizedRouteImport } from './routes/_auth/_pathlessLayout/unauthorized'
+import { Route as AuthPathlessLayoutResendRouteImport } from './routes/_auth/_pathlessLayout/resend'
 import { Route as AuthPathlessLayoutProfileRouteImport } from './routes/_auth/_pathlessLayout/profile'
 import { Route as AuthPathlessLayoutDashboardRouteImport } from './routes/_auth/_pathlessLayout/dashboard'
-import { Route as AuthPathlessLayoutBetterAuthRouteImport } from './routes/_auth/_pathlessLayout/better-auth'
 import { Route as PostsPostIdCommentsIndexRouteImport } from './routes/posts.$postId.comments.index'
 import { Route as AuthPathlessLayoutAdminIndexRouteImport } from './routes/_auth/_pathlessLayout/admin/index'
 import { Route as AuthPathlessLayoutAdminAdmincopyRouteImport } from './routes/_auth/_pathlessLayout/admin/admin copy'
@@ -100,6 +100,12 @@ const AuthPathlessLayoutUnauthorizedRoute =
     path: '/unauthorized',
     getParentRoute: () => AuthPathlessLayoutRouteRoute,
   } as any)
+const AuthPathlessLayoutResendRoute =
+  AuthPathlessLayoutResendRouteImport.update({
+    id: '/resend',
+    path: '/resend',
+    getParentRoute: () => AuthPathlessLayoutRouteRoute,
+  } as any)
 const AuthPathlessLayoutProfileRoute =
   AuthPathlessLayoutProfileRouteImport.update({
     id: '/profile',
@@ -110,12 +116,6 @@ const AuthPathlessLayoutDashboardRoute =
   AuthPathlessLayoutDashboardRouteImport.update({
     id: '/dashboard',
     path: '/dashboard',
-    getParentRoute: () => AuthPathlessLayoutRouteRoute,
-  } as any)
-const AuthPathlessLayoutBetterAuthRoute =
-  AuthPathlessLayoutBetterAuthRouteImport.update({
-    id: '/better-auth',
-    path: '/better-auth',
     getParentRoute: () => AuthPathlessLayoutRouteRoute,
   } as any)
 const PostsPostIdCommentsIndexRoute =
@@ -153,9 +153,9 @@ export interface FileRoutesByFullPath {
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
   '/posts/': typeof PostsIndexRoute
-  '/better-auth': typeof AuthPathlessLayoutBetterAuthRoute
   '/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/profile': typeof AuthPathlessLayoutProfileRoute
+  '/resend': typeof AuthPathlessLayoutResendRoute
   '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/posts/$postId': typeof PostsPostIdIndexRoute
@@ -173,9 +173,9 @@ export interface FileRoutesByTo {
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
   '/posts': typeof PostsIndexRoute
-  '/better-auth': typeof AuthPathlessLayoutBetterAuthRoute
   '/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/profile': typeof AuthPathlessLayoutProfileRoute
+  '/resend': typeof AuthPathlessLayoutResendRoute
   '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/posts/$postId': typeof PostsPostIdIndexRoute
@@ -197,9 +197,9 @@ export interface FileRoutesById {
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
   '/posts/': typeof PostsIndexRoute
-  '/_auth/_pathlessLayout/better-auth': typeof AuthPathlessLayoutBetterAuthRoute
   '/_auth/_pathlessLayout/dashboard': typeof AuthPathlessLayoutDashboardRoute
   '/_auth/_pathlessLayout/profile': typeof AuthPathlessLayoutProfileRoute
+  '/_auth/_pathlessLayout/resend': typeof AuthPathlessLayoutResendRoute
   '/_auth/_pathlessLayout/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/posts/$postId/': typeof PostsPostIdIndexRoute
@@ -220,9 +220,9 @@ export interface FileRouteTypes {
     | '/accept-invitation/$id'
     | '/api/send'
     | '/posts/'
-    | '/better-auth'
     | '/dashboard'
     | '/profile'
+    | '/resend'
     | '/unauthorized'
     | '/api/auth/$'
     | '/posts/$postId'
@@ -240,9 +240,9 @@ export interface FileRouteTypes {
     | '/accept-invitation/$id'
     | '/api/send'
     | '/posts'
-    | '/better-auth'
     | '/dashboard'
     | '/profile'
+    | '/resend'
     | '/unauthorized'
     | '/api/auth/$'
     | '/posts/$postId'
@@ -263,9 +263,9 @@ export interface FileRouteTypes {
     | '/accept-invitation/$id'
     | '/api/send'
     | '/posts/'
-    | '/_auth/_pathlessLayout/better-auth'
     | '/_auth/_pathlessLayout/dashboard'
     | '/_auth/_pathlessLayout/profile'
+    | '/_auth/_pathlessLayout/resend'
     | '/_auth/_pathlessLayout/unauthorized'
     | '/api/auth/$'
     | '/posts/$postId/'
@@ -388,6 +388,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthPathlessLayoutUnauthorizedRouteImport
       parentRoute: typeof AuthPathlessLayoutRouteRoute
     }
+    '/_auth/_pathlessLayout/resend': {
+      id: '/_auth/_pathlessLayout/resend'
+      path: '/resend'
+      fullPath: '/resend'
+      preLoaderRoute: typeof AuthPathlessLayoutResendRouteImport
+      parentRoute: typeof AuthPathlessLayoutRouteRoute
+    }
     '/_auth/_pathlessLayout/profile': {
       id: '/_auth/_pathlessLayout/profile'
       path: '/profile'
@@ -400,13 +407,6 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthPathlessLayoutDashboardRouteImport
-      parentRoute: typeof AuthPathlessLayoutRouteRoute
-    }
-    '/_auth/_pathlessLayout/better-auth': {
-      id: '/_auth/_pathlessLayout/better-auth'
-      path: '/better-auth'
-      fullPath: '/better-auth'
-      preLoaderRoute: typeof AuthPathlessLayoutBetterAuthRouteImport
       parentRoute: typeof AuthPathlessLayoutRouteRoute
     }
     '/posts/$postId/comments/': {
@@ -460,9 +460,9 @@ const PostsRouteRouteWithChildren = PostsRouteRoute._addFileChildren(
 )
 
 interface AuthPathlessLayoutRouteRouteChildren {
-  AuthPathlessLayoutBetterAuthRoute: typeof AuthPathlessLayoutBetterAuthRoute
   AuthPathlessLayoutDashboardRoute: typeof AuthPathlessLayoutDashboardRoute
   AuthPathlessLayoutProfileRoute: typeof AuthPathlessLayoutProfileRoute
+  AuthPathlessLayoutResendRoute: typeof AuthPathlessLayoutResendRoute
   AuthPathlessLayoutUnauthorizedRoute: typeof AuthPathlessLayoutUnauthorizedRoute
   AuthPathlessLayoutAdminAdmincopyRoute: typeof AuthPathlessLayoutAdminAdmincopyRoute
   AuthPathlessLayoutAdminIndexRoute: typeof AuthPathlessLayoutAdminIndexRoute
@@ -470,9 +470,9 @@ interface AuthPathlessLayoutRouteRouteChildren {
 
 const AuthPathlessLayoutRouteRouteChildren: AuthPathlessLayoutRouteRouteChildren =
   {
-    AuthPathlessLayoutBetterAuthRoute: AuthPathlessLayoutBetterAuthRoute,
     AuthPathlessLayoutDashboardRoute: AuthPathlessLayoutDashboardRoute,
     AuthPathlessLayoutProfileRoute: AuthPathlessLayoutProfileRoute,
+    AuthPathlessLayoutResendRoute: AuthPathlessLayoutResendRoute,
     AuthPathlessLayoutUnauthorizedRoute: AuthPathlessLayoutUnauthorizedRoute,
     AuthPathlessLayoutAdminAdmincopyRoute:
       AuthPathlessLayoutAdminAdmincopyRoute,
