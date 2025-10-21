@@ -1,14 +1,11 @@
 import type { CheckedState } from "@radix-ui/react-checkbox";
-import { useStore } from "@tanstack/react-form";
 import { useFieldContext } from "@/hooks/form-context";
 import { cn } from "@/lib/utils";
-import { ErrorMessages } from "./ErrorMessages";
 import { Checkbox } from "./ui/checkbox";
-import { Field, FieldContent, FieldDescription, FieldLabel } from "./ui/field";
+import { Field, FieldError, FieldLabel } from "./ui/field";
 
 type CheckboxFieldProps = {
 	label: string;
-	description?: string;
 	className?: string;
 	onCheckedChange?(checked: CheckedState): void;
 };
@@ -16,18 +13,19 @@ type CheckboxFieldProps = {
 export const CheckboxField = ({
 	className,
 	label,
-	description,
 	onCheckedChange,
 	...props
 }: CheckboxFieldProps) => {
 	const field = useFieldContext<boolean>();
 
-	const errors = useStore(field.store, (state) => state.meta.errors);
+	const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
 	return (
 		<>
-			<Field orientation="horizontal">
+			<Field data-invalid={isInvalid} orientation="horizontal">
 				<Checkbox
+					name={field.name}
+					aria-invalid={isInvalid}
 					checked={field.state.value}
 					className={cn(className)}
 					id={field.name}
@@ -38,20 +36,11 @@ export const CheckboxField = ({
 					}}
 					{...props}
 				/>
-				{description ? (
-					<FieldContent>
-						<FieldLabel className="font-normal" htmlFor={field.name}>
-							{label}
-						</FieldLabel>
-						<FieldDescription>{description}</FieldDescription>
-					</FieldContent>
-				) : (
-					<FieldLabel className="font-normal" htmlFor={field.name}>
-						{label}
-					</FieldLabel>
-				)}
+				<FieldLabel htmlFor={field.name} className="font-normal">
+					{label}
+				</FieldLabel>
 			</Field>
-			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
+			{isInvalid && <FieldError errors={field.state.meta.errors} />}
 		</>
 	);
 };

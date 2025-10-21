@@ -1,4 +1,3 @@
-import { useStore } from "@tanstack/react-form";
 import {
 	Select,
 	SelectContent,
@@ -9,8 +8,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useFieldContext } from "@/hooks/form-context";
-import { ErrorMessages } from "./ErrorMessages";
-import { Field } from "./ui/field";
+import { Field, FieldError } from "./ui/field";
 
 export function SelectField({
 	label,
@@ -22,19 +20,23 @@ export function SelectField({
 	placeholder?: string;
 }) {
 	const field = useFieldContext<string>();
-	const errors = useStore(field.store, (state) => state.meta.errors);
+	const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
 	return (
-		<Field>
+		<Field data-invalid={isInvalid} orientation="responsive">
 			<Select
 				name={field.name}
-				onValueChange={(value) => field.handleChange(value)}
+				onValueChange={field.handleChange}
 				value={field.state.value}
 			>
-				<SelectTrigger className="w-full">
+				<SelectTrigger
+					className="w-full"
+					aria-invalid={isInvalid}
+					id={field.name}
+				>
 					<SelectValue placeholder={placeholder} />
 				</SelectTrigger>
-				<SelectContent>
+				<SelectContent position="item-aligned">
 					<SelectGroup>
 						<SelectLabel>{label}</SelectLabel>
 						{values.map((value) => (
@@ -45,7 +47,7 @@ export function SelectField({
 					</SelectGroup>
 				</SelectContent>
 			</Select>
-			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
+			{isInvalid && <FieldError errors={field.state.meta.errors} />}
 		</Field>
 	);
 }

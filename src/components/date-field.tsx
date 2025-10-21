@@ -1,23 +1,22 @@
-import { useStore } from "@tanstack/react-form";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { useFieldContext } from "@/hooks/form-context";
 import { cn } from "@/lib/utils";
-import { ErrorMessages } from "./ErrorMessages";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
-import { Field } from "./ui/field";
+import { Field, FieldError } from "./ui/field";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 export default function DateField() {
 	const field = useFieldContext<string>();
 
-	const errors = useStore(field.store, (state) => state.meta.errors);
+	const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
 	const [open, setOpen] = useState(false);
 
 	return (
-		<Field>
+		<Field data-invalid={isInvalid}>
 			<Popover onOpenChange={setOpen} open={open}>
 				<PopoverTrigger asChild>
 					<Button
@@ -50,7 +49,7 @@ export default function DateField() {
 					/>
 				</PopoverContent>
 			</Popover>
-			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
+			{isInvalid && <FieldError errors={field.state.meta.errors} />}
 		</Field>
 	);
 }

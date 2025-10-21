@@ -1,9 +1,7 @@
-import { useStore } from "@tanstack/react-form";
 import { X } from "lucide-react";
 import { useFieldContext } from "@/hooks/form-context";
 import { cn } from "@/lib/utils";
-import { ErrorMessages } from "./ErrorMessages";
-import { Field, FieldLabel } from "./ui/field";
+import { Field, FieldError, FieldLabel } from "./ui/field";
 import {
 	InputGroup,
 	InputGroupAddon,
@@ -26,13 +24,14 @@ export default function ImageField({
 }: ImageFieldsProps) {
 	const field = useFieldContext<string>();
 
-	const errors = useStore(field.store, (state) => state.meta.errors);
+	const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
 	return (
-		<Field>
+		<Field data-invalid={isInvalid}>
 			<FieldLabel htmlFor={field.name}>{label}</FieldLabel>
 			<InputGroup>
 				<InputGroupInput
+					aria-invalid={isInvalid}
 					accept="image/*"
 					className={cn(className)}
 					data-slot="input-group-control"
@@ -52,7 +51,7 @@ export default function ImageField({
 					</InputGroupAddon>
 				)}
 			</InputGroup>
-			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
+			{isInvalid && <FieldError errors={field.state.meta.errors} />}
 		</Field>
 	);
 }
