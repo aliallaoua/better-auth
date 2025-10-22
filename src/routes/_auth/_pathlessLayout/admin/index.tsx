@@ -12,7 +12,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { FieldGroup, FieldSet } from "@/components/ui/field";
+import { FieldGroup } from "@/components/ui/field";
 import { Label } from "@/components/ui/label";
 import { useAppForm } from "@/hooks/form";
 import useListUsersQuery from "@/hooks/queries/useListUsersQuery";
@@ -327,68 +327,66 @@ function AdminDashboard() {
 											}}
 										>
 											<FieldGroup>
-												<FieldSet>
-													<createUserForm.AppField
-														children={(field) => (
-															<div className="grid gap-2">
-																<field.TextField
-																	autoComplete="email"
-																	label="Email"
-																	required
-																	type="email"
-																/>
-															</div>
-														)}
-														name="email"
-													/>
-													<createUserForm.AppField
-														children={(field) => (
-															<field.PasswordField
-																autoComplete="new-password"
-																label="Password"
+												<createUserForm.AppField
+													children={(field) => (
+														<div className="grid gap-2">
+															<field.TextField
+																autoComplete="email"
+																label="Email"
+																required
+																type="email"
+															/>
+														</div>
+													)}
+													name="email"
+												/>
+												<createUserForm.AppField
+													children={(field) => (
+														<field.PasswordField
+															autoComplete="new-password"
+															label="Password"
+															required
+														/>
+													)}
+													name="password"
+												/>
+												<createUserForm.AppField
+													children={(field) => (
+														<div className="grid gap-2">
+															<field.TextField
+																autoComplete="name"
+																label="Name"
 																required
 															/>
-														)}
-														name="password"
-													/>
-													<createUserForm.AppField
-														children={(field) => (
-															<div className="grid gap-2">
-																<field.TextField
-																	autoComplete="name"
-																	label="Name"
-																	required
-																/>
-															</div>
-														)}
-														name="name"
-													/>
-													<createUserForm.AppField name="role">
-														{(field) => (
-															<>
-																<field.SelectField
-																	label="Role"
-																	placeholder="Select a role"
-																	values={[
-																		{ label: "Admin", value: "admin" },
-																		{ label: "User", value: "user" },
-																	]}
-																/>
-															</>
-														)}
-													</createUserForm.AppField>
+														</div>
+													)}
+													name="name"
+												/>
+												<createUserForm.AppField name="role">
+													{(field) => (
+														<>
+															<field.SelectField
+																label="Role"
+																placeholder="Select a role"
+																values={[
+																	{ label: "Admin", value: "admin" },
+																	{ label: "User", value: "user" },
+																]}
+															/>
+														</>
+													)}
+												</createUserForm.AppField>
 
-													<createUserForm.AppForm>
-														<createUserForm.SubscribeButton
-															className="w-full"
-															disabled={
-																isLoading === "create" ||
-																!createUserForm.state.canSubmit
-															}
-															label="Create User"
-														/>
-													</createUserForm.AppForm>
-												</FieldSet>
+												<createUserForm.AppForm>
+													<createUserForm.SubscribeButton
+														className="w-full"
+														disabled={
+															isLoading === "create" ||
+															!createUserForm.state.canSubmit
+														}
+														label="Create User"
+													/>
+												</createUserForm.AppForm>
 											</FieldGroup>
 										</form>
 									</DialogContent>

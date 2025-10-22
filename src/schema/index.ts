@@ -104,7 +104,7 @@ export const EditUserSchema = z.object({
 export type EditUserSchema = z.infer<typeof EditUserSchema>;
 
 export const AddPasskeySchema = z.object({
-	passkeyName: z.string(),
+	passkeyName: z.string().min(1, "Passkey name is required"),
 });
 
 export type AddPasskeySchema = z.infer<typeof AddPasskeySchema>;

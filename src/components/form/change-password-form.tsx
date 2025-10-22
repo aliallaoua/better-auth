@@ -16,7 +16,7 @@ import { authClient } from "@/lib/auth-client";
 import { ChangePasswordSchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
 import { Button } from "../ui/button";
-import { FieldGroup, FieldSet } from "../ui/field";
+import { FieldGroup } from "../ui/field";
 
 export function ChangePasswordForm() {
 	const [open, setOpen] = useState<boolean>(false);
@@ -90,62 +90,60 @@ export function ChangePasswordForm() {
 					}}
 				>
 					<FieldGroup>
-						<FieldSet>
-							<form.AppField
-								children={(field) => (
-									<field.PasswordField
-										autoComplete="current-password"
-										label="Current Password"
-										placeholder="Password"
-										required
-									/>
-								)}
-								name="currentPassword"
-							/>
-							<form.AppField
-								children={(field) => (
-									<field.PasswordField
-										autoComplete="new-password"
-										label="New Password"
-										placeholder="New Password"
-										required
-									/>
-								)}
-								name="newPassword"
-							/>
-							<form.AppField
-								children={(field) => (
-									<field.PasswordField
-										autoComplete="new-password"
-										label="Confirm Password"
-										placeholder="Confirm Password"
-										required
-									/>
-								)}
-								name="confirmPassword"
-							/>
-							<div className="flex items-center gap-2">
-								<form.AppField
-									children={(field) => (
-										<field.CheckboxField
-											label="Sign out from other devices"
-											onCheckedChange={(checked) =>
-												checked
-													? setSignOutDevices(true)
-													: setSignOutDevices(false)
-											}
-										/>
-									)}
-									name="signOutDevices"
+						<form.AppField
+							children={(field) => (
+								<field.PasswordField
+									autoComplete="current-password"
+									label="Current Password"
+									placeholder="Password"
+									required
 								/>
-							</div>
+							)}
+							name="currentPassword"
+						/>
+						<form.AppField
+							children={(field) => (
+								<field.PasswordField
+									autoComplete="new-password"
+									label="New Password"
+									placeholder="New Password"
+									required
+								/>
+							)}
+							name="newPassword"
+						/>
+						<form.AppField
+							children={(field) => (
+								<field.PasswordField
+									autoComplete="new-password"
+									label="Confirm Password"
+									placeholder="Confirm Password"
+									required
+								/>
+							)}
+							name="confirmPassword"
+						/>
+						<div className="flex items-center gap-2">
+							<form.AppField
+								children={(field) => (
+									<field.CheckboxField
+										label="Sign out from other devices"
+										onCheckedChange={(checked) =>
+											checked
+												? setSignOutDevices(true)
+												: setSignOutDevices(false)
+										}
+									/>
+								)}
+								name="signOutDevices"
+							/>
+						</div>
 
-							<DialogFooter>
-								<form.AppForm>
-									<form.SubscribeButton label="Change Password" />
-								</form.AppForm>
-							</DialogFooter>
-						</FieldSet>
+						<DialogFooter>
+							<form.AppForm>
+								<form.SubscribeButton label="Change Password" />
+							</form.AppForm>
+						</DialogFooter>
 					</FieldGroup>
 
 					{/* Display form-level errors */}

@@ -23,7 +23,7 @@ export function SelectField({
 	const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
 	return (
-		<Field data-invalid={isInvalid} orientation="responsive">
+		<Field orientation="responsive" data-invalid={isInvalid}>
 			<Select
 				name={field.name}
 				onValueChange={field.handleChange}

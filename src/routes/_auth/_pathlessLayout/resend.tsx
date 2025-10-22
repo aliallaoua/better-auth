@@ -32,13 +32,13 @@ function BetterAuthPage() {
 			onChange: z.object({
 				email: z.email(),
 				emailtype: z.enum(["html", "react"]),
-				emailmethod: z.enum(["fn", "route"]),
+				emailmethod: z.enum(["serverFn", "serverRoute"]),
 			}),
 		},
 		onSubmit: async ({ value }) => {
 			const url = "http://localhost:3000";
 			try {
-				await (value.emailmethod === "fn"
+				await (value.emailmethod === "serverFn"
 					? handleSendEmailUsingServerFunction({
 							email: value.email,
 							name: value.email,
@@ -162,8 +162,8 @@ function BetterAuthPage() {
 											label="Email method"
 											placeholder="Select a method"
 											values={[
-												{ label: "Server Function", value: "fn" },
-												{ label: "Server Route", value: "route" },
+												{ label: "Server Function", value: "serverFn" },
+												{ label: "Server Route", value: "serverRoute" },
 											]}
 										/>
 									)}

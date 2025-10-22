@@ -27,7 +27,7 @@ import type { Passkey } from "@/lib/auth-types";
 import { AddPasskeySchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
 import { Button } from "../ui/button";
-import { FieldGroup, FieldSet } from "../ui/field";
+import { FieldGroup } from "../ui/field";
 import { Spinner } from "../ui/spinner";
 
 export function ListPasskeysForm() {
@@ -140,32 +140,30 @@ export function ListPasskeysForm() {
 						}}
 					>
 						<FieldGroup>
-							<FieldSet>
-								<form.AppField
-									children={(field) => (
-										<div className="grid gap-2">
-											<field.TextField
-												label="New Passkey"
-												placeholder="My Passkey"
-												required
-											/>
-										</div>
-									)}
-									name="passkeyName"
-								/>
+							<form.AppField
+								children={(field) => (
+									<div className="grid gap-2">
+										<field.TextField
+											label="New Passkey"
+											placeholder="My Passkey"
+											required
+										/>
+									</div>
+								)}
+								name="passkeyName"
+							/>
 
-								<form.AppForm>
-									<form.SubscribeButton
-										className="w-full cursor-pointer"
-										label={
-											<>
-												<Fingerprint className="mr-2 size-4" />
-												Create Passkey
-											</>
-										}
-									/>
-								</form.AppForm>
-							</FieldSet>
+							<form.AppForm>
+								<form.SubscribeButton
+									className="w-full cursor-pointer"
+									label={
+										<>
+											<Fingerprint className="mr-2 size-4" />
+											Create Passkey
+										</>
+									}
+								/>
+							</form.AppForm>
 						</FieldGroup>
 						{/* Display form-level errors */}
 						{/* <form.Subscribe

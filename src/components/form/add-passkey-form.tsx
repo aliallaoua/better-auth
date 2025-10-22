@@ -79,9 +79,7 @@ export function AddPasskeyForm() {
 				>
 					<form.AppField
 						children={(field) => (
-							<div className="grid gap-2">
-								<field.TextField label="Passkey Name" required />
-							</div>
+							<field.TextField label="Passkey Name" required />
 						)}
 						name="passkeyName"
 					/>

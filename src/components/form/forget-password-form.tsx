@@ -16,12 +16,7 @@ import { authClient } from "@/lib/auth-client";
 import { ForgotPasswordSchema } from "@/schema";
 import { Alert, AlertDescription } from "../ui/alert";
 import { Button } from "../ui/button";
-import {
-	FieldDescription,
-	FieldGroup,
-	FieldSeparator,
-	FieldSet,
-} from "../ui/field";
+import { FieldGroup } from "../ui/field";
 
 export function ForgetPasswordForm() {
 	const [isSubmitted, setIsSubmitted] = useState(false);
@@ -93,7 +88,7 @@ export function ForgetPasswordForm() {
 
 	return (
 		<main className="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)]">
-			<div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white mask-[radial-gradient(ellipse_at_center,transparent_20%,black)]" />
+			{/* <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white mask-[radial-gradient(ellipse_at_center,transparent_20%,black)]" /> */}
 			<Card className="w-[350px]">
 				<CardHeader>
 					<CardTitle>Forgot password</CardTitle>
@@ -111,37 +106,32 @@ export function ForgetPasswordForm() {
 						}}
 					>
 						<FieldGroup>
-							<FieldSet>
-								<div className="grid gap-3">
-									<form.AppField
-										children={(field) => (
-											<field.TextField
-												autoComplete="email"
-												label="Email"
-												placeholder="Enter your email"
-												required
-												type="email"
-											/>
-										)}
-										name="email"
-									/>
-								</div>
+							<div className="grid gap-3">
+								<form.AppField
+									children={(field) => (
+										<field.TextField
+											autoComplete="email"
+											label="Email"
+											placeholder="Enter your email"
+											required
+											type="email"
+										/>
+									)}
+									name="email"
+								/>
+							</div>
 
-								<div className="flex flex-col gap-3">
-									<form.AppForm>
-										<form.SubscribeButton label="Send reset link" />
-									</form.AppForm>
-								</div>
-							</FieldSet>
-							<FieldSeparator />
-							<FieldDescription className="text-center">
+							<form.AppForm>
+								<form.SubscribeButton label="Send reset link" />
+							</form.AppForm>
+							<div className="text-center text-muted-foreground">
 								<Link
 									className="hover:underline hover:underline-offset-4"
 									to="/login"
 								>
 									Back to sign in
 								</Link>
-							</FieldDescription>
+							</div>
 						</FieldGroup>
 
 						{/* Display form-level errors */}

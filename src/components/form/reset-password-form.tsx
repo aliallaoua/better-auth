@@ -12,7 +12,7 @@ import {
 import { useAppForm } from "@/hooks/form";
 import { authClient } from "@/lib/auth-client";
 import { ResetPasswordSchema } from "@/schema";
-import { FieldGroup, FieldSet } from "../ui/field";
+import { FieldGroup } from "../ui/field";
 
 // import { Alert, AlertDescription } from '../ui/alert';
 
@@ -76,36 +76,34 @@ export function ResetPasswordForm() {
 						}}
 					>
 						<FieldGroup>
-							<FieldSet>
-								<form.AppField
-									children={(field) => (
-										<field.PasswordField
-											autoComplete="new-password"
-											label="New password"
-											placeholder="Password"
-											required
-										/>
-									)}
-									name="password"
-								/>
-								<form.AppField
-									children={(field) => (
-										<field.PasswordField
-											autoComplete="new-password"
-											label="Confirm password"
-											placeholder="Confirm Password"
-											required
-										/>
-									)}
-									name="confirmPassword"
-								/>
+							<form.AppField
+								children={(field) => (
+									<field.PasswordField
+										autoComplete="new-password"
+										label="New password"
+										placeholder="Password"
+										required
+									/>
+								)}
+								name="password"
+							/>
+							<form.AppField
+								children={(field) => (
+									<field.PasswordField
+										autoComplete="new-password"
+										label="Confirm password"
+										placeholder="Confirm Password"
+										required
+									/>
+								)}
+								name="confirmPassword"
+							/>
 
-								<div className="flex flex-col gap-3">
-									<form.AppForm>
-										<form.SubscribeButton label="Reset password" />
-									</form.AppForm>
-								</div>
-							</FieldSet>
+							<div className="flex flex-col gap-3">
+								<form.AppForm>
+									<form.SubscribeButton label="Reset password" />
+								</form.AppForm>
+							</div>
 						</FieldGroup>
 
 						{/* Display form-level errors */}

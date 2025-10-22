@@ -7,7 +7,6 @@ import {
 	Heading,
 	Hr,
 	Html,
-	Img,
 	Link,
 	Preview,
 	Row,
@@ -15,6 +14,7 @@ import {
 	Tailwind,
 	Text,
 } from "@react-email/components";
+import { Image } from "@unpic/react";
 
 interface InvitationEmailProps {
 	username?: string;
@@ -63,12 +63,12 @@ export const InvitationEmail = ({
 							{teamImage ? (
 								<Row>
 									<Column align="left">
-										<Img
+										<Image
 											className="rounded-full"
 											fetchPriority="high"
-											height="64"
+											height={64}
 											src={teamImage}
-											width="64"
+											width={64}
 										/>
 									</Column>
 								</Row>

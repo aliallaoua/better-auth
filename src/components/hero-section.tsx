@@ -3,6 +3,7 @@ import { ChevronRight } from "lucide-react";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { TextEffect } from "@/components/ui/text-effect";
 import { HeroHeader } from "./header";
+import { Image } from "@unpic/react";
 
 const transitionVariants = {
 	item: {
@@ -133,19 +134,19 @@ export default function HeroSection() {
 						>
 							<div className="mask-b-from-55% relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
 								<div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-5xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
-									<img
+									<Image
 										className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
 										src="/app-dark.png"
 										alt="app screen"
-										width="2700"
-										height="1440"
+										width={2700}
+										height={1440}
 									/>
-									<img
+									<Image
 										className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
 										src="/app-light.png"
 										alt="app screen"
-										width="2700"
-										height="1440"
+										width={2700}
+										height={1440}
 									/>
 								</div>
 							</div>
@@ -359,12 +360,12 @@ export default function HeroSection() {
 							</svg>
 							{/* tailwindcss */}
 							<div className="flex">
-								<img
+								<Image
 									className="mx-auto w-fit dark:invert"
 									src="https://html.tailus.io/blocks/customers/tailwindcss.svg"
 									alt="Tailwindcss Logo"
-									height="32"
-									width="auto"
+									height={32}
+									width={32}
 								/>
 							</div>
 							{/* shadcn */}

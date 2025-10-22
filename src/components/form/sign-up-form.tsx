@@ -13,6 +13,7 @@ import useSignUpMutation from "@/hooks/mutations/useSignUpMutation";
 import { cn } from "@/lib/utils";
 import { SignUpSchema } from "@/schema";
 import { Field, FieldDescription, FieldGroup } from "../ui/field";
+import { Image } from "@unpic/react";
 // import { Alert, AlertDescription } from '../ui/alert';
 
 export function SignUpForm({
@@ -149,12 +150,12 @@ export function SignUpForm({
 										<div className="flex items-end gap-4">
 											{imagePreview && (
 												<div className="relative size-16 overflow-hidden rounded-sm">
-													<img
-														alt="Profile preview"
-														className="size-full object-cover"
-														// height={16}
+													<Image
 														src={imagePreview}
-														// width={16}
+														alt="Profile preview"
+														layout="fullWidth"
+														objectFit="cover"
+														className="size-full object-cover"
 													/>
 												</div>
 											)}

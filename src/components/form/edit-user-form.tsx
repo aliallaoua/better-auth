@@ -1,5 +1,6 @@
 import { formOptions } from "@tanstack/react-form";
 import { useRouter } from "@tanstack/react-router";
+import { Image } from "@unpic/react";
 import type { ErrorContext } from "better-auth/react";
 import { Edit } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -19,7 +20,7 @@ import { useAppForm } from "@/hooks/form";
 import { authClient, useSession } from "@/lib/auth-client";
 import { convertImageToBase64 } from "@/lib/utils/convert-image";
 import { EditUserSchema } from "@/schema";
-import { FieldGroup, FieldSet } from "../ui/field";
+import { FieldGroup } from "../ui/field";
 
 export function EditUserForm() {
 	const { data, isPending, error } = useSession();
@@ -141,37 +142,38 @@ export function EditUserForm() {
 					}}
 				>
 					<FieldGroup>
-						<FieldSet>
-							<form.AppField
-								children={(field) => (
-									<div className="grid gap-2">
-										<field.TextField
-											autoComplete="name"
-											id="name"
-											label="Full Name"
-											placeholder={data?.user.name}
-										/>
-									</div>
-								)}
-								name="name"
-							/>
+						<form.AppField
+							children={(field) => (
+								<div className="grid gap-2">
+									<field.TextField
+										autoComplete="name"
+										id="name"
+										label="Full Name"
+										placeholder={data?.user.name}
+									/>
+								</div>
+							)}
+							name="name"
+						/>
 
-							<form.AppField
-								children={(field) => (
-									<div className="grid gap-2">
-										<Label htmlFor="image">Profile Image</Label>
-										<div className="flex items-end gap-4">
-											{imagePreview && !shouldDeleteImage && (
-												<div className="relative size-16 overflow-hidden rounded-sm">
-													<img
-														alt="Profile preview"
-														className="size-full object-cover"
-														src={imagePreview}
-													/>
-												</div>
-											)}
-											<div className="flex w-full items-center gap-2">
-												{/* <field.ImageField
+						<form.AppField
+							children={(field) => (
+								<div className="grid gap-2">
+									<Label htmlFor="image">Profile Image</Label>
+									<div className="flex items-end gap-4">
+										{imagePreview && !shouldDeleteImage && (
+											<div className="relative size-16 overflow-hidden rounded-sm">
+												<Image
+													src={imagePreview}
+													alt="Profile preview"
+													layout="fullWidth"
+													objectFit="cover"
+													className="size-full object-cover"
+												/>
+											</div>
+										)}
+										<div className="flex w-full items-center gap-2">
+											{/* <field.ImageField
 													className="w-full text-muted-foreground"
 													id="image"
 													onChange={handleImageChange}
@@ -189,34 +191,33 @@ export function EditUserForm() {
 														onClick={handleClearNewImage}
 													/>
 												)} */}
-												<field.ImageField
-													className="w-full text-muted-foreground"
-													id="image"
-													onChange={handleImageChange}
-													showButton={showDeleteButton || showClearButton}
-													handleAction={() => {
-														if (showDeleteButton) {
-															handleDeleteImage();
-														} else if (showClearButton) {
-															handleClearNewImage();
-														}
-													}}
-												/>
-											</div>
-										</div>
-										{/* Action Buttons */}
-										<div className="flex gap-2">
-											{shouldDeleteImage && (
-												<div className="text-sm text-muted-foreground">
-													Photo will be removed when you save
-												</div>
-											)}
+											<field.ImageField
+												className="w-full text-muted-foreground"
+												id="image"
+												onChange={handleImageChange}
+												showButton={showDeleteButton || showClearButton}
+												handleAction={() => {
+													if (showDeleteButton) {
+														handleDeleteImage();
+													} else if (showClearButton) {
+														handleClearNewImage();
+													}
+												}}
+											/>
 										</div>
 									</div>
-								)}
-								name="image"
-							/>
-						</FieldSet>
+									{/* Action Buttons */}
+									<div className="flex gap-2">
+										{shouldDeleteImage && (
+											<div className="text-sm text-muted-foreground">
+												Photo will be removed when you save
+											</div>
+										)}
+									</div>
+								</div>
+							)}
+							name="image"
+						/>
 					</FieldGroup>
 
 					<DialogFooter className="mt-4">

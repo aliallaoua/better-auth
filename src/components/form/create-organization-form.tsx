@@ -17,7 +17,7 @@ import { organization } from "@/lib/auth-client";
 import { CreateOrganizationSchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
 import { Button } from "../ui/button";
-import { FieldGroup, FieldSet } from "../ui/field";
+import { FieldGroup } from "../ui/field";
 
 export function CreateOrganizationForm() {
 	const [open, setOpen] = useState(false);
@@ -87,56 +87,54 @@ export function CreateOrganizationForm() {
 					}}
 				>
 					<FieldGroup>
-						<FieldSet>
-							<form.AppField
-								children={(field) => (
-									<field.TextField
-										label="Organization Name"
-										onChange={(e) => {
-											const newName = e.target.value;
-											field.handleChange(newName);
+						<form.AppField
+							children={(field) => (
+								<field.TextField
+									label="Organization Name"
+									onChange={(e) => {
+										const newName = e.target.value;
+										field.handleChange(newName);
 
-											// Auto-generate slug only if user hasn't manually edited it
-											const isSlugEdited = form.getFieldValue("isSlugEdited");
-											if (!isSlugEdited) {
-												const generatedSlug = generateSlug(newName);
-												form.setFieldValue("slug", generatedSlug);
-											}
-										}}
-										placeholder="Name"
-										required
-									/>
-								)}
-								name="name"
-							/>
-							<form.AppField
-								children={(field) => (
-									<field.TextField
-										label="Organization Slug"
-										onChange={(e) => {
-											field.handleChange(e.target.value);
-											// Mark slug as manually edited
-											form.setFieldValue("isSlugEdited", true);
-										}}
-										placeholder="Slug"
-										required
-									/>
-								)}
-								name="slug"
-							/>
+										// Auto-generate slug only if user hasn't manually edited it
+										const isSlugEdited = form.getFieldValue("isSlugEdited");
+										if (!isSlugEdited) {
+											const generatedSlug = generateSlug(newName);
+											form.setFieldValue("slug", generatedSlug);
+										}
+									}}
+									placeholder="Name"
+									required
+								/>
+							)}
+							name="name"
+						/>
+						<form.AppField
+							children={(field) => (
+								<field.TextField
+									label="Organization Slug"
+									onChange={(e) => {
+										field.handleChange(e.target.value);
+										// Mark slug as manually edited
+										form.setFieldValue("isSlugEdited", true);
+									}}
+									placeholder="Slug"
+									required
+								/>
+							)}
+							name="slug"
+						/>
 
-							{/* Hidden field to track if slug was manually edited */}
-							{/* <form.AppField
+						{/* Hidden field to track if slug was manually edited */}
+						{/* <form.AppField
 								children={(field) => <field.TextField label="" type="hidden" />}
 								name="isSlugEdited"
 							/> */}
 
-							<DialogFooter>
-								<form.AppForm>
-									<form.SubscribeButton label="Create" />
-								</form.AppForm>
-							</DialogFooter>
-						</FieldSet>
+						<DialogFooter>
+							<form.AppForm>
+								<form.SubscribeButton label="Create" />
+							</form.AppForm>
+						</DialogFooter>
 					</FieldGroup>
 
 					{/* Display form-level errors */}
