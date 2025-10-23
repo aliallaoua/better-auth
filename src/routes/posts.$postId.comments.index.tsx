@@ -33,7 +33,7 @@ function CommentsComponent() {
 
 	return (
 		<div className="space-y-4">
-			<h2 className="text-2xl font-bold">Comments for Post {postId}</h2>
+			<h2 className="font-bold text-2xl">Comments for Post {postId}</h2>
 			{comments?.map((comment: CommentType) => (
 				<Link
 					className="p-0.5"
@@ -44,13 +44,13 @@ function CommentsComponent() {
 					}}
 					to="/posts/$postId/comments/$commentId"
 				>
-					<Card className="hover:shadow-primary/25 transition-all hover:shadow-lg">
+					<Card className="transition-all hover:shadow-lg hover:shadow-primary/25">
 						<CardHeader>
 							<CardTitle>{comment.name}</CardTitle>
 							<CardDescription>{comment.email}</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<p className="text-sm text-muted-foreground">{comment.body}</p>
+							<p className="text-muted-foreground text-sm">{comment.body}</p>
 						</CardContent>
 					</Card>
 				</Link>

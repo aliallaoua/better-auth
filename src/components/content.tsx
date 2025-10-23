@@ -3,12 +3,12 @@ export default function ContentSection() {
 	return (
 		<section className="py-16 md:py-32">
 			<div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16">
-				<h2 className="relative z-10 max-w-xl text-4xl font-medium lg:text-5xl">
+				<h2 className="relative z-10 max-w-xl font-medium text-4xl lg:text-5xl">
 					The ecosystem that powers your full-stack TypeScript apps.
 				</h2>
 				<div className="grid gap-6 sm:grid-cols-2 md:gap-12 lg:gap-24">
 					<div className="relative mb-6 sm:mb-0">
-						<div className="bg-linear-to-b aspect-76/59 relative rounded-2xl from-zinc-300 to-transparent p-px dark:from-zinc-700">
+						<div className="relative aspect-76/59 rounded-2xl bg-linear-to-b from-zinc-300 to-transparent p-px dark:from-zinc-700">
 							<Image
 								src="/app-admin-dark.png"
 								className="hidden rounded-[15px] dark:block"

@@ -87,7 +87,7 @@ export function ForgetPasswordForm() {
 	}
 
 	return (
-		<main className="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)]">
+		<main className="flex min-h-[calc(100vh-10rem)] flex-col items-center justify-center">
 			{/* <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white mask-[radial-gradient(ellipse_at_center,transparent_20%,black)]" /> */}
 			<Card className="w-[350px]">
 				<CardHeader>

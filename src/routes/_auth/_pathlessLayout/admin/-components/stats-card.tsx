@@ -73,22 +73,22 @@ export function StatCard({ userStats, className }: StatCardProps) {
 				return (
 					<Card
 						className={cn(
-							"group relative overflow-hidden border-2 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:shadow-stat-card/25",
+							"group hover:-translate-y-1 relative overflow-hidden border-2 transition-all duration-300 hover:shadow-lg hover:shadow-stat-card/25",
 							stat.borderColor
 						)}
 						key={stat.title}
 					>
 						<CardContent className="p-6">
 							<div className="flex items-start justify-between">
-								<div className="space-y-3 flex-1">
-									<p className="text-sm font-medium text-muted-foreground">
+								<div className="flex-1 space-y-3">
+									<p className="font-medium text-muted-foreground text-sm">
 										{stat.title}
 									</p>
 									<div className="space-y-1">
-										<p className="text-3xl font-bold tracking-tight">
+										<p className="font-bold text-3xl tracking-tight">
 											{stat.value.toLocaleString()}
 										</p>
-										<p className="text-xs text-muted-foreground">
+										<p className="text-muted-foreground text-xs">
 											{stat.description}
 										</p>
 									</div>
@@ -130,7 +130,7 @@ export function StatCard({ userStats, className }: StatCardProps) {
 						</CardContent>
 						<div
 							className={cn(
-								"absolute bottom-0 inset-x-0 h-1 transition-all duration-300 group-hover:h-1.5",
+								"absolute inset-x-0 bottom-0 h-1 transition-all duration-300 group-hover:h-1.5",
 								stat.bgColor
 							)}
 						/>

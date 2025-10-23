@@ -11,7 +11,7 @@ export default function Features() {
 		<section className="bg-zinc-50 py-16 md:py-32 dark:bg-transparent">
 			<div className="@container mx-auto max-w-5xl px-6">
 				<div className="text-center">
-					<h2 className="text-balance text-4xl font-semibold lg:text-5xl">
+					<h2 className="text-balance font-semibold text-4xl lg:text-5xl">
 						Built to cover your needs
 					</h2>
 					<p className="mt-4">
@@ -19,7 +19,7 @@ export default function Features() {
 						repellendus.
 					</p>
 				</div>
-				<div className="@min-4xl:max-w-full @min-4xl:grid-cols-3 mx-auto mt-8 grid max-w-sm gap-6 *:text-center md:mt-16">
+				<div className="mx-auto mt-8 grid @min-4xl:max-w-full max-w-sm @min-4xl:grid-cols-3 gap-6 *:text-center md:mt-16">
 					<Card className="group relative bg-background">
 						{/* <BorderTrail
 							className={
@@ -136,7 +136,7 @@ const CardDecorator = ({ children }: { children: ReactNode }) => (
 			className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:24px_24px] dark:opacity-50"
 		/>
 
-		<div className="bg-background absolute inset-0 m-auto flex size-12 items-center justify-center border-l border-t">
+		<div className="absolute inset-0 m-auto flex size-12 items-center justify-center border-t border-l bg-background">
 			{children}
 		</div>
 	</div>

@@ -8,6 +8,13 @@
       "when": 1755373484329,
       "tag": "0000_petite_vulcan",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1761163284648,
+      "tag": "0001_real_kingpin",
+      "breakpoints": true
     }
   ]
 }

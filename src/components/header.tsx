@@ -95,27 +95,25 @@ export const HeroHeader = () => {
 							<Button
 								onClick={() => setMenuState(!menuState)}
 								aria-label={menuState ? "Close Menu" : "Open Menu"}
-								className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
+								className="-m-2.5 -mr-4 relative z-20 block cursor-pointer p-2.5 lg:hidden"
 							>
-								<Menu className="in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 m-auto size-6 duration-200" />
-								<X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />
+								<Menu className="m-auto size-6 in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 duration-200" />
+								<X className="-rotate-180 absolute inset-0 m-auto size-6 in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 scale-0 in-data-[state=active]:opacity-100 opacity-0 duration-200" />
 							</Button>
 
 							<NavigationMenu viewport={false}>
 								<NavigationMenuList>
 									<NavigationMenuItem>
-										<NavigationMenuTrigger>
-											Home
-										</NavigationMenuTrigger>
+										<NavigationMenuTrigger>Home</NavigationMenuTrigger>
 										<NavigationMenuContent>
 											<ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
 												<li className="row-span-3">
 													<NavigationMenuLink asChild>
 														<Link
-															className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
+															className="flex h-full w-full select-none flex-col justify-end rounded-md bg-linear-to-b from-muted/50 to-muted p-6 no-underline outline-hidden focus:shadow-md"
 															to="/"
 														>
-															<div className="mt-4 mb-2 text-lg font-medium">
+															<div className="mt-4 mb-2 font-medium text-lg">
 																shadcn/ui
 															</div>
 															<p className="text-muted-foreground text-sm leading-tight">
@@ -145,9 +143,7 @@ export const HeroHeader = () => {
 										</NavigationMenuContent>
 									</NavigationMenuItem>
 									<NavigationMenuItem>
-										<NavigationMenuTrigger>
-											Components
-										</NavigationMenuTrigger>
+										<NavigationMenuTrigger>Components</NavigationMenuTrigger>
 										<NavigationMenuContent>
 											<ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
 												{components.map((component) => (
@@ -171,7 +167,7 @@ export const HeroHeader = () => {
 										<li key={index}>
 											<Link
 												to={item.href}
-												className="text-muted-foreground hover:text-accent-foreground block duration-150"
+												className="block text-muted-foreground duration-150 hover:text-accent-foreground"
 											>
 												<span>{item.name}</span>
 											</Link>
@@ -181,14 +177,14 @@ export const HeroHeader = () => {
 							</div>
 						</div>
 
-						<div className="bg-background in-data-[state=active]:block lg:in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
+						<div className="mb-6 in-data-[state=active]:block hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border bg-background p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:in-data-[state=active]:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
 							<div className="lg:hidden">
 								<ul className="space-y-6 text-base">
 									{menuItems.map((item, index) => (
 										<li key={index}>
 											<Link
 												to={item.href}
-												className="text-muted-foreground hover:text-accent-foreground block duration-150"
+												className="block text-muted-foreground duration-150 hover:text-accent-foreground"
 											>
 												<span>{item.name}</span>
 											</Link>
@@ -203,7 +199,7 @@ export const HeroHeader = () => {
 									target="_blank"
 								>
 									<Button
-										className="size-8 rounded-full cursor-pointer"
+										className="size-8 cursor-pointer rounded-full"
 										size="icon"
 										variant="outline"
 									>
@@ -237,8 +233,8 @@ function ListItem({
 		<li {...props}>
 			<NavigationMenuLink asChild>
 				<Link to={href}>
-					<div className="text-sm leading-none font-medium">{title}</div>
-					<p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+					<div className="font-medium text-sm leading-none">{title}</div>
+					<p className="line-clamp-2 text-muted-foreground text-sm leading-snug">
 						{children}
 					</p>
 				</Link>

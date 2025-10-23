@@ -287,7 +287,7 @@ function AdminDashboard() {
 				<div className="space-y-4">
 					<div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
 						<div className="space-y-1">
-							<h1 className="text-4xl font-bold tracking-tight">
+							<h1 className="font-bold text-4xl tracking-tight">
 								Admin Dashboard
 							</h1>
 							<p className="text-muted-foreground">

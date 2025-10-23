@@ -34,7 +34,7 @@ function CommentsComponent() {
 	const commentQuery = useSuspenseQuery(commentQueryOptions(postId, commentId));
 
 	return (
-		<div className="p-2 space-y-2">
+		<div className="space-y-2 p-2">
 			<Link
 				className="block py-1 text-blue-800 hover:text-blue-600"
 				to="/posts"
@@ -45,13 +45,13 @@ function CommentsComponent() {
 					<span>All Posts</span>
 				</div>
 			</Link>
-			<Card className="max-h-min hover:shadow-primary/25 transition-all hover:shadow-lg">
+			<Card className="max-h-min transition-all hover:shadow-lg hover:shadow-primary/25">
 				<CardHeader>
 					<CardTitle>{commentQuery.data.name}</CardTitle>
 					<CardDescription>{commentQuery.data.email}</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<p className="text-sm text-muted-foreground">
+					<p className="text-muted-foreground text-sm">
 						{commentQuery.data.body}
 					</p>
 				</CardContent>

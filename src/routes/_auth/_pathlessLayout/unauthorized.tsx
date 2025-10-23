@@ -26,10 +26,10 @@ function UnauthorizedPage() {
 		reasonMessages.default;
 
 	return (
-		<div className="container mx-auto min-h-screen flex items-center justify-center p-4">
-			<div className="max-w-md w-full shadow-lg rounded-lg p-8 text-center">
+		<div className="container mx-auto flex min-h-screen items-center justify-center p-4">
+			<div className="w-full max-w-md rounded-lg p-8 text-center shadow-lg">
 				<div className="mb-6">
-					<div className="mx-auto size-16 bg-red-100 rounded-full flex items-center justify-center">
+					<div className="mx-auto flex size-16 items-center justify-center rounded-full bg-red-100">
 						{/* <svg
 					className="size-8 text-red-600"
 					fill="none"
@@ -47,12 +47,12 @@ function UnauthorizedPage() {
 					</div>
 				</div>
 
-				<h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+				<h1 className="mb-4 font-bold text-2xl text-gray-900 dark:text-gray-100">
 					Access Denied
 				</h1>
-				<p className="text-gray-600 mb-6">{message}</p>
+				<p className="mb-6 text-gray-600">{message}</p>
 
-				<div className="mb-6 text-sm text-gray-500">
+				<div className="mb-6 text-gray-500 text-sm">
 					<p>
 						<strong>Your roles:</strong> {data?.user?.role || "None"}
 					</p>
@@ -64,14 +64,14 @@ function UnauthorizedPage() {
 
 				<div className="space-y-3">
 					<Link
-						className="block w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
+						className="block w-full rounded bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
 						to="/dashboard"
 					>
 						Go to Dashboard
 					</Link>
 
 					<Link
-						className="block w-full bg-gray-200 text-gray-800 py-2 px-4 rounded hover:bg-gray-300 transition-colors"
+						className="block w-full rounded bg-gray-200 px-4 py-2 text-gray-800 transition-colors hover:bg-gray-300"
 						to={redirect}
 					>
 						Try Again

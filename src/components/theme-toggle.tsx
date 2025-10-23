@@ -15,7 +15,7 @@ export function ThemeToggle() {
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button
-					className="cursor-pointer size-8 rounded-full"
+					className="size-8 cursor-pointer rounded-full"
 					size="icon"
 					variant="outline"
 				>

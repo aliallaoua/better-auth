@@ -33,7 +33,7 @@ export const SignUpSchema = z
 				["image/jpeg", "image/png", "image/webp", "image/gif"],
 				"Image must be JPEG, PNG, WebP, or GIF format"
 			)
-			.optional()
+			// .optional()
 			.nullable(),
 	})
 	.refine((data) => data.password === data.confirmPassword, {
@@ -97,7 +97,7 @@ export const EditUserSchema = z.object({
 			["image/jpeg", "image/png", "image/webp", "image/gif"],
 			"Image must be JPEG, PNG, WebP, or GIF format"
 		)
-		.optional()
+		// .optional()
 		.nullable(),
 });
 

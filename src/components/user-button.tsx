@@ -39,7 +39,7 @@ export default function UserButton() {
 		<DropdownMenu onOpenChange={setOpen} open={open}>
 			<DropdownMenuTrigger asChild>
 				<Button
-					className="size-8 rounded-full cursor-pointer"
+					className="size-8 cursor-pointer rounded-full"
 					size="icon"
 					variant="outline"
 				>
@@ -107,7 +107,7 @@ export default function UserButton() {
 						)}
 
 						<DropdownMenuItem
-							className="text-red-600 cursor-pointer"
+							className="cursor-pointer text-red-600"
 							onSelect={async () => {
 								await signOutMutation();
 							}}

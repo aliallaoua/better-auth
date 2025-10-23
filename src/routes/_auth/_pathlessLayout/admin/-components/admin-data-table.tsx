@@ -180,7 +180,7 @@ function TableStats({
 	selectedCount: number;
 }) {
 	return (
-		<div className="flex items-center space-x-6 text-sm text-muted-foreground">
+		<div className="flex items-center space-x-6 text-muted-foreground text-sm">
 			<div className="flex items-center space-x-2">
 				<Users className="size-4" />
 				<span>
@@ -268,9 +268,9 @@ export function DataTable<TData, TValue>({
 			<div className="flex items-center justify-between">
 				<div className="flex items-center space-x-2">
 					<div className="relative">
-						<Search className="absolute left-2 top-2.5 size-4 text-muted-foreground" />
+						<Search className="absolute top-2.5 left-2 size-4 text-muted-foreground" />
 						<Input
-							className="pl-8 w-[300px]"
+							className="w-[300px] pl-8"
 							onChange={(event) => setGlobalFilter(event.target.value)}
 							placeholder="Search users..."
 							value={globalFilter}
@@ -339,7 +339,7 @@ export function DataTable<TData, TValue>({
 						.filter((column) => column.getCanFilter() && column.getIsVisible())
 						.map((column) => (
 							<div className="flex flex-col space-y-1" key={column.id}>
-								<Label className="text-sm font-medium capitalize">
+								<Label className="font-medium text-sm capitalize">
 									{column.id}
 								</Label>
 								<div className="flex items-center space-x-2">
@@ -438,7 +438,7 @@ export function DataTable<TData, TValue>({
 				/>
 				<div className="flex items-center space-x-6 lg:space-x-8">
 					<div className="flex items-center space-x-2">
-						<p className="text-sm font-medium">Rows per page</p>
+						<p className="font-medium text-sm">Rows per page</p>
 						<Select
 							onValueChange={(value) => {
 								table.setPageSize(Number(value));
@@ -459,7 +459,7 @@ export function DataTable<TData, TValue>({
 							</SelectContent>
 						</Select>
 					</div>
-					<div className="flex w-[100px] items-center justify-center text-sm font-medium">
+					<div className="flex w-[100px] items-center justify-center font-medium text-sm">
 						Page {table.getState().pagination.pageIndex + 1} of{" "}
 						{table.getPageCount()}
 					</div>

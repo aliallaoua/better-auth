@@ -155,12 +155,12 @@ export const auth = betterAuth({
 					},
 				});
 			},
-			beforeDelete: async (user) => {
-				// Perform actions before user deletion
-			},
-			afterDelete: async (user) => {
-				// Perform cleanup after user deletion
-			},
+			// beforeDelete: async (user) => {
+			// 	// Perform actions before user deletion
+			// },
+			// afterDelete: async (user) => {
+			// 	// Perform cleanup after user deletion
+			// },
 		},
 	},
 	// trustedOrigins: ['exp://'],

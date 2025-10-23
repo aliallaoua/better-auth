@@ -113,7 +113,7 @@ function BetterAuthPage() {
 
 	return (
 		<div className="flex min-h-screen w-full items-center justify-center">
-			<div className="w-full max-w-2xl rounded-xl dark:border-8 dark:border-black/10 dark:bg-black/50 p-8 shadow-xl backdrop-blur-md">
+			<div className="w-full max-w-2xl rounded-xl p-8 shadow-xl backdrop-blur-md dark:border-8 dark:border-black/10 dark:bg-black/50">
 				<form
 					className="space-y-6"
 					onSubmit={(e) => {

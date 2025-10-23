@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
+import { Image } from "@unpic/react";
 import { ChevronRight } from "lucide-react";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { TextEffect } from "@/components/ui/text-effect";
 import { HeroHeader } from "./header";
-import { Image } from "@unpic/react";
 
 const transitionVariants = {
 	item: {
@@ -34,20 +34,20 @@ export default function HeroSection() {
 					aria-hidden
 					className="absolute inset-0 isolate hidden contain-strict lg:block"
 				>
-					<div className="w-140 h-320 -translate-y-87.5 absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]" />
-					<div className="h-320 absolute left-0 top-0 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)] [translate:5%_-50%]" />
-					<div className="h-320 -translate-y-87.5 absolute left-0 top-0 w-60 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]" />
+					<div className="-translate-y-87.5 -rotate-45 absolute top-0 left-0 h-320 w-140 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]" />
+					<div className="-rotate-45 absolute top-0 left-0 h-320 w-60 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)] [translate:5%_-50%]" />
+					<div className="-translate-y-87.5 -rotate-45 absolute top-0 left-0 h-320 w-60 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]" />
 				</div>
 				<section>
 					<div className="relative pt-24">
-						<div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
+						<div className="-z-10 absolute inset-0 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
 						<div className="mx-auto max-w-5xl px-6">
-							<div className="sm:mx-auto lg:mr-auto lg:mt-0">
+							<div className="sm:mx-auto lg:mt-0 lg:mr-auto">
 								<TextEffect
 									preset="fade-in-blur"
 									speedSegment={0.3}
 									as="h1"
-									className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16"
+									className="mt-8 max-w-2xl text-balance font-medium text-5xl md:text-6xl lg:mt-16"
 								>
 									Build modern full-stack apps with the TypeScript ecosystem.
 								</TextEffect>
@@ -93,7 +93,7 @@ export default function HeroSection() {
 											</Link>
 										</Button> */}
 										<Link
-											className="relative inline-flex items-center justify-center select-none rounded-2xl disabled:cursor-not-allowed ease-in-out text-gray-900 dark:text-white border-[2px] border-gray-900/10 dark:border-white/5 backdrop-blur-[25px] bg-origin-border bg-[linear-gradient(104deg,rgba(253,253,253,0.05)_5%,rgba(240,240,228,0.1)_100%)] dark:bg-[linear-gradient(104deg,rgba(253,253,253,0.05)_5%,rgba(240,240,228,0.1)_100%)] shadow-sm not-disabled:hover:bg-gray-900 dark:not-disabled:hover:bg-white/90 not-disabled:hover:text-white dark:not-disabled:hover:text-black not-disabled:hover:shadow-button transition-all duration-200 disabled:opacity-30 disabled:text-gray-900/50 dark:disabled:text-white/50 focus-visible:ring-4 focus-visible:ring-gray-900/30 dark:focus-visible:ring-white/30 focus-visible:outline-hidden focus-visible:bg-gray-900 dark:focus-visible:bg-white/90 focus-visible:text-white dark:focus-visible:text-black after:absolute after:w-[calc(100%+4px)] after:h-[calc(100%+4px)] after:top-[-2px] after:left-[-2px] after:rounded-[1rem] after:bg-[url(&quot;/static/texture-btn.png&quot;)] after:bg-repeat after:pointer-events-none text-base h-12 gap-0 px-5 font-semibold"
+											className="relative inline-flex h-12 select-none items-center justify-center gap-0 rounded-2xl border-[2px] border-gray-900/10 bg-[linear-gradient(104deg,rgba(253,253,253,0.05)_5%,rgba(240,240,228,0.1)_100%)] bg-origin-border px-5 font-semibold text-base text-gray-900 shadow-sm backdrop-blur-[25px] transition-all duration-200 ease-in-out after:pointer-events-none after:absolute after:top-[-2px] after:left-[-2px] after:h-[calc(100%+4px)] after:w-[calc(100%+4px)] after:rounded-[1rem] after:bg-[url(&quot;/static/texture-btn.png&quot;)] after:bg-repeat not-disabled:hover:bg-gray-900 not-disabled:hover:text-white not-disabled:hover:shadow-button focus-visible:bg-gray-900 focus-visible:text-white focus-visible:outline-hidden focus-visible:ring-4 focus-visible:ring-gray-900/30 disabled:cursor-not-allowed disabled:text-gray-900/50 disabled:opacity-30 dark:border-white/5 dark:bg-[linear-gradient(104deg,rgba(253,253,253,0.05)_5%,rgba(240,240,228,0.1)_100%)] dark:text-white dark:disabled:text-white/50 dark:focus-visible:bg-white/90 dark:focus-visible:text-black dark:focus-visible:ring-white/30 dark:not-disabled:hover:bg-white/90 dark:not-disabled:hover:text-black"
 											to="/dashboard"
 										>
 											Get Started
@@ -111,7 +111,7 @@ export default function HeroSection() {
 										</Link>
 									</Button> */}
 									<Link
-										className="relative inline-flex items-center border justify-center select-none rounded-2xl disabled:cursor-not-allowed disabled:opacity-70 transition ease-in-out duration-200 bg-transparent border-transparent text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 focus-visible:ring-4 focus-visible:ring-gray-200 dark:focus-visible:ring-gray-a2 focus-visible:outline-hidden text-base h-12 gap-0 px-5 font-semibold"
+										className="relative inline-flex h-12 select-none items-center justify-center gap-0 rounded-2xl border border-transparent bg-transparent px-5 font-semibold text-base text-gray-700 transition duration-200 ease-in-out hover:text-gray-900 focus-visible:outline-hidden focus-visible:ring-4 focus-visible:ring-gray-200 disabled:cursor-not-allowed disabled:opacity-70 dark:text-gray-300 dark:focus-visible:ring-gray-a2 dark:hover:text-gray-100"
 										to="/posts"
 									>
 										Request a demo
@@ -132,17 +132,17 @@ export default function HeroSection() {
 								...transitionVariants,
 							}}
 						>
-							<div className="mask-b-from-55% relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
-								<div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-5xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
+							<div className="mask-b-from-55% -mr-56 relative mt-8 overflow-hidden px-2 sm:mt-12 sm:mr-0 md:mt-20">
+								<div className="relative inset-shadow-2xs mx-auto max-w-5xl overflow-hidden rounded-2xl border bg-background p-4 shadow-lg shadow-zinc-950/15 ring-1 ring-background dark:inset-shadow-white/20">
 									<Image
-										className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
+										className="relative hidden aspect-15/8 rounded-2xl bg-background dark:block"
 										src="/app-dark.png"
 										alt="app screen"
 										width={2700}
 										height={1440}
 									/>
 									<Image
-										className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
+										className="relative z-2 aspect-15/8 rounded-2xl border border-border/25 dark:hidden"
 										src="/app-light.png"
 										alt="app screen"
 										width={2700}
@@ -153,7 +153,7 @@ export default function HeroSection() {
 						</AnimatedGroup>
 					</div>
 				</section>
-				<section className="bg-background pb-16 pt-16 md:pb-32">
+				<section className="bg-background pt-16 pb-16 md:pb-32">
 					<div className="group relative m-auto max-w-5xl px-6">
 						<div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
 							<Link
@@ -165,7 +165,7 @@ export default function HeroSection() {
 								<ChevronRight className="ml-1 inline-block size-3" />
 							</Link>
 						</div>
-						<div className="group-hover:blur-xs mx-auto mt-12 grid max-w-2xl grid-cols-4 gap-x-12 gap-y-8 transition-all duration-500 group-hover:opacity-50 sm:gap-x-16 sm:gap-y-14">
+						<div className="mx-auto mt-12 grid max-w-2xl grid-cols-4 gap-x-12 gap-y-8 transition-all duration-500 group-hover:opacity-50 group-hover:blur-xs sm:gap-x-16 sm:gap-y-14">
 							{/* TanStack */}
 							<div className="flex">
 								<svg
@@ -301,7 +301,7 @@ export default function HeroSection() {
 							</div>
 							{/* neon */}
 							<svg
-								className="mx-auto w-fit size-8 dark:invert"
+								className="mx-auto size-8 w-fit dark:invert"
 								xmlns="http://www.w3.org/2000/svg"
 								width="102"
 								height="28"
@@ -373,7 +373,7 @@ export default function HeroSection() {
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 256 256"
-									className="mx-auto w-fit size-8"
+									className="mx-auto size-8 w-fit"
 								>
 									<rect width="256" height="256" fill="none" />
 									<line

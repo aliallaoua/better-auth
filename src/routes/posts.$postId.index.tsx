@@ -34,7 +34,7 @@ function PostComponent() {
 
 	return (
 		<div className="space-y-2">
-			<h4 className="text-xl font-bold underline">{postQuery.data.title}</h4>
+			<h4 className="font-bold text-xl underline">{postQuery.data.title}</h4>
 			<div className="text-sm">{postQuery.data.body}</div>
 			<Link
 				activeProps={{ className: "text-black font-bold" }}

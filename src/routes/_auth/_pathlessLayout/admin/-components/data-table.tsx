@@ -977,8 +977,8 @@ export function DataTable<UserWithRole>({
 				.getAllColumns()
 				.filter((column) => column.getCanFilter() && column.getIsVisible())
 				.length > 0 && (
-				<Card className="p-4 bg-gradient-to-br from-background to-muted/10 border-2">
-					<div className="flex items-center gap-2 mb-3">
+				<Card className="border-2 bg-gradient-to-br from-background to-muted/10 p-4">
+					<div className="mb-3 flex items-center gap-2">
 						<Filter className="size-4 text-muted-foreground" />
 						<h3 className="font-semibold text-sm">Advanced Filters</h3>
 					</div>
@@ -990,7 +990,7 @@ export function DataTable<UserWithRole>({
 							)
 							.map((column) => (
 								<div className="flex flex-col space-y-1.5" key={column.id}>
-									<Label className="text-xs font-medium capitalize text-muted-foreground">
+									<Label className="font-medium text-muted-foreground text-xs capitalize">
 										{column.id}
 									</Label>
 									<div className="flex items-center gap-2">

@@ -30,7 +30,7 @@ export function UserManagementCard({
 				<div className="flex items-center justify-between">
 					<div className="space-y-2">
 						<CardTitle className="flex items-center gap-3 text-2xl">
-							<div className="flex items-center justify-center size-10 rounded-xl bg-primary/10 text-primary">
+							<div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
 								<Users className="size-5" />
 							</div>
 							User Management

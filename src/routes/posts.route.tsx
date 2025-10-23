@@ -13,7 +13,7 @@ function PostsLayoutComponent() {
 	const postsQuery = useSuspenseQuery(postsQueryOptions);
 
 	return (
-		<div className="p-2 flex gap-2 pt-20">
+		<div className="flex gap-2 p-2 pt-20">
 			<ul className="list-disc pl-4">
 				{[
 					...postsQuery.data,

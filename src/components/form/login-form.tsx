@@ -51,7 +51,7 @@ export function LogInForm({
 	});
 
 	const LastUsedIndicator = () => (
-		<span className="ml-auto absolute top-1 right-0 px-2 py-1 text-xs bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 rounded-md font-medium">
+		<span className="absolute top-1 right-0 ml-auto rounded-md bg-blue-100 px-2 py-1 font-medium text-blue-700 text-xs dark:bg-blue-900 dark:text-blue-300">
 			Last Used
 		</span>
 	);

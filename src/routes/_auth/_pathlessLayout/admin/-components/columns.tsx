@@ -804,9 +804,9 @@ const SortableHeader = ({ column, title }: { column: any; title: string }) => {
 	return (
 		<Button
 			// className="h-8 px-2 -ml-2"
-			className={`h-8 px-2 -ml-2 ${
+			className={`-ml-2 h-8 px-2 ${
 				column.getCanSort()
-					? "cursor-pointer select-none hover:text-blue-400 transition-colors"
+					? "cursor-pointer select-none transition-colors hover:text-blue-400"
 					: ""
 			}`}
 			// onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
@@ -1140,12 +1140,12 @@ export const createColumns = (handlers: UserActionHandlers) => [
 			const email = getValue();
 			return (
 				<div className="flex items-center gap-2">
-					<div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
+					<div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
 						<Mail className="size-4" />
 					</div>
 					<Tooltip>
 						<TooltipTrigger asChild>
-							<span className="font-medium truncate max-w-[200px] block cursor-default">
+							<span className="block max-w-[200px] cursor-default truncate font-medium">
 								{email}
 							</span>
 						</TooltipTrigger>
@@ -1168,7 +1168,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 			return (
 				<div className="font-medium">
 					{name || (
-						<span className="text-muted-foreground italic text-sm">
+						<span className="text-muted-foreground text-sm italic">
 							No name
 						</span>
 					)}
@@ -1191,7 +1191,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 					}
 					value={user.role ?? undefined}
 				>
-					<SelectTrigger className="w-[140px] h-9">
+					<SelectTrigger className="h-9 w-[140px]">
 						<SelectValue placeholder="Select role" />
 						{handlers.isLoading === `role-${user.id}` && <Spinner />}
 					</SelectTrigger>
@@ -1201,7 +1201,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 							<SelectItem value="admin">
 								<div className="flex items-center gap-2">
 									<ShieldCheck className="size-4 text-purple-600" />
-									<Badge className="text-xs font-semibold" variant="default">
+									<Badge className="font-semibold text-xs" variant="default">
 										Admin
 									</Badge>
 								</div>
@@ -1209,7 +1209,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 							<SelectItem value="user">
 								<div className="flex items-center gap-2">
 									<UserIcon className="size-4 text-blue-600" />
-									<Badge className="text-xs font-semibold" variant="secondary">
+									<Badge className="font-semibold text-xs" variant="secondary">
 										User
 									</Badge>
 								</div>
@@ -1241,7 +1241,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 				</Badge>
 			) : (
 				<Badge
-					className="bg-green-50 text-green-700 border-green-200 font-semibold shadow-sm hover:bg-green-100 dark:bg-green-950 dark:text-green-400 dark:border-green-900"
+					className="border-green-200 bg-green-50 font-semibold text-green-700 shadow-sm hover:bg-green-100 dark:border-green-900 dark:bg-green-950 dark:text-green-400"
 					variant="outline"
 				>
 					<div className="mr-1 size-2 rounded-full bg-green-500" />
@@ -1270,7 +1270,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 			return (
 				<Tooltip>
 					<TooltipTrigger asChild>
-						<span className="text-sm font-medium cursor-default">
+						<span className="cursor-default font-medium text-sm">
 							{new Intl.DateTimeFormat("en-US", {
 								month: "short",
 								day: "numeric",
@@ -1302,7 +1302,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<Button
-							className="size-8 text-muted-foreground data-[state=open]:bg-muted hover:bg-muted/80 transition-colors"
+							className="size-8 text-muted-foreground transition-colors hover:bg-muted/80 data-[state=open]:bg-muted"
 							size="icon"
 							variant="ghost"
 						>
@@ -1376,7 +1376,7 @@ export const createColumns = (handlers: UserActionHandlers) => [
 						<AlertDialog>
 							<AlertDialogTrigger asChild>
 								<DropdownMenuItem
-									className="text-red-600 focus:text-red-600 focus:bg-red-50 dark:focus:bg-red-950/20 gap-2"
+									className="gap-2 text-red-600 focus:bg-red-50 focus:text-red-600 dark:focus:bg-red-950/20"
 									disabled={handlers.isLoading?.startsWith("delete")}
 									onSelect={(e) => e.preventDefault()}
 								>

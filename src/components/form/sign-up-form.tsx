@@ -1,5 +1,6 @@
 import { formOptions } from "@tanstack/react-form";
 import { Link } from "@tanstack/react-router";
+import { Image } from "@unpic/react";
 import { useState } from "react";
 import {
 	Card,
@@ -11,9 +12,9 @@ import {
 import { useAppForm } from "@/hooks/form";
 import useSignUpMutation from "@/hooks/mutations/useSignUpMutation";
 import { cn } from "@/lib/utils";
+import type { SignUpSchema as SignUpType } from "@/schema";
 import { SignUpSchema } from "@/schema";
 import { Field, FieldDescription, FieldGroup } from "../ui/field";
-import { Image } from "@unpic/react";
 // import { Alert, AlertDescription } from '../ui/alert';
 
 export function SignUpForm({
@@ -31,7 +32,7 @@ export function SignUpForm({
 			password: "",
 			confirmPassword: "",
 			image: null,
-		},
+		} satisfies SignUpType as SignUpType,
 	});
 
 	const form = useAppForm({

@@ -163,14 +163,14 @@ export function ChartAreaInteractive() {
 			<CardHeader>
 				<CardTitle>Total Visitors</CardTitle>
 				<CardDescription>
-					<span className="hidden @[540px]/card:block">
+					<span className="@[540px]/card:block hidden">
 						Total for the last 3 months
 					</span>
 					<span className="@[540px]/card:hidden">Last 3 months</span>
 				</CardDescription>
 				<CardAction>
 					<ToggleGroup
-						className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
+						className="*:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex hidden"
 						onValueChange={setTimeRange}
 						type="single"
 						value={timeRange}
@@ -183,7 +183,7 @@ export function ChartAreaInteractive() {
 					<Select onValueChange={setTimeRange} value={timeRange}>
 						<SelectTrigger
 							aria-label="Select a value"
-							className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden"
+							className="flex @[767px]/card:hidden w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate"
 							size="sm"
 						>
 							<SelectValue placeholder="Last 3 months" />
@@ -207,7 +207,7 @@ export function ChartAreaInteractive() {
 					className="aspect-auto h-[250px] w-full"
 					config={chartConfig}
 				>
-					<AreaChart data={filteredData}>
+					<AreaChart data={filteredData} responsive height="100%" width="100%">
 						<defs>
 							<linearGradient id="fillDesktop" x1="0" x2="0" y1="0" y2="1">
 								<stop

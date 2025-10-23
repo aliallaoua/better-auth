@@ -76,7 +76,7 @@ const bannedFilter = (row: any, columnId: string, filterValue: string) => {
 const SortableHeader = ({ column, title }: { column: any; title: string }) => {
 	return (
 		<Button
-			className="h-8 px-2 -ml-2"
+			className="-ml-2 h-8 px-2"
 			onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 			variant="ghost"
 		>
@@ -121,7 +121,7 @@ export const createColumns = (
 				<div className="font-medium">
 					<Tooltip>
 						<TooltipTrigger asChild>
-							<span className="truncate max-w-[200px] block">{email}</span>
+							<span className="block max-w-[200px] truncate">{email}</span>
 						</TooltipTrigger>
 						<TooltipContent>
 							<p>{email}</p>
@@ -202,7 +202,7 @@ export const createColumns = (
 			return banned ? (
 				<Badge variant="destructive">Banned</Badge>
 			) : (
-				<Badge className="text-green-600 border-green-200" variant="outline">
+				<Badge className="border-green-200 text-green-600" variant="outline">
 					Active
 				</Badge>
 			);

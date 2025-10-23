@@ -1,9 +1,9 @@
 import { config } from "dotenv";
 import { migrate } from "drizzle-orm/neon-http/migrator";
-
 import { db } from "./drizzle";
 
-config({ path: ".env" });
+config({ path: ".env.local" }); // or .env
+// config({ path: [".env.local", ".env"] });
 
 // Check if migration flag is set
 if (process.env.DB_MIGRATING !== "true") {

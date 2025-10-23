@@ -20,6 +20,7 @@ import { useAppForm } from "@/hooks/form";
 import { authClient, useSession } from "@/lib/auth-client";
 import { convertImageToBase64 } from "@/lib/utils/convert-image";
 import { EditUserSchema } from "@/schema";
+import type {EditUserSchema as EditUserType} from "@/schema"
 import { FieldGroup } from "../ui/field";
 
 export function EditUserForm() {
@@ -33,7 +34,7 @@ export function EditUserForm() {
 		defaultValues: {
 			name: "",
 			image: null,
-		},
+		} satisfies EditUserType as EditUserType, 
 	});
 
 	const form = useAppForm({
@@ -209,7 +210,7 @@ export function EditUserForm() {
 									{/* Action Buttons */}
 									<div className="flex gap-2">
 										{shouldDeleteImage && (
-											<div className="text-sm text-muted-foreground">
+											<div className="text-muted-foreground text-sm">
 												Photo will be removed when you save
 											</div>
 										)}
