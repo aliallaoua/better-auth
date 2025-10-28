@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
+import type { UserWithRole } from "better-auth/plugins";
 import { authClient } from "@/lib/auth-client";
 import type { SignInSchema, SignUpSchema } from "@/schema";
 import { auth } from "./auth";
@@ -59,7 +60,7 @@ export const getUserSession = createServerFn({
 
 	// return userSession;
 	return {
-		user: userSession.user,
+		user: userSession.user as UserWithRole,
 		session: userSession.session,
 	};
 });

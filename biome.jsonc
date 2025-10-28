@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.7/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.1/schema.json",
   // "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
     "enabled": true,
@@ -7,7 +7,7 @@
     "useIgnoreFile": true,
     "defaultBranch": "main"
   },
-  "extends": ["ultracite"],
+  "extends": ["ultracite/core", "ultracite/react", "ultracite/remix"],
   "files": {
     "ignoreUnknown": false,
     "includes": [
@@ -27,7 +27,10 @@
   "assist": {
     "enabled": true,
     "actions": {
-      "source": { "organizeImports": "on", "useSortedAttributes": "off" }
+      "source": {
+        "organizeImports": "on",
+        "useSortedAttributes": "off"
+      }
     }
   },
   "linter": {
@@ -45,12 +48,13 @@
         "noChildrenProp": "off",
         // "no-unused-vars": "off"
         "noUnusedVariables": "off",
-        // "react-compiler/react-compiler": "error"
+        // "no-unused-vars": "off"
         "noReactPropAssignments": "error",
         // "react-hooks/rules-of-hooks": "error"
         "useHookAtTopLevel": "error",
         // "react-hooks/exhaustive-deps": "warn"
-        "useExhaustiveDependencies": "warn"
+        "useExhaustiveDependencies": "warn",
+        "useImageSize": "off"
       },
       "performance": {
         "noImgElement": "off",
@@ -59,9 +63,7 @@
       },
       "nursery": {
         "noShadow": "off",
-        "useConsistentArrowReturn": "off",
-        "useConsistentTypeDefinitions": "off",
-        "useImageSize": "off"
+        "useConsistentArrowReturn": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"
@@ -74,11 +76,11 @@
         "useBlockStatements": "off",
         // eslint-plugin-react-refresh: react-refresh/only-export-components
         "useComponentExportOnlyModules": "error",
-        "useNamingConvention": "off"
+        "useNamingConvention": "off",
+        "useConsistentTypeDefinitions": "off"
       },
       "suspicious": {
         "noArrayIndexKey": "off",
-        // "@typescript-eslint/no-explicit-any": "warn"
         "noExplicitAny": "warn",
         "noEmptyBlockStatements": "off",
         "noConsole": "off",
@@ -89,7 +91,13 @@
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "double"
+      "quoteStyle": "double",
+      "trailingCommas": "es5"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
   }
 }

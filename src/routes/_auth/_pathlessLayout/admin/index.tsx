@@ -41,6 +41,9 @@ export const Route = createFileRoute("/_auth/_pathlessLayout/admin/")({
 			});
 		}
 	},
+	// loader: async ({ context }) => {
+	// 	await context.queryClient.ensureQueryData(listUsersQueryOptions());
+	// },
 	component: AdminDashboard,
 });
 
@@ -53,6 +56,9 @@ function AdminDashboard() {
 	const [selectedUserId, setSelectedUserId] = useState<string>("");
 
 	const { data: users = [], isPending } = useListUsersQuery();
+	// const { data: users = [], isPending } = useSuspenseQuery(
+	// 	listUsersQueryOptions()
+	// );
 
 	// Statistics derived from users data
 	const userStats = useMemo(() => {

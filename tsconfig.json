@@ -6,14 +6,10 @@
     "module": "ESNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "types": ["vite/client"],
-
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": false,
     "noEmit": true,
-
-    /* Linting */
     "skipLibCheck": true,
     "strict": true,
     "noUnusedLocals": true,
@@ -23,12 +19,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
-
-    // "esModuleInterop": true,
-    // "isolatedModules": true,
-    // "resolveJsonModule": true,
-    // "allowJs": true,
-    // "forceConsistentCasingInFileNames": true,
+    },
+    "strictNullChecks": true
   }
 }
