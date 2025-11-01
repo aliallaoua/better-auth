@@ -1,5 +1,5 @@
 import { formOptions } from "@tanstack/react-form";
-import { Link, useSearch } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Key } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,14 +30,7 @@ export function LogInForm({
 	className,
 	...props
 }: React.ComponentProps<"div">) {
-	const fallback = "/dashboard" as const;
-	const search = useSearch({
-		from: "/login",
-		select: (search) => search.redirect,
-	});
-	const { mutateAsync: signInMutation } = useSignInMutation({
-		nav: search || fallback,
-	});
+	const { mutateAsync: signInMutation } = useSignInMutation();
 
 	const logInFormOpts = formOptions({
 		defaultValues: {
@@ -136,11 +129,11 @@ export function LogInForm({
 							<FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
 								Or continue with
 							</FieldSeparator>
-							<div className="relative">
+							{/* <div className="relative">
 								{authClient.isLastUsedLoginMethod("email") && (
 									<LastUsedIndicator />
 								)}
-							</div>
+							</div>s */}
 							<form.AppField
 								children={(field) => (
 									<field.TextField
@@ -169,7 +162,12 @@ export function LogInForm({
 
 							<Field>
 								<form.AppForm>
-									<form.SubscribeButton label="Log In" />
+									<div className="relative flex flex-col space-x-2">
+										{authClient.isLastUsedLoginMethod("email") && (
+											<LastUsedIndicator />
+										)}
+										<form.SubscribeButton label="Log In" />
+									</div>
 								</form.AppForm>
 								<FieldDescription className="text-center">
 									Don&apos;t have an account?{" "}

@@ -1,11 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "@tanstack/react-router";
+import { useRouter, useSearch } from "@tanstack/react-router";
 import { toast } from "sonner";
-
 import { signUp } from "@/lib/auth-functions";
 
-const useSignUpMutation = ({ nav }: { nav: string }) => {
+const fallback = "/dashboard" as const;
+
+const useSignUpMutation = () => {
 	const router = useRouter();
+	const search = useSearch({
+		from: "/signup",
+		select: (search) => search.redirect,
+	});
 
 	const queryClient = useQueryClient();
 	return useMutation({
@@ -18,8 +23,8 @@ const useSignUpMutation = ({ nav }: { nav: string }) => {
 			router.invalidate();
 			// router.navigate({ to: "/dashboard" });
 			router.navigate({
-				to: nav,
-				replace: true,
+				to: search || fallback,
+				// replace: true,
 			});
 		},
 		onError: (error) => {

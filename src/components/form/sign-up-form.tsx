@@ -1,5 +1,5 @@
 import { formOptions } from "@tanstack/react-form";
-import { Link, useSearch } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import { useState } from "react";
 import {
@@ -21,14 +21,7 @@ export function SignUpForm({
 	...props
 }: React.ComponentProps<"div">) {
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
-	const fallback = "/dashboard" as const;
-	const search = useSearch({
-		from: "/signup",
-		select: (search) => search.redirect,
-	});
-	const { mutateAsync: signUpMutation } = useSignUpMutation({
-		nav: search || fallback,
-	});
+	const { mutateAsync: signUpMutation } = useSignUpMutation();
 
 	const signUpFormOpts = formOptions({
 		defaultValues: {
