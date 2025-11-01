@@ -29,10 +29,10 @@ import {
 
 export const auth = betterAuth({
 	socialProviders: {
-		github: {
-			clientId: process.env.GITHUB_CLIENT_ID as string,
-			clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-		},
+		// github: {
+		// 	clientId: process.env.GITHUB_CLIENT_ID as string,
+		// 	clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+		// },
 		google: {
 			clientId: process.env.GOOGLE_CLIENT_ID as string,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
@@ -69,7 +69,8 @@ export const auth = betterAuth({
 	account: {
 		accountLinking: {
 			// enabled: true,
-			trustedProviders: ["google", "github", "email-password"],
+			// trustedProviders: ["google", "github", "email-password"],
+			trustedProviders: ["google", "email-password"],
 		},
 	},
 	database: drizzleAdapter(db, {

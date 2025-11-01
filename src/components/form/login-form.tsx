@@ -1,5 +1,6 @@
 import { formOptions } from "@tanstack/react-form";
-import { Link } from "@tanstack/react-router";
+import { Link, useSearch } from "@tanstack/react-router";
+import { Key } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -17,7 +18,11 @@ import {
 import { useAppForm } from "@/hooks/form";
 import useSignInMutation from "@/hooks/mutations/useSignInMutation";
 import { authClient } from "@/lib/auth-client";
-import { signInWithGithub, signInWithGoogle } from "@/lib/auth-functions";
+import {
+	// signInWithGithub,
+	signInWithGoogle,
+	signInWithPasskey,
+} from "@/lib/auth-functions";
 import { cn } from "@/lib/utils";
 import { SignInSchema } from "@/schema";
 
@@ -25,7 +30,14 @@ export function LogInForm({
 	className,
 	...props
 }: React.ComponentProps<"div">) {
-	const { mutateAsync: signInMutation } = useSignInMutation();
+	const fallback = "/dashboard" as const;
+	const search = useSearch({
+		from: "/login",
+		select: (search) => search.redirect,
+	});
+	const { mutateAsync: signInMutation } = useSignInMutation({
+		nav: search || fallback,
+	});
 
 	const logInFormOpts = formOptions({
 		defaultValues: {
@@ -77,9 +89,9 @@ export function LogInForm({
 						<FieldGroup>
 							<Field>
 								<Button
-									onClick={signInWithGithub}
-									type="button"
 									variant="outline"
+									className={cn("relative flex w-full items-center gap-2")}
+									// onClick={signInWithGithub}
 								>
 									<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 										<path
@@ -93,9 +105,9 @@ export function LogInForm({
 									)}
 								</Button>
 								<Button
-									onClick={signInWithGoogle}
-									type="button"
 									variant="outline"
+									className={cn("relative flex w-full gap-2")}
+									onClick={signInWithGoogle}
 								>
 									<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 										<path
@@ -105,6 +117,17 @@ export function LogInForm({
 									</svg>
 									<span>Sign in with Google</span>
 									{authClient.isLastUsedLoginMethod("google") && (
+										<LastUsedIndicator />
+									)}
+								</Button>
+								<Button
+									variant="outline"
+									className={cn("relative flex w-full items-center gap-2")}
+									onClick={signInWithPasskey}
+								>
+									<Key size={16} />
+									<span>Sign in with Passkey</span>
+									{authClient.isLastUsedLoginMethod("passkey") && (
 										<LastUsedIndicator />
 									)}
 								</Button>

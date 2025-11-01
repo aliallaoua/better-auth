@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 import { signUp } from "@/lib/auth-functions";
 
-const useSignUpMutation = () => {
+const useSignUpMutation = ({ nav }: { nav: string }) => {
 	const router = useRouter();
 
 	const queryClient = useQueryClient();
@@ -16,8 +16,10 @@ const useSignUpMutation = () => {
 			);
 			queryClient.resetQueries();
 			router.invalidate();
+			// router.navigate({ to: "/dashboard" });
 			router.navigate({
-				to: "/dashboard",
+				to: nav,
+				replace: true,
 			});
 		},
 		onError: (error) => {

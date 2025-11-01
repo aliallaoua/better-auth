@@ -698,9 +698,8 @@
 // 	roleFilter,
 // 	bannedFilter,
 // };
-
-import { useSortable } from "@dnd-kit/sortable";
-import { IconDotsVertical, IconGripVertical } from "@tabler/icons-react";
+// import { useSortable } from "@dnd-kit/sortable";
+import { IconDotsVertical } from "@tabler/icons-react";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
 import type { UserWithRole } from "better-auth/plugins/admin";
 import {
@@ -823,25 +822,27 @@ const SortableHeader = ({ column, title }: { column: any; title: string }) => {
 	);
 };
 
+// ! UNCOMMENT FOR DRAGGABEL ROW
 // Cell Component
-function DragHandle({ id }: { id: string }) {
-	const { attributes, listeners } = useSortable({
-		id,
-	});
+// function DragHandle({ id }: { id: string }) {
+// 	const { attributes, listeners } = useSortable({
+// 		id,
+// 	});
 
-	return (
-		<Button
-			{...attributes}
-			{...listeners}
-			className="size-7 text-muted-foreground hover:bg-transparent"
-			size="icon"
-			variant="ghost"
-		>
-			<IconGripVertical className="size-3 text-muted-foreground" />
-			<span className="sr-only">Drag to reorder</span>
-		</Button>
-	);
-}
+// 	return (
+// 		<Button
+// 			{...attributes}
+// 			{...listeners}
+// 			className="size-7 text-muted-foreground hover:bg-transparent"
+// 			size="icon"
+// 			variant="ghost"
+// 		>
+// 			<IconGripVertical className="size-3 text-muted-foreground" />
+// 			<span className="sr-only">Drag to reorder</span>
+// 		</Button>
+// 	);
+// }
+// ! END
 
 // export const createColumns = (
 // 	handlers: UserActionHandlers
@@ -1104,11 +1105,12 @@ function DragHandle({ id }: { id: string }) {
 // ];
 
 export const createColumns = (handlers: UserActionHandlers) => [
-	columnHelper.display({
-		id: "drag",
-		header: () => null,
-		cell: ({ row }) => <DragHandle id={row.original.id} />,
-	}),
+	// ! UNCOMMENT FOR DRAGGABEL ROW
+	// columnHelper.display({
+	// 	id: "drag",
+	// 	header: () => null,
+	// 	cell: ({ row }) => <DragHandle id={row.original.id} />,
+	// }),
 
 	columnHelper.display({
 		id: "select",
@@ -1139,21 +1141,21 @@ export const createColumns = (handlers: UserActionHandlers) => [
 		cell: ({ getValue }) => {
 			const email = getValue();
 			return (
-				<div className="flex items-center gap-2">
-					<div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
-						<Mail className="size-4" />
-					</div>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<span className="block max-w-[200px] cursor-default truncate font-medium">
-								{email}
-							</span>
-						</TooltipTrigger>
-						<TooltipContent>
-							<p>{email}</p>
-						</TooltipContent>
-					</Tooltip>
-				</div>
+				// <div className="flex items-center gap-2">
+				// 	<div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+				// 		<Mail className="size-4" />
+				// 	</div>
+				// <Tooltip>
+				// 	<TooltipTrigger asChild>
+				<span className="block max-w-[200px] truncate font-medium">
+					{email}
+				</span>
+				// 	</TooltipTrigger>
+				// 	<TooltipContent>
+				// 		<p>{email}</p>
+				// 	</TooltipContent>
+				// </Tooltip>
+				// </div>
 			);
 		},
 		enableColumnFilter: true,

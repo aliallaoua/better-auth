@@ -5,7 +5,6 @@ import { authClient } from "@/lib/auth-client";
 
 const useSignOutMutation = () => {
 	const router = useRouter();
-	// const navigate = useNavigate();
 	const queryClient = useQueryClient();
 
 	return useMutation({
@@ -13,7 +12,7 @@ const useSignOutMutation = () => {
 		onSuccess: async () => {
 			await queryClient.invalidateQueries();
 			router.invalidate();
-			// navigate({to: "/"})
+			router.navigate({ to: "/" });
 		},
 	});
 };

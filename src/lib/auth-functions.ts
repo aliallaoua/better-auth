@@ -1,6 +1,8 @@
+import { useRouter } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
 import type { UserWithRole } from "better-auth/plugins";
+import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import type { SignInSchema, SignUpSchema } from "@/schema";
 import { auth } from "./auth";
@@ -34,16 +36,34 @@ export const signUp = async (data: SignUpSchema) => {
 	return data;
 };
 
-export const signInWithGithub = async () => {
-	await authClient.signIn.social({
-		provider: "github",
-		callbackURL: "/dashboard",
-	});
-};
+// export const signInWithGithub = async () => {
+// 	await authClient.signIn.social({
+// 		provider: "github",
+// 		callbackURL: "/dashboard",
+// 	});
+// };
+
 export const signInWithGoogle = async () => {
 	await authClient.signIn.social({
 		provider: "google",
 		callbackURL: "/dashboard",
+	});
+};
+
+export const signInWithPasskey = async () => {
+	await authClient.signIn.passkey({
+		fetchOptions: {
+			onSuccess() {
+				const router = useRouter();
+				toast.success("Successfully signed in");
+				router.navigate({
+					to: "/dashboard",
+				});
+			},
+			onError(context) {
+				toast.error(`Authentication failed: ${context.error.message}`);
+			},
+		},
 	});
 };
 

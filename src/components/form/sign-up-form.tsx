@@ -1,5 +1,5 @@
 import { formOptions } from "@tanstack/react-form";
-import { Link } from "@tanstack/react-router";
+import { Link, useSearch } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import { useState } from "react";
 import {
@@ -15,15 +15,20 @@ import { cn } from "@/lib/utils";
 import type { SignUpSchema as SignUpType } from "@/schema";
 import { SignUpSchema } from "@/schema";
 import { Field, FieldDescription, FieldGroup } from "../ui/field";
-// import { Alert, AlertDescription } from '../ui/alert';
 
 export function SignUpForm({
 	className,
 	...props
 }: React.ComponentProps<"div">) {
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
-	// const signUpMutation = useSignUpMutation();
-	const { mutateAsync: signUpMutation } = useSignUpMutation();
+	const fallback = "/dashboard" as const;
+	const search = useSearch({
+		from: "/signup",
+		select: (search) => search.redirect,
+	});
+	const { mutateAsync: signUpMutation } = useSignUpMutation({
+		nav: search || fallback,
+	});
 
 	const signUpFormOpts = formOptions({
 		defaultValues: {
@@ -42,12 +47,8 @@ export function SignUpForm({
 		},
 		onSubmit: async ({ value }) => {
 			try {
-				// await signUpMutation.mutateAsync(value);
 				await signUpMutation(value);
-
-				// } catch (e: any) {
 			} catch (e) {
-				// Set form-level error
 				form.setErrorMap({
 					onSubmit: e.message,
 				});
@@ -201,21 +202,6 @@ export function SignUpForm({
 								</FieldDescription>
 							</Field>
 						</FieldGroup>
-
-						{/* Display form-level errors */}
-						{/* <form.Subscribe
-						children={([errorMap]) =>
-							errorMap.onSubmit ? (
-								<Alert className="mt-4" variant="destructive">
-									<AlertCircle className="size-4" />
-									<AlertDescription>
-										{errorMap.onSubmit.toString()}
-									</AlertDescription>
-								</Alert>
-							) : null
-						}
-						selector={(state) => [state.errorMap]}
-					/> */}
 					</form>
 				</CardContent>
 			</Card>

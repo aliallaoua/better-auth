@@ -1,19 +1,19 @@
-import { createFileRoute } from "@tanstack/react-router";
-
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import z from "zod";
 import { SignUpForm } from "@/components/form/sign-up-form";
 
 export const fallback = "/dashboard" as const;
 export const Route = createFileRoute("/signup")({
-	// validateSearch: z.object({
-	// 	redirect: z.string().optional().catch(''),
-	// 	// addAccount: z.boolean().default(false),
-	// }),
-	// beforeLoad: async ({ context, search }) => {
-	// 	// if (context.userSession && !search.addAccount) {
-	// 	if (context.userSession) {
-	// 		throw redirect({ to: search.redirect || fallback });
-	// 	}
-	// },
+	validateSearch: z.object({
+		redirect: z.string().optional().catch(""),
+		// addAccount: z.boolean().default(false),
+	}),
+	beforeLoad: async ({ context, search }) => {
+		// if (context.userSession && !search.addAccount) {
+		if (context.userSession) {
+			throw redirect({ to: search.redirect || fallback });
+		}
+	},
 	component: SignupPage,
 });
 
