@@ -29,7 +29,7 @@ function PostErrorComponent({ error }: ErrorComponentProps) {
 }
 
 function PostComponent() {
-	const postId = Route.useParams().postId;
+	const { postId } = Route.useParams();
 	const postQuery = useSuspenseQuery(postQueryOptions(postId));
 
 	return (

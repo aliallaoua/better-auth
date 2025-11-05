@@ -15,6 +15,20 @@
       "when": 1761163284648,
       "tag": "0001_real_kingpin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1762323231041,
+      "tag": "0002_whole_bloodscream",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1762328056104,
+      "tag": "0003_modern_weapon_omega",
+      "breakpoints": true
     }
   ]
 }

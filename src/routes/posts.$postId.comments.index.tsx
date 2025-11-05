@@ -16,8 +16,8 @@ import type { CommentType } from "@/utils/comments";
 import { commentsQueryOptions } from "@/utils/commentsQueryOptions";
 
 export const Route = createFileRoute("/posts/$postId/comments/")({
-	loader: ({ context: { queryClient }, params: { postId } }) => {
-		return queryClient.ensureQueryData(commentsQueryOptions(postId));
+	loader: ({ params: { postId }, context }) => {
+		return context.queryClient.ensureQueryData(commentsQueryOptions(postId));
 	},
 	errorComponent: CommentsErrorComponent,
 	component: CommentsComponent,

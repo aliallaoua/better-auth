@@ -5,7 +5,7 @@ import { SignUpForm } from "@/components/form/sign-up-form";
 const fallback = "/dashboard" as const;
 export const Route = createFileRoute("/signup")({
 	validateSearch: z.object({
-		redirect: z.string().optional().catch(""),
+		redirect: z.string().default("").catch(""),
 		// addAccount: z.boolean().default(false),
 	}),
 	beforeLoad: async ({ context, search }) => {
