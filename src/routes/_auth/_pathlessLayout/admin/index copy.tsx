@@ -1,5 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
+import { getRequestHeaders } from "@tanstack/react-start/server";
 import { Download, Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -16,26 +18,45 @@ import { FieldGroup } from "@/components/ui/field";
 import { Label } from "@/components/ui/label";
 import { useAppForm } from "@/hooks/form";
 import useListUsersQuery from "@/hooks/queries/useListUsersQuery";
-import { authClient, useSession } from "@/lib/auth-client";
+import { auth } from "@/lib/auth";
+import { authClient } from "@/lib/auth-client";
 import {
 	DataTable,
 	DataTableSkeleton,
-	type UserActionHandlers,
 } from "@/routes/_auth/_pathlessLayout/admin/-components/data-table";
 import { StatCard } from "@/routes/_auth/_pathlessLayout/admin/-components/stats-card";
 import { UserManagementCard } from "@/routes/_auth/_pathlessLayout/admin/-components/user-management-card";
 import { BanUserSchema, CreateUserSchema } from "@/schema";
+import { createColumns, type UserActionHandlers } from "./-components/columns";
 
-export const Route = createFileRoute("/_auth/_pathlessLayout/admin/")({
+const hasAccessFn = createServerFn().handler(async () => {
+	const data = await auth.api.userHasPermission({
+		headers: getRequestHeaders(),
+		body: { permission: { user: ["list"] } },
+	});
+	return data;
+});
+
+export const Route = createFileRoute("/_auth/_pathlessLayout/admin/index copy")({
 	beforeLoad: async ({ context, location }) => {
-		if (context.userSession?.user.role !== "admin") {
+		// if (context.userSession?.user.role !== "admin") {
+		// 	throw redirect({
+		// 		to: "/unauthorized",
+		// 		search: {
+		// 			redirect: location.href,
+		// 			reason: "insufficient_permissions",
+		// 		},
+		// 	});
+		// }
+		const hasAccess = await hasAccessFn();
+		if (!hasAccess.success) {
 			throw redirect({
 				to: "/unauthorized",
 				search: {
 					redirect: location.href,
 					reason: "insufficient_permissions",
 				},
-			});
+			})
 		}
 	},
 	// loader: async ({ context }) => {
@@ -52,9 +73,6 @@ function AdminDashboard() {
 	const [isBanDialogOpen, setIsBanDialogOpen] = useState(false);
 	const [selectedUserId, setSelectedUserId] = useState<string>("");
 
-	const { data: session } = useSession();
-	const selfId = session?.user.id;
-
 	const { data: users = [], isPending } = useListUsersQuery();
 	// const { data: users = [], isPending } = useSuspenseQuery(
 	// 	listUsersQueryOptions()
@@ -69,7 +87,7 @@ function AdminDashboard() {
 			admins: users.filter((u) => u.role === "admin").length,
 			banned: users.filter((u) => u.banned).length,
 			active: users.filter((u) => !u.banned).length,
-		};
+		}
 	}, [users]);
 
 	const createUserForm = useAppForm({
@@ -90,13 +108,13 @@ function AdminDashboard() {
 					password: value.password,
 					name: value.name,
 					role: value.role,
-				});
+				})
 				toast.success("User created successfully");
 				createUserForm.reset();
 				setIsDialogOpen(false);
 				queryClient.invalidateQueries({
 					queryKey: ["users"],
-				});
+				})
 			} catch (error) {
 				toast.error(error.message || "Failed to create user");
 			} finally {
@@ -123,12 +141,12 @@ function AdminDashboard() {
 					userId: selectedUserId,
 					banReason: value.reason,
 					banExpiresIn: value.expirationDate.getTime() - Date.now(),
-				});
+				})
 				toast.success("User banned successfully");
 				setIsBanDialogOpen(false);
 				queryClient.invalidateQueries({
 					queryKey: ["users"],
-				});
+				})
 			} catch (error) {
 				toast.error(error.message || "Failed to ban user");
 			} finally {
@@ -145,25 +163,25 @@ function AdminDashboard() {
 			toast.success("User deleted successfully");
 			queryClient.invalidateQueries({
 				queryKey: ["users"],
-			});
+			})
 		} catch (error) {
 			toast.error(error.message || "Failed to delete user");
 		} finally {
 			setIsLoading(undefined);
 		}
-	};
+	}
 
 	const handleRevokeSessions = async (id: string) => {
 		setIsLoading(`revoke-${id}`);
 		try {
 			await authClient.admin.revokeUserSessions({ userId: id });
 			toast.success("Sessions revoked for user");
-		} catch (error) {
+		} catch (errors) {
 			toast.error(error.message || "Failed to revoke sessions");
 		} finally {
 			setIsLoading(undefined);
 		}
-	};
+	}
 
 	const handleImpersonateUser = async (id: string) => {
 		setIsLoading(`impersonate-${id}`);
@@ -176,13 +194,13 @@ function AdminDashboard() {
 		} finally {
 			setIsLoading(undefined);
 		}
-	};
+	}
 
 	const handleBanClick = (userId: string) => {
 		setSelectedUserId(userId);
 		banUserForm.reset();
 		setIsBanDialogOpen(true);
-	};
+	}
 
 	const handleUnbanUser = async (userId: string) => {
 		setIsLoading(`ban-${userId}`);
@@ -199,17 +217,17 @@ function AdminDashboard() {
 					onSuccess() {
 						queryClient.invalidateQueries({
 							queryKey: ["users"],
-						});
+						})
 						toast.success("User unbanned successfully");
 						setIsLoading(undefined);
 					},
 				}
-			);
+			)
 		} catch (error) {
 			toast.error(error.message || "Failed to unban user");
 			setIsLoading(undefined);
 		}
-	};
+	}
 
 	const handleRoleChange = async (id: string, role: "admin" | "user") => {
 		setIsLoading(`role-${id}`);
@@ -217,7 +235,7 @@ function AdminDashboard() {
 			const { data, error } = await authClient.admin.setRole({
 				userId: id,
 				role,
-			});
+			})
 
 			if (error) {
 				throw new Error(error.message || "Failed to update user role");
@@ -226,18 +244,18 @@ function AdminDashboard() {
 			toast.success("User role updated successfully");
 			queryClient.invalidateQueries({
 				queryKey: ["users"],
-			});
+			})
 		} catch (error) {
 			toast.error(error.message || "Failed to update user role");
 		} finally {
 			setIsLoading(undefined);
 		}
-	};
+	}
 
 	const handleExportData = () => {
 		if (!users || users.length === 0) {
 			toast.error("No data to export");
-			return;
+			return
 		}
 
 		const csvContent = [
@@ -258,13 +276,13 @@ function AdminDashboard() {
 		const url = window.URL.createObjectURL(blob);
 		const a = document.createElement("a");
 		a.href = url;
-		a.download = `users-export-${new Date().toISOString().split("T")[0]}.csv`;
+		a.download = `users-export-${new Date().toISOString().split(`T`)[0]}.csv`;
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);
 		window.URL.revokeObjectURL(url);
 		toast.success("User data exported successfully");
-	};
+	}
 
 	// Create action handlers object
 	const actionHandlers: UserActionHandlers = useMemo(
@@ -278,10 +296,16 @@ function AdminDashboard() {
 			isLoading,
 		}),
 		[isLoading]
-	);
+	)
+
+	// Create columns with handlers
+	const columns = useMemo(
+		() => createColumns(actionHandlers),
+		[actionHandlers]
+	)
 
 	return (
-		<div className="min-h-screen w-full bg-linear-to-b from-background to-muted/20">
+		<div className="min-h-screen w-full bg-gradient-to-b from-background to-muted/20">
 			<div className="mx-auto max-w-7xl space-y-8 px-4 py-6 sm:px-6 lg:px-8">
 				{/* Header Section */}
 				<div className="space-y-4">
@@ -321,9 +345,9 @@ function AdminDashboard() {
 										<form
 											className="space-y-4"
 											onSubmit={(e) => {
-												e.preventDefault();
-												e.stopPropagation();
-												createUserForm.handleSubmit();
+												e.preventDefault()
+												e.stopPropagation()
+												createUserForm.handleSubmit()
 											}}
 										>
 											<FieldGroup>
@@ -405,10 +429,9 @@ function AdminDashboard() {
 						<DataTableSkeleton />
 					) : (
 						<DataTable
+							columns={columns}
 							data={users}
 							onExportData={handleExportData}
-							handlers={actionHandlers}
-							selfId={selfId}
 						/>
 					)}
 				</UserManagementCard>
@@ -422,8 +445,8 @@ function AdminDashboard() {
 						<form
 							className="space-y-4"
 							onSubmit={(e) => {
-								e.preventDefault();
-								e.stopPropagation();
+								e.preventDefault()
+								e.stopPropagation()
 								banUserForm.handleSubmit();
 							}}
 						>
@@ -462,5 +485,5 @@ function AdminDashboard() {
 				</Dialog>
 			</div>
 		</div>
-	);
+	)
 }

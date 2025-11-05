@@ -1,561 +1,7 @@
-// 'use no memo';
-
-// import {
-// 	// closestCenter,
-// 	// DndContext,
-// 	// type DragEndEvent,
-// 	KeyboardSensor,
-// 	MouseSensor,
-// 	TouchSensor,
-// 	type UniqueIdentifier,
-// 	useSensor,
-// 	useSensors,
-// } from '@dnd-kit/core';
-// // import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
-// import {
-// 	// arrayMove,
-// 	SortableContext,
-// 	useSortable,
-// 	verticalListSortingStrategy,
-// } from '@dnd-kit/sortable';
-// import { CSS } from '@dnd-kit/utilities';
-// import {
-// 	IconChevronLeft,
-// 	IconChevronRight,
-// 	IconChevronsLeft,
-// 	IconChevronsRight,
-// } from '@tabler/icons-react';
-// import {
-// 	type ColumnDef,
-// 	type ColumnFiltersState,
-// 	flexRender,
-// 	getCoreRowModel,
-// 	getFacetedRowModel,
-// 	getFacetedUniqueValues,
-// 	getFilteredRowModel,
-// 	getPaginationRowModel,
-// 	getSortedRowModel,
-// 	type Row,
-// 	type SortingState,
-// 	useReactTable,
-// 	type VisibilityState,
-// } from '@tanstack/react-table';
-// import type { UserWithRole } from 'better-auth/plugins/admin';
-// import { ChevronDown, Download, Filter, Search, UserX, X } from 'lucide-react';
-// import { useId, useMemo, useState } from 'react';
-// import { Button } from '@/components/ui/button';
-// import { Card } from '@/components/ui/card';
-// import {
-// 	DropdownMenu,
-// 	DropdownMenuCheckboxItem,
-// 	DropdownMenuContent,
-// 	DropdownMenuLabel,
-// 	DropdownMenuSeparator,
-// 	DropdownMenuTrigger,
-// } from '@/components/ui/dropdown-menu';
-// import { Input } from '@/components/ui/input';
-// import {
-// 	Select,
-// 	SelectContent,
-// 	SelectItem,
-// 	SelectTrigger,
-// 	SelectValue,
-// } from '@/components/ui/select';
-// import { Skeleton } from '@/components/ui/skeleton';
-// import {
-// 	Table,
-// 	TableBody,
-// 	TableCell,
-// 	TableHead,
-// 	TableHeader,
-// 	TableRow,
-// } from '@/components/ui/table';
-// import { Label } from '../../../../../components/ui/label';
-// import { userTableFilterFns } from './columns';
-
-// interface DataTableProps<UserWithRole> {
-// 	columns: ColumnDef<UserWithRole>[];
-// 	data: UserWithRole[];
-// 	onExportData?: () => void;
-// }
-
-// // Custom filter component for select-type filters
-// function TableFilter({ column }: { column: any }) {
-// 	const filterValue = column.getFilterValue();
-// 	const filterOptions = column.columnDef.meta?.filterOptions;
-// 	const filterVariant = column.columnDef.meta?.filterVariant;
-
-// 	if (filterVariant === 'select' && filterOptions) {
-// 		return (
-// 			<Select
-// 				onValueChange={(value) =>
-// 					column.setFilterValue(value === 'all' ? undefined : value)
-// 				}
-// 				value={filterValue || ''}
-// 			>
-// 				<SelectTrigger className="w-[150px]">
-// 					<SelectValue placeholder={`Filter ${column.id}...`} />
-// 				</SelectTrigger>
-// 				<SelectContent>
-// 					<SelectItem value="all">All {column.id}</SelectItem>
-// 					{filterOptions.map((option: any) => (
-// 						<SelectItem key={option.value} value={option.value}>
-// 							{option.label}
-// 						</SelectItem>
-// 					))}
-// 				</SelectContent>
-// 			</Select>
-// 		);
-// 	}
-
-// 	return (
-// 		<Input
-// 			className="max-w-[200px]"
-// 			onChange={(event) => column.setFilterValue(event.target.value)}
-// 			placeholder={`Filter ${column.id}...`}
-// 			value={filterValue || ''}
-// 		/>
-// 	);
-// }
-
-// export function DataTableSkeleton() {
-// 	return (
-// 		<div className="space-y-4">
-// 			<div className="flex items-center justify-between">
-// 				<div className="flex items-center space-x-2">
-// 					<Skeleton className="h-10 w-[250px]" />
-// 					<Skeleton className="h-10 w-[120px]" />
-// 				</div>
-// 				<Skeleton className="h-10 w-[120px]" />
-// 			</div>
-// 			<div className="rounded-md border">
-// 				<Table>
-// 					<TableHeader>
-// 						<TableRow>
-// 							<TableHead>
-// 								<Skeleton className="h-4 w-[50px]" />
-// 							</TableHead>
-// 							<TableHead>
-// 								<Skeleton className="h-4 w-[200px]" />
-// 							</TableHead>
-// 							<TableHead>
-// 								<Skeleton className="h-4 w-[150px]" />
-// 							</TableHead>
-// 							<TableHead>
-// 								<Skeleton className="h-4 w-[100px]" />
-// 							</TableHead>
-// 							<TableHead>
-// 								<Skeleton className="h-4 w-[80px]" />
-// 							</TableHead>
-// 							<TableHead>
-// 								<Skeleton className="h-4 w-[120px]" />
-// 							</TableHead>
-// 							<TableHead>
-// 								<Skeleton className="h-4 w-[100px]" />
-// 							</TableHead>
-// 						</TableRow>
-// 					</TableHeader>
-// 					<TableBody>
-// 						{Array.from({ length: 5 }).map((_, i) => (
-// 							<TableRow key={i}>
-// 								<TableCell>
-// 									<Skeleton className="size-4" />
-// 								</TableCell>
-// 								<TableCell>
-// 									<Skeleton className="h-4 w-[200px]" />
-// 								</TableCell>
-// 								<TableCell>
-// 									<Skeleton className="h-4 w-[150px]" />
-// 								</TableCell>
-// 								<TableCell>
-// 									<Skeleton className="h-6 w-[120px]" />
-// 								</TableCell>
-// 								<TableCell>
-// 									<Skeleton className="h-6 w-[80px]" />
-// 								</TableCell>
-// 								<TableCell>
-// 									<Skeleton className="h-4 w-[100px]" />
-// 								</TableCell>
-// 								<TableCell>
-// 									<Skeleton className="size-8" />
-// 								</TableCell>
-// 							</TableRow>
-// 						))}
-// 					</TableBody>
-// 				</Table>
-// 			</div>
-// 		</div>
-// 	);
-// }
-
-// // Row Component
-// function DraggableRow({ row }: { row: Row<UserWithRole> }) {
-// 	const { transform, transition, setNodeRef, isDragging } = useSortable({
-// 		id: row.original.id,
-// 	});
-
-// 	return (
-// 		<TableRow
-// 			className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
-// 			data-dragging={isDragging}
-// 			data-state={row.getIsSelected() && 'selected'}
-// 			ref={setNodeRef}
-// 			style={{
-// 				transform: CSS.Transform.toString(transform),
-// 				transition,
-// 			}}
-// 		>
-// 			{row.getVisibleCells().map((cell) => (
-// 				<TableCell key={cell.id}>
-// 					{flexRender(cell.column.columnDef.cell, cell.getContext())}
-// 				</TableCell>
-// 			))}
-// 		</TableRow>
-// 	);
-// }
-
-// export function DataTable<UserWithRole>({
-// 	columns,
-// 	// ! UNCOMMENT FOR DRAGGABEL ROW
-// 	// data: initialData,
-// 	data,
-// 	onExportData,
-// }: DataTableProps<UserWithRole>) {
-// 	// const [sorting, setSorting] = useState<SortingState>([
-// 	// 	{ id: 'createdAt', desc: true },
-// 	// ]);
-// 	// ! UNCOMMENT FOR DRAGGABEL ROW
-// 	// const [data, setData] = useState(() => initialData);
-// 	const [rowSelection, setRowSelection] = useState({});
-// 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-// 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-// 	const [sorting, setSorting] = useState<SortingState>([]);
-// 	const [pagination, setPagination] = useState({
-// 		pageIndex: 0,
-// 		pageSize: 10,
-// 	});
-// 	const sortableId = useId();
-// 	const sensors = useSensors(
-// 		useSensor(MouseSensor, {}),
-// 		useSensor(TouchSensor, {}),
-// 		useSensor(KeyboardSensor, {})
-// 	);
-
-// 	const dataIds = useMemo<UniqueIdentifier[]>(
-// 		() => data?.map(({ id }) => id) || [],
-// 		[data]
-// 	);
-
-// 	const [globalFilter, setGlobalFilter] = useState('');
-
-// 	const table = useReactTable({
-// 		data,
-// 		columns,
-// 		state: {
-// 			sorting,
-// 			columnVisibility,
-// 			rowSelection,
-// 			columnFilters,
-// 			pagination,
-// 			globalFilter,
-// 		},
-// 		getRowId: (row) => row.id.toString(),
-// 		enableRowSelection: true,
-// 		onRowSelectionChange: setRowSelection,
-// 		onSortingChange: setSorting,
-// 		onColumnFiltersChange: setColumnFilters,
-// 		onColumnVisibilityChange: setColumnVisibility,
-// 		onPaginationChange: setPagination,
-// 		getCoreRowModel: getCoreRowModel(),
-// 		getFilteredRowModel: getFilteredRowModel(),
-// 		getPaginationRowModel: getPaginationRowModel(),
-// 		getSortedRowModel: getSortedRowModel(),
-// 		getFacetedRowModel: getFacetedRowModel(),
-// 		getFacetedUniqueValues: getFacetedUniqueValues(),
-// 		onGlobalFilterChange: setGlobalFilter,
-// 		globalFilterFn: 'includesString',
-// 		enableColumnFilters: true,
-// 		filterFns: {
-// 			...userTableFilterFns,
-// 			fuzzy: (row, columnId, value) => {
-// 				const searchValue = String(value).toLowerCase();
-// 				const cellValue = String(row.getValue(columnId)).toLowerCase();
-// 				return cellValue.includes(searchValue);
-// 			},
-// 		},
-// 	});
-// 	// ! UNCOMMENT FOR DRAGGABEL ROW
-// 	// function handleDragEnd(event: DragEndEvent) {
-// 	// 	const { active, over } = event;
-// 	// 	if (active && over && active.id !== over.id) {
-// 	// 		setData((data) => {
-// 	// 			const oldIndex = dataIds.indexOf(active.id);
-// 	// 			const newIndex = dataIds.indexOf(over.id);
-// 	// 			return arrayMove(data, oldIndex, newIndex);
-// 	// 		});
-// 	// 	}
-// 	// }
-
-// 	const isFiltered = columnFilters.length > 0 || globalFilter.length > 0;
-
-// 	const clearAllFilters = () => {
-// 		table.resetColumnFilters();
-// 		setGlobalFilter('');
-// 	};
-
-// 	return (
-// 		<div className="w-full space-y-4">
-// 			{/* Global Search and Actions */}
-// 			<div className="flex items-center justify-between">
-// 				<div className="flex items-center space-x-2">
-// 					<div className="relative">
-// 						<Search className="absolute left-2 top-2.5 size-4 text-muted-foreground" />
-// 						<Input
-// 							className="pl-8 w-[300px]"
-// 							// onChange={(e) => setGlobalFilter(String(e.target.value))}
-// 							onChange={(e) => table.setGlobalFilter(String(e.target.value))}
-// 							placeholder="Search users..."
-// 							value={globalFilter}
-// 						/>
-// 					</div>
-// 					{isFiltered && (
-// 						<Button
-// 							className="h-8 px-2 lg:px-3"
-// 							onClick={clearAllFilters}
-// 							variant="ghost"
-// 						>
-// 							Reset
-// 							<X className="ml-2 size-4" />
-// 						</Button>
-// 					)}
-// 				</div>
-// 				<div className="flex items-center space-x-2">
-// 					{onExportData && (
-// 						<Button onClick={onExportData} size="sm" variant="outline">
-// 							<Download className="mr-2 size-4" />
-// 							Export
-// 						</Button>
-// 					)}
-// 					<DropdownMenu>
-// 						<DropdownMenuTrigger asChild>
-// 							<Button size="sm" variant="outline">
-// 								<Filter className="mr-2 size-4" />
-// 								View
-// 								<ChevronDown className="ml-2 size-4" />
-// 							</Button>
-// 						</DropdownMenuTrigger>
-// 						<DropdownMenuContent align="end" className="w-[150px]">
-// 							<DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
-// 							<DropdownMenuSeparator />
-// 							{table
-// 								.getAllColumns()
-// 								.filter(
-// 									(column) =>
-// 										typeof column.accessorFn !== 'undefined' &&
-// 										column.getCanHide()
-// 								)
-// 								.map((column) => (
-// 									<DropdownMenuCheckboxItem
-// 										checked={column.getIsVisible()}
-// 										className="capitalize"
-// 										key={column.id}
-// 										onCheckedChange={(value) =>
-// 											column.toggleVisibility(!!value)
-// 										}
-// 									>
-// 										{column.id}
-// 									</DropdownMenuCheckboxItem>
-// 								))}
-// 						</DropdownMenuContent>
-// 					</DropdownMenu>
-// 				</div>
-// 			</div>
-
-// 			{/* Column Filters */}
-// 			<Card className="p-4">
-// 				<div className="flex flex-wrap gap-4">
-// 					{table
-// 						.getAllColumns()
-// 						.filter((column) => column.getCanFilter() && column.getIsVisible())
-// 						.map((column) => (
-// 							<div className="flex flex-col space-y-1" key={column.id}>
-// 								<Label className="text-sm font-medium capitalize">
-// 									{column.id}
-// 								</Label>
-// 								<div className="flex items-center space-x-2">
-// 									<TableFilter column={column} />
-// 									{column.getIsFiltered() && (
-// 										<Button
-// 											className="h-8 px-2"
-// 											onClick={() => column.setFilterValue(undefined)}
-// 											size="sm"
-// 											variant="ghost"
-// 										>
-// 											<X className="size-4" />
-// 										</Button>
-// 									)}
-// 								</div>
-// 							</div>
-// 						))}
-// 				</div>
-// 			</Card>
-
-// 			{/* Table */}
-// 			<div className="overflow-hidden rounded-lg border">
-// 				{/* // ! UNCOMMENT FOR DRAGGABEL ROW */}
-// 				{/* <DndContext
-// 					collisionDetection={closestCenter}
-// 					id={sortableId}
-// 					modifiers={[restrictToVerticalAxis]}
-// 					onDragEnd={handleDragEnd}
-// 					sensors={sensors}
-// 				> */}
-// 				<Table>
-// 					<TableHeader className="sticky top-0 z-10 bg-muted">
-// 						{table.getHeaderGroups().map((headerGroup) => (
-// 							<TableRow key={headerGroup.id}>
-// 								{headerGroup.headers.map((header) => (
-// 									<TableHead colSpan={header.colSpan} key={header.id}>
-// 										{header.isPlaceholder
-// 											? null
-// 											: flexRender(
-// 													header.column.columnDef.header,
-// 													header.getContext()
-// 												)}
-// 									</TableHead>
-// 								))}
-// 							</TableRow>
-// 						))}
-// 					</TableHeader>
-// 					<TableBody className="**:data-[slot=table-cell]:first:w-8">
-// 						{table.getRowModel().rows?.length ? (
-// 							<SortableContext
-// 								items={dataIds}
-// 								strategy={verticalListSortingStrategy}
-// 							>
-// 								{table.getRowModel().rows.map((row) => (
-// 									<DraggableRow key={row.id} row={row} />
-// 								))}
-// 							</SortableContext>
-// 						) : (
-// 							<TableRow>
-// 								<TableCell
-// 									className="h-24 text-center"
-// 									colSpan={columns.length}
-// 								>
-// 									<div className="flex flex-col items-center justify-center space-y-2">
-// 										<UserX className="size-8 text-muted-foreground" />
-// 										<p className="text-muted-foreground">
-// 											{isFiltered
-// 												? 'No users match your filters.'
-// 												: 'No users found.'}
-// 										</p>
-// 										{isFiltered && (
-// 											<Button
-// 												onClick={clearAllFilters}
-// 												size="sm"
-// 												variant="outline"
-// 											>
-// 												Clear filters
-// 											</Button>
-// 										)}
-// 									</div>
-// 								</TableCell>
-// 							</TableRow>
-// 						)}
-// 					</TableBody>
-// 				</Table>
-// 				{/* // ! UNCOMMENT FOR DRAGGABEL ROW */}
-// 				{/* </DndContext> */}
-// 			</div>
-
-// 			{/* Footer with Stats and Pagination */}
-// 			<div className="flex items-center justify-between px-4">
-// 				<div className="hidden flex-1 text-muted-foreground text-sm lg:flex">
-// 					{table.getFilteredSelectedRowModel().rows.length} of{' '}
-// 					{table.getFilteredRowModel().rows.length} row(s) selected.
-// 				</div>
-// 				<div className="flex w-full items-center gap-8 lg:w-fit">
-// 					<div className="hidden items-center gap-2 lg:flex">
-// 						<Label className="font-medium text-sm" htmlFor="rows-per-page">
-// 							Rows per page
-// 						</Label>
-// 						<Select
-// 							onValueChange={(value) => {
-// 								table.setPageSize(Number(value));
-// 							}}
-// 							value={`${table.getState().pagination.pageSize}`}
-// 						>
-// 							<SelectTrigger className="w-20" id="rows-per-page" size="sm">
-// 								<SelectValue
-// 									placeholder={table.getState().pagination.pageSize}
-// 								/>
-// 							</SelectTrigger>
-// 							<SelectContent side="top">
-// 								{[10, 20, 30, 40, 50].map((pageSize) => (
-// 									<SelectItem key={pageSize} value={`${pageSize}`}>
-// 										{pageSize}
-// 									</SelectItem>
-// 								))}
-// 							</SelectContent>
-// 						</Select>
-// 					</div>
-// 					<div className="flex w-fit items-center justify-center font-medium text-sm">
-// 						Page {table.getState().pagination.pageIndex + 1} of{' '}
-// 						{table.getPageCount()}
-// 					</div>
-// 					<div className="ml-auto flex items-center gap-2 lg:ml-0">
-// 						<Button
-// 							className="hidden size-8 p-0 lg:flex"
-// 							disabled={!table.getCanPreviousPage()}
-// 							onClick={() => table.setPageIndex(0)}
-// 							variant="outline"
-// 						>
-// 							<span className="sr-only">Go to first page</span>
-// 							<IconChevronsLeft />
-// 						</Button>
-// 						<Button
-// 							className="size-8"
-// 							disabled={!table.getCanPreviousPage()}
-// 							onClick={() => table.previousPage()}
-// 							size="icon"
-// 							variant="outline"
-// 						>
-// 							<span className="sr-only">Go to previous page</span>
-// 							<IconChevronLeft />
-// 						</Button>
-// 						<Button
-// 							className="size-8"
-// 							disabled={!table.getCanNextPage()}
-// 							onClick={() => table.nextPage()}
-// 							size="icon"
-// 							variant="outline"
-// 						>
-// 							<span className="sr-only">Go to next page</span>
-// 							<IconChevronRight />
-// 						</Button>
-// 						<Button
-// 							className="hidden size-8 lg:flex"
-// 							disabled={!table.getCanNextPage()}
-// 							onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-// 							size="icon"
-// 							variant="outline"
-// 						>
-// 							<span className="sr-only">Go to last page</span>
-// 							<IconChevronsRight />
-// 						</Button>
-// 					</div>
-// 				</div>
-// 			</div>
-// 		</div>
-// 	);
-// }
-
 "use no memo";
 
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import {
-	// arrayMove,
 	SortableContext,
 	useSortable,
 	verticalListSortingStrategy,
@@ -566,10 +12,11 @@ import {
 	IconChevronRight,
 	IconChevronsLeft,
 	IconChevronsRight,
+	IconDotsVertical,
 } from "@tabler/icons-react";
 import {
-	type ColumnDef,
 	type ColumnFiltersState,
+	createColumnHelper,
 	flexRender,
 	getCoreRowModel,
 	getFacetedRowModel,
@@ -584,22 +31,48 @@ import {
 } from "@tanstack/react-table";
 import type { UserWithRole } from "better-auth/plugins/admin";
 import {
+	ArrowDown,
+	ArrowUp,
+	Ban,
 	ChevronDownIcon,
+	Copy,
 	Download,
 	Filter,
 	Layers,
+	Mail,
+	RefreshCw,
 	SearchIcon,
+	ShieldCheck,
+	Trash,
+	UserCircle,
+	User as UserIcon,
 	UserX,
 	X,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
 	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -619,11 +92,14 @@ import {
 import {
 	Select,
 	SelectContent,
+	SelectGroup,
 	SelectItem,
+	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@/components/ui/spinner";
 import {
 	Table,
 	TableBody,
@@ -632,13 +108,84 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Label } from "../../../../../components/ui/label";
-import { userTableFilterFns } from "./columns";
+
+// Define action handlers type
+export type UserActionHandlers = {
+	onDeleteUser: (id: string) => void;
+	onRevokeSessions: (id: string) => void;
+	onImpersonateUser: (id: string) => void;
+	onBanClick: (id: string) => void;
+	onUnbanUser: (id: string) => void;
+	onRoleChange: (id: string, role: "admin" | "user") => void;
+	isLoading?: string;
+};
+
+// Create the column helper with the User type
+const columnHelper = createColumnHelper<UserWithRole>();
+
+// Custom filter function for multi-select role filtering
+const roleFilter = (
+	row: Row<UserWithRole>,
+	columnId: string,
+	filterValue: string[]
+) => {
+	if (!filterValue || filterValue.length === 0) return true;
+	const value = row.getValue(columnId);
+	return filterValue.includes(String(value));
+};
+
+// Custom filter function for banned status
+const bannedFilter = (
+	row: Row<UserWithRole>,
+	columnId: string,
+	filterValue: string
+) => {
+	if (!filterValue) return true;
+	const value = row.getValue(columnId);
+	if (filterValue === "banned") return value === true;
+	if (filterValue === "active") return value === false;
+	return true;
+};
+
+// Column header component with sorting
+const SortableHeader = ({ column, title }: { column: any; title: string }) => {
+	return (
+		<Button
+			// className="h-8 px-2 -ml-2"
+			className={`-ml-2 h-8 px-2 ${
+				column.getCanSort()
+					? "cursor-pointer select-none transition-colors hover:text-blue-400"
+					: ""
+			}`}
+			onClick={() => column.toggleSorting()}
+			variant="ghost"
+		>
+			{title}
+			{{
+				asc: <ArrowUp />,
+				desc: <ArrowDown />,
+			}[column.getIsSorted() as string] ?? null}
+		</Button>
+	);
+};
+
+// Filter functions that can be used globally
+const userTableFilterFns = {
+	roleFilter,
+	bannedFilter,
+};
 
 interface DataTableProps<UserWithRole> {
-	columns: ColumnDef<UserWithRole>[];
 	data: UserWithRole[];
 	onExportData?: () => void;
+	handlers: UserActionHandlers;
+	selfId: string | undefined;
 }
 
 // Custom filter component for select-type filters
@@ -671,12 +218,6 @@ function TableFilter({ column }: { column: any }) {
 	}
 
 	return (
-		// <Input
-		// 	className="max-w-[200px]"
-		// 	onChange={(event) => column.setFilterValue(event.target.value)}
-		// 	placeholder={`Filter ${column.id}...`}
-		// 	value={filterValue || ""}
-		// />
 		<InputGroup>
 			<InputGroupInput
 				className="max-w-[200px]"
@@ -727,7 +268,7 @@ export function DataTableSkeleton() {
 								<Skeleton className="h-4 w-[100px]" />
 							</TableHead>
 							<TableHead>
-								<Skeleton className="h-4 w-[80px]" />
+								<Skeleton className="h-4 w-20" />
 							</TableHead>
 							<TableHead>
 								<Skeleton className="h-4 w-[120px]" />
@@ -753,7 +294,7 @@ export function DataTableSkeleton() {
 									<Skeleton className="h-6 w-[120px]" />
 								</TableCell>
 								<TableCell>
-									<Skeleton className="h-6 w-[80px]" />
+									<Skeleton className="h-6 w-20" />
 								</TableCell>
 								<TableCell>
 									<Skeleton className="h-4 w-[100px]" />
@@ -797,17 +338,11 @@ function DraggableRow({ row }: { row: Row<UserWithRole> }) {
 }
 
 export function DataTable<UserWithRole>({
-	columns,
-	// ! UNCOMMENT FOR DRAGGABEL ROW
-	// data: initialData,
 	data,
 	onExportData,
+	handlers,
+	selfId,
 }: DataTableProps<UserWithRole>) {
-	// const [sorting, setSorting] = useState<SortingState>([
-	// 	{ id: 'createdAt', desc: true },
-	// ]);
-	// ! UNCOMMENT FOR DRAGGABEL ROW
-	// const [data, setData] = useState(() => initialData);
 	const [rowSelection, setRowSelection] = useState({});
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -816,13 +351,6 @@ export function DataTable<UserWithRole>({
 		pageIndex: 0,
 		pageSize: 10,
 	});
-	// ! UNCOMMENT FOR DRAGGABEL ROW
-	// const sortableId = useId();
-	// const sensors = useSensors(
-	// 	useSensor(MouseSensor, {}),
-	// 	useSensor(TouchSensor, {}),
-	// 	useSensor(KeyboardSensor, {})
-	// );
 
 	const dataIds = useMemo<UniqueIdentifier[]>(
 		() => data?.map(({ id }) => id) || [],
@@ -830,6 +358,331 @@ export function DataTable<UserWithRole>({
 	);
 
 	const [globalFilter, setGlobalFilter] = useState("");
+
+	const columns = useMemo(
+		() => [
+			columnHelper.display({
+				id: "select",
+				header: ({ table }) => (
+					<Checkbox
+						aria-label="Select all"
+						checked={
+							table.getIsAllPageRowsSelected() ||
+							(table.getIsSomePageRowsSelected() && "indeterminate")
+						}
+						onCheckedChange={(value) =>
+							table.toggleAllPageRowsSelected(!!value)
+						}
+					/>
+				),
+				cell: ({ row }) => (
+					<Checkbox
+						aria-label="Select row"
+						checked={row.getIsSelected()}
+						onCheckedChange={(value) => row.toggleSelected(!!value)}
+					/>
+				),
+				enableSorting: false,
+				enableHiding: false,
+			}),
+
+			columnHelper.accessor("email", {
+				header: ({ column }) => (
+					<SortableHeader column={column} title="Email" />
+				),
+				cell: ({ getValue, row }) => {
+					const email = getValue();
+					const user = row.original;
+					const isSelf = user.id === selfId;
+					return (
+						<div className="flex items-center gap-2">
+							<span className="block max-w-[200px] truncate font-medium">
+								{email}
+							</span>
+							{!user.emailVerified && (
+								<Badge variant="outline">Unverified</Badge>
+							)}
+							{isSelf && <Badge>You</Badge>}
+						</div>
+					);
+				},
+				enableColumnFilter: true,
+				filterFn: "includesString",
+			}),
+
+			columnHelper.accessor("name", {
+				header: ({ column }) => <SortableHeader column={column} title="Name" />,
+				cell: ({ getValue }) => {
+					const name = getValue();
+					return (
+						<div className="font-medium">
+							{name || (
+								<span className="text-muted-foreground text-sm italic">
+									No name
+								</span>
+							)}
+						</div>
+					);
+				},
+				enableColumnFilter: true,
+				filterFn: "includesString",
+			}),
+
+			columnHelper.accessor("role", {
+				header: ({ column }) => <SortableHeader column={column} title="Role" />,
+				cell: ({ row }) => {
+					const user = row.original;
+					return (
+						<Select
+							disabled={handlers.isLoading === `role-${user.id}`}
+							onValueChange={(value) =>
+								handlers.onRoleChange(user.id, value as "admin" | "user")
+							}
+							value={user.role ?? undefined}
+						>
+							<SelectTrigger className="h-9 w-[140px]">
+								<SelectValue placeholder="Select role" />
+								{handlers.isLoading === `role-${user.id}` && <Spinner />}
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									<SelectLabel>Select Role</SelectLabel>
+									<SelectItem value="admin">
+										<div className="flex items-center gap-2">
+											<ShieldCheck className="size-4 text-purple-600" />
+											<Badge
+												className="font-semibold text-xs"
+												variant="default"
+											>
+												Admin
+											</Badge>
+										</div>
+									</SelectItem>
+									<SelectItem value="user">
+										<div className="flex items-center gap-2">
+											<UserIcon className="size-4 text-blue-600" />
+											<Badge
+												className="font-semibold text-xs"
+												variant="secondary"
+											>
+												User
+											</Badge>
+										</div>
+									</SelectItem>
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+					);
+				},
+				enableColumnFilter: true,
+				filterFn: roleFilter,
+				meta: {
+					filterVariant: "select",
+					filterOptions: [
+						{ label: "Admin", value: "admin" },
+						{ label: "User", value: "user" },
+					],
+				},
+			}),
+
+			columnHelper.accessor("banned", {
+				header: ({ column }) => (
+					<SortableHeader column={column} title="Status" />
+				),
+				cell: ({ getValue }) => {
+					const banned = getValue();
+					return banned ? (
+						<Badge className="font-semibold shadow-sm" variant="destructive">
+							<Ban className="mr-1 size-3" />
+							Banned
+						</Badge>
+					) : (
+						<Badge
+							className="border-green-200 bg-green-50 font-semibold text-green-700 shadow-sm hover:bg-green-100 dark:border-green-900 dark:bg-green-950 dark:text-green-400"
+							variant="outline"
+						>
+							<div className="mr-1 size-2 rounded-full bg-green-500" />
+							Active
+						</Badge>
+					);
+				},
+				enableColumnFilter: true,
+				filterFn: bannedFilter,
+				meta: {
+					filterVariant: "select",
+					filterOptions: [
+						{ label: "Active", value: "active" },
+						{ label: "Banned", value: "banned" },
+					],
+				},
+			}),
+
+			columnHelper.accessor("createdAt", {
+				header: ({ column }) => (
+					<SortableHeader column={column} title="Created" />
+				),
+				cell: ({ getValue }) => {
+					const date = getValue();
+					if (!date)
+						return <span className="text-muted-foreground text-sm">-</span>;
+
+					return (
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<span className="cursor-default font-medium text-sm">
+									{new Intl.DateTimeFormat("en-US", {
+										month: "short",
+										day: "numeric",
+										year: "numeric",
+									}).format(date)}
+								</span>
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>
+									{new Intl.DateTimeFormat("en-US", {
+										dateStyle: "full",
+										timeStyle: "short",
+									}).format(date)}
+								</p>
+							</TooltipContent>
+						</Tooltip>
+					);
+				},
+				enableColumnFilter: false,
+				enableSorting: true,
+			}),
+
+			columnHelper.display({
+				id: "actions",
+				header: "Actions",
+				cell: ({ row }) => {
+					const user = row.original;
+					return (
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button
+									className="size-8 text-muted-foreground transition-colors hover:bg-muted/80 data-[state=open]:bg-muted"
+									size="icon"
+									variant="ghost"
+								>
+									<IconDotsVertical className="size-4" />
+									<span className="sr-only">Open menu</span>
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align="end" className="w-[200px]">
+								<DropdownMenuLabel className="font-semibold">
+									Actions
+								</DropdownMenuLabel>
+								<DropdownMenuSeparator />
+								<DropdownMenuItem
+									className="gap-2"
+									onClick={() => navigator.clipboard.writeText(user.id)}
+								>
+									<Copy className="size-4" />
+									Copy user ID
+								</DropdownMenuItem>
+								<DropdownMenuItem
+									className="gap-2"
+									onClick={() => navigator.clipboard.writeText(user.email)}
+								>
+									<Mail className="size-4" />
+									Copy email
+								</DropdownMenuItem>
+								<DropdownMenuSeparator />
+								<DropdownMenuItem
+									className="gap-2"
+									disabled={handlers.isLoading?.startsWith("impersonate")}
+									onClick={() => handlers.onImpersonateUser(user.id)}
+								>
+									{handlers.isLoading === `impersonate-${user.id}` ? (
+										<Spinner />
+									) : (
+										<UserCircle className="size-4" />
+									)}
+									Impersonate
+								</DropdownMenuItem>
+								<DropdownMenuItem
+									className="gap-2"
+									disabled={handlers.isLoading?.startsWith("revoke")}
+									onClick={() => handlers.onRevokeSessions(user.id)}
+								>
+									{handlers.isLoading === `revoke-${user.id}` ? (
+										<Spinner />
+									) : (
+										<RefreshCw className="size-4" />
+									)}
+									Revoke sessions
+								</DropdownMenuItem>
+								<DropdownMenuSeparator />
+								<DropdownMenuItem
+									className="gap-2"
+									disabled={handlers.isLoading?.startsWith("ban")}
+									onClick={() => {
+										if (user.banned) {
+											handlers.onUnbanUser(user.id);
+										} else {
+											handlers.onBanClick(user.id);
+										}
+									}}
+								>
+									{handlers.isLoading === `ban-${user.id}` ? (
+										<Spinner />
+									) : (
+										<Ban className="size-4" />
+									)}
+									{user.banned ? "Unban user" : "Ban user"}
+								</DropdownMenuItem>
+								<AlertDialog>
+									<AlertDialogTrigger asChild>
+										<DropdownMenuItem
+											className="gap-2 text-red-600 focus:bg-red-50 focus:text-red-600 dark:focus:bg-red-950/20"
+											disabled={handlers.isLoading?.startsWith("delete")}
+											onSelect={(e) => e.preventDefault()}
+										>
+											{handlers.isLoading === `delete-${user.id}` ? (
+												<Spinner />
+											) : (
+												<Trash className="size-4" />
+											)}
+											Delete user
+										</DropdownMenuItem>
+									</AlertDialogTrigger>
+									<AlertDialogContent className="max-w-md">
+										<AlertDialogHeader>
+											<AlertDialogTitle className="text-xl">
+												Are you absolutely sure?
+											</AlertDialogTitle>
+											<AlertDialogDescription className="text-base">
+												This action cannot be undone. This will permanently
+												delete{" "}
+												<span className="font-semibold text-foreground">
+													{user.email}
+												</span>{" "}
+												and remove all their data from the servers.
+											</AlertDialogDescription>
+										</AlertDialogHeader>
+										<AlertDialogFooter>
+											<AlertDialogCancel>Cancel</AlertDialogCancel>
+											<AlertDialogAction
+												className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+												onClick={() => handlers.onDeleteUser(user.id)}
+											>
+												<Trash className="mr-2 size-4" />
+												Delete User
+											</AlertDialogAction>
+										</AlertDialogFooter>
+									</AlertDialogContent>
+								</AlertDialog>
+							</DropdownMenuContent>
+						</DropdownMenu>
+					);
+				},
+				enableSorting: false,
+				enableHiding: false,
+			}),
+		],
+		[handlers]
+	);
 
 	const table = useReactTable({
 		data,
@@ -867,17 +720,6 @@ export function DataTable<UserWithRole>({
 			},
 		},
 	});
-	// ! UNCOMMENT FOR DRAGGABEL ROW
-	// function handleDragEnd(event: DragEndEvent) {
-	// 	const { active, over } = event;
-	// 	if (active && over && active.id !== over.id) {
-	// 		setData((data) => {
-	// 			const oldIndex = dataIds.indexOf(active.id);
-	// 			const newIndex = dataIds.indexOf(over.id);
-	// 			return arrayMove(data, oldIndex, newIndex);
-	// 		});
-	// 	}
-	// }
 
 	const isFiltered = columnFilters.length > 0 || globalFilter.length > 0;
 
@@ -891,13 +733,6 @@ export function DataTable<UserWithRole>({
 			{/* Global Search and Actions */}
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 				<div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2">
-					{/* <Input
-							className="pl-10 w-full sm:w-[300px] h-10 bg-background border-2 focus-visible:ring-2 transition-all"
-							// onChange={(e) => setGlobalFilter(String(e.target.value))}
-							onChange={(e) => table.setGlobalFilter(String(e.target.value))}
-							placeholder="Search users..."
-							value={globalFilter}
-						/> */}
 					<InputGroup>
 						<InputGroupInput
 							className="w-full sm:w-[300px]"
@@ -908,7 +743,6 @@ export function DataTable<UserWithRole>({
 						<InputGroupAddon>
 							<SearchIcon />
 						</InputGroupAddon>
-						{/* {isFiltered && ( */}
 						{globalFilter.length > 0 && (
 							<InputGroupAddon align="inline-end">
 								<InputGroupButton
@@ -940,7 +774,7 @@ export function DataTable<UserWithRole>({
 					<ButtonGroup>
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
-								<Button className="!pl-2" variant="outline">
+								<Button className="pl-2!" variant="outline">
 									<Layers className="size-4" />
 									Columns
 									<ChevronDownIcon />
@@ -977,7 +811,7 @@ export function DataTable<UserWithRole>({
 				.getAllColumns()
 				.filter((column) => column.getCanFilter() && column.getIsVisible())
 				.length > 0 && (
-				<Card className="border-2 bg-gradient-to-br from-background to-muted/10 p-4">
+				<Card className="border-2 bg-linear-to-br from-background to-muted/10 p-4">
 					<div className="mb-3 flex items-center gap-2">
 						<Filter className="size-4 text-muted-foreground" />
 						<h3 className="font-semibold text-sm">Advanced Filters</h3>
@@ -995,16 +829,6 @@ export function DataTable<UserWithRole>({
 									</Label>
 									<div className="flex items-center gap-2">
 										<TableFilter column={column} />
-										{/* {column.getIsFiltered() && (
-											<Button
-												className="size-8 p-0"
-												onClick={() => column.setFilterValue(undefined)}
-												size="sm"
-												variant="ghost"
-											>
-												<X className="size-3.5" />
-											</Button>
-										)} */}
 									</div>
 								</div>
 							))}
@@ -1014,14 +838,6 @@ export function DataTable<UserWithRole>({
 
 			{/* Table */}
 			<div className="overflow-hidden rounded-xl border-2 bg-background shadow-sm">
-				{/* // ! ! UNCOMMENT FOR DRAGGABEL ROW */}
-				{/* <DndContext
-// 					collisionDetection={closestCenter}
-// 					id={sortableId}
-// 					modifiers={[restrictToVerticalAxis]}
-// 					onDragEnd={handleDragEnd}
-// 					sensors={sensors}
-// 				> */}
 				<Table>
 					<TableHeader className="bg-muted/50">
 						{table.getHeaderGroups().map((headerGroup) => (
@@ -1094,8 +910,6 @@ export function DataTable<UserWithRole>({
 						)}
 					</TableBody>
 				</Table>
-				{/* // ! UNCOMMENT FOR DRAGGABEL ROW */}
-				{/* </DndContext> */}
 			</div>
 
 			{/* Footer with Stats and Pagination */}
