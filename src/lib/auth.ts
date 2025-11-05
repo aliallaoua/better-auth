@@ -16,6 +16,8 @@ import {
 import { passkey } from "better-auth/plugins/passkey";
 import { reactStartCookies } from "better-auth/react-start";
 import { eq } from "drizzle-orm";
+// import { serverEnv } from "@/config/env";
+import { serverEnv } from "@/config/server-env";
 import { db } from "@/db/drizzle";
 import { member, schema } from "@/db/schema";
 import {
@@ -32,10 +34,14 @@ export const auth = betterAuth({
 		// github: {
 		// 	clientId: process.env.GITHUB_CLIENT_ID as string,
 		// 	clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+		// 	clientId: serverEnv.GITHUB_CLIENT_ID,
+		// 	clientSecret: serverEnv.GITHUB_CLIENT_SECRET,
 		// },
 		google: {
-			clientId: process.env.GOOGLE_CLIENT_ID as string,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+			// clientId: process.env.GOOGLE_CLIENT_ID as string,
+			// clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+			clientId: serverEnv.GOOGLE_CLIENT_ID,
+			clientSecret: serverEnv.GOOGLE_CLIENT_SECRET,
 		},
 	},
 	emailAndPassword: {

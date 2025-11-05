@@ -2,8 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Resend } from "resend";
 import WelcomeEmail from "@/components/emails/welcome.email";
+// import { serverEnv } from "@/config/env";
+import { serverEnv } from "@/config/server-env";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(serverEnv.RESEND_API_KEY);
 
 export const Route = createFileRoute("/api/send")({
 	server: {

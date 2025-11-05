@@ -7,8 +7,11 @@ import { InvitationEmail } from "@/components/emails/invitation-email";
 import ResetPasswordEmail from "@/components/emails/reset-password";
 import VerifyEmail from "@/components/emails/verify-email";
 import WelcomeEmail from "@/components/emails/welcome.email";
+// import { serverEnv } from "@/config/env";
+import { serverEnv } from "@/config/server-env";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(serverEnv.RESEND_API_KEY);
 
 export const sendTestEmail = createServerFn({ method: "POST" })
 	.inputValidator(
