@@ -19,95 +19,95 @@ interface WelcomeEmailProps {
 
 const WelcomeEmail = ({ username }: WelcomeEmailProps) => {
 	return (
-		<Html dir="ltr" lang="en">
-			<Head />
-			<Preview>Welcome to our community! Let's get you started.</Preview>
+		<Html lang="en" dir="ltr">
 			<Tailwind>
-				<Body className="bg-gray-100 py-[40px] font-sans">
-					<Container className="mx-auto max-w-[600px] rounded-[8px] bg-white p-[32px]">
+				<Head />
+				<Preview>Welcome to our community! Let's get you started.</Preview>
+				<Body className="bg-gray-100 py-10 font-family-sans">
+					<Container className="mx-auto max-w-xl rounded-lg bg-white p-8">
 						{/* Header */}
-						<Section className="mb-[32px] text-center">
-							<Heading className="m-0 mb-[16px] font-bold text-[28px] text-gray-900">
+						<Section className="mb-8 text-center">
+							<Heading className="m-0 mb-4 font-bold text-3xl text-gray-900">
 								Welcome to Our Community!
 							</Heading>
-							<Text className="m-0 text-[16px] text-gray-600">
+							<Text className="m-0 text-base text-gray-600">
 								Hi {username}, we're thrilled to have you on board
 							</Text>
 						</Section>
 
 						{/* Main Content */}
-						<Section className="mb-[32px]">
-							<Text className="mb-[16px] text-[16px] text-gray-700 leading-[24px]">
+						<Section className="mb-8">
+							<Text className="mb-4 text-base text-gray-700 leading-6">
 								Thank you for joining us! You're now part of an amazing
 								community where you can discover new opportunities, connect with
 								like-minded people, and achieve your goals.
 							</Text>
 
-							<Text className="mb-[24px] text-[16px] text-gray-700 leading-[24px]">
+							<Text className="mb-6 text-base text-gray-700 leading-6">
 								Here's what you can do next:
 							</Text>
 
 							{/* Action Items */}
-							<Section className="mb-[24px]">
-								<Text className="mb-[8px] font-semibold text-[14px] text-gray-700">
+							<Section className="mb-6">
+								<Text className="mb-2 font-semibold text-gray-700 text-sm">
 									✓ Complete your profile
 								</Text>
-								<Text className="mb-[16px] ml-[20px] text-[14px] text-gray-600">
+								<Text className="mb-4 ml-5 text-gray-600 text-sm">
 									Add your information to help others connect with you
 								</Text>
 
-								<Text className="mb-[8px] font-semibold text-[14px] text-gray-700">
+								<Text className="mb-2 font-semibold text-gray-700 text-sm">
 									✓ Explore our features
 								</Text>
-								<Text className="mb-[16px] ml-[20px] text-[14px] text-gray-600">
+								<Text className="mb-4 ml-5 text-gray-600 text-sm">
 									Discover all the tools and resources available to you
 								</Text>
 
-								<Text className="mb-[8px] font-semibold text-[14px] text-gray-700">
+								<Text className="mb-2 font-semibold text-gray-700 text-sm">
 									✓ Join the conversation
 								</Text>
-								<Text className="mb-[16px] ml-[20px] text-[14px] text-gray-600">
+								<Text className="mb-4 ml-5 text-gray-600 text-sm">
 									Connect with other members and start building relationships
 								</Text>
 							</Section>
 
 							{/* CTA Button */}
-							<Section className="mb-[32px] text-center">
+							<Section className="mb-8 text-center">
 								<Button
-									className="box-border rounded-[8px] bg-blue-600 px-[32px] py-[16px] font-semibold text-[16px] text-white no-underline"
-									href="http://localhost:3000"
+									href="https://example.com/get-started"
+									className="box-border rounded-lg bg-blue-600 px-8 py-4 font-semibold text-base text-white no-underline"
 								>
 									Get Started Now
 								</Button>
 							</Section>
 
-							<Text className="mb-[16px] text-[16px] text-gray-700 leading-[24px]">
+							<Text className="mb-4 text-base text-gray-700 leading-6">
 								If you have any questions or need help getting started, don't
 								hesitate to reach out to our support team. We're here to help
 								you succeed!
 							</Text>
 						</Section>
 
-						<Hr className="my-[32px] border-gray-200" />
+						<Hr className="my-8 border-gray-200" />
 
 						{/* Footer */}
 						<Section>
-							<Text className="mb-[16px] text-center text-[14px] text-gray-500">
+							<Text className="mb-4 text-center text-gray-500 text-sm">
 								Thanks for choosing us,
 								<br />
 								The Team
 							</Text>
 
-							<Text className="m-0 mb-[8px] text-center text-[12px] text-gray-400">
+							<Text className="m-0 mb-2 text-center text-gray-400 text-xs">
 								123 Business Street, Suite 100
 								<br />
 								City, State 12345
 							</Text>
 
-							<Text className="m-0 text-center text-[12px] text-gray-400">
+							<Text className="m-0 text-center text-gray-400 text-xs">
 								<Link
-									className="text-gray-400 underline"
 									href="https://example.com/unsubscribe"
+									className="text-gray-400 underline"
 								>
 									Unsubscribe
 								</Link>
@@ -119,6 +119,10 @@ const WelcomeEmail = ({ username }: WelcomeEmailProps) => {
 			</Tailwind>
 		</Html>
 	);
+};
+
+WelcomeEmail.PreviewProps = {
+	username: "Ali",
 };
 
 export default WelcomeEmail;

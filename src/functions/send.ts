@@ -29,7 +29,7 @@ export const sendTestEmail = createServerFn({ method: "POST" })
 					? await resend.emails.send({
 							from: "onboarding@resend.dev",
 							to: [handlerData.email],
-							subject: `Hello from Server Function + ${handlerData.emailType}`,
+							subject: `Hello from ${handlerData.emailType} + Server Function`,
 							react: WelcomeEmail({
 								username: handlerData.name,
 							}),
@@ -37,7 +37,7 @@ export const sendTestEmail = createServerFn({ method: "POST" })
 					: await resend.emails.send({
 							from: "onboarding@resend.dev",
 							to: [handlerData.email],
-							subject: `Hello from Server Function + ${handlerData.emailType}`,
+							subject: `Hello from ${handlerData.emailType} + Server Function`,
 							html: `<p>Welcome ${handlerData.name}, please click on this link to verify your email: ${handlerData.url}`,
 						});
 
