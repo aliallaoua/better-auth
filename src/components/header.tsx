@@ -94,7 +94,7 @@ export const HeroHeader = () => {
 
 							<Button
 								onClick={() => setMenuState(!menuState)}
-								aria-label={menuState ? "Close Menu" : "Open Menu"}
+								aria-label={menuState === true ? "Close Menu" : "Open Menu"}
 								className="-m-2.5 -mr-4 relative z-20 block cursor-pointer p-2.5 lg:hidden"
 							>
 								<Menu className="m-auto size-6 in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 duration-200" />

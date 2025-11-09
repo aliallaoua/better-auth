@@ -1,9 +1,8 @@
 import { Settings2, Sparkles, Zap } from "lucide-react";
 import type { ReactNode } from "react";
-// import { BorderTrail } from "@/components/ui/border-trail";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { GlowEffect } from "@/components/ui/glow-effect";
 import { BorderBeam } from "./ui/border-beam";
+import { GlowEffect } from "./ui/glow-effect";
 import { ShineBorder } from "./ui/shine-border";
 
 export default function Features() {

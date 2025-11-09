@@ -3,7 +3,7 @@ import { Resend } from "resend";
 import z from "zod";
 import DeleteAccountConfirmation from "@/components/emails/delete-account-confirmation";
 import EmailChangeApproval from "@/components/emails/email-change-approval";
-import { InvitationEmail } from "@/components/emails/invitation-email";
+import InvitationEmail from "@/components/emails/invitation-email";
 import ResetPasswordEmail from "@/components/emails/reset-password";
 import VerifyEmail from "@/components/emails/verify-email";
 import WelcomeEmail from "@/components/emails/welcome.email";
