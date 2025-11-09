@@ -12,7 +12,7 @@ import {
 	Text,
 } from "@react-email/components";
 
-interface ForgotPasswordEmailProps {
+interface ResetPasswordEmailProps {
 	username: string;
 	userEmail: string;
 	resetLink: string;
@@ -22,70 +22,70 @@ const ResetPasswordEmail = ({
 	username,
 	userEmail,
 	resetLink,
-}: ForgotPasswordEmailProps) => {
+}: ResetPasswordEmailProps) => {
 	return (
-		<Html dir="ltr" lang="en">
+		<Html lang="en" dir="ltr">
 			<Tailwind>
 				<Head />
 				<Preview>Reset your password - Action required</Preview>
-				<Body className="bg-gray-100 py-[40px] font-sans">
-					<Container className="mx-auto max-w-[600px] rounded-[8px] bg-white p-[40px] shadow-sm">
+				<Body className="bg-gray-100 py-10 font-sans">
+					<Container className="mx-auto max-w-2xl rounded-lg bg-white p-10 shadow-sm">
 						{/* Header */}
-						<Section className="mb-[32px] text-center">
-							<Heading className="m-0 mb-[8px] font-bold text-[28px] text-gray-900">
+						<Section className="mb-8 text-center">
+							<Heading className="m-0 mb-2 font-bold text-3xl text-gray-900">
 								Reset Your Password
 							</Heading>
-							<Text className="m-0 text-[16px] text-gray-600">
+							<Text className="m-0 text-base text-gray-600">
 								We received a request to reset your password
 							</Text>
 						</Section>
 
 						{/* Main Content */}
-						<Section className="mb-[32px]">
-							<Text className="m-0 mb-[16px] text-[16px] text-gray-700 leading-[24px]">
-								Hello, {username},
+						<Section className="mb-8">
+							<Text className="m-0 mb-4 text-base text-gray-700 leading-6">
+								Hello {username},
 							</Text>
-							<Text className="m-0 mb-[16px] text-[16px] text-gray-700 leading-[24px]">
+							<Text className="m-0 mb-4 text-base text-gray-700 leading-6">
 								We received a password reset request for your account associated
 								with <strong>{userEmail}</strong>. If you didn't make this
 								request, you can safely ignore this email.
 							</Text>
-							<Text className="m-0 mb-[24px] text-[16px] text-gray-700 leading-[24px]">
+							<Text className="m-0 mb-6 text-base text-gray-700 leading-6">
 								To reset your password, click the button below. This link will
 								expire in 24 hours for security reasons.
 							</Text>
 						</Section>
 
 						{/* Reset Button */}
-						<Section className="mb-[32px] text-center">
+						<Section className="mb-8 text-center">
 							<Button
-								className="box-border rounded-[8px] bg-blue-600 px-[32px] py-[16px] font-semibold text-[16px] text-white no-underline transition-colors hover:bg-blue-700"
 								href={resetLink}
+								className="box-border rounded-lg bg-blue-600 px-8 py-4 font-semibold text-base text-white no-underline transition-colors hover:bg-blue-700"
 							>
 								Reset My Password
 							</Button>
 						</Section>
 
 						{/* Alternative Link */}
-						<Section className="mb-[32px]">
-							<Text className="m-0 mb-[8px] text-[14px] text-gray-600 leading-[20px]">
+						<Section className="mb-8">
+							<Text className="m-0 mb-2 text-gray-600 text-sm leading-5">
 								If the button above doesn't work, copy and paste this link into
 								your browser:
 							</Text>
 							<Link
-								className="break-all text-[14px] text-blue-600 underline"
 								href={resetLink}
+								className="break-all text-blue-600 text-sm underline"
 							>
 								{resetLink}
 							</Link>
 						</Section>
 
 						{/* Security Notice */}
-						<Section className="mb-[32px] rounded-[8px] bg-gray-50 p-[20px]">
-							<Text className="m-0 mb-[8px] font-semibold text-[14px] text-gray-700 leading-[20px]">
+						<Section className="mb-8 rounded-lg bg-gray-50 p-5">
+							<Text className="m-0 mb-2 font-semibold text-gray-700 text-sm leading-5">
 								🔒 Security Notice
 							</Text>
-							<Text className="m-0 text-[14px] text-gray-600 leading-[20px]">
+							<Text className="m-0 text-gray-600 text-sm leading-5">
 								For your security, this password reset link will expire in 24
 								hours. If you didn't request this reset, please contact our
 								support team immediately.
@@ -93,18 +93,18 @@ const ResetPasswordEmail = ({
 						</Section>
 
 						{/* Footer */}
-						<Section className="border-gray-200 border-t pt-[24px]">
-							<Text className="m-0 mb-[8px] text-[12px] text-gray-500 leading-[16px]">
+						<Section className="border-gray-200 border-t pt-6">
+							<Text className="m-0 mb-2 text-gray-500 text-xs leading-4">
 								Best regards,
 								<br />
 								The Security Team
 							</Text>
-							<Text className="m-0 mb-[16px] text-[12px] text-gray-500 leading-[16px]">
+							<Text className="m-0 mb-4 text-gray-500 text-xs leading-4">
 								123 Security Street, Safe City, SC 12345
 							</Text>
-							<Text className="m-0 text-[12px] text-gray-500 leading-[16px]">
+							<Text className="m-0 text-gray-500 text-xs leading-4">
 								© 2025 Your Company. All rights reserved. |
-								<Link className="ml-[4px] text-gray-500 underline" href="#">
+								<Link href="#" className="ml-1 text-gray-500 underline">
 									Unsubscribe
 								</Link>
 							</Text>
@@ -114,6 +114,12 @@ const ResetPasswordEmail = ({
 			</Tailwind>
 		</Html>
 	);
+};
+
+ResetPasswordEmail.PreviewProps = {
+	username: "Ali",
+	userEmail: "ali@example.com",
+	resetLink: "https://yourapp.com/reset-password?token=abc123xyz789",
 };
 
 export default ResetPasswordEmail;

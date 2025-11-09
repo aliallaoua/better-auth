@@ -19,13 +19,13 @@ export const Route = createFileRoute("/api/send")({
 							? await resend.emails.send({
 									from: "onboarding@resend.dev",
 									to: [body.email],
-									subject: `Hello from Server Route + ${body.emailType}`,
+									subject: `Hello from ${body.emailType} + Server Route`,
 									react: WelcomeEmail({ username: body.name }),
 								})
 							: await resend.emails.send({
 									from: "onboarding@resend.dev",
 									to: [body.email],
-									subject: `Hello from Server Route + ${body.emailType}`,
+									subject: `Hello from ${body.emailType} + Server Route`,
 									html: `<p>Welcome ${body.name}, please click on this link to verify your email: ${body.url}`,
 								});
 

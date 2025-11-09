@@ -27,100 +27,100 @@ const DeleteAccountConfirmation = ({
 	const confirmationUrl = `${url}?token=${token}`;
 
 	return (
-		<Html dir="ltr" lang="en">
+		<Html lang="en" dir="ltr">
 			<Tailwind>
 				<Head />
-				<Body className="bg-gray-100 py-[40px] font-sans">
-					<Container className="mx-auto max-w-[600px] rounded-[8px] bg-white px-[40px] py-[40px]">
+				<Body className="bg-gray-100 py-10 font-sans">
+					<Container className="mx-auto max-w-2xl rounded-lg bg-white px-10 py-10">
 						<Section>
-							<Heading className="mb-[24px] text-center font-bold text-[24px] text-gray-900">
+							<Heading className="mb-6 text-center font-bold text-2xl text-gray-900">
 								Confirm Account Deletion
 							</Heading>
 
-							<Text className="mb-[16px] text-[16px] text-gray-700">
+							<Text className="mb-4 text-base text-gray-700">
 								Hello {username},
 							</Text>
 
-							<Text className="mb-[16px] text-[16px] text-gray-700">
+							<Text className="mb-4 text-base text-gray-700">
 								We received a request to permanently delete the account
 								associated with <strong>{userEmail}</strong>. This action cannot
 								be undone and will result in the permanent loss of all your
 								data, including:
 							</Text>
 
-							<Text className="mb-[8px] ml-[16px] text-[14px] text-gray-600">
+							<Text className="mb-2 ml-4 text-gray-600 text-sm">
 								• Your profile information
 							</Text>
-							<Text className="mb-[8px] ml-[16px] text-[14px] text-gray-600">
+							<Text className="mb-2 ml-4 text-gray-600 text-sm">
 								• All saved content and preferences
 							</Text>
-							<Text className="mb-[8px] ml-[16px] text-[14px] text-gray-600">
+							<Text className="mb-2 ml-4 text-gray-600 text-sm">
 								• Account history and activity
 							</Text>
-							<Text className="mb-[24px] ml-[16px] text-[14px] text-gray-600">
+							<Text className="mb-6 ml-4 text-gray-600 text-sm">
 								• Any associated subscriptions or services
 							</Text>
 
-							<Section className="mb-[24px] rounded-[8px] border border-red-200 bg-red-50 p-[16px]">
-								<Text className="mb-[8px] font-semibold text-[14px] text-red-800">
+							<Section className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4">
+								<Text className="mb-2 font-semibold text-red-800 text-sm">
 									⚠️ Warning: This action is irreversible
 								</Text>
-								<Text className="m-0 text-[14px] text-red-700">
+								<Text className="m-0 text-red-700 text-sm">
 									Once you confirm the deletion, your account and all associated
 									data will be permanently removed from our systems within 24
 									hours.
 								</Text>
 							</Section>
 
-							<Text className="mb-[24px] text-[16px] text-gray-700">
+							<Text className="mb-6 text-base text-gray-700">
 								If you're sure you want to proceed with deleting your account,
 								please click the button below to confirm:
 							</Text>
 
-							<Section className="mb-[32px] text-center">
+							<Section className="mb-8 text-center">
 								<Button
-									className="box-border rounded-[8px] bg-red-600 px-[32px] py-[12px] font-semibold text-[16px] text-white no-underline"
 									href={confirmationUrl}
+									className="box-border rounded-lg bg-red-600 px-8 py-3 font-semibold text-base text-white no-underline"
 								>
 									Confirm Account Deletion
 								</Button>
 							</Section>
 
-							<Text className="mb-[16px] text-[14px] text-gray-600">
+							<Text className="mb-4 text-gray-600 text-sm">
 								If you didn't request this account deletion, please ignore this
 								email or contact our support team immediately. Your account will
 								remain active and secure.
 							</Text>
 
-							<Text className="mb-[32px] text-[14px] text-gray-600">
+							<Text className="mb-8 text-gray-600 text-sm">
 								This confirmation link will expire in 24 hours for security
 								purposes.
 							</Text>
 
-							<Hr className="my-[32px] border-gray-200" />
+							<Hr className="my-8 border-gray-200" />
 
-							<Text className="mb-[8px] text-[12px] text-gray-500">
+							<Text className="mb-2 text-gray-500 text-xs">
 								Best regards,
 								<br />
 								The Security Team
 							</Text>
 
-							<Text className="m-0 text-[12px] text-gray-500">
+							<Text className="m-0 text-gray-500 text-xs">
 								123 Security Street, Safe City, SC 12345
 								<br />
 								<a
-									className="text-gray-500 underline"
 									href="mailto:support@company.com"
+									className="text-gray-500 underline"
 								>
 									support@company.com
 								</a>{" "}
 								|
-								<a className="ml-[8px] text-gray-500 underline" href="#">
+								<a href="#" className="ml-2 text-gray-500 underline">
 									Unsubscribe
 								</a>
 							</Text>
 
-							<Text className="m-0 mt-[16px] text-[12px] text-gray-400">
+							<Text className="m-0 mt-4 text-gray-400 text-xs">
 								© {new Date().getFullYear()} Company Name. All rights reserved.
 							</Text>
 						</Section>
@@ -132,8 +132,8 @@ const DeleteAccountConfirmation = ({
 };
 
 DeleteAccountConfirmation.PreviewProps = {
-	username: "John Doe",
-	userEmail: "john.doe@example.com",
+	username: "Ali",
+	userEmail: "ali@example.com",
 	url: "https://yourapp.com/confirm-delete",
 	token: "abc123xyz789",
 };

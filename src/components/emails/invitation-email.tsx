@@ -25,7 +25,7 @@ interface InvitationEmailProps {
 	inviteLink?: string;
 }
 
-export const InvitationEmail = ({
+const InvitationEmail = ({
 	username,
 	invitedByUsername,
 	invitedByEmail,
@@ -36,19 +36,19 @@ export const InvitationEmail = ({
 	const previewText = `Join ${invitedByUsername} on BetterAuth`;
 	return (
 		<Html>
-			<Head />
-			<Preview>{previewText}</Preview>
 			<Tailwind>
+				<Head />
+				<Preview>{previewText}</Preview>
 				<Body className="mx-auto my-auto bg-white px-2 font-sans">
-					<Container className="mx-auto my-[40px] max-w-[465px] rounded border border-[#eaeaea] border-solid p-[20px]">
+					<Container className="mx-auto my-10 max-w-[465px] rounded border border-[#eaeaea] border-solid p-5">
 						<Heading className="mx-0 my-[30px] p-0 text-center font-normal text-[24px] text-black">
 							Join <strong>{invitedByUsername}</strong> on{" "}
 							<strong>Better Auth.</strong>
 						</Heading>
-						<Text className="text-[14px] text-black leading-[24px]">
+						<Text className="text-[14px] text-black leading-6">
 							Hello there,
 						</Text>
-						<Text className="text-[14px] text-black leading-[24px]">
+						<Text className="text-[14px] text-black leading-6">
 							<strong>{invitedByUsername}</strong> (
 							<Link
 								className="text-blue-600 no-underline"
@@ -60,21 +60,24 @@ export const InvitationEmail = ({
 							<strong>Better Auth</strong>.
 						</Text>
 						<Section>
-							{teamImage ? (
-								<Row>
-									<Column align="left">
-										<Image
-											className="rounded-full"
-											fetchPriority="high"
-											height={64}
-											src={teamImage}
-											width={64}
-										/>
-									</Column>
-								</Row>
-							) : null}
+							{teamImage && (
+								<Section className="my-5">
+									<Row>
+										<Column align="left">
+											<Image
+												alt={`${teamName} team image`}
+												className="rounded-full"
+												fetchPriority="high"
+												height={64}
+												src={teamImage}
+												width={64}
+											/>
+										</Column>
+									</Row>
+								</Section>
+							)}
 						</Section>
-						<Section className="mt-[32px] mb-[32px] text-center">
+						<Section className="mt-8 mb-8 text-center">
 							<Button
 								className="rounded bg-[#000000] px-5 py-3 text-center font-semibold text-[12px] text-white no-underline"
 								href={inviteLink}
@@ -82,14 +85,14 @@ export const InvitationEmail = ({
 								Join the team
 							</Button>
 						</Section>
-						<Text className="text-[14px] text-black leading-[24px]">
+						<Text className="text-[14px] text-black leading-6">
 							or copy and paste this URL into your browser:{" "}
 							<Link className="text-blue-600 no-underline" href={inviteLink}>
 								{inviteLink}
 							</Link>
 						</Text>
 						<Hr className="mx-0 my-[26px] w-full border border-[#eaeaea] border-solid" />
-						<Text className="text-[#666666] text-[12px] leading-[24px]">
+						<Text className="text-[#666666] text-[12px] leading-6">
 							This invitation was intended for{" "}
 							<span className="text-black">{username}</span>. If you were not
 							expecting this invitation, you can ignore this email.
@@ -100,3 +103,14 @@ export const InvitationEmail = ({
 		</Html>
 	);
 };
+
+InvitationEmail.PreviewProps = {
+	username: "Seif Eddine",
+	invitedByUsername: "Ali",
+	invitedByEmail: "ali@company.com",
+	teamName: "Development Team",
+	teamImage: "https://new.email/static/app/placeholder.png",
+	inviteLink: "https://betterauth.com/invite/abc123",
+};
+
+export default InvitationEmail;
