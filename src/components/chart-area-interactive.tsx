@@ -170,7 +170,7 @@ export function ChartAreaInteractive() {
 				</CardDescription>
 				<CardAction>
 					<ToggleGroup
-						className="*:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex hidden"
+						className="@[767px]/card:flex hidden *:data-[slot=toggle-group-item]:px-4!"
 						onValueChange={setTimeRange}
 						type="single"
 						value={timeRange}
