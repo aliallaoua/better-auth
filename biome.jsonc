@@ -1,103 +1,103 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.3.2/schema.json",
-	// "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"useIgnoreFile": true,
-		"defaultBranch": "main"
-	},
-	"extends": ["ultracite/core", "ultracite/react", "ultracite/remix"],
-	"files": {
-		"ignoreUnknown": false,
-		"includes": [
-			"**/src/**/*",
-			"**/.vscode/**/*",
-			"**/index.html",
-			"**/vite.config.js",
-			"!**/src/routeTree.gen.ts",
-			"!**/src/components/ui",
-			"!**/src/hooks/use-mobile.ts"
-		]
-	},
-	"formatter": {
-		"enabled": true,
-		"indentStyle": "tab"
-	},
-	"assist": {
-		"enabled": true,
-		"actions": {
-			"source": {
-				"organizeImports": "on",
-				"useSortedAttributes": "off"
-			}
-		}
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"a11y": {
-				"noRedundantAlt": "off",
-				"noSvgWithoutTitle": "off",
-				"useValidAnchor": "off"
-			},
-			"complexity": {
-				"noExcessiveCognitiveComplexity": "off"
-			},
-			"correctness": {
-				"noChildrenProp": "off",
-				// "no-unused-vars": "off"
-				"noUnusedVariables": "off",
-				// "no-unused-vars": "off"
-				"noReactPropAssignments": "error",
-				// "react-hooks/rules-of-hooks": "error"
-				"useHookAtTopLevel": "error",
-				// "react-hooks/exhaustive-deps": "warn"
-				"useExhaustiveDependencies": "warn",
-				"useImageSize": "off"
-			},
-			"performance": {
-				"noImgElement": "off",
-				"noNamespaceImport": "off",
-				"useTopLevelRegex": "off"
-			},
-			"nursery": {
-				"noShadow": "off",
-				"useConsistentArrowReturn": "off"
-			},
-			"security": {
-				"noDangerouslySetInnerHtml": "off"
-			},
-			"style": {
-				"noHeadElement": "off",
-				"noMagicNumbers": "off",
-				"noNestedTernary": "off",
-				"noNonNullAssertion": "off",
-				"useBlockStatements": "off",
-				// eslint-plugin-react-refresh: react-refresh/only-export-components
-				"useComponentExportOnlyModules": "error",
-				"useNamingConvention": "off",
-				"useConsistentTypeDefinitions": "off"
-			},
-			"suspicious": {
-				"noArrayIndexKey": "off",
-				"noExplicitAny": "warn",
-				"noEmptyBlockStatements": "off",
-				"noConsole": "off",
-				"useAwait": "off",
-				"useStaticResponseMethods": "off"
-			}
-		}
-	},
-	"javascript": {
-		"formatter": {
-			"quoteStyle": "double",
-			"trailingCommas": "es5"
-		}
-	},
-	"css": {
-		"parser": {
-			"tailwindDirectives": true
-		}
-	}
+  "$schema": "https://biomejs.dev/schemas/2.3.5/schema.json",
+  // "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  },
+  "extends": ["ultracite/core", "ultracite/react", "ultracite/remix"],
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "**/src/**/*",
+      "**/.vscode/**/*",
+      "**/index.html",
+      "**/vite.config.js",
+      "!**/src/routeTree.gen.ts",
+      "!**/src/components/ui",
+      "!**/src/hooks/use-mobile.ts"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "tab"
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedAttributes": "off"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "a11y": {
+        "noRedundantAlt": "off",
+        "noSvgWithoutTitle": "off",
+        "useValidAnchor": "off"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "off"
+      },
+      "correctness": {
+        "noChildrenProp": "off",
+        // "no-unused-vars": "off"
+        "noUnusedVariables": "off",
+        // "no-unused-vars": "off"
+        "noReactPropAssignments": "error",
+        // "react-hooks/rules-of-hooks": "error"
+        "useHookAtTopLevel": "error",
+        // "react-hooks/exhaustive-deps": "warn"
+        "useExhaustiveDependencies": "warn",
+        "useImageSize": "off"
+      },
+      "performance": {
+        "noImgElement": "off",
+        "noNamespaceImport": "off",
+        "useTopLevelRegex": "off"
+      },
+      "nursery": {
+        "noShadow": "off",
+        "useConsistentArrowReturn": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
+      "style": {
+        "noHeadElement": "off",
+        "noMagicNumbers": "off",
+        "noNestedTernary": "off",
+        "noNonNullAssertion": "off",
+        "useBlockStatements": "off",
+        // eslint-plugin-react-refresh: react-refresh/only-export-components
+        "useComponentExportOnlyModules": "error",
+        "useNamingConvention": "off",
+        "useConsistentTypeDefinitions": "off"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "off",
+        "noExplicitAny": "warn",
+        "noEmptyBlockStatements": "off",
+        "noConsole": "off",
+        "useAwait": "off",
+        "useStaticResponseMethods": "off"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "trailingCommas": "es5"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  }
 }
