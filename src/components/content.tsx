@@ -4,10 +4,10 @@ export default function ContentSection() {
 	return (
 		<section className="py-16 md:py-32">
 			<div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16">
-				<h2 className="relative z-10 max-w-xl font-medium text-4xl lg:text-5xl">
-					The ecosystem that powers your full-stack TypeScript apps.
+				<h2 className="mb-2 bg-linear-to-br from-black to-gray-300/80 bg-clip-text text-center text-5xl text-transparent leading-[120%] tracking-tighter md:text-6xl dark:from-white dark:to-[#ffffff80]">
+					The ecosystem that powers your full-stack TypeScript apps
 				</h2>
-				<div className="grid gap-6 sm:grid-cols-2 md:gap-12 lg:gap-24">
+				<div className="grid gap-6 pt-10 sm:grid-cols-2 md:gap-12 lg:gap-24">
 					<div className="relative mb-6 sm:mb-0">
 						<div className="relative aspect-76/59 rounded-2xl bg-linear-to-b from-zinc-300 to-transparent p-px dark:from-zinc-700">
 							<Image

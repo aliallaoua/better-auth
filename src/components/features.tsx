@@ -10,12 +10,14 @@ export default function Features() {
 		<section className="bg-zinc-50 py-16 md:py-32 dark:bg-transparent">
 			<div className="@container mx-auto max-w-5xl px-6">
 				<div className="text-center">
-					<h2 className="text-balance font-semibold text-4xl lg:text-5xl">
+					<h2 className="mb-3 bg-linear-to-br from-black to-gray-300/80 bg-clip-text font-semibold text-5xl text-transparent leading-[120%] tracking-tighter md:text-left dark:from-white dark:to-[#ffffff80]">
 						Built to cover your needs
 					</h2>
-					<p className="mt-4">
-						Libero sapiente aliquam quibusdam aspernatur, praesentium iusto
-						repellendus.
+					<p className="mb-12 text-balance text-center font-normal text-base text-muted-foreground md:text-left md:text-xl md:leading-normal">
+						A modern TypeScript ecosystem built for speed, reliability, and type
+						safety — powered by TanStack Start, Better Auth, Drizzle ORM, and
+						Neon. Styled beautifully with Tailwind and Shadcn, and polished with
+						Ultracite for consistent, AI-ready code.
 					</p>
 				</div>
 				<div className="mx-auto mt-8 grid @min-4xl:max-w-full max-w-sm @min-4xl:grid-cols-3 gap-6 *:text-center md:mt-16">
