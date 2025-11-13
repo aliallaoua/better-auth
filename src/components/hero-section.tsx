@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
-import { ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { TextEffect } from "@/components/ui/text-effect";
 import { HeroHeader } from "./header";
@@ -43,6 +43,29 @@ export default function HeroSection() {
 						<div className="-z-10 absolute inset-0 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
 						<div className="mx-auto max-w-5xl px-6">
 							<div className="sm:mx-auto lg:mt-0 lg:mr-auto">
+								<AnimatedGroup variants={transitionVariants}>
+									<Link
+										to="#link"
+										className="group mx-auto flex w-fit items-center gap-4 rounded-full border bg-muted p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 hover:bg-background dark:border-t-white/5 dark:shadow-zinc-950 dark:hover:border-t-border"
+									>
+										<span className="text-foreground text-sm">
+											Introducing Support for AI Models
+										</span>
+										<span className="block h-4 w-0.5 border-l bg-white dark:border-background dark:bg-zinc-700" />
+
+										<div className="size-6 overflow-hidden rounded-full bg-background duration-500 group-hover:bg-muted">
+											<div className="-translate-x-1/2 flex w-12 duration-500 ease-in-out group-hover:translate-x-0">
+												<span className="flex size-6">
+													<ArrowRight className="m-auto size-3" />
+												</span>
+												<span className="flex size-6">
+													<ArrowRight className="m-auto size-3" />
+												</span>
+											</div>
+										</div>
+									</Link>
+								</AnimatedGroup>
+
 								<TextEffect
 									preset="fade-in-blur"
 									speedSegment={0.3}

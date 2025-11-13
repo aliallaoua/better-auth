@@ -10,7 +10,7 @@ export default function Features() {
 		<section className="bg-zinc-50 py-16 md:py-32 dark:bg-transparent">
 			<div className="@container mx-auto max-w-5xl px-6">
 				<div className="text-center">
-					<h2 className="mb-3 bg-linear-to-br from-black to-gray-300/80 bg-clip-text font-semibold text-5xl text-transparent leading-[120%] tracking-tighter md:text-left dark:from-white dark:to-[#ffffff80]">
+					<h2 className="mb-3 bg-linear-to-br from-black to-gray-300/80 bg-clip-text font-semibold text-5xl text-transparent leading-[135%] tracking-tighter md:text-left dark:from-white dark:to-[#ffffff80]">
 						Built to cover your needs
 					</h2>
 					<p className="mb-12 text-balance text-center font-normal text-base text-muted-foreground md:text-left md:text-xl md:leading-normal">
@@ -42,7 +42,7 @@ export default function Features() {
 						</CardHeader>
 
 						<CardContent>
-							<p className="text-sm">
+							<p className="text-muted-foreground text-sm">
 								End-to-end type safety across TanStack Start, Drizzle ORM, and
 								Better Auth ensures reliable, predictable apps.
 							</p>
@@ -99,7 +99,7 @@ export default function Features() {
 							</CardHeader>
 
 							<CardContent>
-								<p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
+								<p className="mt-3 text-muted-foreground text-sm">
 									Deploy seamlessly on any Vite-compatible provider. Neon's
 									serverless Postgres adapts automatically.
 								</p>
@@ -118,7 +118,7 @@ export default function Features() {
 						</CardHeader>
 
 						<CardContent>
-							<p className="mt-3 text-sm">
+							<p className="mt-3 text-muted-foreground text-sm">
 								Ultracite and Biome keep your codebase consistent and AI-ready
 								for future development workflows.
 							</p>
