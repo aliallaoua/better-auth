@@ -42,7 +42,9 @@
         "useValidAnchor": "off"
       },
       "complexity": {
-        "noExcessiveCognitiveComplexity": "off"
+        "noExcessiveCognitiveComplexity": "off",
+        // from demo.better-auth
+        "useDateNow": "error"
       },
       "correctness": {
         "noChildrenProp": "off",
