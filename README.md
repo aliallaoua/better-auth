@@ -50,6 +50,23 @@ Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
 pnpx shadcn@latest add button
 ```
 
+Components used in this project
+```bash
+pnpm dlx shadcn@latest add alert-dialog alert avatar badge breadcrumb button-group button calendar card chart checkbox command dialog drawer dropdown-menu empty field input-group input item label navigation-menu popover radio-group select separator sheet sidebar skeleton slider sonner spinner switch table tabs textarea toggle-group toggle tooltip
+```
+
+```bash
+pnpm dlx shadcn add @tailark/hero-section-2 @tailark/features-1 @tailark/content-1 @tailark/call-to-action-1 @tailark/footer-1
+```
+
+```bash
+ppnpm dlx shadcn add @motion-primitives/animated-group @motion-primitives/border-trail @motion-primitives/glow-effect @motion-primitives/text-effect
+```
+
+```bash
+pnpm dlx shadcn add @magicui/border-beam @magicui/shine-border
+```
+
 
 
 ## Routing

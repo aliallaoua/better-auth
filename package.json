@@ -50,7 +50,7 @@
 		"@tanstack/react-form": "^1.25.0",
 		"@tanstack/react-form-devtools": "^0.2.1",
 		"@tanstack/react-form-start": "^1.25.0",
-		"@tanstack/react-query": "^5.90.8",
+		"@tanstack/react-query": "^5.90.9",
 		"@tanstack/react-query-devtools": "^5.90.2",
 		"@tanstack/react-router": "^1.136.1",
 		"@tanstack/react-router-devtools": "^1.136.1",
@@ -73,7 +73,7 @@
 		"react-day-picker": "^9.11.1",
 		"react-dom": "^19.2.0",
 		"react-qr-code": "^2.0.18",
-		"recharts": "2.15.4",
+		"recharts": "3.4.1",
 		"resend": "^6.4.2",
 		"sonner": "^2.0.7",
 		"tailwind-merge": "^3.4.0",
@@ -98,6 +98,6 @@
 		"typescript": "^5.9.3",
 		"ultracite": "6.3.2",
 		"vite": "^7.2.2",
-		"vitest": "^4.0.8"
+		"vitest": "^4.0.9"
 	}
 }
