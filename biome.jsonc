@@ -17,7 +17,8 @@
       "**/vite.config.js",
       "!**/src/routeTree.gen.ts",
       "!**/src/components/ui",
-      "!**/src/hooks/use-mobile.ts"
+      "!**/src/hooks/use-mobile.ts",
+      "!**/migrations/**/*"
     ]
   },
   "formatter": {
