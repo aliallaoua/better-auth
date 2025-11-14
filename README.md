@@ -50,7 +50,7 @@ Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
 pnpx shadcn@latest add button
 ```
 
-Components used in this project
+### Components used in this project
 ```bash
 pnpm dlx shadcn@latest add alert-dialog alert avatar badge breadcrumb button-group button calendar card chart checkbox command dialog drawer dropdown-menu empty field input-group input item label navigation-menu popover radio-group select separator sheet sidebar skeleton slider sonner spinner switch table tabs textarea toggle-group toggle tooltip
 ```
