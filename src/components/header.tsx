@@ -92,80 +92,80 @@ export const HeroHeader = () => {
 								<Logo />
 							</Link>
 
-							<Button
+							<button
+								type="button"
 								onClick={() => setMenuState(!menuState)}
-								aria-label={menuState === true ? "Close Menu" : "Open Menu"}
+								aria-label={menuState ? "Close Menu" : "Open Menu"}
 								className="-m-2.5 -mr-4 relative z-20 block cursor-pointer p-2.5 lg:hidden"
 							>
 								<Menu className="m-auto size-6 in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 duration-200" />
 								<X className="-rotate-180 absolute inset-0 m-auto size-6 in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 scale-0 in-data-[state=active]:opacity-100 opacity-0 duration-200" />
-							</Button>
+							</button>
 
-							<NavigationMenu viewport={false}>
-								<NavigationMenuList>
-									<NavigationMenuItem>
-										<NavigationMenuTrigger className="text-muted-foreground duration-150 hover:text-accent-foreground">
-											Home
-										</NavigationMenuTrigger>
-										<NavigationMenuContent>
-											<ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-												<li className="row-span-3">
-													<NavigationMenuLink asChild>
-														<Link
-															className="flex h-full w-full select-none flex-col justify-end rounded-md bg-linear-to-b from-muted/50 to-muted p-6 no-underline outline-hidden focus:shadow-md"
-															to="/"
-														>
-															<div className="mt-4 mb-2 font-medium text-lg">
-																shadcn/ui
-															</div>
-															<p className="text-muted-foreground text-sm leading-tight">
-																Beautifully designed components built with
-																Tailwind CSS.
-															</p>
-														</Link>
-													</NavigationMenuLink>
-												</li>
-												<ListItem href="/docs" title="Introduction">
-													Re-usable components built using Radix UI and Tailwind
-													CSS.
-												</ListItem>
-												<ListItem
-													href="/docs/installation"
-													title="Installation"
-												>
-													How to install dependencies and structure your app.
-												</ListItem>
-												<ListItem
-													href="/docs/primitives/typography"
-													title="Typography"
-												>
-													Styles for headings, paragraphs, lists...etc
-												</ListItem>
-											</ul>
-										</NavigationMenuContent>
-									</NavigationMenuItem>
-									<NavigationMenuItem>
-										<NavigationMenuTrigger className="text-muted-foreground duration-150 hover:text-accent-foreground">
-											Components
-										</NavigationMenuTrigger>
-										<NavigationMenuContent>
-											<ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-												{components.map((component) => (
-													<ListItem
-														key={component.title}
-														title={component.title}
-														href={component.href}
-													>
-														{component.description}
+							<div className="hidden lg:flex lg:items-center lg:gap-12">
+								<NavigationMenu viewport={false}>
+									<NavigationMenuList>
+										<NavigationMenuItem>
+											<NavigationMenuTrigger className="text-muted-foreground duration-150 hover:text-accent-foreground">
+												Home
+											</NavigationMenuTrigger>
+											<NavigationMenuContent>
+												<ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+													<li className="row-span-3">
+														<NavigationMenuLink asChild>
+															<Link
+																className="flex h-full w-full select-none flex-col justify-end rounded-md bg-linear-to-b from-muted/50 to-muted p-6 no-underline outline-hidden focus:shadow-md"
+																to="/"
+															>
+																<div className="mt-4 mb-2 font-medium text-lg">
+																	shadcn/ui
+																</div>
+																<p className="text-muted-foreground text-sm leading-tight">
+																	Beautifully designed components built with
+																	Tailwind CSS.
+																</p>
+															</Link>
+														</NavigationMenuLink>
+													</li>
+													<ListItem href="/docs" title="Introduction">
+														Re-usable components built using Radix UI and
+														Tailwind CSS.
 													</ListItem>
-												))}
-											</ul>
-										</NavigationMenuContent>
-									</NavigationMenuItem>
-								</NavigationMenuList>
-							</NavigationMenu>
-
-							<div className="hidden lg:block">
+													<ListItem
+														href="/docs/installation"
+														title="Installation"
+													>
+														How to install dependencies and structure your app.
+													</ListItem>
+													<ListItem
+														href="/docs/primitives/typography"
+														title="Typography"
+													>
+														Styles for headings, paragraphs, lists...etc
+													</ListItem>
+												</ul>
+											</NavigationMenuContent>
+										</NavigationMenuItem>
+										<NavigationMenuItem>
+											<NavigationMenuTrigger className="text-muted-foreground duration-150 hover:text-accent-foreground">
+												Components
+											</NavigationMenuTrigger>
+											<NavigationMenuContent>
+												<ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+													{components.map((component) => (
+														<ListItem
+															key={component.title}
+															title={component.title}
+															href={component.href}
+														>
+															{component.description}
+														</ListItem>
+													))}
+												</ul>
+											</NavigationMenuContent>
+										</NavigationMenuItem>
+									</NavigationMenuList>
+								</NavigationMenu>
 								<ul className="flex gap-8 text-sm">
 									{menuItems.map((item, index) => (
 										<li key={index}>
@@ -196,7 +196,7 @@ export const HeroHeader = () => {
 									))}
 								</ul>
 							</div>
-							<div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
+							<div className="flex w-full flex-row gap-3 md:w-fit">
 								<a
 									href="https://github.com/aliallaoua/"
 									rel="noreferrer"
