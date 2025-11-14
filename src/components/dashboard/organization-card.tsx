@@ -1,4 +1,4 @@
-import { formOptions } from "@tanstack/react-form";
+import { formOptions } from "@tanstack/react-form-start";
 import type { ErrorContext, SuccessContext } from "better-auth/react";
 import { ChevronDownIcon, MailPlus } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
