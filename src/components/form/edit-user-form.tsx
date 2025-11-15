@@ -1,4 +1,4 @@
-import { formOptions } from "@tanstack/react-form-start";
+import { formOptions } from "@tanstack/react-form";
 import { useRouter } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import type { ErrorContext } from "better-auth/react";

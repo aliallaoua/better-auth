@@ -1,4 +1,4 @@
-import { formOptions } from "@tanstack/react-form-start";
+import { formOptions } from "@tanstack/react-form";
 import type { ErrorContext, SuccessContext } from "better-auth/react";
 import { ShieldCheck, ShieldOff } from "lucide-react";
 import { useState } from "react";

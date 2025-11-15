@@ -1,4 +1,4 @@
-import { formOptions } from "@tanstack/react-form-start";
+import { formOptions } from "@tanstack/react-form";
 import { Link } from "@tanstack/react-router";
 import { Key } from "lucide-react";
 import { Button } from "@/components/ui/button";

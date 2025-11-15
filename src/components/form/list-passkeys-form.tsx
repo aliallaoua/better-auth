@@ -1,4 +1,4 @@
-import { formOptions } from "@tanstack/react-form-start";
+import { formOptions } from "@tanstack/react-form";
 import type { ErrorContext } from "better-auth/react";
 import { Fingerprint, Trash } from "lucide-react";
 import { useState } from "react";

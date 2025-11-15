@@ -1,4 +1,4 @@
-import { formOptions } from "@tanstack/react-form-start";
+import { formOptions } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
 import z from "zod";

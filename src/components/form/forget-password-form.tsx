@@ -1,4 +1,4 @@
-import { formOptions } from "@tanstack/react-form-start";
+import { formOptions } from "@tanstack/react-form";
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
