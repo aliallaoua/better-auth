@@ -84,7 +84,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<ThemeProvider>
 					{/* <Header /> */}
 					<HeroHeader />
-					{children}
+					<main className="min-h-screen [view-transition-name:main-content]">
+						{children}
+					</main>
 					<Toaster closeButton richColors theme="system" />
 					<TanStackDevtools
 						plugins={[

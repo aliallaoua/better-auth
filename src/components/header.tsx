@@ -88,6 +88,7 @@ export const HeroHeader = () => {
 								to="/"
 								aria-label="home"
 								className="flex items-center space-x-2"
+								viewTransition={{ types: ["slide-right"] }}
 							>
 								<Logo />
 							</Link>
@@ -116,6 +117,7 @@ export const HeroHeader = () => {
 															<Link
 																className="flex h-full w-full select-none flex-col justify-end rounded-md bg-linear-to-b from-muted/50 to-muted p-6 no-underline outline-hidden focus:shadow-md"
 																to="/"
+																viewTransition={{ types: ["slide-right"] }}
 															>
 																<div className="mt-4 mb-2 font-medium text-lg">
 																	shadcn/ui
@@ -172,6 +174,21 @@ export const HeroHeader = () => {
 											<Link
 												to={item.href}
 												className="block text-muted-foreground duration-150 hover:text-accent-foreground"
+												viewTransition={{
+													types: ({ fromLocation, toLocation }) => {
+														if (toLocation.href === "/") return ["slide-right"];
+														if (toLocation.href === "/posts")
+															return ["slide-left"];
+														if (toLocation.href === "/dashboard") {
+															return fromLocation?.href === "/"
+																? ["slide-left"]
+																: fromLocation?.href === "/posts"
+																	? ["slide-right"]
+																	: false;
+														}
+														return false;
+													},
+												}}
 											>
 												<span>{item.name}</span>
 											</Link>
@@ -189,6 +206,21 @@ export const HeroHeader = () => {
 											<Link
 												to={item.href}
 												className="block text-muted-foreground duration-150 hover:text-accent-foreground"
+												viewTransition={{
+													types: ({ fromLocation, toLocation }) => {
+														if (toLocation.href === "/") return ["slide-right"];
+														if (toLocation.href === "/posts")
+															return ["slide-left"];
+														if (toLocation.href === "/dashboard") {
+															return fromLocation?.href === "/"
+																? ["slide-left"]
+																: fromLocation?.href === "/posts"
+																	? ["slide-right"]
+																	: false;
+														}
+														return false;
+													},
+												}}
 											>
 												<span>{item.name}</span>
 											</Link>

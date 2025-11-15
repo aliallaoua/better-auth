@@ -136,6 +136,7 @@ export default function FooterSection() {
 										key={index}
 										to={item.href}
 										className="block text-muted-foreground duration-150 hover:text-primary"
+										viewTransition={{ types: ["slide-up"] }}
 									>
 										<span>{item.title}</span>
 									</Link>

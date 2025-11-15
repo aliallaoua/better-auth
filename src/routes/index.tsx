@@ -12,13 +12,13 @@ export const Route = createFileRoute("/")({
 
 function App() {
 	return (
-		<main>
+		<>
 			<HeroSection />
 			<Features />
 			<ContentSection />
 			<ContentTwoSection />
 			<CallToAction />
 			<FooterSection />
-		</main>
+		</>
 	);
 }
