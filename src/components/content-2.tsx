@@ -88,7 +88,7 @@ export default function ContentTwoSection() {
 
 						{tabs.map((tab) => (
 							<TabsContent key={tab.id} value={tab.id}>
-								<div className="relative aspect-15/8 w-full rounded-2xl bg-background">
+								<div className="relative w-full overflow-hidden rounded-2xl bg-background">
 									<AnimatePresence mode="wait">
 										<motion.div
 											key={`${tab.id}-images`}
@@ -96,18 +96,18 @@ export default function ContentTwoSection() {
 											animate={{ opacity: 1, y: 0, scale: 1 }}
 											exit={{ opacity: 0, y: 6, scale: 0.98 }}
 											transition={{ duration: 0.2 }}
-											className="relative size-full overflow-hidden rounded-2xl"
+											className="relative size-full"
 										>
 											<Image
 												src={tab.darkImage}
-												className="hidden size-full rounded-2xl bg-background object-cover object-top-left dark:block dark:mix-blend-lighten"
+												className="hidden w-full rounded-2xl border border-slate-800 bg-background object-cover object-top-left dark:block dark:mix-blend-lighten"
 												alt={tab.alt}
 												width={1232}
 												height={657}
 											/>
 											<Image
 												src={tab.lightImage}
-												className="size-full rounded-2xl border border-border/25 object-cover dark:hidden"
+												className="w-full rounded-2xl border border-border/25 object-cover dark:hidden"
 												alt={tab.alt}
 												width={1232}
 												height={657}
