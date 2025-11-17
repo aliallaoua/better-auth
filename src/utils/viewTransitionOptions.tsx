@@ -1,9 +1,17 @@
+import type { ParsedLocation } from "@tanstack/react-router";
+
 // Define your header routes
 const HEADER_ROUTES = ["/", "/posts"];
 
 // Configure view transitions for your router
 export const routerConfig = {
-	viewTransitionOptions: ({ fromLocation, toLocation }: any) => {
+	viewTransitionOptions: ({
+		fromLocation,
+		toLocation,
+	}: {
+		fromLocation: ParsedLocation;
+		toLocation: ParsedLocation;
+	}) => {
 		// Header to header → horizontal transitions
 		if (toLocation.href === "/") return ["slide-right"];
 		if (toLocation.href === "/posts") return ["slide-left"];
