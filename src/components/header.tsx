@@ -13,6 +13,7 @@ import {
 	NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { routerConfig } from "@/utils/viewTransitionOptions";
 import { ThemeToggle } from "./theme-toggle";
 import UserButton from "./user-button";
 
@@ -175,19 +176,7 @@ export const HeroHeader = () => {
 												to={item.href}
 												className="block text-muted-foreground duration-150 hover:text-accent-foreground"
 												viewTransition={{
-													types: ({ fromLocation, toLocation }) => {
-														if (toLocation.href === "/") return ["slide-right"];
-														if (toLocation.href === "/posts")
-															return ["slide-left"];
-														if (toLocation.href === "/dashboard") {
-															return fromLocation?.href === "/"
-																? ["slide-left"]
-																: fromLocation?.href === "/posts"
-																	? ["slide-right"]
-																	: false;
-														}
-														return false;
-													},
+													types: routerConfig.viewTransitionOptions,
 												}}
 											>
 												<span>{item.name}</span>
@@ -207,19 +196,7 @@ export const HeroHeader = () => {
 												to={item.href}
 												className="block text-muted-foreground duration-150 hover:text-accent-foreground"
 												viewTransition={{
-													types: ({ fromLocation, toLocation }) => {
-														if (toLocation.href === "/") return ["slide-right"];
-														if (toLocation.href === "/posts")
-															return ["slide-left"];
-														if (toLocation.href === "/dashboard") {
-															return fromLocation?.href === "/"
-																? ["slide-left"]
-																: fromLocation?.href === "/posts"
-																	? ["slide-right"]
-																	: false;
-														}
-														return false;
-													},
+													types: routerConfig.viewTransitionOptions,
 												}}
 											>
 												<span>{item.name}</span>

@@ -43,6 +43,7 @@ function CommentsComponent() {
 						commentId: comment.id,
 					}}
 					to="/posts/$postId/comments/$commentId"
+					viewTransition={{ types: ["warp"] }}
 				>
 					<Card className="transition-all hover:shadow-lg hover:shadow-primary/25">
 						<CardHeader>

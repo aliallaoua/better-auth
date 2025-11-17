@@ -38,6 +38,7 @@ function CommentsComponent() {
 			<Link
 				className="block py-1 text-blue-800 hover:text-blue-600"
 				to="/posts"
+				viewTransition={{ types: ["warp"] }}
 			>
 				{/* ← All Posts */}
 				<div className="flex items-center gap-2">

@@ -43,6 +43,7 @@ function PostComponent() {
 					postId: postQuery.data.id,
 				}}
 				to={"/posts/$postId/comments"}
+				viewTransition={{ types: ["warp"] }}
 			>
 				Show comments for post: {postId}
 			</Link>

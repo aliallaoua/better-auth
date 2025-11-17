@@ -91,6 +91,7 @@ export default function UserButton() {
 							className="cursor-pointer"
 							onClick={() => setOpen(false)}
 							to="/profile"
+							viewTransition={{ types: ["slide-down"] }}
 						>
 							<User2 className="mr-2 size-4" />
 							<span>Profile</span>
@@ -100,6 +101,7 @@ export default function UserButton() {
 								className="cursor-pointer"
 								onClick={() => setOpen(false)}
 								to="/admin"
+								viewTransition={{ types: ["slide-down"] }}
 							>
 								<Shield className="mr-2 size-4" />
 								<span>Admin Panel</span>

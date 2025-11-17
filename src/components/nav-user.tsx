@@ -23,6 +23,7 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import useSignOutMutation from "@/hooks/mutations/useSignOutMutation";
+import { routerConfig } from "@/utils/viewTransitionOptions";
 
 export function NavUser({
 	user,
@@ -86,6 +87,9 @@ export function NavUser({
 								<Link
 									className="flex items-center gap-2 text-left text-sm transition-colors hover:bg-accent"
 									to="/profile"
+									viewTransition={{
+										types: routerConfig.viewTransitionOptions,
+									}}
 								>
 									<IconUserCircle />
 									Account

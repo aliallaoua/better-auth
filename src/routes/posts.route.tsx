@@ -28,6 +28,7 @@ function PostsLayoutComponent() {
 									postId: post.id,
 								}}
 								to="/posts/$postId"
+								viewTransition={{ types: ["warp"] }}
 							>
 								{post.title.substring(0, 20)}
 							</Link>
@@ -36,7 +37,9 @@ function PostsLayoutComponent() {
 				})}
 			</ul>
 			<hr />
-			<Outlet />
+			<div className="[view-transition-name:post]">
+				<Outlet />
+			</div>
 		</div>
 	);
 }
