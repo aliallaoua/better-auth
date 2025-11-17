@@ -10,22 +10,25 @@ const tabs = [
 		id: "account",
 		label: "Account",
 		icon: User2Icon,
-		image: "/charts.png",
-		alt: "Database visualization",
+		lightImage: "/profile-light.png",
+		darkImage: "/profile-dark.png",
+		alt: "Account management",
 	},
 	{
-		id: "password",
-		label: "Password",
+		id: "admin",
+		label: "Admin",
 		icon: LockKeyholeIcon,
-		image: "/music.png",
+		lightImage: "/admin-light.png",
+		darkImage: "/admin-dark.png",
 		alt: "Security authentication",
 	},
 	{
-		id: "user",
-		label: "User",
+		id: "email",
+		label: "Email",
 		icon: MailIcon,
-		image: "/mail2.png",
-		alt: "Identity management",
+		lightImage: "/email-light.png",
+		darkImage: "/email-dark.png",
+		alt: "Email management",
 	},
 ];
 
@@ -39,7 +42,7 @@ export default function ContentTwoSection() {
 					Full-stack clarity from start to finish
 				</h2>
 				<p className="text-center text-muted-foreground">
-					Built with TanStack, Better Auth, Drizzle, and Neon – everything you
+					Built with TanStack, Better Auth, Drizzle, and Neon — everything you
 					need to build, authenticate, manage data, and scale reliably. Add
 					Resend for seamless email delivery, Tailwind for beautiful design, and
 					Biome for polished, AI-ready code. No compromises, no friction.
@@ -85,19 +88,26 @@ export default function ContentTwoSection() {
 
 						{tabs.map((tab) => (
 							<TabsContent key={tab.id} value={tab.id}>
-								<div className="relative aspect-76/59 w-full rounded-2xl bg-background">
+								<div className="relative aspect-15/8 w-full rounded-2xl bg-background">
 									<AnimatePresence mode="wait">
 										<motion.div
-											key={`${tab.image}-id`}
+											key={`${tab.id}-images`}
 											initial={{ opacity: 0, y: 6, scale: 0.98 }}
 											animate={{ opacity: 1, y: 0, scale: 1 }}
 											exit={{ opacity: 0, y: 6, scale: 0.98 }}
 											transition={{ duration: 0.2 }}
-											className="size-full overflow-hidden rounded-2xl border border-slate-200 bg-zinc-200 shadow-md dark:border-slate-800 dark:bg-zinc-900"
+											className="relative size-full overflow-hidden rounded-2xl"
 										>
 											<Image
-												src={tab.image}
-												className="size-full rounded-2xl object-cover object-top-left dark:mix-blend-lighten"
+												src={tab.darkImage}
+												className="hidden size-full rounded-2xl bg-background object-cover object-top-left dark:block dark:mix-blend-lighten"
+												alt={tab.alt}
+												width={1232}
+												height={657}
+											/>
+											<Image
+												src={tab.lightImage}
+												className="size-full rounded-2xl border border-border/25 object-cover dark:hidden"
 												alt={tab.alt}
 												width={1232}
 												height={657}
