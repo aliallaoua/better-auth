@@ -60,7 +60,7 @@ pnpm dlx shadcn add @tailark/hero-section-2 @tailark/features-1 @tailark/content
 ```
 
 ```bash
-ppnpm dlx shadcn add @motion-primitives/animated-group @motion-primitives/border-trail @motion-primitives/glow-effect @motion-primitives/text-effect
+pnpm dlx shadcn add @motion-primitives/animated-group @motion-primitives/border-trail @motion-primitives/glow-effect @motion-primitives/text-effect
 ```
 
 ```bash
