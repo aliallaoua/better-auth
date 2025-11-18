@@ -69,7 +69,7 @@ export default function ContentTwoSection() {
 											/>
 										</div>
 										<div className="flex size-10 items-center justify-center rounded border border-slate-200 bg-background dark:border-slate-800">
-											<motion.div
+											{/* <motion.div
 												animate={
 													hoveredTab === tab.id
 														? { rotate: 360, scale: 1.1 }
@@ -78,7 +78,10 @@ export default function ContentTwoSection() {
 												transition={{ duration: 0.6, ease: "easeInOut" }}
 											>
 												<Icon className="size-5" />
-											</motion.div>
+											</motion.div> */}
+											<div className="flex size-10 items-center justify-center rounded border border-slate-200 bg-background dark:border-slate-800">
+												<Icon className="size-5 transition-transform duration-600 ease-in-out group-hover:rotate-360 group-hover:scale-110" />
+											</div>
 										</div>
 										{tab.label}
 									</TabsTrigger>
