@@ -1,7 +1,6 @@
 import { Image } from "@unpic/react";
 import { LockKeyholeIcon, MailIcon, User2Icon } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -33,7 +32,7 @@ const tabs = [
 ];
 
 export default function ContentTwoSection() {
-	const [hoveredTab, setHoveredTab] = useState<string | null>(null);
+	// const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
 	return (
 		<section className="py-16 md:py-32">
@@ -58,8 +57,8 @@ export default function ContentTwoSection() {
 										key={tab.id}
 										className="group relative flex-1 overflow-hidden rounded-2xl border border-slate-200 p-6 md:h-16 dark:border-slate-800"
 										value={tab.id}
-										onMouseEnter={() => setHoveredTab(tab.id)}
-										onMouseLeave={() => setHoveredTab(null)}
+										// onMouseEnter={() => setHoveredTab(tab.id)}
+										// onMouseLeave={() => setHoveredTab(null)}
 									>
 										<div className="hidden group-data-[state='active']:block">
 											<BorderBeam
