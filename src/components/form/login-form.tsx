@@ -45,13 +45,14 @@ export function LogInForm({
 			onChange: SignInSchema,
 		},
 		onSubmit: async ({ value }) => {
-			try {
-				await signInMutation(value);
-			} catch (e) {
-				form.setErrorMap({
-					onSubmit: e.message,
-				});
-			}
+			// try {
+			// 	await signInMutation(value);
+			// } catch (e) {
+			// 	form.setErrorMap({
+			// 		onSubmit: e.message,
+			// 	});
+			// }
+			await signInMutation(value);
 		},
 	});
 

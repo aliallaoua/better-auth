@@ -39,13 +39,14 @@ export function SignUpForm({
 			onChange: SignUpSchema,
 		},
 		onSubmit: async ({ value }) => {
-			try {
-				await signUpMutation(value);
-			} catch (e) {
-				form.setErrorMap({
-					onSubmit: e.message,
-				});
-			}
+			// try {
+			// 	await signUpMutation(value);
+			// } catch (e) {
+			// 	form.setErrorMap({
+			// 		onSubmit: e.message,
+			// 	});
+			// }
+			await signUpMutation(value);
 		},
 	});
 
