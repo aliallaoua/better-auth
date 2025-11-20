@@ -1,12 +1,5 @@
 "use no memo";
 
-import type { UniqueIdentifier } from "@dnd-kit/core";
-import {
-	SortableContext,
-	useSortable,
-	verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import {
 	IconChevronLeft,
 	IconChevronRight,
@@ -14,8 +7,13 @@ import {
 	IconChevronsRight,
 	IconDotsVertical,
 } from "@tabler/icons-react";
+import type {
+	ColumnFiltersState,
+	Row,
+	SortingState,
+	VisibilityState,
+} from "@tanstack/react-table";
 import {
-	type ColumnFiltersState,
 	createColumnHelper,
 	flexRender,
 	getCoreRowModel,
@@ -24,10 +22,7 @@ import {
 	getFilteredRowModel,
 	getPaginationRowModel,
 	getSortedRowModel,
-	type Row,
-	type SortingState,
 	useReactTable,
-	type VisibilityState,
 } from "@tanstack/react-table";
 import type { UserWithRole } from "better-auth/plugins/admin";
 import {
@@ -49,7 +44,7 @@ import {
 	UserX,
 	X,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -89,6 +84,7 @@ import {
 	InputGroupButton,
 	InputGroupInput,
 } from "@/components/ui/input-group";
+import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -99,7 +95,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Spinner } from "@/components/ui/spinner";
 import {
 	Table,
 	TableBody,
@@ -113,7 +108,22 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Label } from "../../../../../components/ui/label";
+
+interface UserMutations {
+	deleteUser: (userId: string) => void;
+	revokeSessions: (userId: string) => void;
+	impersonateUser: (userId: string) => void;
+	unbanUser: (userId: string) => void;
+	changeRole: (params: { userId: string; role: "admin" | "user" }) => void;
+}
+
+interface DataTableProps {
+	data: UserWithRole[];
+	mutations: UserMutations;
+	selfId: string | undefined;
+	onExportData?: () => void;
+	onBanClick: (userId: string) => void;
+}
 
 // Define action handlers type
 export type UserActionHandlers = {
@@ -180,13 +190,6 @@ const userTableFilterFns = {
 	roleFilter,
 	bannedFilter,
 };
-
-interface DataTableProps<UserWithRole> {
-	data: UserWithRole[];
-	onExportData?: () => void;
-	handlers: UserActionHandlers;
-	selfId: string | undefined;
-}
 
 // Custom filter component for select-type filters
 function TableFilter({ column }: { column: any }) {
@@ -311,38 +314,126 @@ export function DataTableSkeleton() {
 	);
 }
 
-// Row Component
-function DraggableRow({ row }: { row: Row<UserWithRole> }) {
-	const { transform, transition, setNodeRef, isDragging } = useSortable({
-		id: row.original.id,
-	});
+// User actions dropdown menu
+function UserActionsMenu({
+	user,
+	mutations,
+	onBanClick,
+}: {
+	user: UserWithRole;
+	mutations: UserMutations;
+	onBanClick: (userId: string) => void;
+}) {
+	const handleImpersonate = useCallback(() => {
+		mutations.impersonateUser(user.id);
+	}, [mutations.impersonateUser, user.id]);
+
+	const handleRevokeSessions = useCallback(() => {
+		mutations.revokeSessions(user.id);
+	}, [mutations.revokeSessions, user.id]);
+
+	const handleBanToggle = useCallback(() => {
+		if (user.banned) {
+			mutations.unbanUser(user.id);
+		} else {
+			onBanClick(user.id);
+		}
+	}, [user.banned, user.id, mutations.unbanUser, onBanClick]);
+
+	const handleDelete = useCallback(() => {
+		mutations.deleteUser(user.id);
+	}, [mutations.deleteUser, user.id]);
 
 	return (
-		<TableRow
-			className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
-			data-dragging={isDragging}
-			data-state={row.getIsSelected() && "selected"}
-			ref={setNodeRef}
-			style={{
-				transform: CSS.Transform.toString(transform),
-				transition,
-			}}
-		>
-			{row.getVisibleCells().map((cell) => (
-				<TableCell key={cell.id}>
-					{flexRender(cell.column.columnDef.cell, cell.getContext())}
-				</TableCell>
-			))}
-		</TableRow>
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button
+					className="size-8 text-muted-foreground transition-colors hover:bg-muted/80 data-[state=open]:bg-muted"
+					size="icon"
+					variant="ghost"
+				>
+					<IconDotsVertical className="size-4" />
+					<span className="sr-only">Open menu</span>
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="end" className="w-[200px]">
+				<DropdownMenuLabel className="font-semibold">Actions</DropdownMenuLabel>
+				<DropdownMenuSeparator />
+				<DropdownMenuItem
+					className="gap-2"
+					onClick={() => navigator.clipboard.writeText(user.id)}
+				>
+					<Copy className="size-4" />
+					Copy user ID
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					className="gap-2"
+					onClick={() => navigator.clipboard.writeText(user.email)}
+				>
+					<Mail className="size-4" />
+					Copy email
+				</DropdownMenuItem>
+				<DropdownMenuSeparator />
+				<DropdownMenuItem className="gap-2" onClick={handleImpersonate}>
+					<UserCircle className="size-4" />
+					Impersonate
+				</DropdownMenuItem>
+				<DropdownMenuItem className="gap-2" onClick={handleRevokeSessions}>
+					<RefreshCw className="size-4" />
+					Revoke sessions
+				</DropdownMenuItem>
+				<DropdownMenuSeparator />
+				<DropdownMenuItem className="gap-2" onClick={handleBanToggle}>
+					<Ban className="size-4" />
+					{user.banned ? "Unban user" : "Ban user"}
+				</DropdownMenuItem>
+				<AlertDialog>
+					<AlertDialogTrigger asChild>
+						<DropdownMenuItem
+							className="gap-2 text-red-600 focus:bg-red-50 focus:text-red-600 dark:focus:bg-red-950/20"
+							onSelect={(e) => e.preventDefault()}
+						>
+							<Trash className="size-4" />
+							Delete user
+						</DropdownMenuItem>
+					</AlertDialogTrigger>
+					<AlertDialogContent className="max-w-md">
+						<AlertDialogHeader>
+							<AlertDialogTitle className="text-xl">
+								Are you absolutely sure?
+							</AlertDialogTitle>
+							<AlertDialogDescription className="text-base">
+								This action cannot be undone. This will permanently delete{" "}
+								<span className="font-semibold text-foreground">
+									{user.email}
+								</span>{" "}
+								and remove all their data from the servers.
+							</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogCancel>Cancel</AlertDialogCancel>
+							<AlertDialogAction
+								className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+								onClick={handleDelete}
+							>
+								<Trash className="mr-2 size-4" />
+								Delete User
+							</AlertDialogAction>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
+			</DropdownMenuContent>
+		</DropdownMenu>
 	);
 }
 
-export function DataTable<UserWithRole>({
+export function DataTable({
 	data,
-	onExportData,
-	handlers,
+	mutations,
 	selfId,
-}: DataTableProps<UserWithRole>) {
+	onExportData,
+	onBanClick,
+}: DataTableProps) {
 	const [rowSelection, setRowSelection] = useState({});
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -351,11 +442,6 @@ export function DataTable<UserWithRole>({
 		pageIndex: 0,
 		pageSize: 10,
 	});
-
-	const dataIds = useMemo<UniqueIdentifier[]>(
-		() => data?.map(({ id }) => id) || [],
-		[data]
-	);
 
 	const [globalFilter, setGlobalFilter] = useState("");
 
@@ -432,17 +518,19 @@ export function DataTable<UserWithRole>({
 				header: ({ column }) => <SortableHeader column={column} title="Role" />,
 				cell: ({ row }) => {
 					const user = row.original;
+
 					return (
 						<Select
-							disabled={handlers.isLoading === `role-${user.id}`}
-							onValueChange={(value) =>
-								handlers.onRoleChange(user.id, value as "admin" | "user")
-							}
+							onValueChange={(value) => {
+								mutations.changeRole({
+									userId: user.id,
+									role: value as "admin" | "user",
+								});
+							}}
 							value={user.role ?? undefined}
 						>
 							<SelectTrigger className="h-9 w-[140px]">
 								<SelectValue placeholder="Select role" />
-								{handlers.isLoading === `role-${user.id}` && <Spinner />}
 							</SelectTrigger>
 							<SelectContent>
 								<SelectGroup>
@@ -555,133 +643,18 @@ export function DataTable<UserWithRole>({
 			columnHelper.display({
 				id: "actions",
 				header: "Actions",
-				cell: ({ row }) => {
-					const user = row.original;
-					return (
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button
-									className="size-8 text-muted-foreground transition-colors hover:bg-muted/80 data-[state=open]:bg-muted"
-									size="icon"
-									variant="ghost"
-								>
-									<IconDotsVertical className="size-4" />
-									<span className="sr-only">Open menu</span>
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent align="end" className="w-[200px]">
-								<DropdownMenuLabel className="font-semibold">
-									Actions
-								</DropdownMenuLabel>
-								<DropdownMenuSeparator />
-								<DropdownMenuItem
-									className="gap-2"
-									onClick={() => navigator.clipboard.writeText(user.id)}
-								>
-									<Copy className="size-4" />
-									Copy user ID
-								</DropdownMenuItem>
-								<DropdownMenuItem
-									className="gap-2"
-									onClick={() => navigator.clipboard.writeText(user.email)}
-								>
-									<Mail className="size-4" />
-									Copy email
-								</DropdownMenuItem>
-								<DropdownMenuSeparator />
-								<DropdownMenuItem
-									className="gap-2"
-									disabled={handlers.isLoading?.startsWith("impersonate")}
-									onClick={() => handlers.onImpersonateUser(user.id)}
-								>
-									{handlers.isLoading === `impersonate-${user.id}` ? (
-										<Spinner />
-									) : (
-										<UserCircle className="size-4" />
-									)}
-									Impersonate
-								</DropdownMenuItem>
-								<DropdownMenuItem
-									className="gap-2"
-									disabled={handlers.isLoading?.startsWith("revoke")}
-									onClick={() => handlers.onRevokeSessions(user.id)}
-								>
-									{handlers.isLoading === `revoke-${user.id}` ? (
-										<Spinner />
-									) : (
-										<RefreshCw className="size-4" />
-									)}
-									Revoke sessions
-								</DropdownMenuItem>
-								<DropdownMenuSeparator />
-								<DropdownMenuItem
-									className="gap-2"
-									disabled={handlers.isLoading?.startsWith("ban")}
-									onClick={() => {
-										if (user.banned) {
-											handlers.onUnbanUser(user.id);
-										} else {
-											handlers.onBanClick(user.id);
-										}
-									}}
-								>
-									{handlers.isLoading === `ban-${user.id}` ? (
-										<Spinner />
-									) : (
-										<Ban className="size-4" />
-									)}
-									{user.banned ? "Unban user" : "Ban user"}
-								</DropdownMenuItem>
-								<AlertDialog>
-									<AlertDialogTrigger asChild>
-										<DropdownMenuItem
-											className="gap-2 text-red-600 focus:bg-red-50 focus:text-red-600 dark:focus:bg-red-950/20"
-											disabled={handlers.isLoading?.startsWith("delete")}
-											onSelect={(e) => e.preventDefault()}
-										>
-											{handlers.isLoading === `delete-${user.id}` ? (
-												<Spinner />
-											) : (
-												<Trash className="size-4" />
-											)}
-											Delete user
-										</DropdownMenuItem>
-									</AlertDialogTrigger>
-									<AlertDialogContent className="max-w-md">
-										<AlertDialogHeader>
-											<AlertDialogTitle className="text-xl">
-												Are you absolutely sure?
-											</AlertDialogTitle>
-											<AlertDialogDescription className="text-base">
-												This action cannot be undone. This will permanently
-												delete{" "}
-												<span className="font-semibold text-foreground">
-													{user.email}
-												</span>{" "}
-												and remove all their data from the servers.
-											</AlertDialogDescription>
-										</AlertDialogHeader>
-										<AlertDialogFooter>
-											<AlertDialogCancel>Cancel</AlertDialogCancel>
-											<AlertDialogAction
-												className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
-												onClick={() => handlers.onDeleteUser(user.id)}
-											>
-												<Trash className="mr-2 size-4" />
-												Delete User
-											</AlertDialogAction>
-										</AlertDialogFooter>
-									</AlertDialogContent>
-								</AlertDialog>
-							</DropdownMenuContent>
-						</DropdownMenu>
-					);
-				},
+				cell: ({ row }) => (
+					<UserActionsMenu
+						user={row.original}
+						mutations={mutations}
+						onBanClick={onBanClick}
+					/>
+				),
 				enableSorting: false,
 				enableHiding: false,
 			}),
 		],
-		[handlers]
+		[mutations, selfId, onBanClick]
 	);
 
 	const table = useReactTable({
@@ -841,13 +814,9 @@ export function DataTable<UserWithRole>({
 				<Table>
 					<TableHeader className="bg-muted/50">
 						{table.getHeaderGroups().map((headerGroup) => (
-							<TableRow className="hover:bg-muted/50" key={headerGroup.id}>
+							<TableRow key={headerGroup.id}>
 								{headerGroup.headers.map((header) => (
-									<TableHead
-										className="font-semibold"
-										colSpan={header.colSpan}
-										key={header.id}
-									>
+									<TableHead key={header.id} colSpan={header.colSpan}>
 										{header.isPlaceholder
 											? null
 											: flexRender(
@@ -861,19 +830,26 @@ export function DataTable<UserWithRole>({
 					</TableHeader>
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
-							<SortableContext
-								items={dataIds}
-								strategy={verticalListSortingStrategy}
-							>
-								{table.getRowModel().rows.map((row) => (
-									<DraggableRow key={row.id} row={row} />
-								))}
-							</SortableContext>
+							table.getRowModel().rows.map((row) => (
+								<TableRow
+									key={row.id}
+									data-state={row.getIsSelected() && "selected"}
+								>
+									{row.getVisibleCells().map((cell) => (
+										<TableCell key={cell.id}>
+											{flexRender(
+												cell.column.columnDef.cell,
+												cell.getContext()
+											)}
+										</TableCell>
+									))}
+								</TableRow>
+							))
 						) : (
 							<TableRow>
 								<TableCell
-									className="h-48 text-center"
 									colSpan={columns.length}
+									className="h-24 text-center"
 								>
 									<Empty>
 										<EmptyHeader>

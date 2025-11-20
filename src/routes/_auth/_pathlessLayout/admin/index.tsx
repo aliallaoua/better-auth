@@ -1,5 +1,4 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Download, Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -15,12 +14,12 @@ import {
 import { FieldGroup } from "@/components/ui/field";
 import { Label } from "@/components/ui/label";
 import { useAppForm } from "@/hooks/form";
+import { useUserManagement } from "@/hooks/mutations/useUserManagement";
 import useListUsersQuery from "@/hooks/queries/useListUsersQuery";
-import { authClient, useSession } from "@/lib/auth-client";
+import { useSession } from "@/lib/auth-client";
 import {
 	DataTable,
 	DataTableSkeleton,
-	type UserActionHandlers,
 } from "@/routes/_auth/_pathlessLayout/admin/-components/data-table";
 import { StatCard } from "@/routes/_auth/_pathlessLayout/admin/-components/stats-card";
 import { UserManagementCard } from "@/routes/_auth/_pathlessLayout/admin/-components/user-management-card";
@@ -38,29 +37,30 @@ export const Route = createFileRoute("/_auth/_pathlessLayout/admin/")({
 			});
 		}
 	},
-	// loader: async ({ context }) => {
-	// 	await context.queryClient.ensureQueryData(listUsersQueryOptions());
-	// },
 	component: AdminDashboard,
 });
 
 function AdminDashboard() {
-	const queryClient = useQueryClient();
-	const router = useRouter();
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
-	const [isLoading, setIsLoading] = useState<string | undefined>();
+	const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 	const [isBanDialogOpen, setIsBanDialogOpen] = useState(false);
-	const [selectedUserId, setSelectedUserId] = useState<string>("");
+	const [selectedUserId, setSelectedUserId] = useState("");
 
 	const { data: session } = useSession();
-	const selfId = session?.user.id;
-
 	const { data: users = [], isPending } = useListUsersQuery();
-	// const { data: users = [], isPending } = useSuspenseQuery(
-	// 	listUsersQueryOptions()
-	// );
 
-	// Statistics derived from users data
+	const {
+		deleteUser,
+		revokeSessions,
+		impersonateUser,
+		banUser,
+		unbanUser,
+		changeRole,
+		createUser,
+		isCreateUserPending,
+		isBanUserPanding,
+	} = useUserManagement();
+
+	// User statistics
 	const userStats = useMemo(() => {
 		if (!users) return { total: 0, admins: 0, banned: 0, active: 0 };
 
@@ -72,6 +72,7 @@ function AdminDashboard() {
 		};
 	}, [users]);
 
+	// Create user form
 	const createUserForm = useAppForm({
 		defaultValues: {
 			email: "",
@@ -83,28 +84,16 @@ function AdminDashboard() {
 			onChange: CreateUserSchema,
 		},
 		onSubmit: async ({ value }) => {
-			setIsLoading("create");
-			try {
-				await authClient.admin.createUser({
-					email: value.email,
-					password: value.password,
-					name: value.name,
-					role: value.role,
-				});
-				toast.success("User created successfully");
-				createUserForm.reset();
-				setIsDialogOpen(false);
-				queryClient.invalidateQueries({
-					queryKey: ["users"],
-				});
-			} catch (error) {
-				toast.error(error.message || "Failed to create user");
-			} finally {
-				setIsLoading(undefined);
-			}
+			createUser(value, {
+				onSuccess: () => {
+					createUserForm.reset();
+					setIsCreateDialogOpen(false);
+				},
+			});
 		},
 	});
 
+	// Ban user form
 	const banUserForm = useAppForm({
 		defaultValues: {
 			reason: "",
@@ -114,126 +103,35 @@ function AdminDashboard() {
 			onChange: BanUserSchema,
 		},
 		onSubmit: async ({ value }) => {
-			setIsLoading(`ban-${selectedUserId}`);
-			try {
-				if (!value.expirationDate) {
-					throw new Error("Expiration date is required");
-				}
-				await authClient.admin.banUser({
-					userId: selectedUserId,
-					banReason: value.reason,
-					banExpiresIn: value.expirationDate.getTime() - Date.now(),
-				});
-				toast.success("User banned successfully");
-				setIsBanDialogOpen(false);
-				queryClient.invalidateQueries({
-					queryKey: ["users"],
-				});
-			} catch (error) {
-				toast.error(error.message || "Failed to ban user");
-			} finally {
-				setIsLoading(undefined);
+			if (!value.expirationDate) {
+				toast.error("Expiration date is required");
+				return;
 			}
+
+			banUser(
+				{
+					userId: selectedUserId,
+					reason: value.reason,
+					expiresIn: value.expirationDate.getTime() - Date.now(),
+				},
+				{
+					onSuccess: () => {
+						setIsBanDialogOpen(false);
+						banUserForm.reset();
+					},
+				}
+			);
 		},
 	});
 
-	const handleDeleteUser = async (id: string) => {
-		setIsLoading(`delete-${id}`);
-
-		try {
-			await authClient.admin.removeUser({ userId: id });
-			toast.success("User deleted successfully");
-			queryClient.invalidateQueries({
-				queryKey: ["users"],
-			});
-		} catch (error) {
-			toast.error(error.message || "Failed to delete user");
-		} finally {
-			setIsLoading(undefined);
-		}
-	};
-
-	const handleRevokeSessions = async (id: string) => {
-		setIsLoading(`revoke-${id}`);
-		try {
-			await authClient.admin.revokeUserSessions({ userId: id });
-			toast.success("Sessions revoked for user");
-		} catch (error) {
-			toast.error(error.message || "Failed to revoke sessions");
-		} finally {
-			setIsLoading(undefined);
-		}
-	};
-
-	const handleImpersonateUser = async (id: string) => {
-		setIsLoading(`impersonate-${id}`);
-		try {
-			await authClient.admin.impersonateUser({ userId: id });
-			toast.success("Impersonated user");
-			router.navigate({ to: "/dashboard" });
-		} catch (error) {
-			toast.error(error.message || "Failed to impersonate user");
-		} finally {
-			setIsLoading(undefined);
-		}
-	};
-
+	// Handle ban click
 	const handleBanClick = (userId: string) => {
 		setSelectedUserId(userId);
 		banUserForm.reset();
 		setIsBanDialogOpen(true);
 	};
 
-	const handleUnbanUser = async (userId: string) => {
-		setIsLoading(`ban-${userId}`);
-		try {
-			await authClient.admin.unbanUser(
-				{
-					userId,
-				},
-				{
-					onError(context) {
-						toast.error(context.error.message || "Failed to unban user");
-						setIsLoading(undefined);
-					},
-					onSuccess() {
-						queryClient.invalidateQueries({
-							queryKey: ["users"],
-						});
-						toast.success("User unbanned successfully");
-						setIsLoading(undefined);
-					},
-				}
-			);
-		} catch (error) {
-			toast.error(error.message || "Failed to unban user");
-			setIsLoading(undefined);
-		}
-	};
-
-	const handleRoleChange = async (id: string, role: "admin" | "user") => {
-		setIsLoading(`role-${id}`);
-		try {
-			const { data, error } = await authClient.admin.setRole({
-				userId: id,
-				role,
-			});
-
-			if (error) {
-				throw new Error(error.message || "Failed to update user role");
-			}
-
-			toast.success("User role updated successfully");
-			queryClient.invalidateQueries({
-				queryKey: ["users"],
-			});
-		} catch (error) {
-			toast.error(error.message || "Failed to update user role");
-		} finally {
-			setIsLoading(undefined);
-		}
-	};
-
+	// Export data handler
 	const handleExportData = () => {
 		if (!users || users.length === 0) {
 			toast.error("No data to export");
@@ -266,20 +164,6 @@ function AdminDashboard() {
 		toast.success("User data exported successfully");
 	};
 
-	// Create action handlers object
-	const actionHandlers: UserActionHandlers = useMemo(
-		() => ({
-			onDeleteUser: handleDeleteUser,
-			onRevokeSessions: handleRevokeSessions,
-			onImpersonateUser: handleImpersonateUser,
-			onBanClick: handleBanClick,
-			onUnbanUser: handleUnbanUser,
-			onRoleChange: handleRoleChange,
-			isLoading,
-		}),
-		[isLoading]
-	);
-
 	return (
 		<div className="min-h-screen w-full bg-linear-to-b from-background to-muted/20">
 			<div className="mx-auto max-w-7xl space-y-8 px-4 py-6 sm:px-6 lg:px-8">
@@ -295,103 +179,100 @@ function AdminDashboard() {
 							</p>
 						</div>
 						<ButtonGroup>
-							<ButtonGroup className="hidden sm:flex">
-								<Button
-									disabled={!users || users.length === 0}
-									onClick={handleExportData}
-									size="default"
-									variant="outline"
-								>
-									<Download className="mr-2 size-4" />
-									Export
-								</Button>
-							</ButtonGroup>
-							<ButtonGroup>
-								<Dialog onOpenChange={setIsDialogOpen} open={isDialogOpen}>
-									<DialogTrigger asChild>
-										<Button variant="outline">
-											<Plus />
-											<span className="hidden lg:inline">Create User</span>
-										</Button>
-									</DialogTrigger>
-									<DialogContent className="sm:max-w-[425px]">
-										<DialogHeader>
-											<DialogTitle>Create New User</DialogTitle>
-										</DialogHeader>
-										<form
-											className="space-y-4"
-											onSubmit={(e) => {
-												e.preventDefault();
-												e.stopPropagation();
-												createUserForm.handleSubmit();
-											}}
-										>
-											<FieldGroup>
-												<createUserForm.AppField
-													children={(field) => (
-														<div className="grid gap-2">
-															<field.TextField
-																autoComplete="email"
-																label="Email"
-																required
-																type="email"
-															/>
-														</div>
-													)}
-													name="email"
-												/>
-												<createUserForm.AppField
-													children={(field) => (
-														<field.PasswordField
-															autoComplete="new-password"
-															label="Password"
+							<Button
+								disabled={!users || users.length === 0}
+								onClick={handleExportData}
+								size="default"
+								variant="outline"
+							>
+								<Download className="mr-2 size-4" />
+								Export
+							</Button>
+							<Dialog
+								onOpenChange={setIsCreateDialogOpen}
+								open={isCreateDialogOpen}
+							>
+								<DialogTrigger asChild>
+									<Button variant="outline">
+										<Plus />
+										<span className="hidden lg:inline">Create User</span>
+									</Button>
+								</DialogTrigger>
+								<DialogContent className="sm:max-w-[425px]">
+									<DialogHeader>
+										<DialogTitle>Create New User</DialogTitle>
+									</DialogHeader>
+									<form
+										className="space-y-4"
+										onSubmit={(e) => {
+											e.preventDefault();
+											e.stopPropagation();
+											createUserForm.handleSubmit();
+										}}
+									>
+										<FieldGroup>
+											<createUserForm.AppField
+												name="email"
+												children={(field) => (
+													<div className="grid gap-2">
+														<field.TextField
+															autoComplete="email"
+															label="Email"
+															required
+															type="email"
+														/>
+													</div>
+												)}
+											/>
+											<createUserForm.AppField
+												name="password"
+												children={(field) => (
+													<field.PasswordField
+														autoComplete="new-password"
+														label="Password"
+														required
+													/>
+												)}
+											/>
+											<createUserForm.AppField
+												name="name"
+												children={(field) => (
+													<div className="grid gap-2">
+														<field.TextField
+															autoComplete="name"
+															label="Name"
 															required
 														/>
-													)}
-													name="password"
-												/>
-												<createUserForm.AppField
-													children={(field) => (
-														<div className="grid gap-2">
-															<field.TextField
-																autoComplete="name"
-																label="Name"
-																required
-															/>
-														</div>
-													)}
-													name="name"
-												/>
-												<createUserForm.AppField name="role">
-													{(field) => (
-														<>
-															<field.SelectField
-																label="Role"
-																placeholder="Select a role"
-																values={[
-																	{ label: "Admin", value: "admin" },
-																	{ label: "User", value: "user" },
-																]}
-															/>
-														</>
-													)}
-												</createUserForm.AppField>
-
-												<createUserForm.AppForm>
-													<createUserForm.SubscribeButton
-														className="w-full"
-														disabled={
-															isLoading === "create" ||
-															!createUserForm.state.canSubmit
-														}
-														label="Create User"
+													</div>
+												)}
+											/>
+											<createUserForm.AppField name="role">
+												{(field) => (
+													<field.SelectField
+														label="Role"
+														placeholder="Select a role"
+														values={[
+															{ label: "Admin", value: "admin" },
+															{ label: "User", value: "user" },
+														]}
 													/>
-												</createUserForm.AppForm>
-											</FieldGroup>
-										</form>
-									</DialogContent>
-								</Dialog>
-							</ButtonGroup>
+												)}
+											</createUserForm.AppField>
+
+											<createUserForm.AppForm>
+												<createUserForm.SubscribeButton
+													className="w-full"
+													disabled={
+														isCreateUserPending ||
+														!createUserForm.state.canSubmit
+													}
+													label="Create User"
+												/>
+											</createUserForm.AppForm>
+										</FieldGroup>
+									</form>
+								</DialogContent>
+							</Dialog>
 						</ButtonGroup>
 					</div>
 				</div>
@@ -406,9 +287,16 @@ function AdminDashboard() {
 					) : (
 						<DataTable
 							data={users}
+							mutations={{
+								deleteUser,
+								revokeSessions,
+								impersonateUser,
+								unbanUser,
+								changeRole,
+							}}
+							selfId={session?.user.id}
 							onExportData={handleExportData}
-							handlers={actionHandlers}
-							selfId={selfId}
+							onBanClick={handleBanClick}
 						/>
 					)}
 				</UserManagementCard>
@@ -429,30 +317,27 @@ function AdminDashboard() {
 						>
 							<FieldGroup>
 								<banUserForm.AppField
+									name="reason"
 									children={(field) => (
 										<div className="grid gap-2">
 											<field.TextField label="Reason" required />
 										</div>
 									)}
-									name="reason"
 								/>
 								<banUserForm.AppField
+									name="expirationDate"
 									children={(field) => (
 										<div className="grid gap-2">
 											<Label htmlFor={field.name}>Expiration Date</Label>
 											<field.DateField />
 										</div>
 									)}
-									name="expirationDate"
 								/>
 
 								<banUserForm.AppForm>
 									<banUserForm.SubscribeButton
 										className="w-full"
-										disabled={
-											isLoading === `ban-${selectedUserId}` ||
-											!banUserForm.state.canSubmit
-										}
+										disabled={isBanUserPanding || !banUserForm.state.canSubmit}
 										label="Ban User"
 									/>
 								</banUserForm.AppForm>

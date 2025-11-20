@@ -23,7 +23,7 @@ import { ChangePasswordForm } from "../form/change-password-form";
 import { DeleteAccountForm } from "../form/delete-account-form";
 import { EditUserForm } from "../form/edit-user-form";
 import { ListPasskeysForm } from "../form/list-passkeys-form";
-import { QRCodePasswordForm } from "../form/qr-code-password-form";
+import { QRCodePasswordForm } from "../form/QR-code-password-form";
 import { TwoFactorForm } from "../form/two-factor-form";
 import { ButtonGroup } from "../ui/button-group";
 import { Spinner } from "../ui/spinner";
