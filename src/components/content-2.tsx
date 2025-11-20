@@ -32,8 +32,6 @@ const tabs = [
 ];
 
 export default function ContentTwoSection() {
-	// const [hoveredTab, setHoveredTab] = useState<string | null>(null);
-
 	return (
 		<section className="py-16 md:py-32">
 			<div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16">
@@ -55,32 +53,24 @@ export default function ContentTwoSection() {
 								return (
 									<TabsTrigger
 										key={tab.id}
-										className="group relative flex-1 overflow-hidden rounded-2xl border border-slate-200 p-6 md:h-16 dark:border-slate-800"
+										className="group relative flex-1 justify-start overflow-hidden rounded-2xl border border-slate-200 p-6 md:h-16 dark:border-slate-800"
 										value={tab.id}
-										// onMouseEnter={() => setHoveredTab(tab.id)}
-										// onMouseLeave={() => setHoveredTab(null)}
 									>
-										<div className="hidden group-data-[state='active']:block">
+										<div className="hidden rounded-xl group-data-[state='active']:block">
 											<BorderBeam
-												duration={6}
-												size={200}
-												className="from-transparent via-yellow-700 to-transparent dark:via-white/50"
+												duration={4}
+												// initialOffset={20}
+												size={100}
+												className="from-transparent via-green-400 to-transparent"
+												transition={{
+													type: "spring",
+													stiffness: 60,
+													damping: 20,
+												}}
 											/>
 										</div>
-										<div className="flex size-10 items-center justify-center rounded border border-slate-200 bg-background dark:border-slate-800">
-											{/* <motion.div
-												animate={
-													hoveredTab === tab.id
-														? { rotate: 360, scale: 1.1 }
-														: { rotate: 0, scale: 1 }
-												}
-												transition={{ duration: 0.6, ease: "easeInOut" }}
-											>
-												<Icon className="size-5" />
-											</motion.div> */}
-											<div className="flex size-10 items-center justify-center rounded border border-slate-200 bg-background dark:border-slate-800">
-												<Icon className="size-5 transition-transform duration-600 ease-in-out group-hover:rotate-360 group-hover:scale-110" />
-											</div>
+										<div className="flex size-10 items-center justify-center rounded-xl border border-slate-200 bg-background dark:border-slate-800">
+											<Icon className="size-5 transition-transform duration-600 ease-in-out group-hover:rotate-360 group-hover:scale-110 group-data-[state='active']:text-green-400" />
 										</div>
 										{tab.label}
 									</TabsTrigger>

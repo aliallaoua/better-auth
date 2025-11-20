@@ -47,39 +47,21 @@ export default function Features() {
 								Better Auth ensures reliable, predictable apps.
 							</p>
 						</CardContent>
-						{/* <BorderBeam duration={8} size={100} /> */}
-						{/* <BorderBeam
+						<BorderBeam
 							duration={6}
 							size={400}
 							className="from-transparent via-red-500 to-transparent"
-						/> */}
-						<BorderBeam
-							size={400}
-							initialOffset={20}
-							className="from-transparent via-yellow-500 to-transparent"
-							transition={{
-								type: "spring",
-								stiffness: 60,
-								damping: 20,
-							}}
 						/>
 						<BorderBeam
 							duration={6}
 							delay={3}
 							size={400}
 							borderWidth={2}
-							initialOffset={70}
 							className="from-transparent via-blue-500 to-transparent"
-							transition={{
-								type: "spring",
-								stiffness: 60,
-								damping: 20,
-							}}
 						/>
 					</Card>
 
 					<div className="group relative bg-background">
-						{/* Glow Effect Layer */}
 						<div className="pointer-events-none absolute inset-0">
 							<GlowEffect
 								colors={["#0894FF", "#C959DD", "#FF2E54", "#FF9004"]}
