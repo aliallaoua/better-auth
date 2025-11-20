@@ -1,6 +1,6 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.6/schema.json",
-  // "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  // "$schema": "https://biomejs.dev/schemas/2.3.6/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -66,7 +66,8 @@
       },
       "nursery": {
         "noShadow": "off",
-        "useConsistentArrowReturn": "off"
+        "useConsistentArrowReturn": "off",
+        "useMaxParams": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"
@@ -80,7 +81,13 @@
         // eslint-plugin-react-refresh: react-refresh/only-export-components
         "useComponentExportOnlyModules": "error",
         "useNamingConvention": "off",
-        "useConsistentTypeDefinitions": "off"
+        "useConsistentTypeDefinitions": "off",
+        "useImportType": {
+          "level": "error",
+          "options": {
+            "style": "separatedType"
+          }
+        }
       },
       "suspicious": {
         "noArrayIndexKey": "off",
