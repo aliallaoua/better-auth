@@ -49,18 +49,19 @@ function AdminDashboard() {
 	const { data: users = [], isPending } = useListUsersQuery();
 
 	const {
+		createUser,
 		deleteUser,
 		revokeSessions,
 		impersonateUser,
 		banUser,
 		unbanUser,
 		changeRole,
-		createUser,
-		isCreateUserPending,
-		isBanUserPanding,
+		isCreating,
+		isBanning,
+		isRoleChanging,
+		changingRoleUserId,
 	} = useUserManagement();
 
-	// User statistics
 	const userStats = useMemo(() => {
 		if (!users) return { total: 0, admins: 0, banned: 0, active: 0 };
 
@@ -72,7 +73,6 @@ function AdminDashboard() {
 		};
 	}, [users]);
 
-	// Create user form
 	const createUserForm = useAppForm({
 		defaultValues: {
 			email: "",
@@ -93,7 +93,6 @@ function AdminDashboard() {
 		},
 	});
 
-	// Ban user form
 	const banUserForm = useAppForm({
 		defaultValues: {
 			reason: "",
@@ -111,8 +110,8 @@ function AdminDashboard() {
 			banUser(
 				{
 					userId: selectedUserId,
-					reason: value.reason,
-					expiresIn: value.expirationDate.getTime() - Date.now(),
+					banReason: value.reason,
+					banExpiresIn: value.expirationDate.getTime() - Date.now(),
 				},
 				{
 					onSuccess: () => {
@@ -124,14 +123,12 @@ function AdminDashboard() {
 		},
 	});
 
-	// Handle ban click
 	const handleBanClick = (userId: string) => {
 		setSelectedUserId(userId);
 		banUserForm.reset();
 		setIsBanDialogOpen(true);
 	};
 
-	// Export data handler
 	const handleExportData = () => {
 		if (!users || users.length === 0) {
 			toast.error("No data to export");
@@ -188,6 +185,8 @@ function AdminDashboard() {
 								<Download className="mr-2 size-4" />
 								Export
 							</Button>
+
+							{/* Create User Dialog */}
 							<Dialog
 								onOpenChange={setIsCreateDialogOpen}
 								open={isCreateDialogOpen}
@@ -263,9 +262,9 @@ function AdminDashboard() {
 												<createUserForm.SubscribeButton
 													className="w-full"
 													disabled={
-														isCreateUserPending ||
-														!createUserForm.state.canSubmit
+														isCreating || !createUserForm.state.canSubmit
 													}
+													isLoading={isCreating}
 													label="Create User"
 												/>
 											</createUserForm.AppForm>
@@ -293,6 +292,8 @@ function AdminDashboard() {
 								impersonateUser,
 								unbanUser,
 								changeRole,
+								isRoleChanging,
+								changingRoleUserId,
 							}}
 							selfId={session?.user.id}
 							onExportData={handleExportData}
@@ -337,7 +338,8 @@ function AdminDashboard() {
 								<banUserForm.AppForm>
 									<banUserForm.SubscribeButton
 										className="w-full"
-										disabled={isBanUserPanding || !banUserForm.state.canSubmit}
+										disabled={isBanning || !banUserForm.state.canSubmit}
+										isLoading={isBanning}
 										label="Ban User"
 									/>
 								</banUserForm.AppForm>

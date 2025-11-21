@@ -5,11 +5,13 @@ import { Spinner } from "./ui/spinner";
 function SubscribeButton({
 	label,
 	disabled,
+	isLoading,
 	className,
 	...props
 }: {
 	label: string;
 	disabled?: boolean;
+	isLoading?: boolean;
 	className?: string;
 }) {
 	const form = useFormContext();
@@ -23,7 +25,7 @@ function SubscribeButton({
 					type="submit"
 					{...props}
 				>
-					{isSubmitting ? <Spinner /> : label}
+					{isSubmitting || isLoading ? <Spinner /> : label}
 				</Button>
 			)}
 			selector={(state) => [state.canSubmit, state.isSubmitting]}

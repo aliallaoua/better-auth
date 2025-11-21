@@ -22,7 +22,7 @@ const STAT_CONFIG = [
 		icon: Users,
 		trend: { value: 12, label: "from last month" },
 		color: {
-			text: "text-blue-600",
+			text: "text-blue-600 dark:text-blue-400",
 			bg: "bg-blue-50 dark:bg-blue-950/30",
 			border: "border-blue-200 dark:border-blue-900",
 			accent: "from-blue-400 to-blue-600",
@@ -35,7 +35,7 @@ const STAT_CONFIG = [
 		icon: Shield,
 		trend: { value: 0, label: "No change" },
 		color: {
-			text: "text-purple-600",
+			text: "text-purple-600 dark:text-purple-400",
 			bg: "bg-purple-50 dark:bg-purple-950/30",
 			border: "border-purple-200 dark:border-purple-900",
 			accent: "from-purple-400 to-purple-600",
@@ -48,7 +48,7 @@ const STAT_CONFIG = [
 		icon: UserCheck,
 		trend: { value: 8, label: "from last month" },
 		color: {
-			text: "text-green-600",
+			text: "text-green-600 dark:text-green-400",
 			bg: "bg-green-50 dark:bg-green-950/30",
 			border: "border-green-200 dark:border-green-900",
 			accent: "from-green-400 to-green-600",
@@ -61,7 +61,7 @@ const STAT_CONFIG = [
 		icon: UserX,
 		trend: { value: -2, label: "from last month" },
 		color: {
-			text: "text-red-600",
+			text: "text-red-600 dark:text-red-400",
 			bg: "bg-red-50 dark:bg-red-950/30",
 			border: "border-red-200 dark:border-red-900",
 			accent: "from-red-400 to-red-600",
@@ -78,10 +78,10 @@ function StatIndicator({ trend }: { trend: number }) {
 			<TrendingUp
 				className={cn(
 					"size-3 transition-transform",
-					isPositive ? "text-green-600" : "rotate-180 text-red-600"
+					isPositive ? "text-green-600 dark:text-green-400" : "rotate-180 text-red-600 dark:text-red-400"
 				)}
 			/>
-			<span className={isPositive ? "text-green-600" : "text-red-600"}>
+			<span className={isPositive ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}>
 				{isPositive ? "+" : ""}
 				{trend}%
 			</span>

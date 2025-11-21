@@ -1,14 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
-import type { User } from "better-auth/types";
 import { useState } from "react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 
 interface BanUserParams {
 	userId: string;
-	reason: string;
-	expiresIn: number;
+	banReason: string;
+	banExpiresIn: number;
 }
 
 interface RoleChangeParams {
@@ -31,184 +30,116 @@ export function useUserManagement() {
 		null
 	);
 
-	// Delete user mutation - extract mutate directly
+	const { mutate: createUser, isPending: isCreating } = useMutation({
+		mutationFn: ({ email, password, name, role }: CreateUserParams) =>
+			authClient.admin.createUser({ email, password, name, role }),
+		onSuccess: () => {
+			toast.success("User created successfully");
+		},
+		onError: (error) => {
+			toast.error(error.message || "Failed to create user");
+		},
+		onSettled: () => {
+			queryClient.invalidateQueries({ queryKey: ["users"] });
+		},
+	});
+
 	const { mutate: deleteUser } = useMutation({
 		mutationFn: (userId: string) => authClient.admin.removeUser({ userId }),
-		onMutate: async (userId, context) => {
-			await context.client.cancelQueries({ queryKey: ["users"] });
-
-			const previousUsers = context.client.getQueryData<User[]>(["users"]);
-
-			context.client.setQueryData<User[]>(["users"], (old) =>
-				old ? old.filter((u) => u.id !== userId) : []
-			);
-
-			return { previousUsers };
+		onSuccess: () => {
+			toast.success("User deleted successfully");
 		},
-		onSuccess: () => toast.success("User deleted"),
-
-		onError: (error, _variables, onMutateResult, context) => {
-			if (onMutateResult?.previousUsers) {
-				context.client.setQueryData<User[]>(
-					["users"],
-					onMutateResult.previousUsers
-				);
-			}
+		onError: (error) => {
 			toast.error(error.message || "Failed to delete user");
 		},
-		onSettled: (_data, _error, _variables, _onMutateResult, context) =>
-			context.client.invalidateQueries({ queryKey: ["users"] }),
+		onSettled: () => {
+			queryClient.invalidateQueries({ queryKey: ["users"] });
+		},
 	});
 
-	// Ban user mutation - extract mutate directly
-	const { mutate: banUser, isPending: isBanUserPanding } = useMutation({
-		mutationFn: ({ userId, reason, expiresIn }: BanUserParams) =>
-			authClient.admin.banUser({
-				userId,
-				banReason: reason,
-				banExpiresIn: expiresIn,
-			}),
-		onMutate: async ({ userId }, context) => {
-			await context.client.cancelQueries({ queryKey: ["users"] });
-
-			const previousUsers = context.client.getQueryData<User[]>(["users"]);
-
-			context.client.setQueryData<User[]>(["users"], (old) => {
-				return old
-					? old.map((u) => (u.id === userId ? { ...u, banned: true } : u))
-					: [];
-			});
-
-			return { previousUsers };
-		},
-		onSuccess: () => toast.success("User banned"),
-
-		onError: (error, variables, onMutateResult, context) => {
-			if (onMutateResult?.previousUsers) {
-				context.client.setQueryData<User[]>(
-					["users"],
-					onMutateResult.previousUsers
-				);
-			}
-			toast.error(error.message || `Failed to ban user ${variables.userId}`);
-		},
-		onSettled: (_data, _error, _variables, _onMutateResult, context) =>
-			context.client.invalidateQueries({ queryKey: ["users"] }),
-	});
-
-	// Unban user mutation - extract mutate directly
-	const { mutate: unbanUser } = useMutation({
-		mutationFn: (userId: string) => authClient.admin.unbanUser({ userId }),
-		onMutate: async (userId, context) => {
-			await context.client.cancelQueries({ queryKey: ["users"] });
-
-			const previousUsers = context.client.getQueryData<User[]>(["users"]);
-
-			context.client.setQueryData<User[]>(["users"], (old) => {
-				return old
-					? old.map((u) => (u.id === userId ? { ...u, banned: false } : u))
-					: [];
-			});
-
-			return { previousUsers };
-		},
-		onSuccess: () => toast.success("User unbanned"),
-
-		onError: (error, variables, onMutateResult, context) => {
-			if (onMutateResult?.previousUsers) {
-				context.client.setQueryData<User[]>(
-					["users"],
-					onMutateResult.previousUsers
-				);
-			}
-			toast.error(error.message || `Failed to unban user ${variables}`);
-		},
-		onSettled: (_data, _error, _variables, _onMutateResult, context) =>
-			context.client.invalidateQueries({ queryKey: ["users"] }),
-	});
-
-	// Change role mutation with optimistic updates - extract mutate directly
-	const { mutate: changeRole, isPending: isChangeRolePending } = useMutation({
-		mutationFn: ({ userId, role }: RoleChangeParams) =>
-			authClient.admin.setRole({ userId, role }),
-		onMutate: async ({ userId, role }, context) => {
-			setChangingRoleUserId(userId);
-
-			await context.client.cancelQueries({ queryKey: ["users"] });
-
-			const previousUsers = context.client.getQueryData<User[]>(["users"]);
-
-			context.client.setQueryData<User[]>(["users"], (old) => {
-				return old
-					? old.map((u) => (u.id === userId ? { ...u, role } : u))
-					: [];
-			});
-
-			return { previousUsers };
-		},
-		onSuccess: () => toast.success("Role updated for user"),
-		onError: (error, _variables, onMutateResult, context) => {
-			if (onMutateResult?.previousUsers) {
-				context.client.setQueryData<User[]>(
-					["users"],
-					onMutateResult.previousUsers
-				);
-			}
-			toast.error(error.message || "Failed to update role");
-		},
-		onSettled: (_data, _error, _variables, _onMutateResult, context) =>
-			context.client.invalidateQueries({ queryKey: ["users"] }),
-	});
-
-	// Revoke sessions mutation - extract mutate directly
 	const { mutate: revokeSessions } = useMutation({
 		mutationFn: (userId: string) =>
 			authClient.admin.revokeUserSessions({ userId }),
 		onSuccess: () => {
-			toast.success("Sessions revoked");
+			toast.success("Sessions revoked for user");
 		},
 		onError: (error) => {
 			toast.error(error.message || "Failed to revoke sessions");
 		},
 	});
 
-	// Impersonate user mutation - extract mutate directly
 	const { mutate: impersonateUser } = useMutation({
 		mutationFn: (userId: string) =>
 			authClient.admin.impersonateUser({ userId }),
-		onSuccess: (data) => {
-			toast.success(`Now impersonating user ${data.data?.user.email}`);
+		onSuccess: () => {
+			toast.success("Impersonated user");
 			router.navigate({ to: "/dashboard" });
 		},
-		onError: (error, userId) => {
-			toast.error(error.message || `Failed to impersonate user ${userId}`);
+		onError: (error) => {
+			toast.error(error.message || "Failed to impersonate user ");
 		},
 	});
 
-	// Create user mutation - extract mutate directly
-	const { mutate: createUser, isPending: isCreateUserPending } = useMutation({
-		mutationFn: (params: CreateUserParams) =>
-			authClient.admin.createUser(params),
+	const { mutate: banUser, isPending: isBanning } = useMutation({
+		mutationFn: ({ userId, banReason, banExpiresIn }: BanUserParams) =>
+			authClient.admin.banUser({
+				userId,
+				banReason,
+				banExpiresIn,
+			}),
 		onSuccess: () => {
-			toast.success("User created successfully");
-			queryClient.invalidateQueries({ queryKey: ["users"] });
+			toast.success("User banned successfully");
 		},
 		onError: (error) => {
-			toast.error(error.message || "Failed to create user");
+			toast.error(error.message || "Failed to ban user");
+		},
+		onSettled: () => {
+			queryClient.invalidateQueries({ queryKey: ["users"] });
+		},
+	});
+
+	const { mutate: unbanUser } = useMutation({
+		mutationFn: (userId: string) => authClient.admin.unbanUser({ userId }),
+		onSuccess: () => {
+			toast.success("User unbanned successfully");
+		},
+		onError: (error) => {
+			toast.error(error.message || "Failed to unban user");
+		},
+		onSettled: () => {
+			queryClient.invalidateQueries({ queryKey: ["users"] });
+		},
+	});
+
+	const { mutate: changeRole, isPending: isRoleChanging } = useMutation({
+		mutationFn: ({ userId, role }: RoleChangeParams) =>
+			authClient.admin.setRole({ userId, role }),
+		onMutate: ({ userId }) => {
+			setChangingRoleUserId(userId);
+		},
+		onSuccess: () => {
+			toast.success("Role updated for user");
+		},
+		onError: (error) => {
+			toast.error(error.message || "Failed to update role");
+		},
+		onSettled: () => {
+			setChangingRoleUserId(null);
+			queryClient.invalidateQueries({ queryKey: ["users"] });
 		},
 	});
 
 	return {
+		createUser,
 		deleteUser,
 		revokeSessions,
 		impersonateUser,
 		banUser,
 		unbanUser,
 		changeRole,
-		createUser,
-		isCreateUserPending,
-		isBanUserPanding,
-		isChangeRolePending,
+		isCreating,
+		isBanning,
+		isRoleChanging,
 		changingRoleUserId,
 	};
 }

@@ -95,6 +95,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@/components/ui/spinner";
 import {
 	Table,
 	TableBody,
@@ -115,6 +116,8 @@ interface UserMutations {
 	impersonateUser: (userId: string) => void;
 	unbanUser: (userId: string) => void;
 	changeRole: (params: { userId: string; role: "admin" | "user" }) => void;
+	isRoleChanging: boolean;
+	changingRoleUserId: string | null;
 }
 
 interface DataTableProps {
@@ -124,17 +127,6 @@ interface DataTableProps {
 	onExportData?: () => void;
 	onBanClick: (userId: string) => void;
 }
-
-// Define action handlers type
-export type UserActionHandlers = {
-	onDeleteUser: (id: string) => void;
-	onRevokeSessions: (id: string) => void;
-	onImpersonateUser: (id: string) => void;
-	onBanClick: (id: string) => void;
-	onUnbanUser: (id: string) => void;
-	onRoleChange: (id: string, role: "admin" | "user") => void;
-	isLoading?: string;
-};
 
 // Create the column helper with the User type
 const columnHelper = createColumnHelper<UserWithRole>();
@@ -531,6 +523,8 @@ export function DataTable({
 						>
 							<SelectTrigger className="h-9 w-[140px]">
 								<SelectValue placeholder="Select role" />
+								{mutations.isRoleChanging &&
+									mutations.changingRoleUserId === user.id && <Spinner />}
 							</SelectTrigger>
 							<SelectContent>
 								<SelectGroup>
@@ -589,7 +583,7 @@ export function DataTable({
 							className="border-green-200 bg-green-50 font-semibold text-green-700 shadow-sm hover:bg-green-100 dark:border-green-900 dark:bg-green-950 dark:text-green-400"
 							variant="outline"
 						>
-							<div className="mr-1 size-2 rounded-full bg-green-500" />
+							<div className="mr-1 size-2 rounded-full bg-green-500 dark:bg-green-400" />
 							Active
 						</Badge>
 					);
