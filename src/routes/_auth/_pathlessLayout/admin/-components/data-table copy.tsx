@@ -567,9 +567,14 @@ import {
 	IconChevronsLeft,
 	IconChevronsRight,
 } from "@tabler/icons-react";
+import type {
+	ColumnDef,
+	ColumnFiltersState,
+	Row,
+	SortingState,
+	VisibilityState,
+} from "@tanstack/react-table";
 import {
-	type ColumnDef,
-	type ColumnFiltersState,
 	flexRender,
 	getCoreRowModel,
 	getFacetedRowModel,
@@ -577,10 +582,7 @@ import {
 	getFilteredRowModel,
 	getPaginationRowModel,
 	getSortedRowModel,
-	type Row,
-	type SortingState,
 	useReactTable,
-	type VisibilityState,
 } from "@tanstack/react-table";
 import type { UserWithRole } from "better-auth/plugins/admin";
 import {

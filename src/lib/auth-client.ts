@@ -1,3 +1,4 @@
+import { passkeyClient } from "@better-auth/passkey/client";
 import {
 	adminClient,
 	deviceAuthorizationClient,
@@ -7,7 +8,6 @@ import {
 	oidcClient,
 	oneTapClient,
 	organizationClient,
-	passkeyClient,
 	twoFactorClient,
 } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";

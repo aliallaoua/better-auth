@@ -700,7 +700,8 @@
 // };
 // import { useSortable } from "@dnd-kit/sortable";
 import { IconDotsVertical } from "@tabler/icons-react";
-import { createColumnHelper, type Row } from "@tanstack/react-table";
+import type { Row } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import type { UserWithRole } from "better-auth/plugins/admin";
 import {
 	ArrowDown,

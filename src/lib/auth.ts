@@ -1,3 +1,4 @@
+import { passkey } from "@better-auth/passkey";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import {
@@ -13,8 +14,7 @@ import {
 	organization,
 	twoFactor,
 } from "better-auth/plugins";
-import { passkey } from "better-auth/plugins/passkey";
-import { reactStartCookies } from "better-auth/react-start";
+import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { eq } from "drizzle-orm";
 // import { serverEnv } from "@/config/env";
 import { serverEnv } from "@/config/server-env";
@@ -133,7 +133,7 @@ export const auth = betterAuth({
 			interval: "5s",
 		}),
 		lastLoginMethod(),
-		reactStartCookies(),
+		tanstackStartCookies(),
 	],
 	user: {
 		changeEmail: {
