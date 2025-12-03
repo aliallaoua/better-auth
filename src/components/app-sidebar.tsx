@@ -15,7 +15,6 @@ import {
 	IconSettings,
 	IconUsers,
 } from "@tabler/icons-react";
-import type { User } from "better-auth";
 import type * as React from "react";
 import { NavDocuments } from "@/components/nav-documents";
 import { NavMain } from "@/components/nav-main";
@@ -32,11 +31,6 @@ import {
 } from "@/components/ui/sidebar";
 
 const data = {
-	user: {
-		name: "shadcn",
-		email: "m@example.com",
-		avatar: "/avatars/shadcn.jpg",
-	},
 	navMain: [
 		{
 			title: "Dashboard",
@@ -148,14 +142,7 @@ const data = {
 	],
 };
 
-interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-	user: User;
-}
-
-export function AppSidebar({
-	user,
-	...props
-}: React.ComponentProps<typeof Sidebar> & AppSidebarProps) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar collapsible="icon" {...props}>
 			{/* <Sidebar collapsible="offcanvas" {...props}> */}
@@ -180,7 +167,7 @@ export function AppSidebar({
 				<NavSecondary className="mt-auto" items={data.navSecondary} />
 			</SidebarContent>
 			<SidebarFooter>
-				<NavUser user={user} />
+				<NavUser />
 			</SidebarFooter>
 		</Sidebar>
 	);

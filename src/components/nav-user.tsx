@@ -23,19 +23,17 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import useSignOutMutation from "@/hooks/mutations/useSignOutMutation";
+import { useSession } from "@/lib/auth-client";
 import { routerConfig } from "@/utils/viewTransitionOptions";
 
-export function NavUser({
-	user,
-}: {
-	user: {
-		name?: string;
-		email?: string;
-		image?: string | null;
-	};
-}) {
+export function NavUser() {
 	const { isMobile } = useSidebar();
 	const { mutateAsync: signOutMutation } = useSignOutMutation();
+	const { data: session, isPending } = useSession();
+
+	if (isPending) {
+		return null;
+	}
 
 	return (
 		<SidebarMenu>
@@ -48,13 +46,19 @@ export function NavUser({
 						>
 							<Avatar className="h-8 w-8 rounded-lg grayscale">
 								<AvatarFallback className="rounded-lg">
-									{user.name?.slice(0, 1)}
+									{session?.user.name && session.user.name.length > 0
+										? session.user.name.charAt(0).toUpperCase()
+										: session?.user.email.charAt(0).toUpperCase()}
 								</AvatarFallback>
 							</Avatar>
 							<div className="grid flex-1 text-left text-sm leading-tight">
-								<span className="truncate font-medium">{user.name}</span>
+								<span className="truncate font-medium">
+									{session?.user.name && session.user.name.length > 0
+										? session.user.name
+										: session?.user.email.split("@")[0]}
+								</span>
 								<span className="truncate text-muted-foreground text-xs">
-									{user.email}
+									{session?.user.email}
 								</span>
 							</div>
 							<IconDotsVertical className="ml-auto size-4" />
@@ -70,13 +74,19 @@ export function NavUser({
 							<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 								<Avatar className="h-8 w-8 rounded-lg">
 									<AvatarFallback className="rounded-lg">
-										{user.name?.slice(0, 1)}
+										{session?.user.name && session.user.name.length > 0
+											? session.user.name.charAt(0).toUpperCase()
+											: session?.user.email.charAt(0).toUpperCase()}
 									</AvatarFallback>
 								</Avatar>
 								<div className="grid flex-1 text-left text-sm leading-tight">
-									<span className="truncate font-medium">{user.name}</span>
+									<span className="truncate font-medium">
+										{session?.user.name && session.user.name.length > 0
+											? session.user.name
+											: session?.user.email.split("@")[0]}
+									</span>
 									<span className="truncate text-muted-foreground text-xs">
-										{user.email}
+										{session?.user.email}
 									</span>
 								</div>
 							</div>
