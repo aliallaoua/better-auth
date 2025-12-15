@@ -120,9 +120,11 @@ export const createColumns = (
 			return (
 				<div className="font-medium">
 					<Tooltip>
-						<TooltipTrigger asChild>
-							<span className="block max-w-[200px] truncate">{email}</span>
-						</TooltipTrigger>
+						<TooltipTrigger
+							render={
+								<span className="block max-w-[200px] truncate">{email}</span>
+							}
+						/>
 						<TooltipContent>
 							<p>{email}</p>
 						</TooltipContent>
@@ -226,15 +228,17 @@ export const createColumns = (
 
 			return (
 				<Tooltip>
-					<TooltipTrigger asChild>
-						<span className="text-sm">
-							{new Intl.DateTimeFormat("en-US", {
-								month: "short",
-								day: "numeric",
-								year: "numeric",
-							}).format(date)}
-						</span>
-					</TooltipTrigger>
+					<TooltipTrigger
+						render={
+							<span className="text-sm">
+								{new Intl.DateTimeFormat("en-US", {
+									month: "short",
+									day: "numeric",
+									year: "numeric",
+								}).format(date)}
+							</span>
+						}
+					/>
 					<TooltipContent>
 						<p>
 							{new Intl.DateTimeFormat("en-US", {
@@ -256,12 +260,14 @@ export const createColumns = (
 			const user = row.original;
 			return (
 				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Button className="size-8 p-0" variant="ghost">
-							<span className="sr-only">Open menu</span>
-							<MoreHorizontal className="size-4" />
-						</Button>
-					</DropdownMenuTrigger>
+					<DropdownMenuTrigger
+						render={
+							<Button className="size-8 p-0" variant="ghost">
+								<span className="sr-only">Open menu</span>
+								<MoreHorizontal className="size-4" />
+							</Button>
+						}
+					/>
 					<DropdownMenuContent align="end" className="w-[180px]">
 						<DropdownMenuLabel>Actions</DropdownMenuLabel>
 						<DropdownMenuItem

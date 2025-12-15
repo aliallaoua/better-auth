@@ -3,12 +3,11 @@ import {
 	SelectContent,
 	SelectGroup,
 	SelectItem,
-	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
 import { useFieldContext } from "@/hooks/form-context";
-import { Field, FieldError } from "./ui/field";
+import { Field, FieldError, FieldLabel } from "./ui/field";
 
 export function SelectField({
 	label,
@@ -22,26 +21,32 @@ export function SelectField({
 	const field = useFieldContext<string>();
 	const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
+	// Add placeholder as first item if provided
+	const selectItems = placeholder
+		? [{ label: placeholder, value: null }, ...values]
+		: values;
+
 	return (
 		<Field orientation="responsive" data-invalid={isInvalid}>
+			<FieldLabel htmlFor={field.name}>{label}</FieldLabel>
 			<Select
 				name={field.name}
+				items={selectItems}
 				onValueChange={field.handleChange}
-				value={field.state.value}
+				value={field.state.value || null}
 			>
 				<SelectTrigger
 					className="w-full"
 					aria-invalid={isInvalid}
 					id={field.name}
 				>
-					<SelectValue placeholder={placeholder} />
+					<SelectValue />
 				</SelectTrigger>
-				<SelectContent position="item-aligned">
+				<SelectContent>
 					<SelectGroup>
-						<SelectLabel>{label}</SelectLabel>
-						{values.map((value) => (
-							<SelectItem key={value.value} value={value.value}>
-								{value.label}
+						{selectItems.map((item) => (
+							<SelectItem key={item.value || "placeholder"} value={item.value}>
+								{item.label}
 							</SelectItem>
 						))}
 					</SelectGroup>

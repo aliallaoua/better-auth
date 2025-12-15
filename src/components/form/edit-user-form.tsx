@@ -124,12 +124,18 @@ export function EditUserForm() {
 
 	return (
 		<Dialog onOpenChange={setOpen} open={open}>
-			<DialogTrigger asChild>
-				<Button className="cursor-pointer gap-2" size="sm" variant="secondary">
-					<Edit size={13} />
-					Edit User
-				</Button>
-			</DialogTrigger>
+			<DialogTrigger
+				render={
+					<Button
+						className="cursor-pointer gap-2"
+						size="sm"
+						variant="secondary"
+					>
+						<Edit size={13} />
+						Edit User
+					</Button>
+				}
+			/>
 			<DialogContent className="w-11/12 sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Edit User</DialogTitle>

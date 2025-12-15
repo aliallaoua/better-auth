@@ -22,6 +22,7 @@ import { useSession } from "@/lib/auth-client";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
+	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
@@ -37,53 +38,57 @@ export default function UserButton() {
 
 	return (
 		<DropdownMenu onOpenChange={setOpen} open={open}>
-			<DropdownMenuTrigger asChild>
-				<Button
-					className="size-8 cursor-pointer rounded-full"
-					size="icon"
-					variant="outline"
-				>
-					<Avatar className="size-8">
-						<AvatarImage alt="User avatar" src={session?.user.image ?? ""} />
-						<AvatarFallback>
-							{session?.user ? (
-								session?.user.name.charAt(0)
-							) : (
-								<User className="size-4" />
-							)}
-						</AvatarFallback>
-					</Avatar>
-				</Button>
-			</DropdownMenuTrigger>
+			<DropdownMenuTrigger
+				render={
+					<Button
+						className="size-8 cursor-pointer rounded-full"
+						size="icon"
+						variant="outline"
+					>
+						<Avatar className="size-8">
+							<AvatarImage alt="User avatar" src={session?.user.image ?? ""} />
+							<AvatarFallback>
+								{session?.user ? (
+									session?.user.name.charAt(0)
+								) : (
+									<User className="size-4" />
+								)}
+							</AvatarFallback>
+						</Avatar>
+					</Button>
+				}
+			/>
 			<DropdownMenuContent align="end" className="w-72 [--radius:0.65rem]">
-				<DropdownMenuLabel className="p-0">
-					{session?.user ? (
-						<Item className="w-full p-2" size="sm">
-							<ItemMedia>
-								<Avatar className="size-8">
-									<AvatarImage
-										alt="User avatar"
-										className="grayscale"
-										src={session?.user.image ?? ""}
-									/>
-									<AvatarFallback>
-										{session?.user.name.charAt(0)}
-									</AvatarFallback>
-								</Avatar>
-							</ItemMedia>
-							<ItemContent className="gap-0.5">
-								<ItemTitle>{session?.user.name}</ItemTitle>
-								<ItemDescription>{session?.user.email}</ItemDescription>
-							</ItemContent>
-						</Item>
-					) : (
-						<Item className="w-full p-2" size="sm">
-							<ItemContent>
-								<ItemDescription>Account</ItemDescription>
-							</ItemContent>
-						</Item>
-					)}
-				</DropdownMenuLabel>
+				<DropdownMenuGroup>
+					<DropdownMenuLabel className="p-0">
+						{session?.user ? (
+							<Item className="w-full p-2" size="sm">
+								<ItemMedia>
+									<Avatar className="size-8">
+										<AvatarImage
+											alt="User avatar"
+											className="grayscale"
+											src={session?.user.image ?? ""}
+										/>
+										<AvatarFallback>
+											{session?.user.name.charAt(0)}
+										</AvatarFallback>
+									</Avatar>
+								</ItemMedia>
+								<ItemContent className="gap-0.5">
+									<ItemTitle>{session?.user.name}</ItemTitle>
+									<ItemDescription>{session?.user.email}</ItemDescription>
+								</ItemContent>
+							</Item>
+						) : (
+							<Item className="w-full p-2" size="sm">
+								<ItemContent>
+									<ItemDescription>Account</ItemDescription>
+								</ItemContent>
+							</Item>
+						)}
+					</DropdownMenuLabel>
+				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				{session?.user ? (
 					<>
@@ -110,7 +115,7 @@ export default function UserButton() {
 
 						<DropdownMenuItem
 							className="cursor-pointer text-red-600"
-							onSelect={async () => {
+							onClick={async () => {
 								await signOutMutation();
 							}}
 						>

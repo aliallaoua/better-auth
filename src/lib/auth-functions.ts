@@ -36,12 +36,12 @@ export const signUp = async (data: SignUpSchema) => {
 	return data;
 };
 
-// export const signInWithGithub = async () => {
-// 	await authClient.signIn.social({
-// 		provider: "github",
-// 		callbackURL: "/dashboard",
-// 	});
-// };
+export const signInWithGithub = async () => {
+	await authClient.signIn.social({
+		provider: "github",
+		callbackURL: "/dashboard",
+	});
+};
 
 export const signInWithGoogle = async () => {
 	await authClient.signIn.social({

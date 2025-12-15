@@ -18,21 +18,23 @@ export default function DateField() {
 	return (
 		<Field data-invalid={isInvalid}>
 			<Popover onOpenChange={setOpen} open={open}>
-				<PopoverTrigger asChild>
-					<Button
-						className={cn(
-							"w-full cursor-pointer justify-start text-left font-normal",
-							!field.state.value && "text-muted-foreground"
-						)}
-						id={field.name}
-						variant="outline"
-					>
-						<CalendarIcon className="mr-2 size-4" />
-						{field.state.value
-							? format(field.state.value, "PPP")
-							: "Pick a date"}
-					</Button>
-				</PopoverTrigger>
+				<PopoverTrigger
+					render={
+						<Button
+							className={cn(
+								"w-full cursor-pointer justify-start text-left font-normal",
+								!field.state.value && "text-muted-foreground"
+							)}
+							id={field.name}
+							variant="outline"
+						>
+							<CalendarIcon className="mr-2 size-4" />
+							{field.state.value
+								? format(field.state.value, "PPP")
+								: "Pick a date"}
+						</Button>
+					}
+				/>
 				<PopoverContent align="start" className="w-auto overflow-hidden p-0">
 					<Calendar
 						// disabled={(date) => date < new Date()}

@@ -53,16 +53,18 @@ export function DeleteAccountForm() {
 
 	return (
 		<Dialog onOpenChange={setOpen} open={open}>
-			<DialogTrigger asChild>
-				<Button
-					// className="cursor-pointer border-red-600 bg-transparent text-red-500 text-xs underline opacity-80 hover:bg-transparent"
-					className="z-10 cursor-pointer gap-2"
-					size="sm"
-					variant="destructive"
-				>
-					Delete Account
-				</Button>
-			</DialogTrigger>
+			<DialogTrigger
+				render={
+					<Button
+						// className="cursor-pointer border-red-600 bg-transparent text-red-500 text-xs underline opacity-80 hover:bg-transparent"
+						className="z-10 cursor-pointer gap-2"
+						size="sm"
+						variant="destructive"
+					>
+						Delete Account
+					</Button>
+				}
+			/>
 			<DialogContent className="w-11/12 sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Delete Account</DialogTitle>

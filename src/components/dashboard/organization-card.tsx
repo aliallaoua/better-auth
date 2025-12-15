@@ -69,16 +69,18 @@ export function OrganizationCard(props: {
 				<CardTitle>Organization</CardTitle>
 				<div className="flex justify-between">
 					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<div className="flex cursor-pointer items-center gap-1">
-								<p className="text-sm">
-									<span className="font-bold" />{" "}
-									{optimisticOrg?.name || "Personal"}
-								</p>
+						<DropdownMenuTrigger
+							render={
+								<div className="flex cursor-pointer items-center gap-1">
+									<p className="text-sm">
+										<span className="font-bold" />{" "}
+										{optimisticOrg?.name || "Personal"}
+									</p>
 
-								<ChevronDownIcon />
-							</div>
-						</DropdownMenuTrigger>
+									<ChevronDownIcon />
+								</div>
+							}
+						/>
 						<DropdownMenuContent align="start">
 							<DropdownMenuItem
 								className="py-1"
@@ -388,16 +390,18 @@ function InviteMemberDialog({
 	});
 	return (
 		<Dialog onOpenChange={setOpen} open={open}>
-			<DialogTrigger asChild>
-				<Button
-					className="w-full cursor-pointer gap-2"
-					size="sm"
-					variant="secondary"
-				>
-					<MailPlus size={16} />
-					<p>Invite Member</p>
-				</Button>
-			</DialogTrigger>
+			<DialogTrigger
+				render={
+					<Button
+						className="w-full cursor-pointer gap-2"
+						size="sm"
+						variant="secondary"
+					>
+						<MailPlus size={16} />
+						<p>Invite Member</p>
+					</Button>
+				}
+			/>
 			<DialogContent className="w-11/12 sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Invite Member</DialogTitle>

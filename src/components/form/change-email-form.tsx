@@ -48,15 +48,17 @@ export function ChangeEmailForm() {
 
 	return (
 		<Dialog onOpenChange={setOpen} open={open}>
-			<DialogTrigger asChild>
-				<Button
-					className="z-10 cursor-pointer gap-2"
-					size="sm"
-					variant="outline"
-				>
-					<span className="text-muted-foreground text-sm">Change Email</span>
-				</Button>
-			</DialogTrigger>
+			<DialogTrigger
+				render={
+					<Button
+						className="z-10 cursor-pointer gap-2"
+						size="sm"
+						variant="outline"
+					>
+						<span className="text-muted-foreground text-sm">Change Email</span>
+					</Button>
+				}
+			/>
 			<DialogContent className="w-11/12 sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Change Email</DialogTitle>

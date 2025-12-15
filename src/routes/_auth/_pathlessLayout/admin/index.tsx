@@ -191,12 +191,14 @@ function AdminDashboard() {
 								onOpenChange={setIsCreateDialogOpen}
 								open={isCreateDialogOpen}
 							>
-								<DialogTrigger asChild>
-									<Button variant="outline">
-										<Plus />
-										<span className="hidden lg:inline">Create User</span>
-									</Button>
-								</DialogTrigger>
+								<DialogTrigger
+									render={
+										<Button variant="outline">
+											<Plus />
+											<span className="hidden lg:inline">Create User</span>
+										</Button>
+									}
+								/>
 								<DialogContent className="sm:max-w-[425px]">
 									<DialogHeader>
 										<DialogTitle>Create New User</DialogTitle>

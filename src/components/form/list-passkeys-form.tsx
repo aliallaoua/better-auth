@@ -66,12 +66,17 @@ export function ListPasskeysForm() {
 	const [isDeletePasskey, setIsDeletePasskey] = useState<boolean>(false);
 	return (
 		<Dialog onOpenChange={setIsOpen} open={isOpen}>
-			<DialogTrigger asChild>
-				<Button className="cursor-pointer text-xs md:text-sm" variant="outline">
-					<Fingerprint className="mr-2 size-4" />
-					<span>Passkeys {data?.length ? `[${data?.length}]` : ""}</span>
-				</Button>
-			</DialogTrigger>
+			<DialogTrigger
+				render={
+					<Button
+						className="cursor-pointer text-xs md:text-sm"
+						variant="outline"
+					>
+						<Fingerprint className="mr-2 size-4" />
+						<span>Passkeys {data?.length ? `[${data?.length}]` : ""}</span>
+					</Button>
+				}
+			/>
 			<DialogContent className="w-11/12 sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Passkeys</DialogTitle>
@@ -185,9 +190,9 @@ export function ListPasskeysForm() {
 					{/* <Button className="cursor-pointer" onClick={() => setIsOpen(false)}>
 						Close
 					</Button> */}
-					<DialogClose asChild>
-						<Button className="cursor-pointer">Cancel</Button>
-					</DialogClose>
+					<DialogClose
+						render={<Button className="cursor-pointer">Cancel</Button>}
+					/>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

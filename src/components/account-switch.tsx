@@ -24,25 +24,29 @@ export default function AccountSwitcher({ sessions }: { sessions: Session[] }) {
 	const router = useRouter();
 	return (
 		<Popover onOpenChange={setOpen} open={open}>
-			<PopoverTrigger asChild>
-				<Button
-					aria-expanded={open}
-					aria-label="Select a user"
-					className="w-[250px] justify-between"
-					role="combobox"
-					variant="outline"
-				>
-					<Avatar className="mr-2 size-6">
-						<AvatarImage
-							alt={currentUser?.user.name}
-							src={currentUser?.user.image || undefined}
-						/>
-						<AvatarFallback>{currentUser?.user.name.charAt(0)}</AvatarFallback>
-					</Avatar>
-					{currentUser?.user.name}
-					<ChevronDown className="ml-auto size-4 shrink-0 opacity-50" />
-				</Button>
-			</PopoverTrigger>
+			<PopoverTrigger
+				render={
+					<Button
+						aria-expanded={open}
+						aria-label="Select a user"
+						className="w-[250px] justify-between"
+						role="combobox"
+						variant="outline"
+					>
+						<Avatar className="mr-2 size-6">
+							<AvatarImage
+								alt={currentUser?.user.name}
+								src={currentUser?.user.image || undefined}
+							/>
+							<AvatarFallback>
+								{currentUser?.user.name.charAt(0)}
+							</AvatarFallback>
+						</Avatar>
+						{currentUser?.user.name}
+						<ChevronDown className="ml-auto size-4 shrink-0 opacity-50" />
+					</Button>
+				}
+			/>
 			<PopoverContent className="w-[250px] p-0">
 				<Command>
 					<CommandList>

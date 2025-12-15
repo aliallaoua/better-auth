@@ -105,29 +105,29 @@ export const HeroHeader = () => {
 							</button>
 
 							<div className="hidden lg:flex lg:items-center lg:gap-12">
-								<NavigationMenu viewport={false}>
+								<NavigationMenu>
 									<NavigationMenuList>
 										<NavigationMenuItem>
-											<NavigationMenuTrigger className="text-muted-foreground duration-150 hover:text-accent-foreground">
-												Home
-											</NavigationMenuTrigger>
+											<NavigationMenuTrigger>Home</NavigationMenuTrigger>
 											<NavigationMenuContent>
-												<ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+												<ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
 													<li className="row-span-3">
-														<NavigationMenuLink asChild>
-															<Link
-																className="flex h-full w-full select-none flex-col justify-end rounded-md bg-linear-to-b from-muted/50 to-muted p-6 no-underline outline-hidden focus:shadow-md"
-																to="/"
-																viewTransition={{ types: ["slide-right"] }}
-															>
-																<div className="mt-4 mb-2 font-medium text-lg">
-																	shadcn/ui
-																</div>
-																<p className="text-muted-foreground text-sm leading-tight">
-																	Beautifully designed components built with
-																	Tailwind CSS.
-																</p>
-															</Link>
+														<NavigationMenuLink
+															render={
+																<Link
+																	to="/"
+																	className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+																	viewTransition={{ types: ["slide-right"] }}
+																/>
+															}
+														>
+															<div className="mt-4 mb-2 font-medium text-lg">
+																shadcn/ui
+															</div>
+															<p className="text-muted-foreground text-sm leading-tight">
+																Beautifully designed components built with
+																Tailwind CSS.
+															</p>
 														</NavigationMenuLink>
 													</li>
 													<ListItem href="/docs" title="Introduction">
@@ -149,12 +149,11 @@ export const HeroHeader = () => {
 												</ul>
 											</NavigationMenuContent>
 										</NavigationMenuItem>
+
 										<NavigationMenuItem>
-											<NavigationMenuTrigger className="text-muted-foreground duration-150 hover:text-accent-foreground">
-												Components
-											</NavigationMenuTrigger>
+											<NavigationMenuTrigger>Components</NavigationMenuTrigger>
 											<NavigationMenuContent>
-												<ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+												<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
 													{components.map((component) => (
 														<ListItem
 															key={component.title}
@@ -169,6 +168,7 @@ export const HeroHeader = () => {
 										</NavigationMenuItem>
 									</NavigationMenuList>
 								</NavigationMenu>
+
 								<ul className="flex gap-8 text-sm">
 									{menuItems.map((item, index) => (
 										<li key={index}>
@@ -240,17 +240,26 @@ function ListItem({
 	title,
 	children,
 	href,
-	...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
+}: {
+	title: string;
+	children: React.ReactNode;
+	href: string;
+}) {
 	return (
-		<li {...props}>
-			<NavigationMenuLink asChild>
-				<Link to={href}>
-					<div className="font-medium text-sm leading-none">{title}</div>
-					<p className="line-clamp-2 text-muted-foreground text-sm leading-snug">
-						{children}
-					</p>
-				</Link>
+		<li>
+			<NavigationMenuLink
+				render={
+					<Link
+						to={href}
+						className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+						viewTransition={{ types: routerConfig.viewTransitionOptions }}
+					/>
+				}
+			>
+				<div className="font-medium text-sm leading-none">{title}</div>
+				<p className="line-clamp-2 text-muted-foreground text-sm leading-snug">
+					{children}
+				</p>
 			</NavigationMenuLink>
 		</li>
 	);

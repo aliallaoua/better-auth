@@ -63,12 +63,14 @@ export function QRCodePasswordForm({
 
 	return (
 		<Dialog>
-			<DialogTrigger asChild>
-				<Button className="cursor-pointer gap-2" variant="outline">
-					<QrCode size={16} />
-					<span className="text-xs md:text-sm">Scan QR Code</span>
-				</Button>
-			</DialogTrigger>
+			<DialogTrigger
+				render={
+					<Button className="cursor-pointer gap-2" variant="outline">
+						<QrCode size={16} />
+						<span className="text-xs md:text-sm">Scan QR Code</span>
+					</Button>
+				}
+			/>
 			<DialogContent className="w-11/12 sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Scan QR Code</DialogTitle>

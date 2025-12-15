@@ -34,8 +34,7 @@ export default function CopyButton({ textToCopy }: CopyButtonProps) {
 	return (
 		<TooltipProvider>
 			<Tooltip>
-				<TooltipTrigger asChild>
-					<Button
+				<TooltipTrigger render={<Button
 						className="size-8"
 						onClick={handleCopy}
 						size="icon"
@@ -47,7 +46,8 @@ export default function CopyButton({ textToCopy }: CopyButtonProps) {
 							<Copy className="size-4" />
 						)}
 						<span className="sr-only">Copy to clipboard</span>
-					</Button>
+					</Button>}>
+					
 				</TooltipTrigger>
 				<TooltipContent>
 					<p>{isCopied ? "Copied!" : "Copy to clipboard"}</p>

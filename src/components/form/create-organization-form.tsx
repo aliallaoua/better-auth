@@ -61,16 +61,18 @@ export function CreateOrganizationForm() {
 
 	return (
 		<Dialog onOpenChange={setOpen} open={open}>
-			<DialogTrigger asChild>
-				<Button
-					className="w-full cursor-pointer gap-2"
-					size="sm"
-					variant="default"
-				>
-					<PlusIcon />
-					<p>New Organization</p>
-				</Button>
-			</DialogTrigger>
+			<DialogTrigger
+				render={
+					<Button
+						className="w-full cursor-pointer gap-2"
+						size="sm"
+						variant="default"
+					>
+						<PlusIcon />
+						<p>New Organization</p>
+					</Button>
+				}
+			/>
 			<DialogContent className="w-11/12 sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>New Organization</DialogTitle>

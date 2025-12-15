@@ -90,7 +90,6 @@ import {
 	SelectContent,
 	SelectGroup,
 	SelectItem,
-	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
@@ -128,6 +127,19 @@ interface DataTableProps {
 	onBanClick: (userId: string) => void;
 }
 
+const userRoles = [
+	{
+		label: "Admin",
+		value: "admin",
+		icon: <ShieldCheck className="size-4 text-purple-600" />,
+	},
+	{
+		label: "User",
+		value: "user",
+		icon: <UserIcon className="size-4 text-blue-600" />,
+	},
+];
+
 // Create the column helper with the User type
 const columnHelper = createColumnHelper<UserWithRole>();
 
@@ -159,7 +171,6 @@ const bannedFilter = (
 const SortableHeader = ({ column, title }: { column: any; title: string }) => {
 	return (
 		<Button
-			// className="h-8 px-2 -ml-2"
 			className={`-ml-2 h-8 px-2 ${
 				column.getCanSort()
 					? "cursor-pointer select-none transition-colors hover:text-blue-400"
@@ -190,23 +201,30 @@ function TableFilter({ column }: { column: any }) {
 	const filterVariant = column.columnDef.meta?.filterVariant;
 
 	if (filterVariant === "select" && filterOptions) {
+		const selectItems = [
+			{ label: `All ${column.id}`, value: null },
+			...filterOptions,
+		];
+
 		return (
 			<Select
+				items={selectItems}
 				onValueChange={(value) =>
-					column.setFilterValue(value === "all" ? undefined : value)
+					column.setFilterValue(value === null ? undefined : value)
 				}
-				value={filterValue || ""}
+				value={filterValue || null}
 			>
 				<SelectTrigger className="w-[150px]">
-					<SelectValue placeholder={`Filter ${column.id}...`} />
+					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value="all">All {column.id}</SelectItem>
-					{filterOptions.map((option: any) => (
-						<SelectItem key={option.value} value={option.value}>
-							{option.label}
-						</SelectItem>
-					))}
+					<SelectGroup>
+						{selectItems.map((option) => (
+							<SelectItem key={option.value || "all"} value={option.value}>
+								{option.label}
+							</SelectItem>
+						))}
+					</SelectGroup>
 				</SelectContent>
 			</Select>
 		);
@@ -338,16 +356,18 @@ function UserActionsMenu({
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
-				<Button
-					className="size-8 text-muted-foreground transition-colors hover:bg-muted/80 data-[state=open]:bg-muted"
-					size="icon"
-					variant="ghost"
-				>
-					<IconDotsVertical className="size-4" />
-					<span className="sr-only">Open menu</span>
-				</Button>
-			</DropdownMenuTrigger>
+			<DropdownMenuTrigger
+				render={
+					<Button
+						className="size-8 text-muted-foreground transition-colors hover:bg-muted/80 data-[state=open]:bg-muted"
+						size="icon"
+						variant="ghost"
+					>
+						<IconDotsVertical className="size-4" />
+						<span className="sr-only">Open menu</span>
+					</Button>
+				}
+			/>
 			<DropdownMenuContent align="end" className="w-[200px]">
 				<DropdownMenuLabel className="font-semibold">Actions</DropdownMenuLabel>
 				<DropdownMenuSeparator />
@@ -380,15 +400,17 @@ function UserActionsMenu({
 					{user.banned ? "Unban user" : "Ban user"}
 				</DropdownMenuItem>
 				<AlertDialog>
-					<AlertDialogTrigger asChild>
-						<DropdownMenuItem
-							className="gap-2 text-red-600 focus:bg-red-50 focus:text-red-600 dark:focus:bg-red-950/20"
-							onSelect={(e) => e.preventDefault()}
-						>
-							<Trash className="size-4" />
-							Delete user
-						</DropdownMenuItem>
-					</AlertDialogTrigger>
+					<AlertDialogTrigger
+						render={
+							<DropdownMenuItem
+								className="gap-2 text-red-600 focus:bg-red-50 focus:text-red-600 dark:focus:bg-red-950/20"
+								onClick={(e) => e.preventDefault()}
+							>
+								<Trash className="size-4" />
+								Delete user
+							</DropdownMenuItem>
+						}
+					/>
 					<AlertDialogContent className="max-w-md">
 						<AlertDialogHeader>
 							<AlertDialogTitle className="text-xl">
@@ -513,6 +535,7 @@ export function DataTable({
 
 					return (
 						<Select
+							items={userRoles}
 							onValueChange={(value) => {
 								mutations.changeRole({
 									userId: user.id,
@@ -522,35 +545,27 @@ export function DataTable({
 							value={user.role ?? undefined}
 						>
 							<SelectTrigger className="h-9 w-[140px]">
-								<SelectValue placeholder="Select role" />
+								<SelectValue />
 								{mutations.isRoleChanging &&
 									mutations.changingRoleUserId === user.id && <Spinner />}
 							</SelectTrigger>
 							<SelectContent>
 								<SelectGroup>
-									<SelectLabel>Select Role</SelectLabel>
-									<SelectItem value="admin">
-										<div className="flex items-center gap-2">
-											<ShieldCheck className="size-4 text-purple-600" />
-											<Badge
-												className="font-semibold text-xs"
-												variant="default"
-											>
-												Admin
-											</Badge>
-										</div>
-									</SelectItem>
-									<SelectItem value="user">
-										<div className="flex items-center gap-2">
-											<UserIcon className="size-4 text-blue-600" />
-											<Badge
-												className="font-semibold text-xs"
-												variant="secondary"
-											>
-												User
-											</Badge>
-										</div>
-									</SelectItem>
+									{userRoles.map((role) => (
+										<SelectItem key={role.value} value={role.value}>
+											<div className="flex items-center gap-2">
+												{role.icon}
+												<Badge
+													className="font-semibold text-xs"
+													variant={
+														role.value === "admin" ? "default" : "secondary"
+													}
+												>
+													{role.label}
+												</Badge>
+											</div>
+										</SelectItem>
+									))}
 								</SelectGroup>
 							</SelectContent>
 						</Select>
@@ -610,15 +625,17 @@ export function DataTable({
 
 					return (
 						<Tooltip>
-							<TooltipTrigger asChild>
-								<span className="cursor-default font-medium text-sm">
-									{new Intl.DateTimeFormat("en-US", {
-										month: "short",
-										day: "numeric",
-										year: "numeric",
-									}).format(date)}
-								</span>
-							</TooltipTrigger>
+							<TooltipTrigger
+								render={
+									<span className="cursor-default font-medium text-sm">
+										{new Intl.DateTimeFormat("en-US", {
+											month: "short",
+											day: "numeric",
+											year: "numeric",
+										}).format(date)}
+									</span>
+								}
+							/>
 							<TooltipContent>
 								<p>
 									{new Intl.DateTimeFormat("en-US", {
@@ -695,6 +712,14 @@ export function DataTable({
 		setGlobalFilter("");
 	};
 
+	const pageSizeItems = [
+		{ label: "10", value: 10 },
+		{ label: "20", value: 20 },
+		{ label: "30", value: 30 },
+		{ label: "40", value: 40 },
+		{ label: "50", value: 50 },
+	];
+
 	return (
 		<div className="w-full space-y-4">
 			{/* Global Search and Actions */}
@@ -740,13 +765,15 @@ export function DataTable({
 					</ButtonGroup>
 					<ButtonGroup>
 						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button className="pl-2!" variant="outline">
-									<Layers className="size-4" />
-									Columns
-									<ChevronDownIcon />
-								</Button>
-							</DropdownMenuTrigger>
+							<DropdownMenuTrigger
+								render={
+									<Button className="pl-2!" variant="outline">
+										<Layers className="size-4" />
+										Columns
+										<ChevronDownIcon />
+									</Button>
+								}
+							/>
 							<DropdownMenuContent align="end" className="[--radius:1rem]">
 								{table
 									.getAllColumns()
@@ -894,22 +921,23 @@ export function DataTable({
 							Rows per page
 						</Label>
 						<Select
+							items={pageSizeItems}
 							onValueChange={(value) => {
 								table.setPageSize(Number(value));
 							}}
-							value={`${table.getState().pagination.pageSize}`}
+							value={table.getState().pagination.pageSize}
 						>
 							<SelectTrigger className="w-20" id="rows-per-page" size="sm">
-								<SelectValue
-									placeholder={table.getState().pagination.pageSize}
-								/>
+								<SelectValue />
 							</SelectTrigger>
 							<SelectContent side="top">
-								{[10, 20, 30, 40, 50].map((pageSize) => (
-									<SelectItem key={pageSize} value={`${pageSize}`}>
-										{pageSize}
-									</SelectItem>
-								))}
+								<SelectGroup>
+									{pageSizeItems.map((item) => (
+										<SelectItem key={item.value} value={item.value}>
+											{item.label}
+										</SelectItem>
+									))}
+								</SelectGroup>
 							</SelectContent>
 						</Select>
 					</div>

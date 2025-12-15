@@ -52,15 +52,17 @@ export function AddPasskeyForm() {
 
 	return (
 		<Dialog onOpenChange={setIsOpen} open={isOpen}>
-			<DialogTrigger asChild>
-				<Button
-					className="cursor-pointer gap-2 text-xs md:text-sm"
-					variant="outline"
-				>
-					<Plus size={15} />
-					Add New Passkey
-				</Button>
-			</DialogTrigger>
+			<DialogTrigger
+				render={
+					<Button
+						className="cursor-pointer gap-2 text-xs md:text-sm"
+						variant="outline"
+					>
+						<Plus size={15} />
+						Add New Passkey
+					</Button>
+				}
+			/>
 			<DialogContent className="w-11/12 sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Add New Passkey</DialogTitle>

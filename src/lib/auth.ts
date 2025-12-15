@@ -30,33 +30,11 @@ import {
 } from "@/functions/send";
 
 export const auth = betterAuth({
-	socialProviders: {
-		// github: {
-		// 	clientId: process.env.GITHUB_CLIENT_ID as string,
-		// 	clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-		// 	clientId: serverEnv.GITHUB_CLIENT_ID,
-		// 	clientSecret: serverEnv.GITHUB_CLIENT_SECRET,
-		// },
-		google: {
-			// clientId: process.env.GOOGLE_CLIENT_ID as string,
-			// clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-			clientId: serverEnv.GOOGLE_CLIENT_ID,
-			clientSecret: serverEnv.GOOGLE_CLIENT_SECRET,
-		},
-	},
-	emailAndPassword: {
-		enabled: true,
-		// requireEmailVerification: true,
-		sendResetPassword: async ({ user, url }) => {
-			await sendResetPasswordEmail({
-				data: {
-					name: user.name,
-					email: user.email,
-					url,
-				},
-			});
-		},
-	},
+	appName: "Better Auth Demo",
+	database: drizzleAdapter(db, {
+		provider: "pg",
+		schema,
+	}),
 	emailVerification: {
 		sendVerificationEmail: async ({ user, url }) => {
 			await sendVerificationEmail({
@@ -75,14 +53,37 @@ export const auth = betterAuth({
 	account: {
 		accountLinking: {
 			// enabled: true,
-			// trustedProviders: ["google", "github", "email-password"],
-			trustedProviders: ["google", "email-password"],
+			trustedProviders: ["google", "github", "email-password"],
+			// trustedProviders: ["google", "email-password"],
 		},
 	},
-	database: drizzleAdapter(db, {
-		provider: "pg",
-		schema,
-	}),
+	emailAndPassword: {
+		enabled: true,
+		// requireEmailVerification: true,
+		sendResetPassword: async ({ user, url }) => {
+			await sendResetPasswordEmail({
+				data: {
+					name: user.name,
+					email: user.email,
+					url,
+				},
+			});
+		},
+	},
+	socialProviders: {
+		github: {
+			// clientId: process.env.GITHUB_CLIENT_ID as string,
+			// clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+			clientId: serverEnv.GITHUB_CLIENT_ID,
+			clientSecret: serverEnv.GITHUB_CLIENT_SECRET,
+		},
+		google: {
+			// clientId: process.env.GOOGLE_CLIENT_ID as string,
+			// clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+			clientId: serverEnv.GOOGLE_CLIENT_ID,
+			clientSecret: serverEnv.GOOGLE_CLIENT_SECRET,
+		},
+	},
 	plugins: [
 		organization({
 			async sendInvitationEmail(data: any) {

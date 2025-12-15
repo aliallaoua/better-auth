@@ -19,12 +19,14 @@ const DevbarMenu = () => {
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
-				<Button size="icon" variant="outline">
-					<Menu className="h-[1.2rem] w-[1.2rem]" />
-					<span className="sr-only">Toggle theme</span>
-				</Button>
-			</DropdownMenuTrigger>
+			<DropdownMenuTrigger
+				render={
+					<Button size="icon" variant="outline">
+						<Menu className="h-[1.2rem] w-[1.2rem]" />
+						<span className="sr-only">Toggle theme</span>
+					</Button>
+				}
+			/>
 			<DropdownMenuContent align="end">
 				<DropdownMenuSub>
 					<DropdownMenuSubTrigger>

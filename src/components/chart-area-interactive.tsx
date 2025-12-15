@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import {
@@ -8,8 +10,8 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import type { ChartConfig } from "@/components/ui/chart";
 import {
-	type ChartConfig,
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
@@ -170,32 +172,46 @@ export function ChartAreaInteractive() {
 				</CardDescription>
 				<CardAction>
 					<ToggleGroup
-						className="@[767px]/card:flex hidden *:data-[slot=toggle-group-item]:px-4!"
-						onValueChange={setTimeRange}
-						type="single"
-						value={timeRange}
+						// type="single"
+						// value={timeRange}
+						// onValueChange={setTimeRange}
+						multiple={false}
+						value={[timeRange]}
+						onValueChange={(values) => {
+							if (values.length > 0) {
+								setTimeRange(values[0]);
+							}
+						}}
 						variant="outline"
+						className="*:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex hidden"
 					>
 						<ToggleGroupItem value="90d">Last 3 months</ToggleGroupItem>
 						<ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
 						<ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
 					</ToggleGroup>
-					<Select onValueChange={setTimeRange} value={timeRange}>
+					<Select
+						value={timeRange}
+						onValueChange={(value) => {
+							if (value !== null) {
+								setTimeRange(value);
+							}
+						}}
+					>
 						<SelectTrigger
-							aria-label="Select a value"
 							className="flex @[767px]/card:hidden w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate"
 							size="sm"
+							aria-label="Select a value"
 						>
-							<SelectValue placeholder="Last 3 months" />
+							<SelectValue />
 						</SelectTrigger>
 						<SelectContent className="rounded-xl">
-							<SelectItem className="rounded-lg" value="90d">
+							<SelectItem value="90d" className="rounded-lg">
 								Last 3 months
 							</SelectItem>
-							<SelectItem className="rounded-lg" value="30d">
+							<SelectItem value="30d" className="rounded-lg">
 								Last 30 days
 							</SelectItem>
-							<SelectItem className="rounded-lg" value="7d">
+							<SelectItem value="7d" className="rounded-lg">
 								Last 7 days
 							</SelectItem>
 						</SelectContent>
@@ -204,12 +220,12 @@ export function ChartAreaInteractive() {
 			</CardHeader>
 			<CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
 				<ChartContainer
-					className="aspect-auto h-[250px] w-full"
 					config={chartConfig}
+					className="aspect-auto h-[250px] w-full"
 				>
-					<AreaChart data={filteredData} responsive height="100%" width="100%">
+					<AreaChart data={filteredData}>
 						<defs>
-							<linearGradient id="fillDesktop" x1="0" x2="0" y1="0" y2="1">
+							<linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
 								<stop
 									offset="5%"
 									stopColor="var(--color-desktop)"
@@ -221,7 +237,7 @@ export function ChartAreaInteractive() {
 									stopOpacity={0.1}
 								/>
 							</linearGradient>
-							<linearGradient id="fillMobile" x1="0" x2="0" y1="0" y2="1">
+							<linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
 								<stop
 									offset="5%"
 									stopColor="var(--color-mobile)"
@@ -236,8 +252,10 @@ export function ChartAreaInteractive() {
 						</defs>
 						<CartesianGrid vertical={false} />
 						<XAxis
-							axisLine={false}
 							dataKey="date"
+							tickLine={false}
+							axisLine={false}
+							tickMargin={8}
 							minTickGap={32}
 							tickFormatter={(value) => {
 								const date = new Date(value);
@@ -246,36 +264,34 @@ export function ChartAreaInteractive() {
 									day: "numeric",
 								});
 							}}
-							tickLine={false}
-							tickMargin={8}
 						/>
 						<ChartTooltip
+							cursor={false}
 							content={
 								<ChartTooltipContent
-									indicator="dot"
 									labelFormatter={(value) => {
 										return new Date(value).toLocaleDateString("en-US", {
 											month: "short",
 											day: "numeric",
 										});
 									}}
+									indicator="dot"
 								/>
 							}
-							cursor={false}
 						/>
 						<Area
 							dataKey="mobile"
-							fill="url(#fillMobile)"
-							stackId="a"
-							stroke="var(--color-mobile)"
 							type="natural"
+							fill="url(#fillMobile)"
+							stroke="var(--color-mobile)"
+							stackId="a"
 						/>
 						<Area
 							dataKey="desktop"
-							fill="url(#fillDesktop)"
-							stackId="a"
-							stroke="var(--color-desktop)"
 							type="natural"
+							fill="url(#fillDesktop)"
+							stroke="var(--color-desktop)"
+							stackId="a"
 						/>
 					</AreaChart>
 				</ChartContainer>

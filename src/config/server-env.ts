@@ -8,7 +8,6 @@ const envSchema = z.object({
 	GOOGLE_CLIENT_ID: z.string(),
 	GOOGLE_CLIENT_SECRET: z.string(),
 	RESEND_API_KEY: z.string(),
-	NODE_ENV: z.enum(["development", "production", "test"]),
 });
 
 // Validate server environment

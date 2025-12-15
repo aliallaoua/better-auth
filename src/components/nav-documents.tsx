@@ -1,5 +1,5 @@
+import type { Icon } from "@tabler/icons-react";
 import {
-	type Icon,
 	IconDots,
 	IconFolder,
 	IconShare3,
@@ -40,22 +40,26 @@ export function NavDocuments({
 			<SidebarMenu>
 				{items.map((item) => (
 					<SidebarMenuItem key={item.name}>
-						<SidebarMenuButton asChild>
-							<a href={item.url}>
-								<item.icon />
-								<span>{item.name}</span>
-							</a>
-						</SidebarMenuButton>
+						<SidebarMenuButton
+							render={
+								<a href={item.url}>
+									<item.icon />
+									<span>{item.name}</span>
+								</a>
+							}
+						/>
 						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<SidebarMenuAction
-									className="rounded-sm data-[state=open]:bg-accent"
-									showOnHover
-								>
-									<IconDots />
-									<span className="sr-only">More</span>
-								</SidebarMenuAction>
-							</DropdownMenuTrigger>
+							<DropdownMenuTrigger
+								render={
+									<SidebarMenuAction
+										className="rounded-sm data-[state=open]:bg-accent"
+										showOnHover
+									>
+										<IconDots />
+										<span className="sr-only">More</span>
+									</SidebarMenuAction>
+								}
+							/>
 							<DropdownMenuContent
 								align={isMobile ? "end" : "start"}
 								className="w-24 rounded-lg"

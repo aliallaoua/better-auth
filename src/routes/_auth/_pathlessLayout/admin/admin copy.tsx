@@ -267,11 +267,13 @@ function AdminDashboard() {
 				<CardHeader className="flex flex-row items-center justify-between">
 					<CardTitle className="text-2xl">Admin Dashboard</CardTitle>
 					<Dialog onOpenChange={setIsDialogOpen} open={isDialogOpen}>
-						<DialogTrigger asChild>
-							<Button className="cursor-pointer">
-								<Plus className="mr-2 size-4" /> Create User
-							</Button>
-						</DialogTrigger>
+						<DialogTrigger
+							render={
+								<Button className="cursor-pointer">
+									<Plus className="mr-2 size-4" /> Create User
+								</Button>
+							}
+						/>
 						<DialogContent>
 							<DialogHeader>
 								<DialogTitle>Create New User</DialogTitle>
@@ -481,42 +483,46 @@ function AdminDashboard() {
 										<TableCell>
 											<div className="flex space-x-2">
 												<Tooltip>
-													<TooltipTrigger asChild>
-														<Button
-															className="cursor-pointer"
-															disabled={isLoading?.startsWith("delete")}
-															onClick={() => handleDeleteUser(user.id)}
-															size="sm"
-															variant="destructive"
-														>
-															{isLoading === `delete-${user.id}` ? (
-																<Spinner />
-															) : (
-																<Trash className="size-4" />
-															)}
-														</Button>
-													</TooltipTrigger>
+													<TooltipTrigger
+														render={
+															<Button
+																className="cursor-pointer"
+																disabled={isLoading?.startsWith("delete")}
+																onClick={() => handleDeleteUser(user.id)}
+																size="sm"
+																variant="destructive"
+															>
+																{isLoading === `delete-${user.id}` ? (
+																	<Spinner />
+																) : (
+																	<Trash className="size-4" />
+																)}
+															</Button>
+														}
+													/>
 													<TooltipContent sideOffset={8}>
 														<p>Delete user</p>
 													</TooltipContent>
 												</Tooltip>
 
 												<Tooltip>
-													<TooltipTrigger asChild>
-														<Button
-															className="cursor-pointer"
-															disabled={isLoading?.startsWith("revoke")}
-															onClick={() => handleRevokeSessions(user.id)}
-															size="sm"
-															variant="outline"
-														>
-															{isLoading === `revoke-${user.id}` ? (
-																<Spinner />
-															) : (
-																<RefreshCw className="size-4" />
-															)}
-														</Button>
-													</TooltipTrigger>
+													<TooltipTrigger
+														render={
+															<Button
+																className="cursor-pointer"
+																disabled={isLoading?.startsWith("revoke")}
+																onClick={() => handleRevokeSessions(user.id)}
+																size="sm"
+																variant="outline"
+															>
+																{isLoading === `revoke-${user.id}` ? (
+																	<Spinner />
+																) : (
+																	<RefreshCw className="size-4" />
+																)}
+															</Button>
+														}
+													/>
 													<TooltipContent sideOffset={8}>
 														<p>Revoke session</p>
 													</TooltipContent>

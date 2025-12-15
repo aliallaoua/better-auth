@@ -27,7 +27,8 @@ import {
 import { StatCard } from "@/routes/_auth/_pathlessLayout/admin/-components/stats-card";
 import { UserManagementCard } from "@/routes/_auth/_pathlessLayout/admin/-components/user-management-card";
 import { BanUserSchema, CreateUserSchema } from "@/schema";
-import { createColumns, type UserActionHandlers } from "./-components/columns";
+import type { UserActionHandlers } from "./-components/columns";
+import { createColumns } from "./-components/columns";
 
 const hasAccessFn = createServerFn().handler(async () => {
 	const data = await auth.api.userHasPermission({
@@ -334,12 +335,14 @@ function AdminDashboard() {
 							</ButtonGroup>
 							<ButtonGroup>
 								<Dialog onOpenChange={setIsDialogOpen} open={isDialogOpen}>
-									<DialogTrigger asChild>
-										<Button variant="outline">
-											<Plus />
-											<span className="hidden lg:inline">Create User</span>
-										</Button>
-									</DialogTrigger>
+									<DialogTrigger
+										render={
+											<Button variant="outline">
+												<Plus />
+												<span className="hidden lg:inline">Create User</span>
+											</Button>
+										}
+									/>
 									<DialogContent className="sm:max-w-[425px]">
 										<DialogHeader>
 											<DialogTitle>Create New User</DialogTitle>

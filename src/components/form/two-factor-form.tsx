@@ -153,21 +153,23 @@ export function TwoFactorForm({ session }: { session: Session }) {
 
 	return (
 		<Dialog onOpenChange={handleDialogClose} open={twoFactorDialog}>
-			<DialogTrigger asChild>
-				<Button
-					className="cursor-pointer gap-2"
-					variant={session?.user.twoFactorEnabled ? "destructive" : "outline"}
-				>
-					{session?.user.twoFactorEnabled ? (
-						<ShieldOff size={16} />
-					) : (
-						<ShieldCheck size={16} />
-					)}
-					<span className="text-xs md:text-sm">
-						{session?.user.twoFactorEnabled ? "Disable 2FA" : "Enable 2FA"}
-					</span>
-				</Button>
-			</DialogTrigger>
+			<DialogTrigger
+				render={
+					<Button
+						className="cursor-pointer gap-2"
+						variant={session?.user.twoFactorEnabled ? "destructive" : "outline"}
+					>
+						{session?.user.twoFactorEnabled ? (
+							<ShieldOff size={16} />
+						) : (
+							<ShieldCheck size={16} />
+						)}
+						<span className="text-xs md:text-sm">
+							{session?.user.twoFactorEnabled ? "Disable 2FA" : "Enable 2FA"}
+						</span>
+					</Button>
+				}
+			/>
 			<DialogContent className="w-11/12 sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>

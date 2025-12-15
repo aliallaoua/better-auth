@@ -19,7 +19,7 @@ import { useAppForm } from "@/hooks/form";
 import useSignInMutation from "@/hooks/mutations/useSignInMutation";
 import { authClient } from "@/lib/auth-client";
 import {
-	// signInWithGithub,
+	signInWithGithub,
 	signInWithGoogle,
 	signInWithPasskey,
 } from "@/lib/auth-functions";
@@ -85,7 +85,7 @@ export function LogInForm({
 								<Button
 									variant="outline"
 									className={cn("relative flex w-full items-center gap-2")}
-									// onClick={signInWithGithub}
+									onClick={signInWithGithub}
 								>
 									<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 										<path

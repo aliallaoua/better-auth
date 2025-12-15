@@ -1,15 +1,17 @@
+import type {
+	ColumnDef,
+	ColumnFiltersState,
+	RowSelectionState,
+	SortingState,
+	VisibilityState,
+} from "@tanstack/react-table";
 import {
-	type ColumnDef,
-	type ColumnFiltersState,
 	flexRender,
 	getCoreRowModel,
 	getFilteredRowModel,
 	getPaginationRowModel,
 	getSortedRowModel,
-	type RowSelectionState,
-	type SortingState,
 	useReactTable,
-	type VisibilityState,
 } from "@tanstack/react-table";
 import {
 	ChevronDown,
@@ -21,7 +23,8 @@ import {
 	UserX,
 	X,
 } from "lucide-react";
-import { type Dispatch, type SetStateAction, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -295,13 +298,15 @@ export function DataTable<TData, TValue>({
 						</Button>
 					)}
 					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<Button size="sm" variant="outline">
-								<Filter className="mr-2 size-4" />
-								View
-								<ChevronDown className="ml-2 size-4" />
-							</Button>
-						</DropdownMenuTrigger>
+						<DropdownMenuTrigger
+							render={
+								<Button size="sm" variant="outline">
+									<Filter className="mr-2 size-4" />
+									View
+									<ChevronDown className="ml-2 size-4" />
+								</Button>
+							}
+						/>
 						<DropdownMenuContent align="end" className="w-[150px]">
 							<DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
 							<DropdownMenuSeparator />

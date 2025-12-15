@@ -284,16 +284,18 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
 		id: "actions",
 		cell: () => (
 			<DropdownMenu>
-				<DropdownMenuTrigger asChild>
-					<Button
-						className="flex size-8 text-muted-foreground data-[state=open]:bg-muted"
-						size="icon"
-						variant="ghost"
-					>
-						<IconDotsVertical />
-						<span className="sr-only">Open menu</span>
-					</Button>
-				</DropdownMenuTrigger>
+				<DropdownMenuTrigger
+					render={
+						<Button
+							className="flex size-8 text-muted-foreground data-[state=open]:bg-muted"
+							size="icon"
+							variant="ghost"
+						>
+							<IconDotsVertical />
+							<span className="sr-only">Open menu</span>
+						</Button>
+					}
+				/>
 				<DropdownMenuContent align="end" className="w-32">
 					<DropdownMenuItem>Edit</DropdownMenuItem>
 					<DropdownMenuItem>Make a copy</DropdownMenuItem>
@@ -432,14 +434,16 @@ export function DataTable({
 				</TabsList>
 				<div className="flex items-center gap-2">
 					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<Button size="sm" variant="outline">
-								<IconLayoutColumns />
-								<span className="hidden lg:inline">Customize Columns</span>
-								<span className="lg:hidden">Columns</span>
-								<IconChevronDown />
-							</Button>
-						</DropdownMenuTrigger>
+						<DropdownMenuTrigger
+							render={
+								<Button size="sm" variant="outline">
+									<IconLayoutColumns />
+									<span className="hidden lg:inline">Customize Columns</span>
+									<span className="lg:hidden">Columns</span>
+									<IconChevronDown />
+								</Button>
+							}
+						/>
 						<DropdownMenuContent align="end" className="w-56">
 							{table
 								.getAllColumns()
