@@ -189,10 +189,7 @@ export function SignUpForm({
 									<form.SubscribeButton label="Create Account" />
 								</form.AppForm>
 								<FieldDescription className="px-6 text-center">
-									Already have an account?{" "}
-									<Link className="underline underline-offset-4" to="/login">
-										Log in
-									</Link>
+									Already have an account? <Link to="/login">Log in</Link>
 								</FieldDescription>
 							</Field>
 						</FieldGroup>

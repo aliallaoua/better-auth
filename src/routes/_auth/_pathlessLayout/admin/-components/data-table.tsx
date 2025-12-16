@@ -54,7 +54,6 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
-	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -65,6 +64,7 @@ import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
 	DropdownMenuContent,
+	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
@@ -334,6 +334,8 @@ function UserActionsMenu({
 	mutations: UserMutations;
 	onBanClick: (userId: string) => void;
 }) {
+	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
 	const handleImpersonate = useCallback(() => {
 		mutations.impersonateUser(user.id);
 	}, [mutations.impersonateUser, user.id]);
@@ -352,92 +354,99 @@ function UserActionsMenu({
 
 	const handleDelete = useCallback(() => {
 		mutations.deleteUser(user.id);
+		setDeleteDialogOpen(false);
 	}, [mutations.deleteUser, user.id]);
 
 	return (
-		<DropdownMenu>
-			<DropdownMenuTrigger
-				render={
-					<Button
-						className="size-8 text-muted-foreground transition-colors hover:bg-muted/80 data-[state=open]:bg-muted"
-						size="icon"
-						variant="ghost"
+		<>
+			<DropdownMenu>
+				<DropdownMenuTrigger
+					render={
+						<Button
+							className="size-8 text-muted-foreground transition-colors hover:bg-muted/80 data-[state=open]:bg-muted"
+							size="icon"
+							variant="ghost"
+						>
+							<IconDotsVertical className="size-4" />
+							<span className="sr-only">Open menu</span>
+						</Button>
+					}
+				/>
+				<DropdownMenuContent align="end" className="w-[200px]">
+					<DropdownMenuGroup>
+						<DropdownMenuLabel className="font-semibold">
+							Actions
+						</DropdownMenuLabel>
+					</DropdownMenuGroup>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem
+						className="gap-2"
+						onClick={() => navigator.clipboard.writeText(user.id)}
 					>
-						<IconDotsVertical className="size-4" />
-						<span className="sr-only">Open menu</span>
-					</Button>
-				}
-			/>
-			<DropdownMenuContent align="end" className="w-[200px]">
-				<DropdownMenuLabel className="font-semibold">Actions</DropdownMenuLabel>
-				<DropdownMenuSeparator />
-				<DropdownMenuItem
-					className="gap-2"
-					onClick={() => navigator.clipboard.writeText(user.id)}
-				>
-					<Copy className="size-4" />
-					Copy user ID
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					className="gap-2"
-					onClick={() => navigator.clipboard.writeText(user.email)}
-				>
-					<Mail className="size-4" />
-					Copy email
-				</DropdownMenuItem>
-				<DropdownMenuSeparator />
-				<DropdownMenuItem className="gap-2" onClick={handleImpersonate}>
-					<UserCircle className="size-4" />
-					Impersonate
-				</DropdownMenuItem>
-				<DropdownMenuItem className="gap-2" onClick={handleRevokeSessions}>
-					<RefreshCw className="size-4" />
-					Revoke sessions
-				</DropdownMenuItem>
-				<DropdownMenuSeparator />
-				<DropdownMenuItem className="gap-2" onClick={handleBanToggle}>
-					<Ban className="size-4" />
-					{user.banned ? "Unban user" : "Ban user"}
-				</DropdownMenuItem>
-				<AlertDialog>
-					<AlertDialogTrigger
-						render={
-							<DropdownMenuItem
-								className="gap-2 text-red-600 focus:bg-red-50 focus:text-red-600 dark:focus:bg-red-950/20"
-								onClick={(e) => e.preventDefault()}
-							>
-								<Trash className="size-4" />
-								Delete user
-							</DropdownMenuItem>
-						}
-					/>
-					<AlertDialogContent className="max-w-md">
-						<AlertDialogHeader>
-							<AlertDialogTitle className="text-xl">
-								Are you absolutely sure?
-							</AlertDialogTitle>
-							<AlertDialogDescription className="text-base">
-								This action cannot be undone. This will permanently delete{" "}
-								<span className="font-semibold text-foreground">
-									{user.email}
-								</span>{" "}
-								and remove all their data from the servers.
-							</AlertDialogDescription>
-						</AlertDialogHeader>
-						<AlertDialogFooter>
-							<AlertDialogCancel>Cancel</AlertDialogCancel>
-							<AlertDialogAction
-								className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
-								onClick={handleDelete}
-							>
-								<Trash className="mr-2 size-4" />
-								Delete User
-							</AlertDialogAction>
-						</AlertDialogFooter>
-					</AlertDialogContent>
-				</AlertDialog>
-			</DropdownMenuContent>
-		</DropdownMenu>
+						<Copy className="size-4" />
+						Copy user ID
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						className="gap-2"
+						onClick={() => navigator.clipboard.writeText(user.email)}
+					>
+						<Mail className="size-4" />
+						Copy email
+					</DropdownMenuItem>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem className="gap-2" onClick={handleImpersonate}>
+						<UserCircle className="size-4" />
+						Impersonate
+					</DropdownMenuItem>
+					<DropdownMenuItem className="gap-2" onClick={handleRevokeSessions}>
+						<RefreshCw className="size-4" />
+						Revoke sessions
+					</DropdownMenuItem>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem className="gap-2" onClick={handleBanToggle}>
+						<Ban className="size-4" />
+						{user.banned ? "Unban user" : "Ban user"}
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						className="gap-2 text-red-600 focus:bg-red-50 focus:text-red-600 dark:focus:bg-red-950/20"
+						onClick={(e) => {
+							e.preventDefault();
+							setDeleteDialogOpen(true);
+						}}
+					>
+						<Trash className="size-4" />
+						Delete user
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
+
+			<AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+				<AlertDialogContent className="max-w-md">
+					<AlertDialogHeader>
+						<AlertDialogTitle className="text-xl">
+							Are you absolutely sure?
+						</AlertDialogTitle>
+						<AlertDialogDescription className="text-base">
+							This action cannot be undone. This will permanently delete{" "}
+							<span className="font-semibold text-foreground">
+								{user.email}
+							</span>{" "}
+							and remove all their data from the servers.
+						</AlertDialogDescription>
+					</AlertDialogHeader>
+					<AlertDialogFooter>
+						<AlertDialogCancel>Cancel</AlertDialogCancel>
+						<AlertDialogAction
+							className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+							onClick={handleDelete}
+						>
+							<Trash className="mr-2 size-4" />
+							Delete User
+						</AlertDialogAction>
+					</AlertDialogFooter>
+				</AlertDialogContent>
+			</AlertDialog>
+		</>
 	);
 }
 

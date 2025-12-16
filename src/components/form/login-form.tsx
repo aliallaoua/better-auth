@@ -64,7 +64,6 @@ export function LogInForm({
 
 	return (
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
-			{/* <Card className="mx-auto w-[500px]"> */}
 			<Card>
 				<CardHeader className="text-center">
 					<CardTitle className="text-xl">Welcome back</CardTitle>
@@ -84,6 +83,7 @@ export function LogInForm({
 							<Field>
 								<Button
 									variant="outline"
+									type="button"
 									className={cn("relative flex w-full items-center gap-2")}
 									onClick={signInWithGithub}
 								>
@@ -100,6 +100,7 @@ export function LogInForm({
 								</Button>
 								<Button
 									variant="outline"
+									type="button"
 									className={cn("relative flex w-full gap-2")}
 									onClick={signInWithGoogle}
 								>
@@ -116,6 +117,7 @@ export function LogInForm({
 								</Button>
 								<Button
 									variant="outline"
+									type="button"
 									className={cn("relative flex w-full items-center gap-2")}
 									onClick={signInWithPasskey}
 								>
@@ -126,15 +128,9 @@ export function LogInForm({
 									)}
 								</Button>
 							</Field>
-
 							<FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
 								Or continue with
 							</FieldSeparator>
-							{/* <div className="relative">
-								{authClient.isLastUsedLoginMethod("email") && (
-									<LastUsedIndicator />
-								)}
-							</div>s */}
 							<form.AppField
 								children={(field) => (
 									<field.TextField
@@ -171,10 +167,7 @@ export function LogInForm({
 									</div>
 								</form.AppForm>
 								<FieldDescription className="text-center">
-									Don&apos;t have an account?{" "}
-									<Link className="underline underline-offset-4" to="/signup">
-										Sign up
-									</Link>
+									Don&apos;t have an account? <Link to="/signup">Sign up</Link>
 								</FieldDescription>
 							</Field>
 						</FieldGroup>
@@ -182,8 +175,9 @@ export function LogInForm({
 				</CardContent>
 			</Card>
 			<FieldDescription className="px-6 text-center">
-				By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-				and <a href="#">Privacy Policy</a>.
+				By clicking continue, you agree to our{" "}
+				<Link to="#">Terms of Service</Link> and{" "}
+				<Link to="#">Privacy Policy</Link>.
 			</FieldDescription>
 		</div>
 	);
