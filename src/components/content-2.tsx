@@ -53,24 +53,23 @@ export default function ContentTwoSection() {
 								return (
 									<TabsTrigger
 										key={tab.id}
-										className="group relative flex-1 justify-start overflow-hidden rounded-2xl border border-slate-200 p-6 md:h-16 dark:border-slate-800"
+										className="group relative flex-1 justify-start overflow-hidden rounded-2xl border border-slate-200 p-6 md:h-16 dark:border-slate-800 [&[data-active]_.border-beam]:block"
 										value={tab.id}
 									>
-										<div className="hidden rounded-xl group-data-[state='active']:block">
+										<div className="hidden rounded-xl border-beam">
 											<BorderBeam
 												duration={4}
-												// initialOffset={20}
 												size={100}
 												className="from-transparent via-green-400 to-transparent"
 												transition={{
 													type: "spring",
-													stiffness: 60,
-													damping: 20,
+													stiffness: 8,
+													damping: 50,
 												}}
 											/>
 										</div>
 										<div className="flex size-10 items-center justify-center rounded-xl border border-slate-200 bg-background dark:border-slate-800">
-											<Icon className="size-5 transition-transform duration-600 ease-in-out group-hover:rotate-360 group-hover:scale-110 group-data-[state='active']:text-green-400" />
+											<Icon className="size-5 transition-transform duration-600 ease-in-out group-hover:rotate-360 group-hover:scale-110 [.group[data-active]_&]:text-green-400" />
 										</div>
 										{tab.label}
 									</TabsTrigger>

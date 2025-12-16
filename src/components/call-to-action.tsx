@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import { ChevronRightIcon } from "lucide-react";
+import { Button } from "./ui/button";
 
 export default function CallToAction() {
 	return (
@@ -16,54 +18,32 @@ export default function CallToAction() {
 					</p>
 
 					<div className="mt-12 flex flex-wrap justify-center gap-4">
-						<Link
-							className="inline-flex h-12 items-center justify-center rounded-2xl border-2 border-black/5 bg-linear-104 from-5% from-black/3 to-100% to-black/6 px-5 font-semibold text-base text-black shadow-sm backdrop-blur-[25px] transition-all duration-200 ease-in-out hover:bg-black/90 hover:text-white hover:shadow-button focus-visible:bg-black/90 focus-visible:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black/30 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/5 dark:bg-linear-104 dark:from-5% dark:from-white/5 dark:to-100% dark:to-[rgba(240,240,228,0.1)] dark:text-white dark:disabled:opacity-50 dark:focus-visible:bg-white/90 dark:focus-visible:text-black dark:focus-visible:ring-white/30 dark:hover:bg-white/90 dark:hover:text-black"
-							to="/dashboard"
-							viewTransition={{ types: ["slide-down"] }}
+						<Button
+							className="h-12 rounded-2xl border-2 px-5 font-semibold hover:bg-primary hover:text-primary-foreground hover:dark:bg-primary hover:dark:text-primary-foreground"
+							variant="outline"
+							render={
+								<Link
+									to="/dashboard"
+									viewTransition={{ types: ["slide-up"] }}
+								/>
+							}
 						>
 							Get Started
-							<span className="-mr-2 opacity-100 dark:text-[#70757E]">
-								<svg
-									fill="none"
-									height="24"
-									viewBox="0 0 24 24"
-									width="24"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										d="M10.75 8.75L14.25 12L10.75 15.25"
-										stroke="currentColor"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth="1.5"
-									/>
-								</svg>
-							</span>
-						</Link>
-						<Link
-							className="inline-flex h-12 items-center justify-center rounded-2xl border border-transparent px-5 font-semibold text-base text-muted-foreground transition duration-200 ease-in-out hover:text-primary focus-visible:outline-hidden focus-visible:ring-4 disabled:cursor-not-allowed disabled:opacity-70 dark:focus-visible:ring-gray-a2 [&_svg]:dark:text-gray-300"
-							to="/posts"
-							viewTransition={{ types: ["slide-down"] }}
+							<ChevronRightIcon className="size-3 text-muted-foreground" />
+						</Button>
+						<Button
+							className="h-12 rounded-2xl text-muted-foreground hover:bg-transparent hover:dark:bg-transparent"
+							variant="ghost"
+							render={
+								<Link
+									to="/dashboard"
+									viewTransition={{ types: ["slide-up"] }}
+								/>
+							}
 						>
-							Book Demo
-							<span className="-mr-2 opacity-100 dark:text-[#70757E]">
-								<svg
-									fill="none"
-									height="24"
-									viewBox="0 0 24 24"
-									width="24"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										d="M10.75 8.75L14.25 12L10.75 15.25"
-										stroke="currentColor"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth="1.5"
-									/>
-								</svg>
-							</span>
-						</Link>
+							Book demo
+							<ChevronRightIcon className="size-3" />
+						</Button>
 					</div>
 				</div>
 			</div>

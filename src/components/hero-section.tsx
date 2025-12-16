@@ -3,6 +3,7 @@ import { Image } from "@unpic/react";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { TextEffect } from "@/components/ui/text-effect";
+import { Button } from "./ui/button";
 
 const transitionVariants = {
 	item: {
@@ -31,13 +32,13 @@ export default function HeroSection() {
 				aria-hidden
 				className="absolute inset-0 isolate hidden contain-strict lg:block"
 			>
-				<div className="-translate-y-87.5 -rotate-45 absolute top-0 left-0 h-320 w-140 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]" />
-				<div className="-rotate-45 absolute top-0 left-0 h-320 w-60 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)] [translate:5%_-50%]" />
-				<div className="-translate-y-87.5 -rotate-45 absolute top-0 left-0 h-320 w-60 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]" />
+				<div className="absolute top-0 left-0 h-320 w-140 -translate-y-87.5 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]" />
+				<div className="absolute top-0 left-0 h-320 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)] [translate:5%_-50%]" />
+				<div className="absolute top-0 left-0 h-320 w-60 -translate-y-87.5 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]" />
 			</div>
 			<section>
 				<div className="relative pt-24">
-					<div className="-z-10 absolute inset-0 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
+					<div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
 					<div className="mx-auto max-w-5xl px-6">
 						<div className="sm:mx-auto lg:mt-0 lg:mr-auto">
 							<AnimatedGroup variants={transitionVariants}>
@@ -51,7 +52,7 @@ export default function HeroSection() {
 									<span className="block h-4 w-0.5 border-l bg-white dark:border-background dark:bg-zinc-700" />
 
 									<div className="size-6 overflow-hidden rounded-full bg-background duration-500 group-hover:bg-muted">
-										<div className="-translate-x-1/2 flex w-12 duration-500 ease-in-out group-hover:translate-x-0">
+										<div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
 											<span className="flex size-6">
 												<ArrowRight className="m-auto size-3" />
 											</span>
@@ -99,25 +100,32 @@ export default function HeroSection() {
 								}}
 								className="mt-12 flex items-center gap-2"
 							>
-								<div
-									key={1}
-									// className="bg-foreground/10 rounded-[calc(var(--radius-xl)+0.125rem)] border p-0.5"
-								>
-									<Link
-										className="inline-flex h-12 items-center justify-center rounded-2xl border-2 border-black/5 bg-linear-104 from-5% from-black/3 to-100% to-black/6 px-5 font-semibold text-base text-black shadow-sm backdrop-blur-[25px] transition-all duration-200 ease-in-out hover:bg-black/90 hover:text-white hover:shadow-button focus-visible:bg-black/90 focus-visible:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black/30 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/5 dark:bg-linear-104 dark:from-5% dark:from-white/5 dark:to-100% dark:to-[rgba(240,240,228,0.1)] dark:text-white dark:disabled:opacity-50 dark:focus-visible:bg-white/90 dark:focus-visible:text-black dark:focus-visible:ring-white/30 dark:hover:bg-white/90 dark:hover:text-black"
-										to="/dashboard"
-										viewTransition={{ types: ["slide-up"] }}
+								<div key={1}>
+									<Button
+										className="h-12 rounded-2xl border-2 px-5 font-semibold hover:bg-primary hover:text-primary-foreground hover:dark:bg-primary hover:dark:text-primary-foreground"
+										variant="outline"
+										render={
+											<Link
+												to="/dashboard"
+												viewTransition={{ types: ["slide-up"] }}
+											/>
+										}
 									>
 										Get Started
-									</Link>
+									</Button>
 								</div>
-								<Link
-									className="relative inline-flex h-12 select-none items-center justify-center gap-0 rounded-2xl border border-transparent bg-transparent px-5 font-semibold text-base text-muted-foreground transition duration-200 ease-in-out hover:text-primary focus-visible:outline-hidden focus-visible:ring-4 focus-visible:ring-gray-200 disabled:cursor-not-allowed disabled:opacity-70 dark:focus-visible:ring-gray-a2"
-									to="/posts"
-									viewTransition={{ types: ["slide-up"] }}
+								<Button
+									className="h-12 rounded-2xl text-muted-foreground hover:bg-transparent hover:dark:bg-transparent"
+									variant="ghost"
+									render={
+										<Link
+											to="/dashboard"
+											viewTransition={{ types: ["slide-up"] }}
+										/>
+									}
 								>
 									Request a demo
-								</Link>
+								</Button>
 							</AnimatedGroup>
 						</div>
 					</div>
@@ -134,7 +142,7 @@ export default function HeroSection() {
 							...transitionVariants,
 						}}
 					>
-						<div className="mask-b-from-55% -mr-56 relative mt-8 overflow-hidden px-2 sm:mt-12 sm:mr-0 md:mt-20">
+						<div className="mask-b-from-55% relative mt-8 -mr-56 overflow-hidden px-2 sm:mt-12 sm:mr-0 md:mt-20">
 							<div className="relative inset-shadow-2xs mx-auto max-w-5xl overflow-hidden rounded-2xl border bg-background p-4 shadow-lg shadow-zinc-950/15 ring-1 ring-background dark:inset-shadow-white/20">
 								<Image
 									className="relative hidden aspect-15/8 rounded-2xl bg-background dark:block"

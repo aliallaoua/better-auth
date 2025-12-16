@@ -65,6 +65,7 @@
         "useTopLevelRegex": "off"
       },
       "nursery": {
+        "noLeakedRender": "off",
         "noShadow": "off",
         "useConsistentArrowReturn": "off",
         "useMaxParams": "off"
