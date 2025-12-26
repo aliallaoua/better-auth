@@ -1,12 +1,5 @@
 "use no memo";
 
-import {
-	IconChevronLeft,
-	IconChevronRight,
-	IconChevronsLeft,
-	IconChevronsRight,
-	IconDotsVertical,
-} from "@tabler/icons-react";
 import type {
 	ColumnFiltersState,
 	Row,
@@ -30,11 +23,16 @@ import {
 	ArrowUp,
 	Ban,
 	ChevronDownIcon,
+	ChevronLeftIcon,
+	ChevronRightIcon,
+	ChevronsLeftIcon,
+	ChevronsRightIcon,
 	Copy,
 	Download,
 	Filter,
 	Layers,
 	Mail,
+	MoreVerticalIcon,
 	RefreshCw,
 	SearchIcon,
 	ShieldCheck,
@@ -367,7 +365,7 @@ function UserActionsMenu({
 							size="icon"
 							variant="ghost"
 						>
-							<IconDotsVertical className="size-4" />
+							<MoreVerticalIcon className="size-4" />
 							<span className="sr-only">Open menu</span>
 						</Button>
 					}
@@ -962,7 +960,7 @@ export function DataTable({
 							variant="outline"
 						>
 							<span className="sr-only">Go to first page</span>
-							<IconChevronsLeft />
+							<ChevronsLeftIcon />
 						</Button>
 						<Button
 							className="size-8"
@@ -972,7 +970,7 @@ export function DataTable({
 							variant="outline"
 						>
 							<span className="sr-only">Go to previous page</span>
-							<IconChevronLeft />
+							<ChevronLeftIcon />
 						</Button>
 						<Button
 							className="size-8"
@@ -982,7 +980,7 @@ export function DataTable({
 							variant="outline"
 						>
 							<span className="sr-only">Go to next page</span>
-							<IconChevronRight />
+							<ChevronRightIcon />
 						</Button>
 						<Button
 							className="hidden size-8 lg:flex"
@@ -992,7 +990,7 @@ export function DataTable({
 							variant="outline"
 						>
 							<span className="sr-only">Go to last page</span>
-							<IconChevronsRight />
+							<ChevronsRightIcon />
 						</Button>
 					</div>
 				</div>

@@ -1,5 +1,6 @@
-import { type Icon, IconCirclePlusFilled, IconMail } from "@tabler/icons-react";
+import type { Icon } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
+import { MailIcon, PlusCircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
 	SidebarGroup,
@@ -32,19 +33,19 @@ export function NavMain({
 							}}
 						>
 							<SidebarMenuButton
-								className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
 								tooltip="Quick Create"
+								className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
 							>
-								<IconCirclePlusFilled />
+								<PlusCircleIcon />
 								<span>Quick Create</span>
 							</SidebarMenuButton>
 						</Link>
 						<Button
-							className="size-8 group-data-[collapsible=icon]:opacity-0"
 							size="icon"
+							className="size-8 group-data-[collapsible=icon]:opacity-0"
 							variant="outline"
 						>
-							<IconMail />
+							<MailIcon />
 							<span className="sr-only">Inbox</span>
 						</Button>
 					</SidebarMenuItem>
@@ -52,20 +53,30 @@ export function NavMain({
 				<SidebarMenu>
 					{items.map((item) => (
 						<SidebarMenuItem key={item.title}>
-							<Link
+							{/* <Link
 								to={item.url}
 								viewTransition={{
 									types: routerConfig.viewTransitionOptions,
 								}}
 							>
-								<SidebarMenuButton
-									className="cursor-pointer"
-									tooltip={item.title}
-								>
+								<SidebarMenuButton tooltip={item.title}>
 									{item.icon && <item.icon />}
 									<span>{item.title}</span>
 								</SidebarMenuButton>
-							</Link>
+							</Link> */}
+							<SidebarMenuButton
+								render={
+									<Link
+										to={item.url}
+										viewTransition={{
+											types: routerConfig.viewTransitionOptions,
+										}}
+									/>
+								}
+							>
+								{item.icon && <item.icon />}
+								<span>{item.title}</span>
+							</SidebarMenuButton>
 						</SidebarMenuItem>
 					))}
 				</SidebarMenu>

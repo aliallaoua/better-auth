@@ -1,20 +1,23 @@
 import {
-	IconCamera,
-	IconChartBar,
-	IconDashboard,
-	IconDatabase,
 	IconFileAi,
-	IconFileDescription,
-	IconFileWord,
-	IconFolder,
-	IconHelp,
 	IconInnerShadowTop,
 	IconListDetails,
 	IconReport,
-	IconSearch,
-	IconSettings,
-	IconUsers,
 } from "@tabler/icons-react";
+import { Link } from "@tanstack/react-router";
+import {
+	CameraIcon,
+	ChartBarIcon,
+	DatabaseIcon,
+	FileEditIcon,
+	FilesIcon,
+	FolderIcon,
+	HelpCircleIcon,
+	LayoutDashboardIcon,
+	SearchIcon,
+	SettingsIcon,
+	UsersIcon,
+} from "lucide-react";
 import type * as React from "react";
 import { NavDocuments } from "@/components/nav-documents";
 import { NavMain } from "@/components/nav-main";
@@ -35,7 +38,7 @@ const data = {
 		{
 			title: "Dashboard",
 			url: "/dashboard",
-			icon: IconDashboard,
+			icon: LayoutDashboardIcon,
 		},
 		{
 			title: "Lifecycle",
@@ -45,23 +48,23 @@ const data = {
 		{
 			title: "Analytics",
 			url: "/admin",
-			icon: IconChartBar,
+			icon: ChartBarIcon,
 		},
 		{
 			title: "Projects",
 			url: "#",
-			icon: IconFolder,
+			icon: FolderIcon,
 		},
 		{
 			title: "Team",
 			url: "#",
-			icon: IconUsers,
+			icon: UsersIcon,
 		},
 	],
 	navClouds: [
 		{
 			title: "Capture",
-			icon: IconCamera,
+			icon: CameraIcon,
 			isActive: true,
 			url: "#",
 			items: [
@@ -77,7 +80,7 @@ const data = {
 		},
 		{
 			title: "Proposal",
-			icon: IconFileDescription,
+			icon: FilesIcon,
 			url: "#",
 			items: [
 				{
@@ -110,24 +113,24 @@ const data = {
 		{
 			title: "Settings",
 			url: "#",
-			icon: IconSettings,
+			icon: SettingsIcon,
 		},
 		{
 			title: "Get Help",
 			url: "#",
-			icon: IconHelp,
+			icon: HelpCircleIcon,
 		},
 		{
 			title: "Search",
 			url: "#",
-			icon: IconSearch,
+			icon: SearchIcon,
 		},
 	],
 	documents: [
 		{
 			name: "Data Library",
 			url: "#",
-			icon: IconDatabase,
+			icon: DatabaseIcon,
 		},
 		{
 			name: "Reports",
@@ -137,7 +140,7 @@ const data = {
 		{
 			name: "Word Assistant",
 			url: "#",
-			icon: IconFileWord,
+			icon: FileEditIcon,
 		},
 	],
 };
@@ -145,26 +148,23 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar collapsible="icon" {...props}>
-			{/* <Sidebar collapsible="offcanvas" {...props}> */}
 			<SidebarHeader>
 				<SidebarMenu>
 					<SidebarMenuItem>
 						<SidebarMenuButton
-							render={
-								<a href="#">
-									<IconInnerShadowTop className="size-5!" />
-									<span className="font-semibold text-base">Acme Inc.</span>
-								</a>
-							}
-							className="data-[slot=sidebar-menu-button]:p-1.5!"
-						/>
+							render={<Link to="#" />}
+							className="data-[slot=sidebar-menu-button]:!p-1.5"
+						>
+							<IconInnerShadowTop className="!size-5" />
+							<span className="font-semibold text-base">Acme Inc.</span>
+						</SidebarMenuButton>
 					</SidebarMenuItem>
 				</SidebarMenu>
 			</SidebarHeader>
 			<SidebarContent>
 				<NavMain items={data.navMain} />
 				<NavDocuments items={data.documents} />
-				<NavSecondary className="mt-auto" items={data.navSecondary} />
+				<NavSecondary items={data.navSecondary} className="mt-auto" />
 			</SidebarContent>
 			<SidebarFooter>
 				<NavUser />

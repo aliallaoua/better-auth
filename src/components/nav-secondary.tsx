@@ -1,6 +1,6 @@
 import type { Icon } from "@tabler/icons-react";
+import { Link } from "@tanstack/react-router";
 import type * as React from "react";
-
 import {
 	SidebarGroup,
 	SidebarGroupContent,
@@ -27,10 +27,10 @@ export function NavSecondary({
 						<SidebarMenuItem key={item.title}>
 							<SidebarMenuButton
 								render={
-									<a href={item.url}>
+									<Link to={item.url}>
 										<item.icon />
 										<span>{item.title}</span>
-									</a>
+									</Link>
 								}
 							/>
 						</SidebarMenuItem>

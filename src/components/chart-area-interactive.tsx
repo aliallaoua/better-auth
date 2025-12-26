@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import {
 	Card,
@@ -123,9 +123,6 @@ const chartData = [
 ];
 
 const chartConfig = {
-	visitors: {
-		label: "Visitors",
-	},
 	desktop: {
 		label: "Desktop",
 		color: "var(--primary)",
@@ -138,9 +135,9 @@ const chartConfig = {
 
 export function ChartAreaInteractive() {
 	const isMobile = useIsMobile();
-	const [timeRange, setTimeRange] = React.useState("90d");
+	const [timeRange, setTimeRange] = useState("90d");
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (isMobile) {
 			setTimeRange("7d");
 		}
@@ -148,7 +145,7 @@ export function ChartAreaInteractive() {
 
 	const filteredData = chartData.filter((item) => {
 		const date = new Date(item.date);
-		const referenceDate = new Date("2024-06-30");
+		const referenceDate = new Date("2024-04-15");
 		let daysToSubtract = 90;
 		if (timeRange === "30d") {
 			daysToSubtract = 30;
@@ -172,14 +169,10 @@ export function ChartAreaInteractive() {
 				</CardDescription>
 				<CardAction>
 					<ToggleGroup
-						// type="single"
-						// value={timeRange}
-						// onValueChange={setTimeRange}
-						multiple={false}
 						value={[timeRange]}
-						onValueChange={(values) => {
-							if (values.length > 0) {
-								setTimeRange(values[0]);
+						onValueChange={(value) => {
+							if (value.length > 0) {
+								setTimeRange(value[0]);
 							}
 						}}
 						variant="outline"
@@ -192,7 +185,7 @@ export function ChartAreaInteractive() {
 					<Select
 						value={timeRange}
 						onValueChange={(value) => {
-							if (value !== null) {
+							if (value) {
 								setTimeRange(value);
 							}
 						}}
@@ -266,6 +259,7 @@ export function ChartAreaInteractive() {
 							}}
 						/>
 						<ChartTooltip
+							defaultIndex={isMobile ? -1 : 10}
 							cursor={false}
 							content={
 								<ChartTooltipContent

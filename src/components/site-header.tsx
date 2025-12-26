@@ -8,12 +8,13 @@ export function SiteHeader() {
 			<div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
 				<SidebarTrigger className="-ml-1" />
 				<Separator
-					className="mx-2 data-[orientation=vertical]:h-4"
 					orientation="vertical"
+					className="mx-2 data-[orientation=vertical]:h-4"
 				/>
 				<h1 className="font-medium text-base">Documents</h1>
 				<div className="ml-auto flex items-center gap-2">
 					<Button
+						variant="ghost"
 						render={
 							<a
 								className="dark:text-foreground"
@@ -24,9 +25,8 @@ export function SiteHeader() {
 								GitHub
 							</a>
 						}
-						className="hidden sm:flex"
 						size="sm"
-						variant="ghost"
+						className="hidden sm:flex"
 					/>
 				</div>
 			</div>

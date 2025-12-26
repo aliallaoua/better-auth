@@ -1,12 +1,12 @@
-import {
-	IconCreditCard,
-	IconDotsVertical,
-	IconLogout,
-	IconNotification,
-	IconUserCircle,
-} from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+	BellIcon,
+	CreditCardIcon,
+	LogOutIcon,
+	MoreVerticalIcon,
+	UserCircle2Icon,
+} from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -39,7 +39,7 @@ export function NavUser() {
 		<SidebarMenu>
 			<SidebarMenuItem>
 				<DropdownMenu>
-					<DropdownMenuTrigger
+					{/* <DropdownMenuTrigger
 						render={
 							<SidebarMenuButton
 								className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
@@ -65,17 +65,49 @@ export function NavUser() {
 								<IconDotsVertical className="ml-auto size-4" />
 							</SidebarMenuButton>
 						}
-					/>
+					/> */}
+					<DropdownMenuTrigger
+						render={
+							<SidebarMenuButton
+								size="lg"
+								className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+							/>
+						}
+					>
+						<Avatar className="h-8 w-8 rounded-lg grayscale">
+							<AvatarImage src={session?.user.image} alt={session?.user.name} />
+							<AvatarFallback className="rounded-lg">
+								{session?.user.name && session.user.name.length > 0
+									? session.user.name.charAt(0).toUpperCase()
+									: session?.user.email.charAt(0).toUpperCase()}
+							</AvatarFallback>
+						</Avatar>
+						<div className="grid flex-1 text-left text-sm leading-tight">
+							<span className="truncate font-medium">
+								{session?.user.name && session.user.name.length > 0
+									? session.user.name
+									: session?.user.email.split("@")[0]}
+							</span>
+							<span className="truncate text-muted-foreground text-xs">
+								{session?.user.email}
+							</span>
+						</div>
+						<MoreVerticalIcon className="ml-auto size-4" />
+					</DropdownMenuTrigger>
 					<DropdownMenuContent
-						align="end"
 						className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
 						side={isMobile ? "bottom" : "right"}
+						align="end"
 						sideOffset={4}
 					>
 						<DropdownMenuGroup>
 							<DropdownMenuLabel className="p-0 font-normal">
 								<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 									<Avatar className="h-8 w-8 rounded-lg">
+										<AvatarImage
+											src={session?.user.image}
+											alt={session?.user.name}
+										/>
 										<AvatarFallback className="rounded-lg">
 											{session?.user.name && session.user.name.length > 0
 												? session.user.name.charAt(0).toUpperCase()
@@ -105,16 +137,16 @@ export function NavUser() {
 										types: routerConfig.viewTransitionOptions,
 									}}
 								>
-									<IconUserCircle />
+									<UserCircle2Icon />
 									Account
 								</Link>
 							</DropdownMenuItem>
 							<DropdownMenuItem>
-								<IconCreditCard />
+								<CreditCardIcon />
 								Billing
 							</DropdownMenuItem>
 							<DropdownMenuItem>
-								<IconNotification />
+								<BellIcon />
 								Notifications
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
@@ -124,7 +156,7 @@ export function NavUser() {
 								await signOutMutation();
 							}}
 						>
-							<IconLogout />
+							<LogOutIcon />
 							Sign out
 						</DropdownMenuItem>
 					</DropdownMenuContent>
