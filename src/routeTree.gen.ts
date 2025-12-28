@@ -16,20 +16,24 @@ import { Route as ForgetPasswordRouteImport } from './routes/forget-password'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as PostsRouteRouteImport } from './routes/posts.route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TwoFactorIndexRouteImport } from './routes/two-factor/index'
 import { Route as PostsIndexRouteImport } from './routes/posts.index'
 import { Route as ApiSendRouteImport } from './routes/api/send'
-import { Route as AcceptInvitationIdRouteImport } from './routes/accept-invitation/$id'
-import { Route as AuthPathlessLayoutRouteRouteImport } from './routes/_auth/_pathlessLayout/route'
+import { Route as Auth_pathlessLayoutRouteRouteImport } from './routes/_auth/__pathlessLayout/route'
+import { Route as TwoFactorOtpIndexRouteImport } from './routes/two-factor/otp/index'
 import { Route as PostsPostIdIndexRouteImport } from './routes/posts.$postId.index'
+import { Route as authDeviceIndexRouteImport } from './routes/(auth)/device/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
-import { Route as AuthPathlessLayoutUnauthorizedRouteImport } from './routes/_auth/_pathlessLayout/unauthorized'
-import { Route as AuthPathlessLayoutResendRouteImport } from './routes/_auth/_pathlessLayout/resend'
-import { Route as AuthPathlessLayoutProfileRouteImport } from './routes/_auth/_pathlessLayout/profile'
-import { Route as AuthPathlessLayoutDashboardRouteImport } from './routes/_auth/_pathlessLayout/dashboard'
+import { Route as Auth_pathlessLayoutUnauthorizedRouteImport } from './routes/_auth/__pathlessLayout/unauthorized'
+import { Route as Auth_pathlessLayoutResendRouteImport } from './routes/_auth/__pathlessLayout/resend'
+import { Route as Auth_pathlessLayoutDashboardRouteImport } from './routes/_auth/__pathlessLayout/dashboard'
+import { Route as authAcceptInvitationIdRouteImport } from './routes/(auth)/accept-invitation/$id'
 import { Route as PostsPostIdCommentsIndexRouteImport } from './routes/posts.$postId.comments.index'
-import { Route as AuthPathlessLayoutAdminIndexRouteImport } from './routes/_auth/_pathlessLayout/admin/index'
-import { Route as AuthPathlessLayoutAdminIndexcopyRouteImport } from './routes/_auth/_pathlessLayout/admin/index copy'
-import { Route as AuthPathlessLayoutAdminAdmincopyRouteImport } from './routes/_auth/_pathlessLayout/admin/admin copy'
+import { Route as Auth_pathlessLayoutProfileIndexRouteImport } from './routes/_auth/__pathlessLayout/profile/index'
+import { Route as Auth_pathlessLayoutAdminIndexRouteImport } from './routes/_auth/__pathlessLayout/admin/index'
+import { Route as authDeviceSuccessIndexRouteImport } from './routes/(auth)/device/success/index'
+import { Route as authDeviceDeniedIndexRouteImport } from './routes/(auth)/device/denied/index'
+import { Route as authDeviceApproveIndexRouteImport } from './routes/(auth)/device/approve/index'
 import { Route as PostsPostIdCommentsCommentIdIndexRouteImport } from './routes/posts.$postId.comments.$commentId.index'
 
 const SignupRoute = SignupRouteImport.update({
@@ -66,6 +70,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TwoFactorIndexRoute = TwoFactorIndexRouteImport.update({
+  id: '/two-factor/',
+  path: '/two-factor/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsIndexRoute = PostsIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -76,73 +85,87 @@ const ApiSendRoute = ApiSendRouteImport.update({
   path: '/api/send',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AcceptInvitationIdRoute = AcceptInvitationIdRouteImport.update({
-  id: '/accept-invitation/$id',
-  path: '/accept-invitation/$id',
+const Auth_pathlessLayoutRouteRoute =
+  Auth_pathlessLayoutRouteRouteImport.update({
+    id: '/__pathlessLayout',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const TwoFactorOtpIndexRoute = TwoFactorOtpIndexRouteImport.update({
+  id: '/two-factor/otp/',
+  path: '/two-factor/otp/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AuthPathlessLayoutRouteRoute = AuthPathlessLayoutRouteRouteImport.update({
-  id: '/_pathlessLayout',
-  getParentRoute: () => AuthRoute,
 } as any)
 const PostsPostIdIndexRoute = PostsPostIdIndexRouteImport.update({
   id: '/$postId/',
   path: '/$postId/',
   getParentRoute: () => PostsRouteRoute,
 } as any)
+const authDeviceIndexRoute = authDeviceIndexRouteImport.update({
+  id: '/(auth)/device/',
+  path: '/device/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthPathlessLayoutUnauthorizedRoute =
-  AuthPathlessLayoutUnauthorizedRouteImport.update({
+const Auth_pathlessLayoutUnauthorizedRoute =
+  Auth_pathlessLayoutUnauthorizedRouteImport.update({
     id: '/unauthorized',
     path: '/unauthorized',
-    getParentRoute: () => AuthPathlessLayoutRouteRoute,
+    getParentRoute: () => Auth_pathlessLayoutRouteRoute,
   } as any)
-const AuthPathlessLayoutResendRoute =
-  AuthPathlessLayoutResendRouteImport.update({
+const Auth_pathlessLayoutResendRoute =
+  Auth_pathlessLayoutResendRouteImport.update({
     id: '/resend',
     path: '/resend',
-    getParentRoute: () => AuthPathlessLayoutRouteRoute,
+    getParentRoute: () => Auth_pathlessLayoutRouteRoute,
   } as any)
-const AuthPathlessLayoutProfileRoute =
-  AuthPathlessLayoutProfileRouteImport.update({
-    id: '/profile',
-    path: '/profile',
-    getParentRoute: () => AuthPathlessLayoutRouteRoute,
-  } as any)
-const AuthPathlessLayoutDashboardRoute =
-  AuthPathlessLayoutDashboardRouteImport.update({
+const Auth_pathlessLayoutDashboardRoute =
+  Auth_pathlessLayoutDashboardRouteImport.update({
     id: '/dashboard',
     path: '/dashboard',
-    getParentRoute: () => AuthPathlessLayoutRouteRoute,
+    getParentRoute: () => Auth_pathlessLayoutRouteRoute,
   } as any)
+const authAcceptInvitationIdRoute = authAcceptInvitationIdRouteImport.update({
+  id: '/(auth)/accept-invitation/$id',
+  path: '/accept-invitation/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsPostIdCommentsIndexRoute =
   PostsPostIdCommentsIndexRouteImport.update({
     id: '/$postId/comments/',
     path: '/$postId/comments/',
     getParentRoute: () => PostsRouteRoute,
   } as any)
-const AuthPathlessLayoutAdminIndexRoute =
-  AuthPathlessLayoutAdminIndexRouteImport.update({
+const Auth_pathlessLayoutProfileIndexRoute =
+  Auth_pathlessLayoutProfileIndexRouteImport.update({
+    id: '/profile/',
+    path: '/profile/',
+    getParentRoute: () => Auth_pathlessLayoutRouteRoute,
+  } as any)
+const Auth_pathlessLayoutAdminIndexRoute =
+  Auth_pathlessLayoutAdminIndexRouteImport.update({
     id: '/admin/',
     path: '/admin/',
-    getParentRoute: () => AuthPathlessLayoutRouteRoute,
+    getParentRoute: () => Auth_pathlessLayoutRouteRoute,
   } as any)
-const AuthPathlessLayoutAdminIndexcopyRoute =
-  AuthPathlessLayoutAdminIndexcopyRouteImport.update({
-    id: '/admin/index copy',
-    path: '/admin/index copy',
-    getParentRoute: () => AuthPathlessLayoutRouteRoute,
-  } as any)
-const AuthPathlessLayoutAdminAdmincopyRoute =
-  AuthPathlessLayoutAdminAdmincopyRouteImport.update({
-    id: '/admin/admin copy',
-    path: '/admin/admin copy',
-    getParentRoute: () => AuthPathlessLayoutRouteRoute,
-  } as any)
+const authDeviceSuccessIndexRoute = authDeviceSuccessIndexRouteImport.update({
+  id: '/(auth)/device/success/',
+  path: '/device/success/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authDeviceDeniedIndexRoute = authDeviceDeniedIndexRouteImport.update({
+  id: '/(auth)/device/denied/',
+  path: '/device/denied/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authDeviceApproveIndexRoute = authDeviceApproveIndexRouteImport.update({
+  id: '/(auth)/device/approve/',
+  path: '/device/approve/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsPostIdCommentsCommentIdIndexRoute =
   PostsPostIdCommentsCommentIdIndexRouteImport.update({
     id: '/$postId/comments/$commentId/',
@@ -157,18 +180,22 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
-  '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
   '/posts/': typeof PostsIndexRoute
-  '/dashboard': typeof AuthPathlessLayoutDashboardRoute
-  '/profile': typeof AuthPathlessLayoutProfileRoute
-  '/resend': typeof AuthPathlessLayoutResendRoute
-  '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
+  '/two-factor': typeof TwoFactorIndexRoute
+  '/accept-invitation/$id': typeof authAcceptInvitationIdRoute
+  '/dashboard': typeof Auth_pathlessLayoutDashboardRoute
+  '/resend': typeof Auth_pathlessLayoutResendRoute
+  '/unauthorized': typeof Auth_pathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/device': typeof authDeviceIndexRoute
   '/posts/$postId': typeof PostsPostIdIndexRoute
-  '/admin/admin copy': typeof AuthPathlessLayoutAdminAdmincopyRoute
-  '/admin/index copy': typeof AuthPathlessLayoutAdminIndexcopyRoute
-  '/admin': typeof AuthPathlessLayoutAdminIndexRoute
+  '/two-factor/otp': typeof TwoFactorOtpIndexRoute
+  '/device/approve': typeof authDeviceApproveIndexRoute
+  '/device/denied': typeof authDeviceDeniedIndexRoute
+  '/device/success': typeof authDeviceSuccessIndexRoute
+  '/admin': typeof Auth_pathlessLayoutAdminIndexRoute
+  '/profile': typeof Auth_pathlessLayoutProfileIndexRoute
   '/posts/$postId/comments': typeof PostsPostIdCommentsIndexRoute
   '/posts/$postId/comments/$commentId': typeof PostsPostIdCommentsCommentIdIndexRoute
 }
@@ -178,18 +205,22 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
-  '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
   '/posts': typeof PostsIndexRoute
-  '/dashboard': typeof AuthPathlessLayoutDashboardRoute
-  '/profile': typeof AuthPathlessLayoutProfileRoute
-  '/resend': typeof AuthPathlessLayoutResendRoute
-  '/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
+  '/two-factor': typeof TwoFactorIndexRoute
+  '/accept-invitation/$id': typeof authAcceptInvitationIdRoute
+  '/dashboard': typeof Auth_pathlessLayoutDashboardRoute
+  '/resend': typeof Auth_pathlessLayoutResendRoute
+  '/unauthorized': typeof Auth_pathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/device': typeof authDeviceIndexRoute
   '/posts/$postId': typeof PostsPostIdIndexRoute
-  '/admin/admin copy': typeof AuthPathlessLayoutAdminAdmincopyRoute
-  '/admin/index copy': typeof AuthPathlessLayoutAdminIndexcopyRoute
-  '/admin': typeof AuthPathlessLayoutAdminIndexRoute
+  '/two-factor/otp': typeof TwoFactorOtpIndexRoute
+  '/device/approve': typeof authDeviceApproveIndexRoute
+  '/device/denied': typeof authDeviceDeniedIndexRoute
+  '/device/success': typeof authDeviceSuccessIndexRoute
+  '/admin': typeof Auth_pathlessLayoutAdminIndexRoute
+  '/profile': typeof Auth_pathlessLayoutProfileIndexRoute
   '/posts/$postId/comments': typeof PostsPostIdCommentsIndexRoute
   '/posts/$postId/comments/$commentId': typeof PostsPostIdCommentsCommentIdIndexRoute
 }
@@ -202,19 +233,23 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
-  '/_auth/_pathlessLayout': typeof AuthPathlessLayoutRouteRouteWithChildren
-  '/accept-invitation/$id': typeof AcceptInvitationIdRoute
+  '/_auth/__pathlessLayout': typeof Auth_pathlessLayoutRouteRouteWithChildren
   '/api/send': typeof ApiSendRoute
   '/posts/': typeof PostsIndexRoute
-  '/_auth/_pathlessLayout/dashboard': typeof AuthPathlessLayoutDashboardRoute
-  '/_auth/_pathlessLayout/profile': typeof AuthPathlessLayoutProfileRoute
-  '/_auth/_pathlessLayout/resend': typeof AuthPathlessLayoutResendRoute
-  '/_auth/_pathlessLayout/unauthorized': typeof AuthPathlessLayoutUnauthorizedRoute
+  '/two-factor/': typeof TwoFactorIndexRoute
+  '/(auth)/accept-invitation/$id': typeof authAcceptInvitationIdRoute
+  '/_auth/__pathlessLayout/dashboard': typeof Auth_pathlessLayoutDashboardRoute
+  '/_auth/__pathlessLayout/resend': typeof Auth_pathlessLayoutResendRoute
+  '/_auth/__pathlessLayout/unauthorized': typeof Auth_pathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/(auth)/device/': typeof authDeviceIndexRoute
   '/posts/$postId/': typeof PostsPostIdIndexRoute
-  '/_auth/_pathlessLayout/admin/admin copy': typeof AuthPathlessLayoutAdminAdmincopyRoute
-  '/_auth/_pathlessLayout/admin/index copy': typeof AuthPathlessLayoutAdminIndexcopyRoute
-  '/_auth/_pathlessLayout/admin/': typeof AuthPathlessLayoutAdminIndexRoute
+  '/two-factor/otp/': typeof TwoFactorOtpIndexRoute
+  '/(auth)/device/approve/': typeof authDeviceApproveIndexRoute
+  '/(auth)/device/denied/': typeof authDeviceDeniedIndexRoute
+  '/(auth)/device/success/': typeof authDeviceSuccessIndexRoute
+  '/_auth/__pathlessLayout/admin/': typeof Auth_pathlessLayoutAdminIndexRoute
+  '/_auth/__pathlessLayout/profile/': typeof Auth_pathlessLayoutProfileIndexRoute
   '/posts/$postId/comments/': typeof PostsPostIdCommentsIndexRoute
   '/posts/$postId/comments/$commentId/': typeof PostsPostIdCommentsCommentIdIndexRoute
 }
@@ -227,18 +262,22 @@ export interface FileRouteTypes {
     | '/login'
     | '/reset-password'
     | '/signup'
-    | '/accept-invitation/$id'
     | '/api/send'
     | '/posts/'
+    | '/two-factor'
+    | '/accept-invitation/$id'
     | '/dashboard'
-    | '/profile'
     | '/resend'
     | '/unauthorized'
     | '/api/auth/$'
+    | '/device'
     | '/posts/$postId'
-    | '/admin/admin copy'
-    | '/admin/index copy'
+    | '/two-factor/otp'
+    | '/device/approve'
+    | '/device/denied'
+    | '/device/success'
     | '/admin'
+    | '/profile'
     | '/posts/$postId/comments'
     | '/posts/$postId/comments/$commentId'
   fileRoutesByTo: FileRoutesByTo
@@ -248,18 +287,22 @@ export interface FileRouteTypes {
     | '/login'
     | '/reset-password'
     | '/signup'
-    | '/accept-invitation/$id'
     | '/api/send'
     | '/posts'
+    | '/two-factor'
+    | '/accept-invitation/$id'
     | '/dashboard'
-    | '/profile'
     | '/resend'
     | '/unauthorized'
     | '/api/auth/$'
+    | '/device'
     | '/posts/$postId'
-    | '/admin/admin copy'
-    | '/admin/index copy'
+    | '/two-factor/otp'
+    | '/device/approve'
+    | '/device/denied'
+    | '/device/success'
     | '/admin'
+    | '/profile'
     | '/posts/$postId/comments'
     | '/posts/$postId/comments/$commentId'
   id:
@@ -271,19 +314,23 @@ export interface FileRouteTypes {
     | '/login'
     | '/reset-password'
     | '/signup'
-    | '/_auth/_pathlessLayout'
-    | '/accept-invitation/$id'
+    | '/_auth/__pathlessLayout'
     | '/api/send'
     | '/posts/'
-    | '/_auth/_pathlessLayout/dashboard'
-    | '/_auth/_pathlessLayout/profile'
-    | '/_auth/_pathlessLayout/resend'
-    | '/_auth/_pathlessLayout/unauthorized'
+    | '/two-factor/'
+    | '/(auth)/accept-invitation/$id'
+    | '/_auth/__pathlessLayout/dashboard'
+    | '/_auth/__pathlessLayout/resend'
+    | '/_auth/__pathlessLayout/unauthorized'
     | '/api/auth/$'
+    | '/(auth)/device/'
     | '/posts/$postId/'
-    | '/_auth/_pathlessLayout/admin/admin copy'
-    | '/_auth/_pathlessLayout/admin/index copy'
-    | '/_auth/_pathlessLayout/admin/'
+    | '/two-factor/otp/'
+    | '/(auth)/device/approve/'
+    | '/(auth)/device/denied/'
+    | '/(auth)/device/success/'
+    | '/_auth/__pathlessLayout/admin/'
+    | '/_auth/__pathlessLayout/profile/'
     | '/posts/$postId/comments/'
     | '/posts/$postId/comments/$commentId/'
   fileRoutesById: FileRoutesById
@@ -296,9 +343,15 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
-  AcceptInvitationIdRoute: typeof AcceptInvitationIdRoute
   ApiSendRoute: typeof ApiSendRoute
+  TwoFactorIndexRoute: typeof TwoFactorIndexRoute
+  authAcceptInvitationIdRoute: typeof authAcceptInvitationIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  authDeviceIndexRoute: typeof authDeviceIndexRoute
+  TwoFactorOtpIndexRoute: typeof TwoFactorOtpIndexRoute
+  authDeviceApproveIndexRoute: typeof authDeviceApproveIndexRoute
+  authDeviceDeniedIndexRoute: typeof authDeviceDeniedIndexRoute
+  authDeviceSuccessIndexRoute: typeof authDeviceSuccessIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -352,6 +405,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/two-factor/': {
+      id: '/two-factor/'
+      path: '/two-factor'
+      fullPath: '/two-factor'
+      preLoaderRoute: typeof TwoFactorIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/posts/': {
       id: '/posts/'
       path: '/'
@@ -366,19 +426,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiSendRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/accept-invitation/$id': {
-      id: '/accept-invitation/$id'
-      path: '/accept-invitation/$id'
-      fullPath: '/accept-invitation/$id'
-      preLoaderRoute: typeof AcceptInvitationIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_auth/_pathlessLayout': {
-      id: '/_auth/_pathlessLayout'
+    '/_auth/__pathlessLayout': {
+      id: '/_auth/__pathlessLayout'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthPathlessLayoutRouteRouteImport
+      preLoaderRoute: typeof Auth_pathlessLayoutRouteRouteImport
       parentRoute: typeof AuthRoute
+    }
+    '/two-factor/otp/': {
+      id: '/two-factor/otp/'
+      path: '/two-factor/otp'
+      fullPath: '/two-factor/otp'
+      preLoaderRoute: typeof TwoFactorOtpIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/posts/$postId/': {
       id: '/posts/$postId/'
@@ -387,6 +447,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdIndexRouteImport
       parentRoute: typeof PostsRouteRoute
     }
+    '/(auth)/device/': {
+      id: '/(auth)/device/'
+      path: '/device'
+      fullPath: '/device'
+      preLoaderRoute: typeof authDeviceIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -394,33 +461,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_auth/_pathlessLayout/unauthorized': {
-      id: '/_auth/_pathlessLayout/unauthorized'
+    '/_auth/__pathlessLayout/unauthorized': {
+      id: '/_auth/__pathlessLayout/unauthorized'
       path: '/unauthorized'
       fullPath: '/unauthorized'
-      preLoaderRoute: typeof AuthPathlessLayoutUnauthorizedRouteImport
-      parentRoute: typeof AuthPathlessLayoutRouteRoute
+      preLoaderRoute: typeof Auth_pathlessLayoutUnauthorizedRouteImport
+      parentRoute: typeof Auth_pathlessLayoutRouteRoute
     }
-    '/_auth/_pathlessLayout/resend': {
-      id: '/_auth/_pathlessLayout/resend'
+    '/_auth/__pathlessLayout/resend': {
+      id: '/_auth/__pathlessLayout/resend'
       path: '/resend'
       fullPath: '/resend'
-      preLoaderRoute: typeof AuthPathlessLayoutResendRouteImport
-      parentRoute: typeof AuthPathlessLayoutRouteRoute
+      preLoaderRoute: typeof Auth_pathlessLayoutResendRouteImport
+      parentRoute: typeof Auth_pathlessLayoutRouteRoute
     }
-    '/_auth/_pathlessLayout/profile': {
-      id: '/_auth/_pathlessLayout/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthPathlessLayoutProfileRouteImport
-      parentRoute: typeof AuthPathlessLayoutRouteRoute
-    }
-    '/_auth/_pathlessLayout/dashboard': {
-      id: '/_auth/_pathlessLayout/dashboard'
+    '/_auth/__pathlessLayout/dashboard': {
+      id: '/_auth/__pathlessLayout/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthPathlessLayoutDashboardRouteImport
-      parentRoute: typeof AuthPathlessLayoutRouteRoute
+      preLoaderRoute: typeof Auth_pathlessLayoutDashboardRouteImport
+      parentRoute: typeof Auth_pathlessLayoutRouteRoute
+    }
+    '/(auth)/accept-invitation/$id': {
+      id: '/(auth)/accept-invitation/$id'
+      path: '/accept-invitation/$id'
+      fullPath: '/accept-invitation/$id'
+      preLoaderRoute: typeof authAcceptInvitationIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/posts/$postId/comments/': {
       id: '/posts/$postId/comments/'
@@ -429,26 +496,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdCommentsIndexRouteImport
       parentRoute: typeof PostsRouteRoute
     }
-    '/_auth/_pathlessLayout/admin/': {
-      id: '/_auth/_pathlessLayout/admin/'
+    '/_auth/__pathlessLayout/profile/': {
+      id: '/_auth/__pathlessLayout/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof Auth_pathlessLayoutProfileIndexRouteImport
+      parentRoute: typeof Auth_pathlessLayoutRouteRoute
+    }
+    '/_auth/__pathlessLayout/admin/': {
+      id: '/_auth/__pathlessLayout/admin/'
       path: '/admin'
       fullPath: '/admin'
-      preLoaderRoute: typeof AuthPathlessLayoutAdminIndexRouteImport
-      parentRoute: typeof AuthPathlessLayoutRouteRoute
+      preLoaderRoute: typeof Auth_pathlessLayoutAdminIndexRouteImport
+      parentRoute: typeof Auth_pathlessLayoutRouteRoute
     }
-    '/_auth/_pathlessLayout/admin/index copy': {
-      id: '/_auth/_pathlessLayout/admin/index copy'
-      path: '/admin/index copy'
-      fullPath: '/admin/index copy'
-      preLoaderRoute: typeof AuthPathlessLayoutAdminIndexcopyRouteImport
-      parentRoute: typeof AuthPathlessLayoutRouteRoute
+    '/(auth)/device/success/': {
+      id: '/(auth)/device/success/'
+      path: '/device/success'
+      fullPath: '/device/success'
+      preLoaderRoute: typeof authDeviceSuccessIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_auth/_pathlessLayout/admin/admin copy': {
-      id: '/_auth/_pathlessLayout/admin/admin copy'
-      path: '/admin/admin copy'
-      fullPath: '/admin/admin copy'
-      preLoaderRoute: typeof AuthPathlessLayoutAdminAdmincopyRouteImport
-      parentRoute: typeof AuthPathlessLayoutRouteRoute
+    '/(auth)/device/denied/': {
+      id: '/(auth)/device/denied/'
+      path: '/device/denied'
+      fullPath: '/device/denied'
+      preLoaderRoute: typeof authDeviceDeniedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/device/approve/': {
+      id: '/(auth)/device/approve/'
+      path: '/device/approve'
+      fullPath: '/device/approve'
+      preLoaderRoute: typeof authDeviceApproveIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/posts/$postId/comments/$commentId/': {
       id: '/posts/$postId/comments/$commentId/'
@@ -479,40 +560,34 @@ const PostsRouteRouteWithChildren = PostsRouteRoute._addFileChildren(
   PostsRouteRouteChildren,
 )
 
-interface AuthPathlessLayoutRouteRouteChildren {
-  AuthPathlessLayoutDashboardRoute: typeof AuthPathlessLayoutDashboardRoute
-  AuthPathlessLayoutProfileRoute: typeof AuthPathlessLayoutProfileRoute
-  AuthPathlessLayoutResendRoute: typeof AuthPathlessLayoutResendRoute
-  AuthPathlessLayoutUnauthorizedRoute: typeof AuthPathlessLayoutUnauthorizedRoute
-  AuthPathlessLayoutAdminAdmincopyRoute: typeof AuthPathlessLayoutAdminAdmincopyRoute
-  AuthPathlessLayoutAdminIndexcopyRoute: typeof AuthPathlessLayoutAdminIndexcopyRoute
-  AuthPathlessLayoutAdminIndexRoute: typeof AuthPathlessLayoutAdminIndexRoute
+interface Auth_pathlessLayoutRouteRouteChildren {
+  Auth_pathlessLayoutDashboardRoute: typeof Auth_pathlessLayoutDashboardRoute
+  Auth_pathlessLayoutResendRoute: typeof Auth_pathlessLayoutResendRoute
+  Auth_pathlessLayoutUnauthorizedRoute: typeof Auth_pathlessLayoutUnauthorizedRoute
+  Auth_pathlessLayoutAdminIndexRoute: typeof Auth_pathlessLayoutAdminIndexRoute
+  Auth_pathlessLayoutProfileIndexRoute: typeof Auth_pathlessLayoutProfileIndexRoute
 }
 
-const AuthPathlessLayoutRouteRouteChildren: AuthPathlessLayoutRouteRouteChildren =
+const Auth_pathlessLayoutRouteRouteChildren: Auth_pathlessLayoutRouteRouteChildren =
   {
-    AuthPathlessLayoutDashboardRoute: AuthPathlessLayoutDashboardRoute,
-    AuthPathlessLayoutProfileRoute: AuthPathlessLayoutProfileRoute,
-    AuthPathlessLayoutResendRoute: AuthPathlessLayoutResendRoute,
-    AuthPathlessLayoutUnauthorizedRoute: AuthPathlessLayoutUnauthorizedRoute,
-    AuthPathlessLayoutAdminAdmincopyRoute:
-      AuthPathlessLayoutAdminAdmincopyRoute,
-    AuthPathlessLayoutAdminIndexcopyRoute:
-      AuthPathlessLayoutAdminIndexcopyRoute,
-    AuthPathlessLayoutAdminIndexRoute: AuthPathlessLayoutAdminIndexRoute,
+    Auth_pathlessLayoutDashboardRoute: Auth_pathlessLayoutDashboardRoute,
+    Auth_pathlessLayoutResendRoute: Auth_pathlessLayoutResendRoute,
+    Auth_pathlessLayoutUnauthorizedRoute: Auth_pathlessLayoutUnauthorizedRoute,
+    Auth_pathlessLayoutAdminIndexRoute: Auth_pathlessLayoutAdminIndexRoute,
+    Auth_pathlessLayoutProfileIndexRoute: Auth_pathlessLayoutProfileIndexRoute,
   }
 
-const AuthPathlessLayoutRouteRouteWithChildren =
-  AuthPathlessLayoutRouteRoute._addFileChildren(
-    AuthPathlessLayoutRouteRouteChildren,
+const Auth_pathlessLayoutRouteRouteWithChildren =
+  Auth_pathlessLayoutRouteRoute._addFileChildren(
+    Auth_pathlessLayoutRouteRouteChildren,
   )
 
 interface AuthRouteChildren {
-  AuthPathlessLayoutRouteRoute: typeof AuthPathlessLayoutRouteRouteWithChildren
+  Auth_pathlessLayoutRouteRoute: typeof Auth_pathlessLayoutRouteRouteWithChildren
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-  AuthPathlessLayoutRouteRoute: AuthPathlessLayoutRouteRouteWithChildren,
+  Auth_pathlessLayoutRouteRoute: Auth_pathlessLayoutRouteRouteWithChildren,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -525,9 +600,15 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
-  AcceptInvitationIdRoute: AcceptInvitationIdRoute,
   ApiSendRoute: ApiSendRoute,
+  TwoFactorIndexRoute: TwoFactorIndexRoute,
+  authAcceptInvitationIdRoute: authAcceptInvitationIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  authDeviceIndexRoute: authDeviceIndexRoute,
+  TwoFactorOtpIndexRoute: TwoFactorOtpIndexRoute,
+  authDeviceApproveIndexRoute: authDeviceApproveIndexRoute,
+  authDeviceDeniedIndexRoute: authDeviceDeniedIndexRoute,
+  authDeviceSuccessIndexRoute: authDeviceSuccessIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

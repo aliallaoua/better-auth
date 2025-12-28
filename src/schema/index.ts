@@ -9,12 +9,14 @@ export type UserMeta = z.infer<typeof UserMetaSchema>;
 export const SignUpSchema = z
 	.object({
 		name: UserMetaSchema.shape.username,
-		email: z.email().max(255),
+		email: z.email("Please enter a valid email address.").max(255),
 		password: z
 			.string()
 			.min(8, { error: "Password must be at least 8 characters" })
 			.max(100, { error: "Password must be at most 100 characters" }),
-		confirmPassword: z.string(),
+		confirmPassword: z
+			.string()
+			.min(1, { error: "Please confirm your password." }),
 		image: z
 			.file()
 			.max(5 * 1024 * 1024, { error: "Image must be less than 5MB" })
@@ -24,23 +26,24 @@ export const SignUpSchema = z
 			.nullable(),
 	})
 	.refine((data) => data.password === data.confirmPassword, {
-		error: "Passwords don't match",
+		error: "Passwords do not match",
 		path: ["confirmPassword"],
 	});
 
 export type SignUpSchema = z.infer<typeof SignUpSchema>;
 
 export const SignInSchema = z.object({
-	email: z.email().max(255),
+	email: z.email("Please enter a valid email address.").max(255),
 	password: z
 		.string()
 		.min(8, { error: "Password must be at least 8 characters" })
 		.max(100, { error: "Password must be at most 100 characters" }),
+	rememberMe: z.boolean(),
 });
 export type SignInSchema = z.infer<typeof SignInSchema>;
 
 export const ForgotPasswordSchema = z.object({
-	email: z.email().max(255),
+	email: z.email("Please enter a valid email address.").max(255),
 });
 export type ForgotPasswordSchema = z.infer<typeof ForgotPasswordSchema>;
 
@@ -50,40 +53,61 @@ export const ResetPasswordSchema = z
 			.string()
 			.min(8, { error: "Password must be at least 8 characters" })
 			.max(100, { error: "Password must be at most 100 characters" }),
-		confirmPassword: z.string(),
+		confirmPassword: z
+			.string()
+			.min(1, { error: "Please confirm your password." }),
 	})
 	.refine((data) => data.password === data.confirmPassword, {
-		error: "Passwords don't match",
+		error: "Passwords do not match",
 		path: ["confirmPassword"],
 	});
 export type ResetPasswordSchema = z.infer<typeof ResetPasswordSchema>;
 
 export const ChangePasswordSchema = z
 	.object({
-		currentPassword: z.string(),
+		currentPassword: z
+			.string()
+			.min(1, { error: "Current password is required" }),
 		newPassword: z
 			.string()
 			.min(8, { error: "Password must be at least 8 characters" })
-			.max(100, { error: "Password must be at most 100 characters" }),
-		confirmPassword: z.string(),
-		signOutDevices: z.boolean(),
+			.max(128, { error: "Password must be at most 128 characters" }),
+		confirmPassword: z
+			.string()
+			.min(1, { error: "Please confirm your password" }),
+		revokeOtherSessions: z.boolean(),
 	})
 	.refine((data) => data.newPassword === data.confirmPassword, {
-		error: "Passwords don't match",
+		error: "Passwords do not match",
 		path: ["confirmPassword"],
 	});
 export type ChangePasswordSchema = z.infer<typeof ChangePasswordSchema>;
 
 export const CreateOrganizationSchema = z.object({
-	name: z.string(),
-	slug: z.string(),
+	name: z
+		.string()
+		.min(2, "Name must be at least 2 characters")
+		.max(50, "Name must be at most 50 characters"),
+	slug: z
+		.string()
+		.min(2, "Slug must be at least 2 characters")
+		.max(50, "Slug must be at most 50 characters")
+		.regex(
+			/^[a-z0-9-]+$/,
+			"Slug can only contain lowercase letters, numbers, and hyphens"
+		),
 	logo: z.url().optional(),
 	isSlugEdited: z.boolean(),
 });
 export type CreateOrganizationSchema = z.infer<typeof CreateOrganizationSchema>;
 
 export const EditUserSchema = z.object({
-	name: z.string(),
+	name: z
+		.string()
+		.min(2, "Name must be at least 2 characters")
+		.max(50, "Name must be at most 50 characters")
+		.optional()
+		.or(z.literal("")),
 	image: z
 		.file()
 		.max(5 * 1024 * 1024, { error: "Image must be less than 5MB" })
@@ -122,12 +146,14 @@ export const BanUserSchema = z.object({
 export type BanUserSchema = z.infer<typeof BanUserSchema>;
 
 export const InviteMemberSchema = z.object({
-	email: z.email().max(255),
-	role: z.enum(["admin", "member"]),
+	email: z.email("Please enter a valid email address"),
+	role: z.enum(["admin", "member"], {
+		error: "Please select a role",
+	}),
 });
 export type InviteMemberSchema = z.infer<typeof InviteMemberSchema>;
 
-export const TwoFactorPasswordSchema = z.object({
+export const PasswordSchema = z.object({
 	password: z
 		.string()
 		.min(8, { error: "Password must be at least 8 characters" })
@@ -145,3 +171,8 @@ export const DeleteAccountSchema = z.object({
 		.min(8, { error: "Password must be at least 8 characters" })
 		.max(100, { error: "Password must be at most 100 characters" }),
 });
+
+export const DeviceSchema = z.object({
+	userCode: z.string().min(1),
+});
+export type DeviceSchema = z.infer<typeof DeviceSchema>;

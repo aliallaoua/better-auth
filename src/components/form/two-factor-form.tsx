@@ -5,9 +5,9 @@ import { useState } from "react";
 import QRCode from "react-qr-code";
 import { toast } from "sonner";
 import { useAppForm } from "@/hooks/form";
+import type { Session } from "@/lib/auth";
 import { authClient } from "@/lib/auth-client";
-import type { Session } from "@/lib/auth-types";
-import { TwoFactorOTPSchema, TwoFactorPasswordSchema } from "@/schema";
+import { PasswordSchema, TwoFactorOTPSchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
 import { Button } from "../ui/button";
 import {
@@ -36,7 +36,7 @@ export function TwoFactorForm({ session }: { session: Session }) {
 	const passwordForm = useAppForm({
 		...passwordFormOpts,
 		validators: {
-			onChange: TwoFactorPasswordSchema,
+			onChange: PasswordSchema,
 		},
 		onSubmit: async ({ value }) => {
 			setIsPendingTwoFa(true);

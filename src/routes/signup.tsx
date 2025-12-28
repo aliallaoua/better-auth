@@ -14,10 +14,10 @@ export const Route = createFileRoute("/signup")({
 			throw redirect({ to: search.redirect || fallback });
 		}
 	},
-	component: SignupPage,
+	component: SignupComponent,
 });
 
-function SignupPage() {
+function SignupComponent() {
 	return (
 		<div className="flex min-h-svh w-full items-center justify-center p-14 md:p-20">
 			<div className="w-full max-w-sm">

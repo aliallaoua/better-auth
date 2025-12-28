@@ -1,5 +1,4 @@
 import { formOptions } from "@tanstack/react-form";
-import type { ErrorContext } from "better-auth/react";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -12,14 +11,15 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import { useOrganizationCreateMutation } from "@/data/organization/organization-create-mutation";
 import { useAppForm } from "@/hooks/form";
-import { organization } from "@/lib/auth-client";
 import { CreateOrganizationSchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
 import { Button } from "../ui/button";
 import { FieldGroup } from "../ui/field";
 
 export function CreateOrganizationForm() {
+	const { mutate: createMutation, isSuccess } = useOrganizationCreateMutation();
 	const [open, setOpen] = useState(false);
 	const createOrganizationFormOpts = formOptions({
 		defaultValues: {
@@ -35,28 +35,28 @@ export function CreateOrganizationForm() {
 			onChange: CreateOrganizationSchema,
 		},
 		onSubmit: async ({ value }) => {
-			await organization.create(
-				{
+			try {
+				createMutation({
 					name: value.name,
 					slug: value.slug,
-				},
-				{
-					onSuccess: () => {
-						toast.success("Organization created successfully");
-						setOpen(false);
-						form.reset();
-					},
-					onError: (error: ErrorContext) => {
-						toast.error(error.error.message);
-					},
+				});
+
+				if (isSuccess) {
+					setOpen(false);
 				}
-			);
+			} catch (error: any) {
+				toast.error(error.message);
+			}
 		},
 	});
 
 	// Helper function to generate slug from name
 	const generateSlug = (name: string) => {
-		return name.trim().toLowerCase().replace(/\s+/g, "-");
+		return name
+			.trim()
+			.toLowerCase()
+			.replace(/\s+/g, "-")
+			.replace(/[^a-z0-9-]/g, "");
 	};
 
 	return (

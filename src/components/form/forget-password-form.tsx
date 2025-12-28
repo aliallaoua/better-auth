@@ -53,7 +53,6 @@ export function ForgetPasswordForm() {
 		},
 	});
 
-	// If modal should be shown, render it instead of the form
 	if (isSubmitted) {
 		return (
 			<main className="flex min-h-[calc(100vh-10rem)] flex-col items-center justify-center">
@@ -66,20 +65,19 @@ export function ForgetPasswordForm() {
 					</CardHeader>
 					<CardContent>
 						<Alert variant="default">
-							<CheckCircle2 className="size-4" />
+							<CheckCircle2 className="h-4 w-4" />
 							<AlertDescription>
 								If you don't see the email, check your spam folder.
 							</AlertDescription>
 						</Alert>
 					</CardContent>
-					<CardFooter>
-						<Button
-							className="w-full"
-							onClick={() => setIsSubmitted(false)}
-							variant="outline"
-						>
-							<ArrowLeft className="mr-2 size-4" /> Back to reset password
-						</Button>
+					<CardFooter className="flex justify-center">
+						<Link to="/login">
+							<Button variant="link" className="gap-2 px-0">
+								<ArrowLeft size={15} />
+								Back to sign in
+							</Button>
+						</Link>
 					</CardFooter>
 				</Card>
 			</main>
@@ -88,7 +86,6 @@ export function ForgetPasswordForm() {
 
 	return (
 		<main className="flex min-h-[calc(100vh-10rem)] flex-col items-center justify-center">
-			{/* <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white mask-[radial-gradient(ellipse_at_center,transparent_20%,black)]" /> */}
 			<Card className="w-[350px]">
 				<CardHeader>
 					<CardTitle>Forgot password</CardTitle>
@@ -129,7 +126,10 @@ export function ForgetPasswordForm() {
 									className="hover:underline hover:underline-offset-4"
 									to="/login"
 								>
-									Back to sign in
+									<Button variant="link" className="gap-2 px-0">
+										<ArrowLeft size={15} />
+										Back to sign in
+									</Button>
 								</Link>
 							</div>
 						</FieldGroup>

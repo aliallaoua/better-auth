@@ -11,8 +11,8 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import { useChangePasswordMutation } from "@/data/user/change-password-mutation";
 import { useAppForm } from "@/hooks/form";
-import { authClient } from "@/lib/auth-client";
 import { ChangePasswordSchema } from "@/schema";
 // import { Alert, AlertDescription } from '../ui/alert';
 import { Button } from "../ui/button";
@@ -20,13 +20,13 @@ import { FieldGroup } from "../ui/field";
 
 export function ChangePasswordForm() {
 	const [open, setOpen] = useState<boolean>(false);
-	const [signOutDevices, setSignOutDevices] = useState<boolean>(false);
+	const { mutate: changePasswordMutation } = useChangePasswordMutation();
 	const changePasswordFormOpts = formOptions({
 		defaultValues: {
 			currentPassword: "",
 			newPassword: "",
 			confirmPassword: "",
-			signOutDevices: false,
+			revokeOtherSessions: false,
 		},
 	});
 
@@ -36,21 +36,23 @@ export function ChangePasswordForm() {
 			onChange: ChangePasswordSchema,
 		},
 		onSubmit: async ({ value }) => {
-			const res = await authClient.changePassword({
-				newPassword: value.newPassword,
-				currentPassword: value.currentPassword,
-				revokeOtherSessions: signOutDevices,
-			});
-			if (res.error) {
-				toast.error(
-					res.error.message ||
-						"Couldn't change your password! Make sure it's correct"
-				);
-			} else {
-				setOpen(false);
-				toast.success("Password changed successfully");
-				form.reset();
-			}
+			changePasswordMutation(
+				{
+					currentPassword: value.currentPassword,
+					newPassword: value.newPassword,
+					revokeOtherSessions: value.revokeOtherSessions,
+				},
+				{
+					onSuccess: () => {
+						form.reset();
+						toast.success("Password changed successfully");
+						setOpen(false);
+					},
+					onError: (error) => {
+						toast.error(error.message);
+					},
+				}
+			);
 		},
 	});
 
@@ -99,7 +101,7 @@ export function ChangePasswordForm() {
 								<field.PasswordField
 									autoComplete="current-password"
 									label="Current Password"
-									placeholder="Password"
+									placeholder="Current Password"
 									required
 								/>
 							)}
@@ -130,16 +132,9 @@ export function ChangePasswordForm() {
 						<div className="flex items-center gap-2">
 							<form.AppField
 								children={(field) => (
-									<field.CheckboxField
-										label="Sign out from other devices"
-										onCheckedChange={(checked) =>
-											checked
-												? setSignOutDevices(true)
-												: setSignOutDevices(false)
-										}
-									/>
+									<field.CheckboxField label="Sign out from other devices" />
 								)}
-								name="signOutDevices"
+								name="revokeOtherSessions"
 							/>
 						</div>
 

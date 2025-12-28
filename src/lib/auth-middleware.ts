@@ -1,4 +1,4 @@
-import { createMiddleware, json } from "@tanstack/react-start";
+import { createMiddleware } from "@tanstack/react-start";
 import { getUserSession } from "./auth-functions";
 
 export const userMiddleware = createMiddleware({ type: "function" }).server(
@@ -13,7 +13,7 @@ export const userRequiredMiddleware = createMiddleware({ type: "function" })
 	.middleware([userMiddleware])
 	.server(async ({ next, context }) => {
 		if (!context.userSession) {
-			throw json(
+			throw Response.json(
 				{ message: "You must be logged in to do that!" },
 				{ status: 401 }
 			);

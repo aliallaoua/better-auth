@@ -12,6 +12,8 @@ export const signIn = async (data: SignInSchema) => {
 	const { error, data: response } = await authClient.signIn.email({
 		email: data.email,
 		password: data.password,
+		rememberMe: data.rememberMe,
+		// callbackURL: "/dashboard",
 	});
 
 	if (error) {
@@ -27,6 +29,7 @@ export const signUp = async (data: SignUpSchema) => {
 		password: data.password,
 		name: data.name,
 		image: data.image ? await convertImageToBase64(data.image) : "",
+		// callbackURL: "/dashboard",
 	});
 
 	if (error) {

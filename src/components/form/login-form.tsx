@@ -25,6 +25,7 @@ import {
 } from "@/lib/auth-functions";
 import { cn } from "@/lib/utils";
 import { SignInSchema } from "@/schema";
+import { LastUsedIndicator } from "../last-used-indicator";
 
 export function LogInForm({
 	className,
@@ -36,6 +37,7 @@ export function LogInForm({
 		defaultValues: {
 			email: "",
 			password: "",
+			rememberMe: false,
 		},
 	});
 
@@ -55,12 +57,6 @@ export function LogInForm({
 			await signInMutation(value);
 		},
 	});
-
-	const LastUsedIndicator = () => (
-		<span className="absolute top-1 right-0 ml-auto rounded-md bg-blue-100 px-2 py-1 font-medium text-blue-700 text-xs dark:bg-blue-900 dark:text-blue-300">
-			Last Used
-		</span>
-	);
 
 	return (
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -155,6 +151,13 @@ export function LogInForm({
 									/>
 								)}
 								name="password"
+							/>
+
+							<form.AppField
+								children={(field) => (
+									<field.CheckboxField label="Remember Me" />
+								)}
+								name="rememberMe"
 							/>
 
 							<Field>

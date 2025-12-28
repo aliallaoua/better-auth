@@ -1,17 +1,19 @@
+import { oauthProviderClient } from "@better-auth/oauth-provider/client";
 import { passkeyClient } from "@better-auth/passkey/client";
 import {
 	adminClient,
+	customSessionClient,
 	deviceAuthorizationClient,
-	genericOAuthClient,
 	lastLoginMethodClient,
 	multiSessionClient,
-	oidcClient,
 	oneTapClient,
 	organizationClient,
 	twoFactorClient,
 } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 import { toast } from "sonner";
+import type { auth } from "./auth";
+
 export const authClient = createAuthClient({
 	plugins: [
 		organizationClient(),
@@ -24,14 +26,13 @@ export const authClient = createAuthClient({
 		adminClient(),
 		multiSessionClient(),
 		oneTapClient({
-			clientId: process.env.GOOGLE_CLIENT_ID!,
+			clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
 			promptOptions: {
 				maxAttempts: 1,
 			},
 		}),
-		oidcClient(),
-		genericOAuthClient(),
-
+		oauthProviderClient(),
+		customSessionClient<typeof auth>(),
 		deviceAuthorizationClient(),
 		lastLoginMethodClient(),
 	],
@@ -42,8 +43,6 @@ export const authClient = createAuthClient({
 			}
 		},
 	},
-	/** The base URL of the server (optional if you're using the same domain) */
-	baseURL: "http://localhost:3000",
 });
 
 export const {

@@ -7,14 +7,16 @@ const searchSchema = z.object({
 });
 export const Route = createFileRoute("/reset-password")({
 	validateSearch: searchSchema,
-	component: ResetPasswordPage,
+	component: ResetPasswordComponent,
 });
 
-function ResetPasswordPage() {
+function ResetPasswordComponent() {
+	const { token } = Route.useSearch();
+
 	return (
 		<div className="container flex h-screen items-center justify-center py-4">
 			<div className="flex w-full max-w-sm flex-col gap-6">
-				<ResetPasswordForm />
+				<ResetPasswordForm token={token} />
 			</div>
 		</div>
 	);

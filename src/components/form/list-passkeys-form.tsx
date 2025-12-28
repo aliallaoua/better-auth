@@ -92,8 +92,8 @@ export function ListPasskeysForm() {
 						<TableBody>
 							{data.map((passkey: Passkey) => (
 								<TableRow
-									className="flex items-center justify-between"
 									key={passkey.id}
+									className="flex items-center justify-between"
 								>
 									<TableCell>{passkey.name || "My Passkey"}</TableCell>
 									<TableCell className="text-right">

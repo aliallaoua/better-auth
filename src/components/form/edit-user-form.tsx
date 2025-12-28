@@ -1,7 +1,6 @@
 import { formOptions } from "@tanstack/react-form";
 import { useRouter } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
-import type { ErrorContext } from "better-auth/react";
 import { Edit } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -16,19 +15,22 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { useSessionQuery } from "@/data/user/session-query";
+import { useUpdateUserMutation } from "@/data/user/update-user-mutation";
 import { useAppForm } from "@/hooks/form";
-import { authClient, useSession } from "@/lib/auth-client";
 import { convertImageToBase64 } from "@/lib/utils/convert-image";
 import type { EditUserSchema as EditUserType } from "@/schema";
 import { EditUserSchema } from "@/schema";
 import { FieldGroup } from "../ui/field";
 
 export function EditUserForm() {
-	const { data, isPending, error } = useSession();
+	const { data } = useSessionQuery();
 	const router = useRouter();
 	const [open, setOpen] = useState<boolean>(false);
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
 	const [shouldDeleteImage, setShouldDeleteImage] = useState<boolean>(false);
+
+	const { mutate: updateUserMutation, isPending } = useUpdateUserMutation();
 
 	const editUserFormOpts = formOptions({
 		defaultValues: {
@@ -51,24 +53,43 @@ export function EditUserForm() {
 				imageToUpdate = await convertImageToBase64(value.image);
 			}
 
-			await authClient.updateUser({
-				image: imageToUpdate,
-				name: value.name || undefined,
-				fetchOptions: {
+			// await authClient.updateUser({
+			// 	image: imageToUpdate,
+			// 	name: value.name || undefined,
+			// 	fetchOptions: {
+			// 		onSuccess: () => {
+			// 			toast.success("User updated successfully");
+			// 		},
+			// 		onError: (error: ErrorContext) => {
+			// 			toast.error(error.error.message);
+			// 		},
+			// 	},
+			// });
+
+			// form.reset();
+			// setImagePreview(null);
+			// setShouldDeleteImage(false);
+			// router.invalidate();
+			// setOpen(false);
+
+			updateUserMutation(
+				{
+					image: imageToUpdate,
+					name: value.name || undefined,
+				},
+				{
 					onSuccess: () => {
 						toast.success("User updated successfully");
+						form.reset();
+						setImagePreview(null);
+						router.invalidate();
+						setOpen(false);
 					},
-					onError: (error: ErrorContext) => {
-						toast.error(error.error.message);
+					onError: (error) => {
+						toast.error(error.message);
 					},
-				},
-			});
-
-			form.reset();
-			setImagePreview(null);
-			setShouldDeleteImage(false);
-			router.invalidate();
-			setOpen(false);
+				}
+			);
 		},
 	});
 
@@ -154,7 +175,6 @@ export function EditUserForm() {
 								<div className="grid gap-2">
 									<field.TextField
 										autoComplete="name"
-										id="name"
 										label="Full Name"
 										placeholder={data?.user.name}
 									/>

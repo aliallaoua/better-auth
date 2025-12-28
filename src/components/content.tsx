@@ -3,7 +3,7 @@ import { Image } from "@unpic/react";
 export default function ContentSection() {
 	return (
 		<section className="py-16 md:py-32">
-			<div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16">
+			<div className="mx-auto max-w-4xl space-y-8 px-6 md:space-y-16">
 				<h2 className="mb-2 bg-linear-to-br from-black to-gray-300/80 bg-clip-text text-center text-5xl text-transparent leading-[120%] tracking-tighter md:text-6xl dark:from-white dark:to-[#ffffff80]">
 					The ecosystem that powers your full-stack TypeScript apps
 				</h2>

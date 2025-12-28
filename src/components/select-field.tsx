@@ -27,7 +27,7 @@ export function SelectField({
 		: values;
 
 	return (
-		<Field orientation="responsive" data-invalid={isInvalid}>
+		<Field data-invalid={isInvalid}>
 			<FieldLabel htmlFor={field.name}>{label}</FieldLabel>
 			<Select
 				name={field.name}

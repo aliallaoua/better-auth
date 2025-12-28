@@ -1,5 +1,5 @@
 import { formOptions } from "@tanstack/react-form";
-import { getRouteApi, useRouter } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 // import { AlertCircle } from 'lucide-react';
 import { toast } from "sonner";
 import {
@@ -16,10 +16,8 @@ import { FieldGroup } from "../ui/field";
 
 // import { Alert, AlertDescription } from '../ui/alert';
 
-const routeApi = getRouteApi("/reset-password");
-export function ResetPasswordForm() {
+export function ResetPasswordForm({ token }: { token: string }) {
 	const router = useRouter();
-	const { token } = routeApi.useSearch();
 
 	const resetPasswordFormOpts = formOptions({
 		defaultValues: {

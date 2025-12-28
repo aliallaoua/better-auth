@@ -34,7 +34,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
 				{isRoot ? (
 					<Link
 						className={
-							"rounded bg-gray-600 px-2 py-1 font-extrabold text-white uppercase dark:bg-gray-700"
+							"rounded-sm bg-gray-600 px-2 py-1 font-extrabold text-white uppercase dark:bg-gray-700"
 						}
 						to="/"
 					>
@@ -43,7 +43,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
 				) : (
 					<Link
 						className={
-							"rounded bg-gray-600 px-2 py-1 font-extrabold text-white uppercase dark:bg-gray-700"
+							"rounded-sm bg-gray-600 px-2 py-1 font-extrabold text-white uppercase dark:bg-gray-700"
 						}
 						onClick={(e) => {
 							e.preventDefault();
