@@ -1,11 +1,28 @@
 {
+  "initialized": true,
   "projectName": "resend-test-app",
   "mode": "file-router",
   "typescript": true,
   "tailwind": true,
-  "packageManager": "pnpm",
   "git": true,
+  "addOnOptions": {
+    "drizzle": {
+      "database": "postgresql"
+    }
+  },
+  "packageManager": "bun",
   "version": 1,
   "framework": "react-cra",
-  "chosenAddOns": ["biome", "start", "form", "neon", "shadcn", "tanstack-query"]
+  "chosenAddOns": [
+    "neon",
+    "compiler",
+    "drizzle",
+    "form",
+    "shadcn",
+    "table",
+    "start",
+    "tanstack-query",
+    "biome",
+    "nitro"
+  ]
 }
