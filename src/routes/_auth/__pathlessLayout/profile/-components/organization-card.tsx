@@ -103,8 +103,8 @@ export function OrganizationCard(props: { session: Session | null }) {
 							</DropdownMenuItem>
 							{organizations?.map((org: Organization) => (
 								<DropdownMenuItem
-									className="py-1"
 									key={org.id}
+									className="py-1"
 									onClick={async () => {
 										if (org.id === activeOrganization?.id) {
 											return;

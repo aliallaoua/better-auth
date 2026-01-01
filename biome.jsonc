@@ -1,5 +1,4 @@
 {
-  // "$schema": "https://biomejs.dev/schemas/2.3.7/schema.json",
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
     "enabled": true,
@@ -7,7 +6,14 @@
     "useIgnoreFile": true,
     "defaultBranch": "main"
   },
-  "extends": ["ultracite/core", "ultracite/react", "ultracite/remix"],
+  "extends": [
+    "ultracite/core",
+    "ultracite/react",
+    "ultracite/remix",
+    "ultracite/biome/core",
+    "ultracite/biome/remix",
+    "ultracite/biome/react"
+  ],
   "files": {
     "ignoreUnknown": false,
     "includes": [
@@ -44,18 +50,13 @@
       },
       "complexity": {
         "noExcessiveCognitiveComplexity": "off",
-        // from demo.better-auth
         "useDateNow": "error"
       },
       "correctness": {
         "noChildrenProp": "off",
-        // "no-unused-vars": "off"
         "noUnusedVariables": "off",
-        // "no-unused-vars": "off"
         "noReactPropAssignments": "error",
-        // "react-hooks/rules-of-hooks": "error"
         "useHookAtTopLevel": "error",
-        // "react-hooks/exhaustive-deps": "warn"
         "useExhaustiveDependencies": "warn",
         "useImageSize": "off"
       },
@@ -79,7 +80,6 @@
         "noNestedTernary": "off",
         "noNonNullAssertion": "off",
         "useBlockStatements": "off",
-        // eslint-plugin-react-refresh: react-refresh/only-export-components
         "useComponentExportOnlyModules": "error",
         "useNamingConvention": "off",
         "useConsistentTypeDefinitions": "off",

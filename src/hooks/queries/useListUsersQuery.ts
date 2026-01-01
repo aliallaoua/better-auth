@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { UserWithRole } from "better-auth/plugins/admin";
+import { userKeys } from "@/data/user/keys";
 import { authClient } from "@/lib/auth-client";
 
 const fetchListUsers = async (): Promise<UserWithRole[]> => {
@@ -20,7 +21,8 @@ const fetchListUsers = async (): Promise<UserWithRole[]> => {
 
 const useListUsersQuery = () =>
 	useQuery({
-		queryKey: ["users"],
+		// queryKey: ["users"],
+		queryKey: userKeys.all(),
 		queryFn: () => fetchListUsers(),
 	});
 

@@ -97,14 +97,6 @@ export default function UserCard(props: {
 						</div>
 						<EditUserForm />
 					</div>
-					<ButtonGroup>
-						<ButtonGroup>
-							<ChangeEmailForm />
-						</ButtonGroup>
-						<ButtonGroup>
-							<DeleteAccountForm />
-						</ButtonGroup>
-					</ButtonGroup>
 				</div>
 
 				{session?.user.emailVerified ? null : (
@@ -218,25 +210,29 @@ export default function UserCard(props: {
 						<div className="flex gap-2">
 							{!!session?.user.twoFactorEnabled && <TwoFactorQrForm />}
 							<Dialog open={twoFactorDialog} onOpenChange={setTwoFactorDialog}>
-								<DialogTrigger asChild>
-									<Button
-										variant={
-											session?.user.twoFactorEnabled ? "destructive" : "outline"
-										}
-										className="gap-2"
-									>
-										{session?.user.twoFactorEnabled ? (
-											<ShieldOff size={16} />
-										) : (
-											<ShieldCheck size={16} />
-										)}
-										<span className="text-xs md:text-sm">
-											{session?.user.twoFactorEnabled
-												? "Disable 2FA"
-												: "Enable 2FA"}
-										</span>
-									</Button>
-								</DialogTrigger>
+								<DialogTrigger
+									render={
+										<Button
+											variant={
+												session?.user.twoFactorEnabled
+													? "destructive"
+													: "outline"
+											}
+											className="gap-2"
+										>
+											{session?.user.twoFactorEnabled ? (
+												<ShieldOff size={16} />
+											) : (
+												<ShieldCheck size={16} />
+											)}
+											<span className="text-xs md:text-sm">
+												{session?.user.twoFactorEnabled
+													? "Disable 2FA"
+													: "Enable 2FA"}
+											</span>
+										</Button>
+									}
+								/>
 								<DialogContent className="w-11/12 sm:max-w-[425px]">
 									<DialogHeader>
 										<DialogTitle>
@@ -266,7 +262,17 @@ export default function UserCard(props: {
 				</div>
 			</CardContent>
 			<CardFooter className="items-center justify-between gap-2">
-				<ChangePasswordForm />
+				<ButtonGroup>
+					<ButtonGroup>
+						<ChangeEmailForm />
+					</ButtonGroup>
+					<ButtonGroup>
+						<ChangePasswordForm />
+					</ButtonGroup>
+					<ButtonGroup>
+						<DeleteAccountForm />
+					</ButtonGroup>
+				</ButtonGroup>
 				{session?.session.impersonatedBy ? (
 					<Button
 						className="z-10 cursor-pointer gap-2"

@@ -18,22 +18,22 @@ import { Route as PostsRouteRouteImport } from './routes/posts.route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TwoFactorIndexRouteImport } from './routes/two-factor/index'
 import { Route as PostsIndexRouteImport } from './routes/posts.index'
+import { Route as DeviceIndexRouteImport } from './routes/device/index'
 import { Route as ApiSendRouteImport } from './routes/api/send'
+import { Route as AcceptInvitationIdRouteImport } from './routes/accept-invitation/$id'
 import { Route as Auth_pathlessLayoutRouteRouteImport } from './routes/_auth/__pathlessLayout/route'
 import { Route as TwoFactorOtpIndexRouteImport } from './routes/two-factor/otp/index'
 import { Route as PostsPostIdIndexRouteImport } from './routes/posts.$postId.index'
-import { Route as authDeviceIndexRouteImport } from './routes/(auth)/device/index'
+import { Route as DeviceSuccessIndexRouteImport } from './routes/device/success/index'
+import { Route as DeviceDeniedIndexRouteImport } from './routes/device/denied/index'
+import { Route as DeviceApproveIndexRouteImport } from './routes/device/approve/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as Auth_pathlessLayoutUnauthorizedRouteImport } from './routes/_auth/__pathlessLayout/unauthorized'
 import { Route as Auth_pathlessLayoutResendRouteImport } from './routes/_auth/__pathlessLayout/resend'
 import { Route as Auth_pathlessLayoutDashboardRouteImport } from './routes/_auth/__pathlessLayout/dashboard'
-import { Route as authAcceptInvitationIdRouteImport } from './routes/(auth)/accept-invitation/$id'
 import { Route as PostsPostIdCommentsIndexRouteImport } from './routes/posts.$postId.comments.index'
 import { Route as Auth_pathlessLayoutProfileIndexRouteImport } from './routes/_auth/__pathlessLayout/profile/index'
 import { Route as Auth_pathlessLayoutAdminIndexRouteImport } from './routes/_auth/__pathlessLayout/admin/index'
-import { Route as authDeviceSuccessIndexRouteImport } from './routes/(auth)/device/success/index'
-import { Route as authDeviceDeniedIndexRouteImport } from './routes/(auth)/device/denied/index'
-import { Route as authDeviceApproveIndexRouteImport } from './routes/(auth)/device/approve/index'
 import { Route as PostsPostIdCommentsCommentIdIndexRouteImport } from './routes/posts.$postId.comments.$commentId.index'
 
 const SignupRoute = SignupRouteImport.update({
@@ -80,9 +80,19 @@ const PostsIndexRoute = PostsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PostsRouteRoute,
 } as any)
+const DeviceIndexRoute = DeviceIndexRouteImport.update({
+  id: '/device/',
+  path: '/device/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiSendRoute = ApiSendRouteImport.update({
   id: '/api/send',
   path: '/api/send',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcceptInvitationIdRoute = AcceptInvitationIdRouteImport.update({
+  id: '/accept-invitation/$id',
+  path: '/accept-invitation/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Auth_pathlessLayoutRouteRoute =
@@ -100,9 +110,19 @@ const PostsPostIdIndexRoute = PostsPostIdIndexRouteImport.update({
   path: '/$postId/',
   getParentRoute: () => PostsRouteRoute,
 } as any)
-const authDeviceIndexRoute = authDeviceIndexRouteImport.update({
-  id: '/(auth)/device/',
-  path: '/device/',
+const DeviceSuccessIndexRoute = DeviceSuccessIndexRouteImport.update({
+  id: '/device/success/',
+  path: '/device/success/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeviceDeniedIndexRoute = DeviceDeniedIndexRouteImport.update({
+  id: '/device/denied/',
+  path: '/device/denied/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeviceApproveIndexRoute = DeviceApproveIndexRouteImport.update({
+  id: '/device/approve/',
+  path: '/device/approve/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -128,11 +148,6 @@ const Auth_pathlessLayoutDashboardRoute =
     path: '/dashboard',
     getParentRoute: () => Auth_pathlessLayoutRouteRoute,
   } as any)
-const authAcceptInvitationIdRoute = authAcceptInvitationIdRouteImport.update({
-  id: '/(auth)/accept-invitation/$id',
-  path: '/accept-invitation/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PostsPostIdCommentsIndexRoute =
   PostsPostIdCommentsIndexRouteImport.update({
     id: '/$postId/comments/',
@@ -151,21 +166,6 @@ const Auth_pathlessLayoutAdminIndexRoute =
     path: '/admin/',
     getParentRoute: () => Auth_pathlessLayoutRouteRoute,
   } as any)
-const authDeviceSuccessIndexRoute = authDeviceSuccessIndexRouteImport.update({
-  id: '/(auth)/device/success/',
-  path: '/device/success/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const authDeviceDeniedIndexRoute = authDeviceDeniedIndexRouteImport.update({
-  id: '/(auth)/device/denied/',
-  path: '/device/denied/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const authDeviceApproveIndexRoute = authDeviceApproveIndexRouteImport.update({
-  id: '/(auth)/device/approve/',
-  path: '/device/approve/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PostsPostIdCommentsCommentIdIndexRoute =
   PostsPostIdCommentsCommentIdIndexRouteImport.update({
     id: '/$postId/comments/$commentId/',
@@ -180,20 +180,20 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
+  '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
+  '/device': typeof DeviceIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/two-factor': typeof TwoFactorIndexRoute
-  '/accept-invitation/$id': typeof authAcceptInvitationIdRoute
   '/dashboard': typeof Auth_pathlessLayoutDashboardRoute
   '/resend': typeof Auth_pathlessLayoutResendRoute
   '/unauthorized': typeof Auth_pathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/device': typeof authDeviceIndexRoute
+  '/device/approve': typeof DeviceApproveIndexRoute
+  '/device/denied': typeof DeviceDeniedIndexRoute
+  '/device/success': typeof DeviceSuccessIndexRoute
   '/posts/$postId': typeof PostsPostIdIndexRoute
   '/two-factor/otp': typeof TwoFactorOtpIndexRoute
-  '/device/approve': typeof authDeviceApproveIndexRoute
-  '/device/denied': typeof authDeviceDeniedIndexRoute
-  '/device/success': typeof authDeviceSuccessIndexRoute
   '/admin': typeof Auth_pathlessLayoutAdminIndexRoute
   '/profile': typeof Auth_pathlessLayoutProfileIndexRoute
   '/posts/$postId/comments': typeof PostsPostIdCommentsIndexRoute
@@ -205,20 +205,20 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
+  '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
+  '/device': typeof DeviceIndexRoute
   '/posts': typeof PostsIndexRoute
   '/two-factor': typeof TwoFactorIndexRoute
-  '/accept-invitation/$id': typeof authAcceptInvitationIdRoute
   '/dashboard': typeof Auth_pathlessLayoutDashboardRoute
   '/resend': typeof Auth_pathlessLayoutResendRoute
   '/unauthorized': typeof Auth_pathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/device': typeof authDeviceIndexRoute
+  '/device/approve': typeof DeviceApproveIndexRoute
+  '/device/denied': typeof DeviceDeniedIndexRoute
+  '/device/success': typeof DeviceSuccessIndexRoute
   '/posts/$postId': typeof PostsPostIdIndexRoute
   '/two-factor/otp': typeof TwoFactorOtpIndexRoute
-  '/device/approve': typeof authDeviceApproveIndexRoute
-  '/device/denied': typeof authDeviceDeniedIndexRoute
-  '/device/success': typeof authDeviceSuccessIndexRoute
   '/admin': typeof Auth_pathlessLayoutAdminIndexRoute
   '/profile': typeof Auth_pathlessLayoutProfileIndexRoute
   '/posts/$postId/comments': typeof PostsPostIdCommentsIndexRoute
@@ -234,20 +234,20 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/_auth/__pathlessLayout': typeof Auth_pathlessLayoutRouteRouteWithChildren
+  '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
+  '/device/': typeof DeviceIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/two-factor/': typeof TwoFactorIndexRoute
-  '/(auth)/accept-invitation/$id': typeof authAcceptInvitationIdRoute
   '/_auth/__pathlessLayout/dashboard': typeof Auth_pathlessLayoutDashboardRoute
   '/_auth/__pathlessLayout/resend': typeof Auth_pathlessLayoutResendRoute
   '/_auth/__pathlessLayout/unauthorized': typeof Auth_pathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/(auth)/device/': typeof authDeviceIndexRoute
+  '/device/approve/': typeof DeviceApproveIndexRoute
+  '/device/denied/': typeof DeviceDeniedIndexRoute
+  '/device/success/': typeof DeviceSuccessIndexRoute
   '/posts/$postId/': typeof PostsPostIdIndexRoute
   '/two-factor/otp/': typeof TwoFactorOtpIndexRoute
-  '/(auth)/device/approve/': typeof authDeviceApproveIndexRoute
-  '/(auth)/device/denied/': typeof authDeviceDeniedIndexRoute
-  '/(auth)/device/success/': typeof authDeviceSuccessIndexRoute
   '/_auth/__pathlessLayout/admin/': typeof Auth_pathlessLayoutAdminIndexRoute
   '/_auth/__pathlessLayout/profile/': typeof Auth_pathlessLayoutProfileIndexRoute
   '/posts/$postId/comments/': typeof PostsPostIdCommentsIndexRoute
@@ -262,20 +262,20 @@ export interface FileRouteTypes {
     | '/login'
     | '/reset-password'
     | '/signup'
+    | '/accept-invitation/$id'
     | '/api/send'
+    | '/device'
     | '/posts/'
     | '/two-factor'
-    | '/accept-invitation/$id'
     | '/dashboard'
     | '/resend'
     | '/unauthorized'
     | '/api/auth/$'
-    | '/device'
-    | '/posts/$postId'
-    | '/two-factor/otp'
     | '/device/approve'
     | '/device/denied'
     | '/device/success'
+    | '/posts/$postId'
+    | '/two-factor/otp'
     | '/admin'
     | '/profile'
     | '/posts/$postId/comments'
@@ -287,20 +287,20 @@ export interface FileRouteTypes {
     | '/login'
     | '/reset-password'
     | '/signup'
+    | '/accept-invitation/$id'
     | '/api/send'
+    | '/device'
     | '/posts'
     | '/two-factor'
-    | '/accept-invitation/$id'
     | '/dashboard'
     | '/resend'
     | '/unauthorized'
     | '/api/auth/$'
-    | '/device'
-    | '/posts/$postId'
-    | '/two-factor/otp'
     | '/device/approve'
     | '/device/denied'
     | '/device/success'
+    | '/posts/$postId'
+    | '/two-factor/otp'
     | '/admin'
     | '/profile'
     | '/posts/$postId/comments'
@@ -315,20 +315,20 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/_auth/__pathlessLayout'
+    | '/accept-invitation/$id'
     | '/api/send'
+    | '/device/'
     | '/posts/'
     | '/two-factor/'
-    | '/(auth)/accept-invitation/$id'
     | '/_auth/__pathlessLayout/dashboard'
     | '/_auth/__pathlessLayout/resend'
     | '/_auth/__pathlessLayout/unauthorized'
     | '/api/auth/$'
-    | '/(auth)/device/'
+    | '/device/approve/'
+    | '/device/denied/'
+    | '/device/success/'
     | '/posts/$postId/'
     | '/two-factor/otp/'
-    | '/(auth)/device/approve/'
-    | '/(auth)/device/denied/'
-    | '/(auth)/device/success/'
     | '/_auth/__pathlessLayout/admin/'
     | '/_auth/__pathlessLayout/profile/'
     | '/posts/$postId/comments/'
@@ -343,15 +343,15 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
+  AcceptInvitationIdRoute: typeof AcceptInvitationIdRoute
   ApiSendRoute: typeof ApiSendRoute
+  DeviceIndexRoute: typeof DeviceIndexRoute
   TwoFactorIndexRoute: typeof TwoFactorIndexRoute
-  authAcceptInvitationIdRoute: typeof authAcceptInvitationIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
-  authDeviceIndexRoute: typeof authDeviceIndexRoute
+  DeviceApproveIndexRoute: typeof DeviceApproveIndexRoute
+  DeviceDeniedIndexRoute: typeof DeviceDeniedIndexRoute
+  DeviceSuccessIndexRoute: typeof DeviceSuccessIndexRoute
   TwoFactorOtpIndexRoute: typeof TwoFactorOtpIndexRoute
-  authDeviceApproveIndexRoute: typeof authDeviceApproveIndexRoute
-  authDeviceDeniedIndexRoute: typeof authDeviceDeniedIndexRoute
-  authDeviceSuccessIndexRoute: typeof authDeviceSuccessIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -419,11 +419,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsIndexRouteImport
       parentRoute: typeof PostsRouteRoute
     }
+    '/device/': {
+      id: '/device/'
+      path: '/device'
+      fullPath: '/device'
+      preLoaderRoute: typeof DeviceIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/send': {
       id: '/api/send'
       path: '/api/send'
       fullPath: '/api/send'
       preLoaderRoute: typeof ApiSendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accept-invitation/$id': {
+      id: '/accept-invitation/$id'
+      path: '/accept-invitation/$id'
+      fullPath: '/accept-invitation/$id'
+      preLoaderRoute: typeof AcceptInvitationIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth/__pathlessLayout': {
@@ -447,11 +461,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdIndexRouteImport
       parentRoute: typeof PostsRouteRoute
     }
-    '/(auth)/device/': {
-      id: '/(auth)/device/'
-      path: '/device'
-      fullPath: '/device'
-      preLoaderRoute: typeof authDeviceIndexRouteImport
+    '/device/success/': {
+      id: '/device/success/'
+      path: '/device/success'
+      fullPath: '/device/success'
+      preLoaderRoute: typeof DeviceSuccessIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/device/denied/': {
+      id: '/device/denied/'
+      path: '/device/denied'
+      fullPath: '/device/denied'
+      preLoaderRoute: typeof DeviceDeniedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/device/approve/': {
+      id: '/device/approve/'
+      path: '/device/approve'
+      fullPath: '/device/approve'
+      preLoaderRoute: typeof DeviceApproveIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
@@ -482,13 +510,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Auth_pathlessLayoutDashboardRouteImport
       parentRoute: typeof Auth_pathlessLayoutRouteRoute
     }
-    '/(auth)/accept-invitation/$id': {
-      id: '/(auth)/accept-invitation/$id'
-      path: '/accept-invitation/$id'
-      fullPath: '/accept-invitation/$id'
-      preLoaderRoute: typeof authAcceptInvitationIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/posts/$postId/comments/': {
       id: '/posts/$postId/comments/'
       path: '/$postId/comments'
@@ -509,27 +530,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin'
       preLoaderRoute: typeof Auth_pathlessLayoutAdminIndexRouteImport
       parentRoute: typeof Auth_pathlessLayoutRouteRoute
-    }
-    '/(auth)/device/success/': {
-      id: '/(auth)/device/success/'
-      path: '/device/success'
-      fullPath: '/device/success'
-      preLoaderRoute: typeof authDeviceSuccessIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(auth)/device/denied/': {
-      id: '/(auth)/device/denied/'
-      path: '/device/denied'
-      fullPath: '/device/denied'
-      preLoaderRoute: typeof authDeviceDeniedIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(auth)/device/approve/': {
-      id: '/(auth)/device/approve/'
-      path: '/device/approve'
-      fullPath: '/device/approve'
-      preLoaderRoute: typeof authDeviceApproveIndexRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/posts/$postId/comments/$commentId/': {
       id: '/posts/$postId/comments/$commentId/'
@@ -600,15 +600,15 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
+  AcceptInvitationIdRoute: AcceptInvitationIdRoute,
   ApiSendRoute: ApiSendRoute,
+  DeviceIndexRoute: DeviceIndexRoute,
   TwoFactorIndexRoute: TwoFactorIndexRoute,
-  authAcceptInvitationIdRoute: authAcceptInvitationIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
-  authDeviceIndexRoute: authDeviceIndexRoute,
+  DeviceApproveIndexRoute: DeviceApproveIndexRoute,
+  DeviceDeniedIndexRoute: DeviceDeniedIndexRoute,
+  DeviceSuccessIndexRoute: DeviceSuccessIndexRoute,
   TwoFactorOtpIndexRoute: TwoFactorOtpIndexRoute,
-  authDeviceApproveIndexRoute: authDeviceApproveIndexRoute,
-  authDeviceDeniedIndexRoute: authDeviceDeniedIndexRoute,
-  authDeviceSuccessIndexRoute: authDeviceSuccessIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

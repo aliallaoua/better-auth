@@ -1,68 +1,58 @@
 import { ScriptOnce } from "@tanstack/react-router";
 import { createClientOnlyFn, createIsomorphicFn } from "@tanstack/react-start";
-import { createContext, type ReactNode, use, useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import { createContext, use, useEffect, useState } from "react";
 import { z } from "zod";
 
-const themeModeSchema = z.enum(["light", "dark", "system"]);
-const resolvedThemeSchema = z.enum(["light", "dark"]);
-const themeKey = "theme";
+const UserThemeSchema = z.enum(["light", "dark", "system"]).catch("system");
+const AppThemeSchema = z.enum(["light", "dark"]).catch("light");
+const themeStorageKey = "theme";
 
-type ThemeMode = z.infer<typeof themeModeSchema>;
-type ResolvedTheme = z.infer<typeof resolvedThemeSchema>;
+type UserTheme = z.infer<typeof UserThemeSchema>;
+type AppTheme = z.infer<typeof AppThemeSchema>;
 
-const getStoredThemeMode = createIsomorphicFn()
-	.server((): ThemeMode => "system")
-	.client((): ThemeMode => {
-		try {
-			const storedTheme = localStorage.getItem(themeKey);
-			return themeModeSchema.parse(storedTheme);
-		} catch {
-			return "system";
-		}
+const getStoredUserTheme = createIsomorphicFn()
+	.server((): UserTheme => "system")
+	.client((): UserTheme => {
+		const stored = localStorage.getItem(themeStorageKey);
+		return UserThemeSchema.parse(stored);
 	});
 
-const setStoredThemeMode = createClientOnlyFn((theme: ThemeMode) => {
-	try {
-		const parsedTheme = themeModeSchema.parse(theme);
-		localStorage.setItem(themeKey, parsedTheme);
-	} catch {}
+const setStoredThemeMode = createClientOnlyFn((theme: UserTheme) => {
+	const validatedTheme = UserThemeSchema.parse(theme);
+	localStorage.setItem(themeStorageKey, validatedTheme);
 });
 
 const getSystemTheme = createIsomorphicFn()
-	.server((): ResolvedTheme => "light")
-	.client((): ResolvedTheme => {
+	.server((): AppTheme => "light")
+	.client((): AppTheme => {
 		return window.matchMedia("(prefers-color-scheme: dark)").matches
 			? "dark"
 			: "light";
 	});
 
-const updateThemeClass = createClientOnlyFn((themeMode: ThemeMode) => {
+const handleThemeChange = createClientOnlyFn((userTheme: UserTheme) => {
+	const validatedTheme = UserThemeSchema.parse(userTheme);
+
 	const root = document.documentElement;
 	root.classList.remove("light", "dark", "system");
-	const newTheme = themeMode === "system" ? getSystemTheme() : themeMode;
-	root.classList.add(newTheme);
 
-	if (themeMode === "system") {
-		root.classList.add("system");
+	if (validatedTheme === "system") {
+		const systemTheme = getSystemTheme();
+		root.classList.add(systemTheme, "system");
+	} else {
+		root.classList.add(validatedTheme);
 	}
 });
 
 const setupPreferredListener = createClientOnlyFn(() => {
 	const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-	const handler = () => updateThemeClass("system");
+	const handler = () => handleThemeChange("system");
 	mediaQuery.addEventListener("change", handler);
 	return () => mediaQuery.removeEventListener("change", handler);
 });
 
-const getNextTheme = createClientOnlyFn((current: ThemeMode): ThemeMode => {
-	const themes: ThemeMode[] =
-		getSystemTheme() === "dark"
-			? ["system", "light", "dark"]
-			: ["system", "dark", "light"];
-	return themes[(themes.indexOf(current) + 1) % themes.length];
-});
-
-const themeDetectorScript = (() => {
+const themeScript = (() => {
 	function themeFn() {
 		try {
 			const storedTheme = localStorage.getItem("theme") || "system";
@@ -91,10 +81,9 @@ const themeDetectorScript = (() => {
 })();
 
 type ThemeContextProps = {
-	themeMode: ThemeMode;
-	resolvedTheme: ResolvedTheme;
-	setTheme: (theme: ThemeMode) => void;
-	toggleMode: () => void;
+	userTheme: UserTheme;
+	appTheme: AppTheme;
+	setTheme: (theme: UserTheme) => void;
 };
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
@@ -102,28 +91,25 @@ type ThemeProviderProps = {
 	children: ReactNode;
 };
 export function ThemeProvider({ children }: ThemeProviderProps) {
-	const [themeMode, setThemeMode] = useState<ThemeMode>(getStoredThemeMode);
+	const [userTheme, setUserTheme] = useState<UserTheme>(getStoredUserTheme);
 
 	useEffect(() => {
-		if (themeMode !== "system") return;
+		if (userTheme !== "system") return;
 		return setupPreferredListener();
-	}, [themeMode]);
+	}, [userTheme]);
 
-	const resolvedTheme = themeMode === "system" ? getSystemTheme() : themeMode;
+	const appTheme = userTheme === "system" ? getSystemTheme() : userTheme;
 
-	const setTheme = (newTheme: ThemeMode) => {
-		setThemeMode(newTheme);
-		setStoredThemeMode(newTheme);
-		updateThemeClass(newTheme);
-	};
-
-	const toggleMode = () => {
-		setTheme(getNextTheme(themeMode));
+	const setTheme = (newUserTheme: UserTheme) => {
+		const validatedTheme = UserThemeSchema.parse(newUserTheme);
+		setUserTheme(validatedTheme);
+		setStoredThemeMode(validatedTheme);
+		handleThemeChange(validatedTheme);
 	};
 
 	return (
-		<ThemeContext value={{ themeMode, resolvedTheme, setTheme, toggleMode }}>
-			<ScriptOnce children={themeDetectorScript} />
+		<ThemeContext value={{ userTheme, appTheme, setTheme }}>
+			<ScriptOnce children={themeScript} />
 			{children}
 		</ThemeContext>
 	);

@@ -15,7 +15,7 @@ import { useInviteAcceptMutation } from "@/data/organization/invitation-accept-m
 import { useInvitationQuery } from "@/data/organization/invitation-query";
 import { useInviteRejectMutation } from "@/data/organization/invitation-reject-mutation";
 
-export const Route = createFileRoute("/(auth)/accept-invitation/$id")({
+export const Route = createFileRoute("/accept-invitation/$id")({
 	component: InvitationComponent,
 });
 

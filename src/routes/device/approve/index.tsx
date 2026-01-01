@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { authClient, useSession } from "@/lib/auth-client";
 import { DeviceSchema } from "@/schema";
 
-export const Route = createFileRoute("/(auth)/device/approve/")({
+export const Route = createFileRoute("/device/approve/")({
 	validateSearch: DeviceSchema,
 	beforeLoad: async ({ context, location }) => {
 		if (!context.userSession) {
@@ -19,10 +19,10 @@ export const Route = createFileRoute("/(auth)/device/approve/")({
 			});
 		}
 	},
-	component: RouteComponent,
+	component: ApproveComponent,
 });
 
-function RouteComponent() {
+function ApproveComponent() {
 	const router = useRouter();
 	const { userCode } = Route.useSearch();
 	const { data: session } = useSession();

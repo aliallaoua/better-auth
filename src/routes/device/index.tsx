@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { DeviceForm } from "@/components/form/device-form";
 import { DeviceSchema } from "@/schema";
 
-export const Route = createFileRoute("/(auth)/device/")({
+export const Route = createFileRoute("/device/")({
 	validateSearch: DeviceSchema,
 	beforeLoad: async ({ context, location }) => {
 		if (!context.userSession) {
@@ -14,9 +14,9 @@ export const Route = createFileRoute("/(auth)/device/")({
 			});
 		}
 	},
-	component: RouteComponent,
+	component: DeviceComponent,
 });
 
-function RouteComponent() {
+function DeviceComponent() {
 	return <DeviceForm />;
 }

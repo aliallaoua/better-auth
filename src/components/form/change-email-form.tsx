@@ -1,4 +1,5 @@
 import { formOptions } from "@tanstack/react-form";
+import { Mail } from "lucide-react";
 // import { AlertCircle } from 'lucide-react';
 import { useState } from "react";
 import { toast } from "sonner";
@@ -55,6 +56,7 @@ export function ChangeEmailForm() {
 						size="sm"
 						variant="outline"
 					>
+						<Mail className="size-4 text-muted-foreground" />
 						<span className="text-muted-foreground text-sm">Change Email</span>
 					</Button>
 				}
