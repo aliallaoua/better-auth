@@ -76,6 +76,7 @@ export function TwoFactorTotpForm() {
 		>
 			<FieldGroup>
 				<form.AppField
+					name="code"
 					children={(field) => (
 						<field.TextField
 							label="TOTP Code"
@@ -86,7 +87,6 @@ export function TwoFactorTotpForm() {
 							autoComplete="one-time-code"
 						/>
 					)}
-					name="code"
 				/>
 			</FieldGroup>
 			<form.AppForm>

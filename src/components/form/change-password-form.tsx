@@ -97,6 +97,7 @@ export function ChangePasswordForm() {
 				>
 					<FieldGroup>
 						<form.AppField
+							name="currentPassword"
 							children={(field) => (
 								<field.PasswordField
 									autoComplete="current-password"
@@ -105,9 +106,9 @@ export function ChangePasswordForm() {
 									required
 								/>
 							)}
-							name="currentPassword"
 						/>
 						<form.AppField
+							name="newPassword"
 							children={(field) => (
 								<field.PasswordField
 									autoComplete="new-password"
@@ -116,9 +117,9 @@ export function ChangePasswordForm() {
 									required
 								/>
 							)}
-							name="newPassword"
 						/>
 						<form.AppField
+							name="confirmPassword"
 							children={(field) => (
 								<field.PasswordField
 									autoComplete="new-password"
@@ -127,14 +128,13 @@ export function ChangePasswordForm() {
 									required
 								/>
 							)}
-							name="confirmPassword"
 						/>
 						<div className="flex items-center gap-2">
 							<form.AppField
+								name="revokeOtherSessions"
 								children={(field) => (
 									<field.CheckboxField label="Sign out from other devices" />
 								)}
-								name="revokeOtherSessions"
 							/>
 						</div>
 

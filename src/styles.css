@@ -59,22 +59,18 @@ code {
 	--radius-2xl: calc(var(--radius) + 8px);
 	--radius-3xl: calc(var(--radius) + 12px);
 	--radius-4xl: calc(var(--radius) + 16px);
-  @keyframes shine {
-  0% {
-    background-position:
-		0% 0%;
+	@keyframes shine {
+		0% {
+			background-position: 0% 0%;
 		}
-  50% {
-    background-position:
-		100% 100%;
+		50% {
+			background-position: 100% 100%;
 		}
-  to {
-    background-position:
-		0% 0%;
+		to {
+			background-position: 0% 0%;
 		}
 	}
-	--animate-shine:
-		shine var(--duration) infinite linear
+	--animate-shine: shine var(--duration) infinite linear;
 }
 
 :root {
@@ -308,14 +304,5 @@ html:active-view-transition-type(warp) {
 		opacity: 1;
 		filter: blur(0) brightness(1);
 		transform: scale(1) rotate(0deg);
-	}
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-	}
-  body {
-    @apply bg-background text-foreground;
 	}
 }

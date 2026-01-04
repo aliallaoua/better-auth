@@ -18,6 +18,7 @@ function SubscribeButton({
 
 	return (
 		<form.Subscribe
+			selector={(state) => [state.canSubmit, state.isSubmitting]}
 			children={([canSubmit, isSubmitting]) => (
 				<Button
 					className={className}
@@ -28,7 +29,6 @@ function SubscribeButton({
 					{isSubmitting || isLoading ? <Spinner /> : label}
 				</Button>
 			)}
-			selector={(state) => [state.canSubmit, state.isSubmitting]}
 		/>
 	);
 }

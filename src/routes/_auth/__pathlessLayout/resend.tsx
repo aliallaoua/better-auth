@@ -138,6 +138,7 @@ function ResendComponent() {
 							</FieldDescription>
 							<FieldGroup className="space-y-4 pt-4">
 								<form.AppField
+									name="email"
 									children={(field) => (
 										<field.TextField
 											autoComplete="email"
@@ -147,11 +148,11 @@ function ResendComponent() {
 											type="email"
 										/>
 									)}
-									name="email"
 								/>
 
-								<form.AppField name="emailtype">
-									{(field) => (
+								<form.AppField
+									name="emailtype"
+									children={(field) => (
 										<field.SelectField
 											label="Email type"
 											placeholder="Select a type"
@@ -161,10 +162,11 @@ function ResendComponent() {
 											]}
 										/>
 									)}
-								</form.AppField>
+								/>
 
-								<form.AppField name="emailmethod">
-									{(field) => (
+								<form.AppField
+									name="emailmethod"
+									children={(field) => (
 										<field.SelectField
 											label="Email method"
 											placeholder="Select a method"
@@ -174,7 +176,7 @@ function ResendComponent() {
 											]}
 										/>
 									)}
-								</form.AppField>
+								/>
 							</FieldGroup>
 						</FieldSet>
 

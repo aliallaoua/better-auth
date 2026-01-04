@@ -117,6 +117,7 @@ export function TwoFactorEmailOtpForm({
 		>
 			<FieldGroup>
 				<form.AppField
+					name="code"
 					children={(field) => (
 						<field.TextField
 							label="One-Time Password"
@@ -127,7 +128,6 @@ export function TwoFactorEmailOtpForm({
 							autoComplete="one-time-code"
 						/>
 					)}
-					name="code"
 				/>
 			</FieldGroup>
 			<form.AppForm>

@@ -92,6 +92,7 @@ export function SignUpForm({
 					>
 						<FieldGroup>
 							<form.AppField
+								name="name"
 								children={(field) => (
 									<field.TextField
 										autoComplete="name"
@@ -100,10 +101,10 @@ export function SignUpForm({
 										required
 									/>
 								)}
-								name="name"
 							/>
 
 							<form.AppField
+								name="email"
 								children={(field) => (
 									<field.TextField
 										autoComplete="email"
@@ -113,9 +114,9 @@ export function SignUpForm({
 										type="email"
 									/>
 								)}
-								name="email"
 							/>
 							<form.AppField
+								name="password"
 								children={(field) => (
 									<field.PasswordField
 										autoComplete="new-password"
@@ -124,10 +125,10 @@ export function SignUpForm({
 										required
 									/>
 								)}
-								name="password"
 							/>
 
 							<form.AppField
+								name="confirmPassword"
 								children={(field) => (
 									<field.PasswordField
 										autoComplete="new-password"
@@ -136,10 +137,10 @@ export function SignUpForm({
 										required
 									/>
 								)}
-								name="confirmPassword"
 							/>
 
 							<form.AppField
+								name="image"
 								children={(field) => (
 									<div className="grid gap-2">
 										{/* <Label htmlFor="image">Profile Image</Label> */}
@@ -181,7 +182,6 @@ export function SignUpForm({
 										</div>
 									</div>
 								)}
-								name="image"
 							/>
 
 							<Field>

@@ -98,6 +98,7 @@ export function TwoFactorEnableForm({ onSuccess }: TwoFactorEnableFormProps) {
 				>
 					<FieldGroup>
 						<otpForm.AppField
+							name="otp"
 							children={(field) => (
 								<div className="grid gap-2">
 									<field.TextField
@@ -107,7 +108,6 @@ export function TwoFactorEnableForm({ onSuccess }: TwoFactorEnableFormProps) {
 									/>
 								</div>
 							)}
-							name="otp"
 						/>
 					</FieldGroup>
 					<otpForm.AppForm>
@@ -129,6 +129,7 @@ export function TwoFactorEnableForm({ onSuccess }: TwoFactorEnableFormProps) {
 		>
 			<FieldGroup>
 				<passwordForm.AppField
+					name="password"
 					children={(field) => (
 						<field.PasswordField
 							label="Password"
@@ -137,7 +138,6 @@ export function TwoFactorEnableForm({ onSuccess }: TwoFactorEnableFormProps) {
 							required
 						/>
 					)}
-					name="password"
 				/>
 			</FieldGroup>
 			<passwordForm.AppForm>

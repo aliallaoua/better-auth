@@ -146,6 +146,7 @@ export function ListPasskeysForm() {
 					>
 						<FieldGroup>
 							<form.AppField
+								name="passkeyName"
 								children={(field) => (
 									<div className="grid gap-2">
 										<field.TextField
@@ -155,7 +156,6 @@ export function ListPasskeysForm() {
 										/>
 									</div>
 								)}
-								name="passkeyName"
 							/>
 
 							<form.AppForm>

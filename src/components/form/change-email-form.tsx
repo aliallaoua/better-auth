@@ -77,6 +77,7 @@ export function ChangeEmailForm() {
 					<div className="grid gap-6">
 						<div className="flex flex-col gap-6">
 							<form.AppField
+								name="newEmail"
 								children={(field) => (
 									<field.TextField
 										autoComplete="email"
@@ -86,7 +87,6 @@ export function ChangeEmailForm() {
 										type="email"
 									/>
 								)}
-								name="newEmail"
 							/>
 
 							<DialogFooter>

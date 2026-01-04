@@ -74,6 +74,7 @@ export function DeviceForm({
 					>
 						<FieldGroup>
 							<form.AppField
+								name="userCode"
 								children={(field) => (
 									<field.TextField
 										label="Device Code"
@@ -81,7 +82,6 @@ export function DeviceForm({
 										required
 									/>
 								)}
-								name="userCode"
 							/>
 
 							<Field>

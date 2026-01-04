@@ -247,8 +247,9 @@ function AdminDashboard() {
 													</div>
 												)}
 											/>
-											<createUserForm.AppField name="role">
-												{(field) => (
+											<createUserForm.AppField
+												name="role"
+												children={(field) => (
 													<field.SelectField
 														label="Role"
 														placeholder="Select a role"
@@ -258,7 +259,7 @@ function AdminDashboard() {
 														]}
 													/>
 												)}
-											</createUserForm.AppField>
+											/>
 
 											<createUserForm.AppForm>
 												<createUserForm.SubscribeButton

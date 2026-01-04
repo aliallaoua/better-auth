@@ -171,6 +171,7 @@ export function EditUserForm() {
 				>
 					<FieldGroup>
 						<form.AppField
+							name="name"
 							children={(field) => (
 								<div className="grid gap-2">
 									<field.TextField
@@ -180,10 +181,10 @@ export function EditUserForm() {
 									/>
 								</div>
 							)}
-							name="name"
 						/>
 
 						<form.AppField
+							name="image"
 							children={(field) => (
 								<div className="grid gap-2">
 									<Label htmlFor="image">Profile Image</Label>
@@ -243,7 +244,6 @@ export function EditUserForm() {
 									</div>
 								</div>
 							)}
-							name="image"
 						/>
 					</FieldGroup>
 

@@ -75,6 +75,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
 					>
 						<FieldGroup>
 							<form.AppField
+								name="password"
 								children={(field) => (
 									<field.PasswordField
 										autoComplete="new-password"
@@ -83,9 +84,9 @@ export function ResetPasswordForm({ token }: { token: string }) {
 										required
 									/>
 								)}
-								name="password"
 							/>
 							<form.AppField
+								name="confirmPassword"
 								children={(field) => (
 									<field.PasswordField
 										autoComplete="new-password"
@@ -94,7 +95,6 @@ export function ResetPasswordForm({ token }: { token: string }) {
 										required
 									/>
 								)}
-								name="confirmPassword"
 							/>
 
 							<div className="flex flex-col gap-3">

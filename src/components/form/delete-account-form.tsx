@@ -84,6 +84,7 @@ export function DeleteAccountForm() {
 				>
 					<FieldGroup>
 						<form.AppField
+							name="password"
 							children={(field) => (
 								<field.PasswordField
 									autoComplete="current-password"
@@ -92,7 +93,6 @@ export function DeleteAccountForm() {
 									required
 								/>
 							)}
-							name="password"
 						/>
 
 						<DialogFooter>

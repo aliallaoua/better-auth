@@ -389,6 +389,7 @@ function InviteMemberDialog() {
 				>
 					<div className="flex flex-col gap-2">
 						<form.AppField
+							name="email"
 							children={(field) => (
 								<div className="grid gap-2">
 									<field.TextField
@@ -400,10 +401,10 @@ function InviteMemberDialog() {
 									/>
 								</div>
 							)}
-							name="email"
 						/>
-						<form.AppField name="role">
-							{(field) => (
+						<form.AppField
+							name="role"
+							children={(field) => (
 								<field.SelectField
 									label="Role"
 									placeholder="Select a role"
@@ -413,7 +414,7 @@ function InviteMemberDialog() {
 									]}
 								/>
 							)}
-						</form.AppField>
+						/>
 					</div>
 					<DialogFooter>
 						<form.AppForm>

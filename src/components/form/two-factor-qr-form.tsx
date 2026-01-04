@@ -92,6 +92,7 @@ export function TwoFactorQrForm() {
 				>
 					<FieldGroup>
 						<form.AppField
+							name="password"
 							children={(field) => (
 								<field.PasswordField
 									label=""
@@ -99,7 +100,6 @@ export function TwoFactorQrForm() {
 									required
 								/>
 							)}
-							name="password"
 						/>
 						<form.AppForm>
 							<form.SubscribeButton label="Show QR Code" />

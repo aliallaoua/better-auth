@@ -55,6 +55,7 @@ export function TwoFactorDisableForm({ onSuccess }: TwoFactorDisableFormProps) {
 		>
 			<FieldGroup>
 				<form.AppField
+					name="password"
 					children={(field) => (
 						<field.PasswordField
 							label="Password"
@@ -63,7 +64,6 @@ export function TwoFactorDisableForm({ onSuccess }: TwoFactorDisableFormProps) {
 							required
 						/>
 					)}
-					name="password"
 				/>
 			</FieldGroup>
 			<form.AppForm>

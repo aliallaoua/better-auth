@@ -105,6 +105,7 @@ export function ForgetPasswordForm() {
 						<FieldGroup>
 							<div className="grid gap-3">
 								<form.AppField
+									name="email"
 									children={(field) => (
 										<field.TextField
 											autoComplete="email"
@@ -114,7 +115,6 @@ export function ForgetPasswordForm() {
 											type="email"
 										/>
 									)}
-									name="email"
 								/>
 							</div>
 

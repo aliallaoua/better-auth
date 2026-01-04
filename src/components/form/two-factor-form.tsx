@@ -203,6 +203,7 @@ export function TwoFactorForm({ session }: { session: Session }) {
 							}}
 						>
 							<otpForm.AppField
+								name="code"
 								children={(field) => (
 									<div className="grid gap-2">
 										<field.TextField
@@ -212,7 +213,6 @@ export function TwoFactorForm({ session }: { session: Session }) {
 										/>
 									</div>
 								)}
-								name="code"
 							/>
 							<DialogFooter>
 								<otpForm.AppForm>
@@ -249,6 +249,7 @@ export function TwoFactorForm({ session }: { session: Session }) {
 						}}
 					>
 						<passwordForm.AppField
+							name="password"
 							children={(field) => (
 								<field.PasswordField
 									label="Password"
@@ -256,7 +257,6 @@ export function TwoFactorForm({ session }: { session: Session }) {
 									required
 								/>
 							)}
-							name="password"
 						/>
 						<DialogFooter>
 							<passwordForm.AppForm>

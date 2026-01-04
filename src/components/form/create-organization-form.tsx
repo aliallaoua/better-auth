@@ -90,6 +90,7 @@ export function CreateOrganizationForm() {
 				>
 					<FieldGroup>
 						<form.AppField
+							name="name"
 							children={(field) => (
 								<field.TextField
 									label="Organization Name"
@@ -108,9 +109,9 @@ export function CreateOrganizationForm() {
 									required
 								/>
 							)}
-							name="name"
 						/>
 						<form.AppField
+							name="slug"
 							children={(field) => (
 								<field.TextField
 									label="Organization Slug"
@@ -123,13 +124,12 @@ export function CreateOrganizationForm() {
 									required
 								/>
 							)}
-							name="slug"
 						/>
 
 						{/* Hidden field to track if slug was manually edited */}
 						{/* <form.AppField
-								children={(field) => <field.TextField label="" type="hidden" />}
 								name="isSlugEdited"
+								children={(field) => <field.TextField label="" type="hidden" />}
 							/> */}
 
 						<DialogFooter>

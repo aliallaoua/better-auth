@@ -128,6 +128,7 @@ export function LogInForm({
 								Or continue with
 							</FieldSeparator>
 							<form.AppField
+								name="email"
 								children={(field) => (
 									<field.TextField
 										autoComplete="email"
@@ -137,10 +138,10 @@ export function LogInForm({
 										type="email"
 									/>
 								)}
-								name="email"
 							/>
 
 							<form.AppField
+								name="password"
 								children={(field) => (
 									<field.PasswordField
 										autoComplete="current-password"
@@ -150,14 +151,13 @@ export function LogInForm({
 										required
 									/>
 								)}
-								name="password"
 							/>
 
 							<form.AppField
+								name="rememberMe"
 								children={(field) => (
 									<field.CheckboxField label="Remember Me" />
 								)}
-								name="rememberMe"
 							/>
 
 							<Field>

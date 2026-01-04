@@ -80,10 +80,10 @@ export function AddPasskeyForm() {
 					}}
 				>
 					<form.AppField
+						name="passkeyName"
 						children={(field) => (
 							<field.TextField label="Passkey Name" required />
 						)}
-						name="passkeyName"
 					/>
 					<DialogFooter>
 						<DialogFooter className="mt-4">
