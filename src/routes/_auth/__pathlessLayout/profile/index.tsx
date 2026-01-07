@@ -16,7 +16,7 @@ const getProfileData = createServerFn()
 				auth.api.getSession({ headers }),
 				auth.api.listSessions({ headers }),
 				auth.api.listDeviceSessions({ headers }),
-			])
+			]);
 
 			return {
 				session: session
@@ -27,7 +27,7 @@ const getProfileData = createServerFn()
 					: null,
 				activeSessions: activeSessions || [],
 				deviceSessions: deviceSessions || [],
-			}
+			};
 		} catch (e) {
 			console.log(e);
 			throw redirect({ to: "/login" });
@@ -42,7 +42,7 @@ export const Route = createFileRoute("/_auth/__pathlessLayout/profile/")({
 			session,
 			activeSessions,
 			deviceSessions,
-		}
+		};
 	},
 	component: ProfileComponent,
 });
@@ -63,5 +63,5 @@ function ProfileComponent() {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }

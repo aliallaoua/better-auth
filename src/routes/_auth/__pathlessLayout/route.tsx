@@ -20,5 +20,5 @@ function RootComponent() {
 			<AppSidebar className="pt-[62px]" variant="inset" />
 			<Outlet />
 		</SidebarProvider>
-	)
+	);
 }

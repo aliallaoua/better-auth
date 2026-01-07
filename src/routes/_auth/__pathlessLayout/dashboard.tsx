@@ -26,5 +26,5 @@ function DashboardComponent() {
 				</div>
 			</div>
 		</SidebarInset>
-	)
+	);
 }

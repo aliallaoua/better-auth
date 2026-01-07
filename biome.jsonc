@@ -7,12 +7,9 @@
     "defaultBranch": "main"
   },
   "extends": [
-    "ultracite/core",
-    "ultracite/react",
-    "ultracite/remix",
     "ultracite/biome/core",
-    "ultracite/biome/remix",
-    "ultracite/biome/react"
+    "ultracite/biome/react",
+    "ultracite/biome/remix"
   ],
   "files": {
     "ignoreUnknown": false,

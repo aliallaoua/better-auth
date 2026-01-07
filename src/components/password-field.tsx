@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
-import { type JSX, useState } from "react";
+import type { JSX } from "react";
+import { useState } from "react";
 import { useFieldContext } from "@/hooks/form-context";
 import { cn } from "@/lib/utils";
 import { Field, FieldError, FieldLabel } from "./ui/field";

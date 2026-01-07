@@ -19,7 +19,7 @@ function UnauthorizedComponent() {
 		insufficientPermissions:
 			"You do not have the required permissions to access this page.",
 		default: "You are not authorized to access this page.",
-	}
+	};
 
 	const message =
 		reasonMessages[reason as keyof typeof reasonMessages] ||
@@ -79,5 +79,5 @@ function UnauthorizedComponent() {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }

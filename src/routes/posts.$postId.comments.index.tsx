@@ -1,10 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import {
-	createFileRoute,
-	ErrorComponent,
-	type ErrorComponentProps,
-	Link,
-} from "@tanstack/react-router";
+import type { ErrorComponentProps } from "@tanstack/react-router";
+import { createFileRoute, ErrorComponent, Link } from "@tanstack/react-router";
 import {
 	Card,
 	CardContent,
