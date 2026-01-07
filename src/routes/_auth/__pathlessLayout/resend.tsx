@@ -56,10 +56,12 @@ function ResendComponent() {
 					e instanceof Error
 						? e.message
 						: "Failed to send email. Please try again.";
-				form.setErrorMap({
-					onSubmit: errorMessage,
-				});
+
 				toast.error(errorMessage);
+				// Return form-level error for display
+				return {
+					form: errorMessage,
+				};
 			}
 		},
 	});
@@ -122,79 +124,83 @@ function ResendComponent() {
 		<div className="flex min-h-screen w-full items-center justify-center p-4">
 			<div className="w-full max-w-2xl rounded-xl p-8 shadow-xl backdrop-blur-md dark:border-8 dark:border-black/10 dark:bg-black/50">
 				<form
-					className="space-y-8"
+					className="space-y-6"
 					onSubmit={(e) => {
 						e.preventDefault();
 						e.stopPropagation();
 						form.handleSubmit();
 					}}
 				>
-					<FieldGroup>
-						<FieldSet>
-							<FieldLegend>Send email</FieldLegend>
-							<FieldDescription>
-								Send email with Resend using TanStack Server Functions or Server
-								Routes
-							</FieldDescription>
-							<FieldGroup className="space-y-4 pt-4">
-								<form.AppField
-									name="email"
-									children={(field) => (
-										<field.TextField
-											autoComplete="email"
-											label="Email"
-											placeholder="name@example.com"
-											required
-											type="email"
-										/>
-									)}
-								/>
+					<FieldSet>
+						<FieldLegend>Send email</FieldLegend>
+						<FieldDescription>
+							Send email with Resend using TanStack Server Functions or Server
+							Routes
+						</FieldDescription>
+						<FieldGroup className="space-y-4">
+							<form.AppField
+								name="email"
+								children={(field) => (
+									<field.TextField
+										autoComplete="email"
+										label="Email"
+										placeholder="name@example.com"
+										required
+										type="email"
+									/>
+								)}
+							/>
 
-								<form.AppField
-									name="emailtype"
-									children={(field) => (
-										<field.SelectField
-											label="Email type"
-											placeholder="Select a type"
-											values={[
-												{ label: "HTML", value: "html" },
-												{ label: "React", value: "react" },
-											]}
-										/>
-									)}
-								/>
+							<form.AppField
+								name="emailtype"
+								children={(field) => (
+									<field.SelectField
+										label="Email type"
+										placeholder="Select a type"
+										values={[
+											{ label: "HTML", value: "html" },
+											{ label: "React", value: "react" },
+										]}
+									/>
+								)}
+							/>
 
-								<form.AppField
-									name="emailmethod"
-									children={(field) => (
-										<field.SelectField
-											label="Email method"
-											placeholder="Select a method"
-											values={[
-												{ label: "Server Function", value: "serverFn" },
-												{ label: "Server Route", value: "serverRoute" },
-											]}
-										/>
-									)}
-								/>
-							</FieldGroup>
-						</FieldSet>
+							<form.AppField
+								name="emailmethod"
+								children={(field) => (
+									<field.SelectField
+										label="Email method"
+										placeholder="Select a method"
+										values={[
+											{ label: "Server Function", value: "serverFn" },
+											{ label: "Server Route", value: "serverRoute" },
+										]}
+									/>
+								)}
+							/>
+						</FieldGroup>
+					</FieldSet>
 
-						{form.state.errorMap.onSubmit && (
-							<div className="rounded-lg border border-destructive/20 bg-destructive/10 p-3 text-destructive text-sm">
-								{form.state.errorMap.onSubmit}
-							</div>
-						)}
+					{/* Display form-level errors */}
+					<form.Subscribe
+						selector={(state) => [state.errorMap]}
+						children={([errorMap]) =>
+							errorMap.onSubmit ? (
+								<div className="rounded-lg border border-destructive/20 bg-destructive/10 p-3 text-destructive text-sm">
+									{errorMap.onSubmit}
+								</div>
+							) : null
+						}
+					/>
 
-						<div className="flex justify-end pt-2">
-							<form.AppForm>
-								<form.SubscribeButton
-									className="min-w-32 cursor-pointer font-semibold transition-all hover:scale-105"
-									label="Send Email"
-								/>
-							</form.AppForm>
-						</div>
-					</FieldGroup>
+					<div className="flex justify-end">
+						<form.AppForm>
+							<form.SubscribeButton
+								className="min-w-32 cursor-pointer font-semibold transition-all hover:scale-105"
+								label="Send Email"
+							/>
+						</form.AppForm>
+					</div>
 				</form>
 			</div>
 		</div>
