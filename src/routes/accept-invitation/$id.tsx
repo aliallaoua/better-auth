@@ -40,11 +40,11 @@ function InvitationComponent() {
 					setIsRedirecting(true);
 					router.navigate({
 						to: "/dashboard",
-					});
+					})
 				},
 			}
-		);
-	};
+		)
+	}
 
 	const handleReject = () => {
 		rejectMutation(
@@ -56,11 +56,11 @@ function InvitationComponent() {
 					setIsRedirecting(true);
 					router.navigate({
 						to: "/dashboard",
-					});
+					})
 				},
 			}
-		);
-	};
+		)
+	}
 
 	if (isLoading || isRedirecting) {
 		return (
@@ -68,7 +68,7 @@ function InvitationComponent() {
 				<div className="mask-[radial-gradient(ellipse_at_center,transparent_20%,black)] pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black" />
 				<InvitationSkeleton />
 			</div>
-		);
+		)
 	}
 
 	if (!invitation || error) {
@@ -77,7 +77,7 @@ function InvitationComponent() {
 				<div className="mask-[radial-gradient(ellipse_at_center,transparent_20%,black)] pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black" />
 				<InvitationError />
 			</div>
-		);
+		)
 	}
 
 	return (
@@ -148,7 +148,7 @@ function InvitationComponent() {
 				</Card>
 			)}
 		</div>
-	);
+	)
 }
 
 function InvitationSkeleton() {
@@ -172,7 +172,7 @@ function InvitationSkeleton() {
 				<Skeleton className="h-8 w-full" />
 			</CardFooter>
 		</Card>
-	);
+	)
 }
 
 function InvitationError() {
@@ -204,5 +204,5 @@ function InvitationError() {
 				</Link>
 			</CardFooter>
 		</Card>
-	);
+	)
 }

@@ -127,7 +127,6 @@ function ResendComponent() {
 					className="space-y-6"
 					onSubmit={(e) => {
 						e.preventDefault();
-						e.stopPropagation();
 						form.handleSubmit();
 					}}
 				>

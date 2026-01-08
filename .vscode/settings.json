@@ -36,6 +36,7 @@
     "source.organizeImports.biome": "explicit"
   },
   "typescript.autoClosingTags": true,
+  "typescript.experimental.useTsgo": true,
   "[graphql]": {
     "editor.defaultFormatter": "biomejs.biome"
   },

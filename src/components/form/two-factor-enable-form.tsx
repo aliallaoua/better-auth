@@ -92,7 +92,6 @@ export function TwoFactorEnableForm({ onSuccess }: TwoFactorEnableFormProps) {
 					className="flex flex-col gap-4"
 					onSubmit={(e) => {
 						e.preventDefault();
-						e.stopPropagation();
 						otpForm.handleSubmit();
 					}}
 				>
@@ -122,7 +121,6 @@ export function TwoFactorEnableForm({ onSuccess }: TwoFactorEnableFormProps) {
 		<form
 			onSubmit={(e) => {
 				e.preventDefault();
-				e.stopPropagation();
 				passwordForm.handleSubmit();
 			}}
 			className="flex flex-col gap-4"

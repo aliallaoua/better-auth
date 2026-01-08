@@ -98,7 +98,6 @@ export function ForgetPasswordForm() {
 						className="flex flex-col gap-4"
 						onSubmit={(e) => {
 							e.preventDefault();
-							e.stopPropagation();
 							form.handleSubmit();
 						}}
 					>

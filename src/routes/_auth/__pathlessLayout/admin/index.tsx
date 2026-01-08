@@ -207,7 +207,6 @@ function AdminDashboard() {
 										className="space-y-4"
 										onSubmit={(e) => {
 											e.preventDefault();
-											e.stopPropagation();
 											createUserForm.handleSubmit();
 										}}
 									>
@@ -315,7 +314,6 @@ function AdminDashboard() {
 							className="space-y-4"
 							onSubmit={(e) => {
 								e.preventDefault();
-								e.stopPropagation();
 								banUserForm.handleSubmit();
 							}}
 						>

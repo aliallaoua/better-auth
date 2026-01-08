@@ -165,7 +165,6 @@ export function EditUserForm() {
 				<form
 					onSubmit={(e) => {
 						e.preventDefault();
-						e.stopPropagation();
 						form.handleSubmit();
 					}}
 				>

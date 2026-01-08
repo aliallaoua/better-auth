@@ -198,7 +198,6 @@ export function TwoFactorForm({ session }: { session: Session }) {
 							className="flex flex-col gap-4"
 							onSubmit={(e) => {
 								e.preventDefault();
-								e.stopPropagation();
 								otpForm.handleSubmit();
 							}}
 						>
@@ -244,7 +243,6 @@ export function TwoFactorForm({ session }: { session: Session }) {
 						className="flex flex-col gap-4"
 						onSubmit={(e) => {
 							e.preventDefault();
-							e.stopPropagation();
 							passwordForm.handleSubmit();
 						}}
 					>

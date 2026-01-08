@@ -69,7 +69,6 @@ export function TwoFactorTotpForm() {
 		<form
 			onSubmit={(e) => {
 				e.preventDefault();
-				e.stopPropagation();
 				form.handleSubmit();
 			}}
 			className="grid gap-4"
