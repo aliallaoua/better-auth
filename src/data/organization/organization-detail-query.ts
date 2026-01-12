@@ -16,5 +16,6 @@ export const useOrganizationDetailQuery = () => {
 	return useQuery({
 		queryKey: organizationKeys.detail(),
 		queryFn: getOrganizationDetail,
+		refetchOnWindowFocus: false,
 	});
 };

@@ -80,18 +80,14 @@ export function OrganizationCard(props: { session: Session | null }) {
 				<CardTitle>Organization</CardTitle>
 				<div className="flex justify-between">
 					<DropdownMenu>
-						<DropdownMenuTrigger
-							render={
-								<div className="flex cursor-pointer items-center gap-1">
-									<p className="text-sm">
-										<span className="font-bold" />{" "}
-										{activeOrganization?.name || "Personal"}
-									</p>
-
-									<ChevronDownIcon />
-								</div>
-							}
-						/>
+						<DropdownMenuTrigger className="flex cursor-pointer items-center gap-1">
+							{/* <p className="text-sm">
+								<span className="font-bold" />{" "}
+								{activeOrganization?.name || "Personal"}
+							</p> */}
+							{activeOrganization?.name || "Personal"}
+							<ChevronDownIcon />
+						</DropdownMenuTrigger>
 						<DropdownMenuContent align="start">
 							<DropdownMenuItem
 								className="py-1"
@@ -122,12 +118,12 @@ export function OrganizationCard(props: { session: Session | null }) {
 					</div>
 				</div>
 				<div className="flex items-center gap-2">
-					<Avatar className="rounded-none">
+					<Avatar>
 						<AvatarImage
 							className="size-full rounded-none object-cover"
 							src={activeOrganization?.logo || undefined}
 						/>
-						<AvatarFallback className="rounded-none">
+						<AvatarFallback>
 							{activeOrganization?.name?.charAt(0) || "P"}
 						</AvatarFallback>
 					</Avatar>

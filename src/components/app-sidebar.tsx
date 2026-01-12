@@ -4,7 +4,7 @@ import {
 	IconListDetails,
 	IconReport,
 } from "@tabler/icons-react";
-import { Link } from "@tanstack/react-router";
+import { Link, linkOptions } from "@tanstack/react-router";
 import {
 	CameraIcon,
 	ChartBarIcon,
@@ -18,10 +18,11 @@ import {
 	SettingsIcon,
 	UsersIcon,
 } from "lucide-react";
-import type * as React from "react";
 import { NavDocuments } from "@/components/nav-documents";
+import type { NavMainProps } from "@/components/nav-main";
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
+import type { NavUserProps } from "@/components/nav-user";
 import { NavUser } from "@/components/nav-user";
 import {
 	Sidebar,
@@ -33,34 +34,69 @@ import {
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+	user: NavUserProps["user"];
+}
+
+const navMain: NavMainProps["items"] = linkOptions([
+	{
+		title: "Dashboard",
+		to: "/dashboard",
+		icon: LayoutDashboardIcon,
+		// activeOptions: { exact: false },
+	},
+	{
+		title: "Lifecycle",
+		to: "#",
+		icon: IconListDetails,
+	},
+	{
+		title: "Analytics",
+		to: "/admin",
+		icon: ChartBarIcon,
+		// activeOptions: { exact: false },
+	},
+	{
+		title: "Projects",
+		to: "#",
+		icon: FolderIcon,
+	},
+	{
+		title: "Team",
+		to: "#",
+		icon: UsersIcon,
+	},
+]);
+
 const data = {
-	navMain: [
-		{
-			title: "Dashboard",
-			url: "/dashboard",
-			icon: LayoutDashboardIcon,
-		},
-		{
-			title: "Lifecycle",
-			url: "#",
-			icon: IconListDetails,
-		},
-		{
-			title: "Analytics",
-			url: "/admin",
-			icon: ChartBarIcon,
-		},
-		{
-			title: "Projects",
-			url: "#",
-			icon: FolderIcon,
-		},
-		{
-			title: "Team",
-			url: "#",
-			icon: UsersIcon,
-		},
-	],
+	// navMain: [
+	// 	{
+	// 		title: "Dashboard",
+	// 		url: "/dashboard",
+	// 		icon: LayoutDashboardIcon,
+	// 	},
+	// 	{
+	// 		title: "Lifecycle",
+	// 		url: "#",
+	// 		icon: IconListDetails,
+	// 	},
+	// 	{
+	// 		title: "Analytics",
+	// 		url: "/admin",
+	// 		icon: ChartBarIcon,
+	// 	},
+	// 	{
+	// 		title: "Projects",
+	// 		url: "#",
+	// 		icon: FolderIcon,
+	// 	},
+	// 	{
+	// 		title: "Team",
+	// 		url: "#",
+	// 		icon: UsersIcon,
+	// 	},
+	// ],
+	navMain,
 	navClouds: [
 		{
 			title: "Capture",
@@ -145,7 +181,7 @@ const data = {
 	],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ user, ...props }: AppSidebarProps) {
 	return (
 		<Sidebar collapsible="icon" {...props}>
 			<SidebarHeader>
@@ -167,7 +203,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				<NavSecondary items={data.navSecondary} className="mt-auto" />
 			</SidebarContent>
 			<SidebarFooter>
-				<NavUser />
+				<NavUser user={user} />
 			</SidebarFooter>
 		</Sidebar>
 	);

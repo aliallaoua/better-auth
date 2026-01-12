@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import type { UserWithRole } from "better-auth/plugins/admin";
 import {
 	BellIcon,
 	CreditCardIcon,
@@ -23,17 +24,20 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import useSignOutMutation from "@/hooks/mutations/useSignOutMutation";
-import { useSession } from "@/lib/auth-client";
 import { routerConfig } from "@/utils/viewTransitionOptions";
 
-export function NavUser() {
+export interface NavUserProps {
+	user: UserWithRole;
+}
+
+export function NavUser({ user }: NavUserProps) {
 	const { isMobile } = useSidebar();
 	const { mutateAsync: signOutMutation } = useSignOutMutation();
-	const { data: session, isPending } = useSession();
+	// const { data: session, isPending } = useSessionQuery();
 
-	if (isPending) {
-		return null;
-	}
+	// if (isPending) {
+	// 	return null;
+	// }
 
 	return (
 		<SidebarMenu>
@@ -75,21 +79,21 @@ export function NavUser() {
 						}
 					>
 						<Avatar className="h-8 w-8 rounded-lg grayscale">
-							<AvatarImage src={session?.user.image} alt={session?.user.name} />
+							<AvatarImage src={user.image} alt={user.name} />
 							<AvatarFallback className="rounded-lg">
-								{session?.user.name && session.user.name.length > 0
-									? session.user.name.charAt(0).toUpperCase()
-									: session?.user.email.charAt(0).toUpperCase()}
+								{user.name && user.name.length > 0
+									? user.name.charAt(0).toUpperCase()
+									: user.email.charAt(0).toUpperCase()}
 							</AvatarFallback>
 						</Avatar>
 						<div className="grid flex-1 text-left text-sm leading-tight">
 							<span className="truncate font-medium">
-								{session?.user.name && session.user.name.length > 0
-									? session.user.name
-									: session?.user.email.split("@")[0]}
+								{user.name && user.name.length > 0
+									? user.name
+									: user.email.split("@")[0]}
 							</span>
 							<span className="truncate text-muted-foreground text-xs">
-								{session?.user.email}
+								{user.email}
 							</span>
 						</div>
 						<MoreVerticalIcon className="ml-auto size-4" />
@@ -104,24 +108,21 @@ export function NavUser() {
 							<DropdownMenuLabel className="p-0 font-normal">
 								<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 									<Avatar className="h-8 w-8 rounded-lg">
-										<AvatarImage
-											src={session?.user.image}
-											alt={session?.user.name}
-										/>
+										<AvatarImage src={user.image} alt={user.name} />
 										<AvatarFallback className="rounded-lg">
-											{session?.user.name && session.user.name.length > 0
-												? session.user.name.charAt(0).toUpperCase()
-												: session?.user.email.charAt(0).toUpperCase()}
+											{user.name && user.name.length > 0
+												? user.name.charAt(0).toUpperCase()
+												: user.email.charAt(0).toUpperCase()}
 										</AvatarFallback>
 									</Avatar>
 									<div className="grid flex-1 text-left text-sm leading-tight">
 										<span className="truncate font-medium">
-											{session?.user.name && session.user.name.length > 0
-												? session.user.name
-												: session?.user.email.split("@")[0]}
+											{user.name && user.name.length > 0
+												? user.name
+												: user.email.split("@")[0]}
 										</span>
 										<span className="truncate text-muted-foreground text-xs">
-											{session?.user.email}
+											{user.email}
 										</span>
 									</div>
 								</div>

@@ -1,5 +1,5 @@
-import type { Icon } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
+import type { LucideIcon } from "lucide-react";
 import { MailIcon, PlusCircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,15 +11,16 @@ import {
 } from "@/components/ui/sidebar";
 import { routerConfig } from "@/utils/viewTransitionOptions";
 
-export function NavMain({
-	items,
-}: {
+export interface NavMainProps {
 	items: {
 		title: string;
-		url: string;
-		icon?: Icon;
+		to: string;
+		icon: LucideIcon;
+		activeOptions: { exact: boolean };
 	}[];
-}) {
+}
+
+export function NavMain({ items }: NavMainProps) {
 	return (
 		<SidebarGroup>
 			<SidebarGroupContent className="flex flex-col gap-2">
@@ -67,9 +68,12 @@ export function NavMain({
 							<SidebarMenuButton
 								render={
 									<Link
-										to={item.url}
+										to={item.to}
 										viewTransition={{
 											types: routerConfig.viewTransitionOptions,
+										}}
+										activeProps={{
+											"data-active": true,
 										}}
 									/>
 								}

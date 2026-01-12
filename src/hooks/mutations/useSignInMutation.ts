@@ -17,12 +17,13 @@ const useSignInMutation = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
+		mutationKey: ["auth", "sign-in"],
 		mutationFn: signIn,
 		onSuccess: (response) => {
 			toast.success(`Welcome back, ${response.user.name}`);
 
 			queryClient.resetQueries();
-			router.invalidate();
+			// router.invalidate();
 			// router.navigate({ to: "/dashboard" });
 			router.navigate({
 				// to: search || fallback,

@@ -13,7 +13,7 @@ import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary";
 import { HeroHeader } from "@/components/header";
 import { NotFound } from "@/components/NotFound";
 import { ThemeProvider } from "@/components/theme-provider";
-import { useAuthQueries } from "@/hooks/queries/useAuthQueries";
+import { useAuthQuery } from "@/hooks/queries/useAuthQueries";
 import appCss from "../styles.css?url";
 import { seo } from "../utils/seo";
 
@@ -22,7 +22,7 @@ export const Route = createRootRouteWithContext<{
 }>()({
 	beforeLoad: async ({ context }) => {
 		const userSession = await context.queryClient.fetchQuery(
-			useAuthQueries.user()
+			useAuthQuery.user()
 		);
 		return {
 			userSession,

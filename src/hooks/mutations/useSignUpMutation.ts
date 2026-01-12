@@ -15,6 +15,7 @@ const useSignUpMutation = () => {
 
 	const queryClient = useQueryClient();
 	return useMutation({
+		mutationKey: ["auth", "sign-up"],
 		mutationFn: signUp,
 		onSuccess: () => {
 			toast.success(

@@ -6,7 +6,7 @@ import { LogInForm } from "@/components/form/login-form";
 import { authClient } from "@/lib/auth-client";
 
 const SignInSchema = z.object({
-	redirect: z.string().default("").catch(""),
+	redirect: z.string().optional().catch("/"),
 	callbackUrl: z.string().default("").catch(""),
 	// addAccount: z.boolean().default(false),
 });

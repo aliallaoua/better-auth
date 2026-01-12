@@ -16,5 +16,6 @@ export const useOrganizationListQuery = () => {
 	return useQuery({
 		queryKey: organizationKeys.list(),
 		queryFn: getOrganizationList,
+		refetchOnWindowFocus: false,
 	});
 };

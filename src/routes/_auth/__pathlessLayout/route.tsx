@@ -7,6 +7,8 @@ export const Route = createFileRoute("/_auth/__pathlessLayout")({
 });
 
 function RootComponent() {
+	const { userSession } = Route.useRouteContext();
+
 	return (
 		<SidebarProvider
 			className="pt-16"
@@ -17,7 +19,11 @@ function RootComponent() {
 				} as React.CSSProperties
 			}
 		>
-			<AppSidebar className="pt-[62px]" variant="inset" />
+			<AppSidebar
+				className="pt-[61px]"
+				variant="inset"
+				user={userSession?.user}
+			/>
 			<Outlet />
 		</SidebarProvider>
 	);
