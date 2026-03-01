@@ -29,6 +29,8 @@ import {
 	sendResetPasswordEmail,
 	sendVerificationEmail,
 } from "@/functions/send";
+import { i18n } from "@better-auth/i18n"
+
 
 const authOptions = {
 	appName: "Better Auth Demo",
@@ -124,6 +126,21 @@ const authOptions = {
 				issuer: process.env.VITE_BETTER_AUTH_URL,
 			},
 		}),
+		i18n({
+            translations: {
+                // fr: {
+                //     USER_NOT_FOUND: "Utilisateur non trouvé",
+                //     INVALID_EMAIL_OR_PASSWORD: "Email ou mot de passe invalide",
+                //     INVALID_PASSWORD: "Mot de passe invalide",
+                // },
+                // de: {
+                //     USER_NOT_FOUND: "Benutzer nicht gefunden",
+                //     INVALID_EMAIL_OR_PASSWORD: "Ungültige E-Mail oder Passwort",
+                //     INVALID_PASSWORD: "Ungültiges Passwort",
+                // },
+            },
+        }),
+
 		tanstackStartCookies(),
 	],
 } satisfies BetterAuthOptions;
