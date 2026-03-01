@@ -7,18 +7,18 @@ import FooterSection from "@/components/footer";
 import HeroSection from "@/components/hero-section";
 
 export const Route = createFileRoute("/")({
-	component: App,
+  component: App,
 });
 
 function App() {
-	return (
-		<>
-			<HeroSection />
-			<Features />
-			<ContentSection />
-			<ContentTwoSection />
-			<CallToAction />
-			<FooterSection />
-		</>
-	);
+  return (
+    <>
+      <HeroSection />
+      <Features />
+      <ContentSection />
+      <ContentTwoSection />
+      <CallToAction />
+      <FooterSection />
+    </>
+  );
 }

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 export const Route = createFileRoute("/device/denied/")({
@@ -27,10 +27,9 @@ function DeniedComponent() {
 						The device will not be able to access your account.
 					</p>
 
-					<Button
-						render={<Link to="/">Return to Home</Link>}
-						className="w-full"
-					/>
+					<Link to="/" className={buttonVariants({ className: "w-full" })}>
+						Return to Home
+					</Link>
 				</div>
 			</Card>
 		</div>

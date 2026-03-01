@@ -1,9 +1,9 @@
-import { oauthProviderClient } from "@better-auth/oauth-provider/client";
 import { passkeyClient } from "@better-auth/passkey/client";
 import {
 	adminClient,
 	customSessionClient,
 	deviceAuthorizationClient,
+	jwtClient,
 	lastLoginMethodClient,
 	multiSessionClient,
 	oneTapClient,
@@ -31,10 +31,10 @@ export const authClient = createAuthClient({
 				maxAttempts: 1,
 			},
 		}),
-		oauthProviderClient(),
 		customSessionClient<typeof auth>(),
 		deviceAuthorizationClient(),
 		lastLoginMethodClient(),
+		jwtClient(),
 	],
 	fetchOptions: {
 		onError(e) {

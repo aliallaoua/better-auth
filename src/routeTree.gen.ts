@@ -182,22 +182,22 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/api/send': typeof ApiSendRoute
-  '/device': typeof DeviceIndexRoute
+  '/device/': typeof DeviceIndexRoute
   '/posts/': typeof PostsIndexRoute
-  '/two-factor': typeof TwoFactorIndexRoute
+  '/two-factor/': typeof TwoFactorIndexRoute
   '/dashboard': typeof Auth_pathlessLayoutDashboardRoute
   '/resend': typeof Auth_pathlessLayoutResendRoute
   '/unauthorized': typeof Auth_pathlessLayoutUnauthorizedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/device/approve': typeof DeviceApproveIndexRoute
-  '/device/denied': typeof DeviceDeniedIndexRoute
-  '/device/success': typeof DeviceSuccessIndexRoute
-  '/posts/$postId': typeof PostsPostIdIndexRoute
-  '/two-factor/otp': typeof TwoFactorOtpIndexRoute
-  '/admin': typeof Auth_pathlessLayoutAdminIndexRoute
-  '/profile': typeof Auth_pathlessLayoutProfileIndexRoute
-  '/posts/$postId/comments': typeof PostsPostIdCommentsIndexRoute
-  '/posts/$postId/comments/$commentId': typeof PostsPostIdCommentsCommentIdIndexRoute
+  '/device/approve/': typeof DeviceApproveIndexRoute
+  '/device/denied/': typeof DeviceDeniedIndexRoute
+  '/device/success/': typeof DeviceSuccessIndexRoute
+  '/posts/$postId/': typeof PostsPostIdIndexRoute
+  '/two-factor/otp/': typeof TwoFactorOtpIndexRoute
+  '/admin/': typeof Auth_pathlessLayoutAdminIndexRoute
+  '/profile/': typeof Auth_pathlessLayoutProfileIndexRoute
+  '/posts/$postId/comments/': typeof PostsPostIdCommentsIndexRoute
+  '/posts/$postId/comments/$commentId/': typeof PostsPostIdCommentsCommentIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -264,22 +264,22 @@ export interface FileRouteTypes {
     | '/signup'
     | '/accept-invitation/$id'
     | '/api/send'
-    | '/device'
+    | '/device/'
     | '/posts/'
-    | '/two-factor'
+    | '/two-factor/'
     | '/dashboard'
     | '/resend'
     | '/unauthorized'
     | '/api/auth/$'
-    | '/device/approve'
-    | '/device/denied'
-    | '/device/success'
-    | '/posts/$postId'
-    | '/two-factor/otp'
-    | '/admin'
-    | '/profile'
-    | '/posts/$postId/comments'
-    | '/posts/$postId/comments/$commentId'
+    | '/device/approve/'
+    | '/device/denied/'
+    | '/device/success/'
+    | '/posts/$postId/'
+    | '/two-factor/otp/'
+    | '/admin/'
+    | '/profile/'
+    | '/posts/$postId/comments/'
+    | '/posts/$postId/comments/$commentId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -387,7 +387,7 @@ declare module '@tanstack/react-router' {
     '/_auth': {
       id: '/_auth'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -408,7 +408,7 @@ declare module '@tanstack/react-router' {
     '/two-factor/': {
       id: '/two-factor/'
       path: '/two-factor'
-      fullPath: '/two-factor'
+      fullPath: '/two-factor/'
       preLoaderRoute: typeof TwoFactorIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -422,7 +422,7 @@ declare module '@tanstack/react-router' {
     '/device/': {
       id: '/device/'
       path: '/device'
-      fullPath: '/device'
+      fullPath: '/device/'
       preLoaderRoute: typeof DeviceIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -443,42 +443,42 @@ declare module '@tanstack/react-router' {
     '/_auth/__pathlessLayout': {
       id: '/_auth/__pathlessLayout'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof Auth_pathlessLayoutRouteRouteImport
       parentRoute: typeof AuthRoute
     }
     '/two-factor/otp/': {
       id: '/two-factor/otp/'
       path: '/two-factor/otp'
-      fullPath: '/two-factor/otp'
+      fullPath: '/two-factor/otp/'
       preLoaderRoute: typeof TwoFactorOtpIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/posts/$postId/': {
       id: '/posts/$postId/'
       path: '/$postId'
-      fullPath: '/posts/$postId'
+      fullPath: '/posts/$postId/'
       preLoaderRoute: typeof PostsPostIdIndexRouteImport
       parentRoute: typeof PostsRouteRoute
     }
     '/device/success/': {
       id: '/device/success/'
       path: '/device/success'
-      fullPath: '/device/success'
+      fullPath: '/device/success/'
       preLoaderRoute: typeof DeviceSuccessIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/device/denied/': {
       id: '/device/denied/'
       path: '/device/denied'
-      fullPath: '/device/denied'
+      fullPath: '/device/denied/'
       preLoaderRoute: typeof DeviceDeniedIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/device/approve/': {
       id: '/device/approve/'
       path: '/device/approve'
-      fullPath: '/device/approve'
+      fullPath: '/device/approve/'
       preLoaderRoute: typeof DeviceApproveIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -513,28 +513,28 @@ declare module '@tanstack/react-router' {
     '/posts/$postId/comments/': {
       id: '/posts/$postId/comments/'
       path: '/$postId/comments'
-      fullPath: '/posts/$postId/comments'
+      fullPath: '/posts/$postId/comments/'
       preLoaderRoute: typeof PostsPostIdCommentsIndexRouteImport
       parentRoute: typeof PostsRouteRoute
     }
     '/_auth/__pathlessLayout/profile/': {
       id: '/_auth/__pathlessLayout/profile/'
       path: '/profile'
-      fullPath: '/profile'
+      fullPath: '/profile/'
       preLoaderRoute: typeof Auth_pathlessLayoutProfileIndexRouteImport
       parentRoute: typeof Auth_pathlessLayoutRouteRoute
     }
     '/_auth/__pathlessLayout/admin/': {
       id: '/_auth/__pathlessLayout/admin/'
       path: '/admin'
-      fullPath: '/admin'
+      fullPath: '/admin/'
       preLoaderRoute: typeof Auth_pathlessLayoutAdminIndexRouteImport
       parentRoute: typeof Auth_pathlessLayoutRouteRoute
     }
     '/posts/$postId/comments/$commentId/': {
       id: '/posts/$postId/comments/$commentId/'
       path: '/$postId/comments/$commentId'
-      fullPath: '/posts/$postId/comments/$commentId'
+      fullPath: '/posts/$postId/comments/$commentId/'
       preLoaderRoute: typeof PostsPostIdCommentsCommentIdIndexRouteImport
       parentRoute: typeof PostsRouteRoute
     }

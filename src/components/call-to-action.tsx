@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronRightIcon } from "lucide-react";
-import { Button } from "./ui/button";
+import { buttonVariants } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 export default function CallToAction() {
 	return (
@@ -18,32 +19,28 @@ export default function CallToAction() {
 					</p>
 
 					<div className="mt-12 flex flex-wrap justify-center gap-4">
-						<Button
-							className="h-12 rounded-2xl border-2 px-5 font-semibold hover:bg-primary hover:text-primary-foreground hover:dark:bg-primary hover:dark:text-primary-foreground"
-							variant="outline"
-							render={
-								<Link
-									to="/dashboard"
-									viewTransition={{ types: ["slide-up"] }}
-								/>
-							}
+						<Link
+							to="/dashboard"
+							viewTransition={{ types: ["slide-up"] }}
+							className={cn(
+								buttonVariants({ variant: "outline" }),
+								"h-12 rounded-2xl border-2 px-5 font-semibold hover:bg-primary hover:text-primary-foreground hover:dark:bg-primary hover:dark:text-primary-foreground",
+							)}
 						>
 							Get Started
 							<ChevronRightIcon className="size-3 text-muted-foreground" />
-						</Button>
-						<Button
-							className="h-12 rounded-2xl text-muted-foreground hover:bg-transparent hover:dark:bg-transparent"
-							variant="ghost"
-							render={
-								<Link
-									to="/dashboard"
-									viewTransition={{ types: ["slide-up"] }}
-								/>
-							}
+						</Link>
+						<Link
+							to="/dashboard"
+							viewTransition={{ types: ["slide-up"] }}
+							className={cn(
+								buttonVariants({ variant: "ghost" }),
+								"h-12 rounded-2xl text-muted-foreground hover:bg-transparent hover:dark:bg-transparent",
+							)}
 						>
 							Book demo
 							<ChevronRightIcon className="size-3" />
-						</Button>
+						</Link>
 					</div>
 				</div>
 			</div>

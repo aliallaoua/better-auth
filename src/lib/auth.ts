@@ -1,9 +1,7 @@
-import { oauthProvider } from "@better-auth/oauth-provider";
 import { passkey } from "@better-auth/passkey";
 import type { BetterAuthOptions } from "better-auth";
-import { APIError, betterAuth } from "better-auth";
+import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import type { Organization } from "better-auth/plugins";
 import {
 	admin,
 	bearer,
@@ -126,88 +124,6 @@ const authOptions = {
 				issuer: process.env.VITE_BETTER_AUTH_URL,
 			},
 		}),
-		oauthProvider({
-			loginPage: "/login",
-			consentPage: "/oauth/consent",
-			allowDynamicClientRegistration: true,
-			allowUnauthenticatedClientRegistration: true,
-			scopes: [
-				"openid",
-				"profile",
-				"email",
-				"offline_access",
-				"read:organization",
-			],
-			validAudiences: [
-				process.env.VITE_BETTER_AUTH_URL || "http://localhost:3000",
-				(process.env.VITE_BETTER_AUTH_URL || "http://localhost:3000") +
-					"/api/mcp",
-			],
-			selectAccount: {
-				page: "/oauth/select-account",
-				shouldRedirect: async ({ headers }) => {
-					const allSessions = await getAllDeviceSessions(headers);
-					return allSessions?.length >= 1;
-				},
-			},
-			customAccessTokenClaims({ referenceId, scopes }) {
-				if (referenceId && scopes.includes("read:organization")) {
-					const baseUrl =
-						process.env.VITE_BETTER_AUTH_URL || "http://localhost:3000";
-					return {
-						[`${baseUrl}/org`]: referenceId,
-					};
-				}
-				return {};
-			},
-			postLogin: {
-				page: "/oauth/select-organization",
-				async shouldRedirect({ session, scopes, headers }) {
-					const userOnlyScopes = [
-						"openid",
-						"profile",
-						"email",
-						"offline_access",
-					];
-					if (scopes.every((sc) => userOnlyScopes.includes(sc))) {
-						return false;
-					}
-					// Check if user has multiple organizations to select from
-					try {
-						const organizations = (await getAllUserOrganizations(
-							headers
-						)) as Organization[];
-						return (
-							organizations.length > 1 ||
-							!(
-								organizations.length === 1 &&
-								organizations.at(0)?.id === session.activeOrganizationId
-							)
-						);
-					} catch {
-						return true;
-					}
-				},
-				consentReferenceId({ session, scopes }) {
-					if (scopes.includes("read:organization")) {
-						const activeOrganizationId = (session?.activeOrganizationId ??
-							undefined) as string | undefined;
-						if (!activeOrganizationId) {
-							throw new APIError("BAD_REQUEST", {
-								error: "set_organization",
-								error_description: "must set organization for these scopes",
-							});
-						}
-						return activeOrganizationId;
-					}
-					return undefined;
-				},
-			},
-			silenceWarnings: {
-				openidConfig: true,
-				oauthAuthServerConfig: true,
-			},
-		}),
 		tanstackStartCookies(),
 	],
 } satisfies BetterAuthOptions;
@@ -265,13 +181,6 @@ export const auth = betterAuth({
 			// },
 		},
 	},
-	// trustedOrigins: ['exp://'],
-	// advanced: {
-	// 	crossSubDomainCookies: {
-	// 		enabled: process.env.NODE_ENV === 'production',
-	// 		domain: cookieDomain,
-	// 	},
-	// },
 
 	// To set active organization when a session is created you can use database hooks.
 	databaseHooks: {
@@ -332,15 +241,3 @@ export type Invitation = typeof auth.$Infer.Invitation;
 export type DeviceSession = Awaited<
 	ReturnType<typeof auth.api.listDeviceSessions>
 >[number];
-
-async function getAllDeviceSessions(headers: Headers): Promise<unknown[]> {
-	return await auth.api.listDeviceSessions({
-		headers,
-	});
-}
-
-async function getAllUserOrganizations(headers: Headers): Promise<unknown[]> {
-	return await auth.api.listOrganizations({
-		headers,
-	});
-}

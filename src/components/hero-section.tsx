@@ -3,7 +3,8 @@ import { Image } from "@unpic/react";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { TextEffect } from "@/components/ui/text-effect";
-import { Button } from "./ui/button";
+import { buttonVariants } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 const transitionVariants = {
 	item: {
@@ -101,31 +102,27 @@ export default function HeroSection() {
 								className="mt-12 flex items-center gap-2"
 							>
 								<div key={1}>
-									<Button
-										className="h-12 rounded-2xl border-2 px-5 font-semibold hover:bg-primary hover:text-primary-foreground hover:dark:bg-primary hover:dark:text-primary-foreground"
-										variant="outline"
-										render={
-											<Link
-												to="/dashboard"
-												viewTransition={{ types: ["slide-up"] }}
-											/>
-										}
+									<Link
+										to="/dashboard"
+										viewTransition={{ types: ["slide-up"] }}
+										className={cn(
+											buttonVariants({ variant: "outline" }),
+											"h-12 rounded-2xl border-2 px-5 font-semibold hover:bg-primary hover:text-primary-foreground hover:dark:bg-primary hover:dark:text-primary-foreground",
+										)}
 									>
 										Get Started
-									</Button>
+									</Link>
 								</div>
-								<Button
-									className="h-12 rounded-2xl text-muted-foreground hover:bg-transparent hover:dark:bg-transparent"
-									variant="ghost"
-									render={
-										<Link
-											to="/dashboard"
-											viewTransition={{ types: ["slide-up"] }}
-										/>
-									}
+								<Link
+									to="/dashboard"
+									viewTransition={{ types: ["slide-up"] }}
+									className={cn(
+										buttonVariants({ variant: "ghost" }),
+										"h-12 rounded-2xl text-muted-foreground hover:bg-transparent hover:dark:bg-transparent",
+									)}
 								>
 									Request a demo
-								</Button>
+								</Link>
 							</AnimatedGroup>
 						</div>
 					</div>
