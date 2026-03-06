@@ -15,8 +15,8 @@ function UnauthorizedComponent() {
 	const { data } = useSession();
 
 	const reasonMessages = {
-		insufficientRole: "You do not have the required role to access this page.",
-		insufficientPermissions:
+		insufficient_role: "You do not have the required role to access this page.",
+		insufficient_permissions:
 			"You do not have the required permissions to access this page.",
 		default: "You are not authorized to access this page.",
 	};

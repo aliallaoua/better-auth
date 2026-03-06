@@ -19,7 +19,7 @@ import { Button } from "../ui/button";
 import { FieldGroup } from "../ui/field";
 
 export function CreateOrganizationForm() {
-	const { mutate: createMutation, isSuccess } = useOrganizationCreateMutation();
+	const { mutateAsync: createMutation } = useOrganizationCreateMutation();
 	const [open, setOpen] = useState(false);
 	const createOrganizationFormOpts = formOptions({
 		defaultValues: {
@@ -36,14 +36,12 @@ export function CreateOrganizationForm() {
 		},
 		onSubmit: async ({ value }) => {
 			try {
-				createMutation({
+				await createMutation({
 					name: value.name,
 					slug: value.slug,
 				});
 
-				if (isSuccess) {
-					setOpen(false);
-				}
+				setOpen(false);
 			} catch (error: any) {
 				toast.error(error.message);
 			}

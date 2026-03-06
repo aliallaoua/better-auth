@@ -1,26 +1,18 @@
 import { formOptions } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
-import { CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
-import z from "zod";
 import { FieldGroup } from "@/components/ui/field";
+import { VerificationSuccess } from "@/components/verification-success";
 import { useAppForm } from "@/hooks/form";
 import { authClient } from "@/lib/auth-client";
-
-const totpSchema = z.object({
-	code: z
-		.string()
-		.length(6, "TOTP code must be 6 digits.")
-		.regex(/^\d+$/, "TOTP code must be digits only."),
-});
+import { TwoFactorOTPSchema } from "@/schema";
 
 export function TwoFactorTotpForm() {
 	const router = useRouter();
 
 	const {
 		mutate: verifyTotpMutation,
-		isPending,
 		isSuccess,
 		data,
 	} = useMutation({
@@ -49,7 +41,7 @@ export function TwoFactorTotpForm() {
 	const form = useAppForm({
 		...formOpts,
 		validators: {
-			onChange: totpSchema,
+			onChange: TwoFactorOTPSchema,
 		},
 		onSubmit: async ({ value }) => {
 			verifyTotpMutation(value.code);
@@ -57,12 +49,7 @@ export function TwoFactorTotpForm() {
 	});
 
 	if (isSuccess && data?.data?.token) {
-		return (
-			<div className="flex flex-col items-center justify-center space-y-2 py-4">
-				<CheckCircle2 className="h-12 w-12 text-green-500" />
-				<p className="font-semibold text-lg">Verification Successful</p>
-			</div>
-		);
+		return <VerificationSuccess />;
 	}
 
 	return (

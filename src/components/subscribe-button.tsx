@@ -22,7 +22,7 @@ function SubscribeButton({
 			children={([canSubmit, isSubmitting]) => (
 				<Button
 					className={className}
-					disabled={!canSubmit}
+					disabled={!canSubmit || disabled}
 					type="submit"
 					{...props}
 				>

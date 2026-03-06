@@ -26,6 +26,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import useSignOutMutation from "@/hooks/mutations/useSignOutMutation";
+import { getAvatarInitial } from "@/lib/utils/get-avatar-initial";
 import { routerConfig } from "@/utils/viewTransitionOptions";
 export interface NavUserProps {
   user: UserWithRole;
@@ -47,9 +48,7 @@ export function NavUser({ user }: NavUserProps) {
             <Avatar className="size-8 rounded-lg grayscale">
               <AvatarImage src={user.image} alt={user.name} />
               <AvatarFallback className="rounded-lg">
-                {user.name && user.name.length > 0
-                  ? user.name.charAt(0).toUpperCase()
-                  : user.email.charAt(0).toUpperCase()}
+                {getAvatarInitial(user.name, user.email)}
               </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
@@ -76,9 +75,7 @@ export function NavUser({ user }: NavUserProps) {
                   <Avatar className="size-8">
                     <AvatarImage src={user.image} alt={user.name} />
                     <AvatarFallback className="rounded-lg">
-                      {user.name && user.name.length > 0
-                        ? user.name.charAt(0).toUpperCase()
-                        : user.email.charAt(0).toUpperCase()}
+                      {getAvatarInitial(user.name, user.email)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">

@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import type { ErrorContext, RequestContext } from "better-auth/react";
 import {
@@ -45,6 +46,7 @@ import { useSessionQuery } from "@/data/user/session-query";
 import useSignOutMutation from "@/hooks/mutations/useSignOutMutation";
 import type { Session } from "@/lib/auth";
 import { authClient } from "@/lib/auth-client";
+import { getAvatarInitial } from "@/lib/utils/get-avatar-initial";
 
 export default function UserCard(props: {
 	session: Session | null;
@@ -61,13 +63,20 @@ export default function UserCard(props: {
 	const { data } = useSessionQuery();
 	const session = data || props.session;
 
+	const { mutate: stopImpersonatingMutation, isPending: isStoppingImpersonation } =
+		useMutation({
+			mutationFn: async () => {
+				await authClient.admin.stopImpersonating();
+			},
+			onSuccess: () => {
+				toast.info("Impersonation stopped successfully");
+				router.navigate({ to: "/admin" });
+			},
+		});
 	const [twoFactorDialog, setTwoFactorDialog] = useState<boolean>(false);
-	const [isSignOut, setIsSignOut] = useState<boolean>(false);
 	const [emailVerificationPending, setEmailVerificationPending] =
 		useState<boolean>(false);
-	const [activeSessions, setActiveSessions] = useState(props.activeSessions);
-	const removeActiveSession = (id: string) =>
-		setActiveSessions(activeSessions.filter((session) => session.id !== id));
+	const activeSessions = props.activeSessions;
 
 	return (
 		<Card>
@@ -84,7 +93,7 @@ export default function UserCard(props: {
 									alt="Avatar"
 									className="object-cover"
 								/>
-								<AvatarFallback>{session?.user.name.charAt(0)}</AvatarFallback>
+								<AvatarFallback>{getAvatarInitial(session?.user.name, session?.user.email)}</AvatarFallback>
 							</Avatar>
 							<div className="grid">
 								<div className="flex items-center gap-1">
@@ -150,18 +159,19 @@ export default function UserCard(props: {
 							const isTerminating =
 								revokeSessionMutationIsPending &&
 								revokeSessionMutationVariables?.token === session.token;
+							const parser = new UAParser(session.userAgent || "");
 							return (
 								<div key={session.id}>
 									<div className="flex items-center gap-2 font-medium text-black text-sm dark:text-white">
-										{new UAParser(session.userAgent || "").getDevice().type ===
+										{parser.getDevice().type ===
 										"mobile" ? (
 											<PhoneIcon />
 										) : (
 											<Laptop size={16} />
 										)}
-										{new UAParser(session.userAgent || "").getOS().name ||
+										{parser.getOS().name ||
 											session.userAgent}
-										, {new UAParser(session.userAgent || "").getBrowser().name}
+										, {parser.getBrowser().name}
 										<Button
 											className="cursor-pointer border-red-600 bg-transparent text-red-500 text-xs underline opacity-80 hover:bg-transparent"
 											onClick={async () => {
@@ -171,7 +181,6 @@ export default function UserCard(props: {
 													},
 													{
 														onSuccess: () => {
-															removeActiveSession(session.id);
 															if (isCurrentSession) {
 																router.navigate({
 																	to: "/",
@@ -277,17 +286,13 @@ export default function UserCard(props: {
 					<Button
 						className="z-10 cursor-pointer gap-2"
 						variant="secondary"
-						onClick={async () => {
-							setIsSignOut(true);
-							await authClient.admin.stopImpersonating();
-							setIsSignOut(false);
-							toast.info("Impersonation stopped successfully");
-							router.navigate({ to: "/admin" });
+						onClick={() => {
+							stopImpersonatingMutation();
 						}}
-						disabled={isSignOut}
+						disabled={isStoppingImpersonation}
 					>
 						<span className="text-sm">
-							{isSignOut ? (
+							{isStoppingImpersonation ? (
 								<Spinner />
 							) : (
 								<div className="flex items-center gap-2">

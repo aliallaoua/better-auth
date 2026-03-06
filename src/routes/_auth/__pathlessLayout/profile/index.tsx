@@ -12,19 +12,12 @@ const getProfileData = createServerFn()
 	.handler(async () => {
 		const headers = getRequestHeaders();
 		try {
-			const [session, activeSessions, deviceSessions] = await Promise.all([
-				auth.api.getSession({ headers }),
+			const [activeSessions, deviceSessions] = await Promise.all([
 				auth.api.listSessions({ headers }),
 				auth.api.listDeviceSessions({ headers }),
 			]);
 
 			return {
-				session: session
-					? {
-							user: session?.user,
-							session: session?.session,
-						}
-					: null,
 				activeSessions: activeSessions || [],
 				deviceSessions: deviceSessions || [],
 			};
@@ -35,8 +28,11 @@ const getProfileData = createServerFn()
 	});
 
 export const Route = createFileRoute("/_auth/__pathlessLayout/profile/")({
-	loader: async () => {
-		const { session, activeSessions, deviceSessions } = await getProfileData();
+	loader: async ({ context }) => {
+		const { activeSessions, deviceSessions } = await getProfileData();
+		// userSession from root context has UserWithRole type but components expect Session with customField.
+		// The customSession plugin adds customField at runtime; this cast bridges the type gap.
+		const session = (context.userSession ?? null) as Awaited<ReturnType<typeof auth.api.getSession>>;
 
 		return {
 			session,

@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 import { useAppForm } from "@/hooks/form";
 import { useUserManagement } from "@/hooks/mutations/useUserManagement";
 import useListUsersQuery from "@/hooks/queries/useListUsersQuery";
-import { useSession } from "@/lib/auth-client";
+import { USER_ROLES, useSession } from "@/lib/auth-client";
 import {
   DataTable,
   DataTableSkeleton,
@@ -27,7 +27,7 @@ import { BanUserSchema, CreateUserSchema } from "@/schema";
 
 export const Route = createFileRoute("/_auth/__pathlessLayout/admin/")({
   beforeLoad: async ({ context, location }) => {
-    if (context.userSession?.user.role !== "admin") {
+    if (context.userSession?.user.role !== USER_ROLES.ADMIN) {
       throw redirect({
         to: "/unauthorized",
         search: {
@@ -65,12 +65,20 @@ function AdminDashboard() {
   const userStats = useMemo(() => {
     if (!users) return { total: 0, admins: 0, banned: 0, active: 0 };
 
-    return {
-      total: users.length,
-      admins: users.filter((u) => u.role === "admin").length,
-      banned: users.filter((u) => u.banned).length,
-      active: users.filter((u) => !u.banned).length,
-    };
+    const counts = users.reduce(
+      (acc, u) => {
+        if (u.role === USER_ROLES.ADMIN) acc.admins++;
+        if (u.banned) {
+          acc.banned++;
+        } else {
+          acc.active++;
+        }
+        return acc;
+      },
+      { admins: 0, banned: 0, active: 0 },
+    );
+
+    return { total: users.length, ...counts };
   }, [users]);
 
   const createUserForm = useAppForm({

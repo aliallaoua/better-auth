@@ -1,4 +1,3 @@
-import { formOptions } from "@tanstack/react-form";
 import type { ErrorContext } from "better-auth/react";
 import { Fingerprint, Trash } from "lucide-react";
 import { useState } from "react";
@@ -21,49 +20,16 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useAppForm } from "@/hooks/form";
 import { authClient } from "@/lib/auth-client";
-import type { Passkey } from "@/lib/auth-types";
-import { AddPasskeySchema } from "@/schema";
-// import { Alert, AlertDescription } from '../ui/alert';
+import { AddPasskeyForm } from "./add-passkey-form";
 import { Button } from "../ui/button";
-import { FieldGroup } from "../ui/field";
 import { Spinner } from "../ui/spinner";
 
 export function ListPasskeysForm() {
 	const { data } = authClient.useListPasskeys();
 	const [isOpen, setIsOpen] = useState(false);
+	const [deletingPasskeyIds, setDeletingPasskeyIds] = useState<Set<string>>(new Set());
 
-	const addPasskeyFormOpts = formOptions({
-		defaultValues: {
-			passkeyName: "",
-		},
-	});
-
-	const form = useAppForm({
-		...addPasskeyFormOpts,
-		validators: {
-			onChange: AddPasskeySchema,
-		},
-		onSubmit: async ({ value }) => {
-			// if (!value.passkeyName) {
-			// 	toast.error('Passkey name is required');
-			// 	return;
-			// }
-			const res = await authClient.passkey.addPasskey({
-				name: value.passkeyName,
-			});
-			if (res?.error) {
-				toast.error(res?.error.message);
-			} else {
-				toast.success(
-					"Passkey added successfully. You can now use it to login."
-				);
-			}
-		},
-	});
-
-	const [isDeletePasskey, setIsDeletePasskey] = useState<boolean>(false);
 	return (
 		<Dialog onOpenChange={setIsOpen} open={isOpen}>
 			<DialogTrigger
@@ -90,105 +56,64 @@ export function ListPasskeysForm() {
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{data.map((passkey: Passkey) => (
-								<TableRow
-									key={passkey.id}
-									className="flex items-center justify-between"
-								>
-									<TableCell>{passkey.name || "My Passkey"}</TableCell>
-									<TableCell className="text-right">
-										<Button
-											className="cursor-pointer"
-											onClick={async () => {
-												const res = await authClient.passkey.deletePasskey({
-													id: passkey.id,
-													fetchOptions: {
-														onRequest: () => {
-															setIsDeletePasskey(true);
+							{data.map((passkey) => {
+								const isDeleting = deletingPasskeyIds.has(passkey.id);
+								return (
+									<TableRow
+										key={passkey.id}
+										className="flex items-center justify-between"
+									>
+										<TableCell>{passkey.name || "My Passkey"}</TableCell>
+										<TableCell className="text-right">
+											<Button
+												className="cursor-pointer"
+												onClick={async () => {
+													await authClient.passkey.deletePasskey({
+														id: passkey.id,
+														fetchOptions: {
+															onRequest: () => {
+																setDeletingPasskeyIds((prev) => new Set(prev).add(passkey.id));
+															},
+															onSuccess: () => {
+																toast("Passkey deleted successfully");
+																setDeletingPasskeyIds((prev) => {
+																	const next = new Set(prev);
+																	next.delete(passkey.id);
+																	return next;
+																});
+															},
+															onError: (error: ErrorContext) => {
+																toast.error(error.error.message);
+																setDeletingPasskeyIds((prev) => {
+																	const next = new Set(prev);
+																	next.delete(passkey.id);
+																	return next;
+																});
+															},
 														},
-														onSuccess: () => {
-															toast("Passkey deleted successfully");
-															setIsDeletePasskey(false);
-														},
-														onError: (error: ErrorContext) => {
-															toast.error(error.error.message);
-															setIsDeletePasskey(false);
-														},
-													},
-												});
-											}}
-										>
-											{isDeletePasskey ? (
-												<Spinner />
-											) : (
-												<Trash
-													className="cursor-pointer text-red-600"
-													size={15}
-												/>
-											)}
-										</Button>
-									</TableCell>
-								</TableRow>
-							))}
+													});
+												}}
+											>
+												{isDeleting ? (
+													<Spinner />
+												) : (
+													<Trash
+														className="cursor-pointer text-red-600"
+														size={15}
+													/>
+												)}
+											</Button>
+										</TableCell>
+									</TableRow>
+								);
+							})}
 						</TableBody>
 					</Table>
 				) : (
 					<p className="text-muted-foreground text-sm">No passkeys found</p>
 				)}
-				{!data?.length && (
-					<form
-						className="flex flex-col gap-4"
-						onSubmit={(e) => {
-							e.preventDefault();
-							form.handleSubmit();
-						}}
-					>
-						<FieldGroup>
-							<form.AppField
-								name="passkeyName"
-								children={(field) => (
-									<div className="grid gap-2">
-										<field.TextField
-											label="New Passkey"
-											placeholder="My Passkey"
-											required
-										/>
-									</div>
-								)}
-							/>
-
-							<form.AppForm>
-								<form.SubscribeButton
-									className="w-full cursor-pointer"
-									label={
-										<>
-											<Fingerprint className="mr-2 size-4" />
-											Create Passkey
-										</>
-									}
-								/>
-							</form.AppForm>
-						</FieldGroup>
-						{/* Display form-level errors */}
-						{/* <form.Subscribe
-							children={([errorMap]) =>
-								errorMap.onSubmit ? (
-									<Alert className="mt-4" variant="destructive">
-										<AlertCircle className="size-4" />
-										<AlertDescription>
-											{errorMap.onSubmit.toString()}
-										</AlertDescription>
-									</Alert>
-								) : null
-							}
-							selector={(state) => [state.errorMap]}
-						/> */}
-					</form>
-				)}
+				{!data?.length && <AddPasskeyForm />}
 				<DialogFooter>
-					{/* <Button className="cursor-pointer" onClick={() => setIsOpen(false)}>
-						Close
-					</Button> */}
 					<DialogClose
 						render={<Button className="cursor-pointer">Cancel</Button>}
 					/>

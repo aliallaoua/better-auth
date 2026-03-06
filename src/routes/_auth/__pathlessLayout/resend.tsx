@@ -34,7 +34,7 @@ function ResendComponent() {
       }),
     },
     onSubmit: async ({ value }) => {
-      const url = "http://localhost:3000";
+      const url = import.meta.env.VITE_BETTER_AUTH_URL;
       try {
         await (value.emailmethod === "serverFn"
           ? handleSendEmailUsingServerFunction({

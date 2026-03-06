@@ -21,6 +21,7 @@ import type { SessionData } from "@/data/user/session-query";
 import { useSessionQuery } from "@/data/user/session-query";
 import type { DeviceSession } from "@/lib/auth";
 import { authClient } from "@/lib/auth-client";
+import { getAvatarInitial } from "@/lib/utils/get-avatar-initial";
 
 export default function AccountSwitcher({
 	deviceSessions,
@@ -51,7 +52,7 @@ export default function AccountSwitcher({
 								alt={currentUser?.user.name}
 							/>
 							<AvatarFallback>
-								{currentUser?.user.name.charAt(0)}
+								{getAvatarInitial(currentUser?.user.name, currentUser?.user.email)}
 							</AvatarFallback>
 						</Avatar>
 						{currentUser?.user.name}
@@ -75,7 +76,7 @@ export default function AccountSwitcher({
 											alt={currentUser?.user.name}
 										/>
 										<AvatarFallback>
-											{currentUser?.user.name.charAt(0)}
+											{getAvatarInitial(currentUser?.user.name, currentUser?.user.email)}
 										</AvatarFallback>
 									</Avatar>
 									{currentUser?.user.name}
@@ -109,7 +110,7 @@ export default function AccountSwitcher({
 												src={u.user.image || undefined}
 												alt={u.user.name}
 											/>
-											<AvatarFallback>{u.user.name.charAt(0)}</AvatarFallback>
+											<AvatarFallback>{getAvatarInitial(u.user.name, u.user.email)}</AvatarFallback>
 										</Avatar>
 										<div className="flex w-full items-center justify-between">
 											<div>

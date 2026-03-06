@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/item";
 import useSignOutMutation from "@/hooks/mutations/useSignOutMutation";
 import { useSession } from "@/lib/auth-client";
+import { getAvatarInitial } from "@/lib/utils/get-avatar-initial";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -71,7 +72,7 @@ export default function UserButton() {
 											src={session?.user.image ?? ""}
 										/>
 										<AvatarFallback>
-											{session?.user.name.charAt(0)}
+											{getAvatarInitial(session?.user.name, session?.user.email)}
 										</AvatarFallback>
 									</Avatar>
 								</ItemMedia>

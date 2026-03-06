@@ -1,6 +1,5 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { AlertCircle, CheckIcon, XIcon } from "lucide-react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -19,10 +18,18 @@ export const Route = createFileRoute("/accept-invitation/$id")({
 	component: InvitationComponent,
 });
 
+function InvitationWrapper({ children }: { children: React.ReactNode }) {
+	return (
+		<div className="flex min-h-[80vh] items-center justify-center">
+			<div className="mask-[radial-gradient(ellipse_at_center,transparent_20%,black)] pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black" />
+			{children}
+		</div>
+	);
+}
+
 function InvitationComponent() {
 	const router = useRouter();
 	const { id } = Route.useParams();
-	const [isRedirecting, setIsRedirecting] = useState(false);
 
 	const { data: invitation, isLoading, error } = useInvitationQuery(id);
 	const { mutate: acceptMutation, isPending: acceptMutationIsPending } =
@@ -30,14 +37,13 @@ function InvitationComponent() {
 	const { mutate: rejectMutation, isPending: rejectMutationIsPending } =
 		useInviteRejectMutation();
 
-	const handleAccept = () => {
-		acceptMutation(
+	const handleInvitation = (mutate: typeof acceptMutation | typeof rejectMutation) => {
+		(mutate as typeof acceptMutation)(
 			{
 				invitationId: id,
 			},
 			{
 				onSuccess: () => {
-					setIsRedirecting(true);
 					router.navigate({
 						to: "/dashboard",
 					})
@@ -46,43 +52,24 @@ function InvitationComponent() {
 		)
 	}
 
-	const handleReject = () => {
-		rejectMutation(
-			{
-				invitationId: id,
-			},
-			{
-				onSuccess: () => {
-					setIsRedirecting(true);
-					router.navigate({
-						to: "/dashboard",
-					})
-				},
-			}
-		)
-	}
-
-	if (isLoading || isRedirecting) {
+	if (isLoading) {
 		return (
-			<div className="flex min-h-[80vh] items-center justify-center">
-				<div className="mask-[radial-gradient(ellipse_at_center,transparent_20%,black)] pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black" />
+			<InvitationWrapper>
 				<InvitationSkeleton />
-			</div>
+			</InvitationWrapper>
 		)
 	}
 
 	if (!invitation || error) {
 		return (
-			<div className="flex min-h-[80vh] items-center justify-center">
-				<div className="mask-[radial-gradient(ellipse_at_center,transparent_20%,black)] pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black" />
+			<InvitationWrapper>
 				<InvitationError />
-			</div>
+			</InvitationWrapper>
 		)
 	}
 
 	return (
-		<div className="flex min-h-[80vh] items-center justify-center">
-			<div className="mask-[radial-gradient(ellipse_at_center,transparent_20%,black)] pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black" />
+		<InvitationWrapper>
 			{invitation && (
 				<Card className="w-full max-w-md">
 					<CardHeader>
@@ -135,19 +122,19 @@ function InvitationComponent() {
 						<CardFooter className="flex justify-between">
 							<Button
 								variant="outline"
-								onClick={handleReject}
+								onClick={() => handleInvitation(rejectMutation)}
 								disabled={rejectMutationIsPending}
 							>
 								{rejectMutationIsPending ? "Declining..." : "Decline"}
 							</Button>
-							<Button onClick={handleAccept} disabled={acceptMutationIsPending}>
+							<Button onClick={() => handleInvitation(acceptMutation)} disabled={acceptMutationIsPending}>
 								{acceptMutationIsPending ? "Accepting..." : "Accept Invitation"}
 							</Button>
 						</CardFooter>
 					)}
 				</Card>
 			)}
-		</div>
+		</InvitationWrapper>
 	)
 }
 

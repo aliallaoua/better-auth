@@ -1,8 +1,9 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import z from "zod";
 import { SignUpForm } from "@/components/form/sign-up-form";
+import { AUTH_REDIRECT_FALLBACK } from "@/lib/auth-client";
 
-const fallback = "/dashboard" as const;
+const fallback = AUTH_REDIRECT_FALLBACK;
 export const Route = createFileRoute("/signup")({
 	validateSearch: z.object({
 		redirect: z.string().optional().catch("/"),

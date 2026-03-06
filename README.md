@@ -5,8 +5,8 @@ Welcome to your new TanStack app!
 To run this application:
 
 ```bash
-pnpm install
-pnpm start
+bun install
+bun run start
 ```
 
 # Building For Production
@@ -14,15 +14,15 @@ pnpm start
 To build this application for production:
 
 ```bash
-pnpm build
+bun run build
 ```
 
 ## Testing
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+This project uses [Vitest](http://vitest.dev/) for testing. You can run the tests with:
 
 ```bash
-pnpm test
+bun test
 ```
 
 ## Styling
@@ -36,9 +36,9 @@ This project uses [Biome](https://biomejs.dev/) for linting and formatting. The 
 
 
 ```bash
-pnpm lint
-pnpm format
-pnpm check
+bun run lint
+bun run format
+bun run check
 ```
 
 
@@ -52,19 +52,19 @@ pnpx shadcn@latest add button
 
 ### Components used in this project
 ```bash
-pnpm dlx shadcn@latest add alert-dialog alert avatar badge breadcrumb button-group button calendar card chart checkbox command dialog drawer dropdown-menu empty field input-group input item label navigation-menu popover radio-group select separator sheet sidebar skeleton slider sonner spinner switch table tabs textarea toggle-group toggle tooltip
+bunx --bun shadcn@latest add alert-dialog alert avatar badge breadcrumb button-group button calendar card chart checkbox command dialog drawer dropdown-menu empty field input-group input item label navigation-menu popover radio-group select separator sheet sidebar skeleton slider sonner spinner switch table tabs textarea toggle-group toggle tooltip
 ```
 
 ```bash
-pnpm dlx shadcn add @tailark/hero-section-2 @tailark/features-1 @tailark/content-1 @tailark/call-to-action-1 @tailark/footer-1
+bunx --bun shadcn add @tailark/hero-section-2 @tailark/features-1 @tailark/content-1 @tailark/call-to-action-1 @tailark/footer-1
 ```
 
 ```bash
-pnpm dlx shadcn add @motion-primitives/animated-group @motion-primitives/border-trail @motion-primitives/glow-effect @motion-primitives/text-effect
+bunx --bun shadcn add @motion-primitives/animated-group @motion-primitives/border-trail @motion-primitives/glow-effect @motion-primitives/text-effect
 ```
 
 ```bash
-pnpm dlx shadcn add @magicui/border-beam @magicui/shine-border
+bunx --bun shadcn add @magicui/border-beam @magicui/shine-border
 ```
 
 
@@ -171,7 +171,7 @@ React-Query is an excellent addition or alternative to route loading and integra
 First add your dependencies:
 
 ```bash
-pnpm add @tanstack/react-query @tanstack/react-query-devtools
+bun add @tanstack/react-query @tanstack/react-query-devtools
 ```
 
 Next we'll need to create a query client and provider. We recommend putting those in `main.tsx`.
@@ -252,7 +252,7 @@ Another common requirement for React applications is state management. There are
 First you need to add TanStack Store as a dependency:
 
 ```bash
-pnpm add @tanstack/store
+bun add @tanstack/store
 ```
 
 Now let's create a simple counter in the `src/App.tsx` file as a demonstration.

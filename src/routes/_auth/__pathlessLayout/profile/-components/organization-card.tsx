@@ -6,7 +6,7 @@ import type {
 } from "better-auth/plugins/organization";
 import { ChevronDownIcon, Loader2, MailPlus } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { Activity, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { CreateOrganizationForm } from "@/components/form/create-organization-form";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -68,6 +68,10 @@ export function OrganizationCard(props: { session: Session | null }) {
 
   const currentMember = activeOrganization?.members.find(
     (member: Member) => member.userId === session?.user.id,
+  );
+
+  const pendingInvitations = activeOrganization?.invitations?.filter(
+    (invitation: Invitation) => invitation.status === "pending",
   );
 
   if (isOrganizationFetching) {
@@ -218,11 +222,7 @@ export function OrganizationCard(props: { session: Session | null }) {
             </p>
             <div className="flex flex-col gap-2">
               <AnimatePresence>
-                {activeOrganization?.invitations
-                  ?.filter(
-                    (invitation: Invitation) => invitation.status === "pending",
-                  )
-                  .map((invitation: Invitation) => {
+                {pendingInvitations?.map((invitation: Invitation) => {
                     const isCanceling =
                       cancelInvitationMutationIsPending &&
                       cancelInvitationMutationVariables?.invitationId ===
@@ -274,9 +274,7 @@ export function OrganizationCard(props: { session: Session | null }) {
                     );
                   })}
               </AnimatePresence>
-              {activeOrganization?.invitations?.filter(
-                (invitation) => invitation.status === "pending",
-              ).length === 0 && (
+              {pendingInvitations?.length === 0 && (
                 <motion.p
                   className="text-muted-foreground text-sm"
                   initial={{ opacity: 0 }}
@@ -303,9 +301,7 @@ export function OrganizationCard(props: { session: Session | null }) {
 									setOptimisticOrg={setOptimisticOrg}
 								/>
 							)} */}
-              <Activity mode={activeOrganization?.id ? "visible" : "hidden"}>
-                <InviteMemberDialog />
-              </Activity>
+              {activeOrganization?.id && <InviteMemberDialog />}
             </div>
           </div>
         </div>
@@ -314,12 +310,11 @@ export function OrganizationCard(props: { session: Session | null }) {
   );
 }
 
-function InviteMemberDialog() {
-  const ORGANIZATION_ROLES = {
-    ADMIN: "admin",
-    MEMBER: "member",
-  } as const satisfies Record<string, OrganizationRole>;
+const INVITABLE_ROLES = Object.entries(ORGANIZATION_ROLES)
+  .filter(([, value]) => value !== "owner")
+  .map(([key, value]) => ({ label: key.charAt(0) + key.slice(1).toLowerCase(), value }));
 
+function InviteMemberDialog() {
   const { mutate: inviteMutation } = useInviteMemberMutation();
 
   const [open, setOpen] = useState(false);
@@ -403,10 +398,7 @@ function InviteMemberDialog() {
                 <field.SelectField
                   label="Role"
                   placeholder="Select a role"
-                  items={[
-                    { label: "Admin", value: ORGANIZATION_ROLES.ADMIN },
-                    { label: "Member", value: ORGANIZATION_ROLES.MEMBER },
-                  ]}
+                  items={INVITABLE_ROLES}
                 />
               )}
             />
