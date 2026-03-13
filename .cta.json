@@ -21,8 +21,6 @@
     "shadcn",
     "table",
     "start",
-    "tanstack-query",
-    "biome",
-    "nitro"
+    "tanstack-query"
   ]
 }
