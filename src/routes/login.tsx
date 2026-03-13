@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import z from "zod";
 import { LogInForm } from "@/components/form/login-form";
-import { authClient } from "@/lib/auth-client";
+import { AUTH_REDIRECT_FALLBACK, authClient } from "@/lib/auth-client";
 
 const SignInSchema = z.object({
 	redirect: z.string().optional().catch("/"),
@@ -11,7 +11,7 @@ const SignInSchema = z.object({
 	// addAccount: z.boolean().default(false),
 });
 
-const fallback = "/dashboard" as const;
+const fallback = AUTH_REDIRECT_FALLBACK;
 
 export const Route = createFileRoute("/login")({
 	validateSearch: SignInSchema,

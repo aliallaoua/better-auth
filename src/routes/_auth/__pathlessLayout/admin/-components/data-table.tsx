@@ -107,6 +107,25 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+const shortDateFormat = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
+
+const fullDateFormat = new Intl.DateTimeFormat("en-US", {
+  dateStyle: "full",
+  timeStyle: "short",
+});
+
+const pageSizeItems = [
+  { label: "10", value: 10 },
+  { label: "20", value: 20 },
+  { label: "30", value: 30 },
+  { label: "40", value: 40 },
+  { label: "50", value: 50 },
+];
+
 interface UserMutations {
   deleteUser: (userId: string) => void;
   revokeSessions: (userId: string) => void;
@@ -565,17 +584,18 @@ export function DataTable({
                 <SelectGroup>
                   {userRoles.map((role) => (
                     <SelectItem key={role.value} value={role.value}>
-                      <div className="flex items-center gap-2">
-                        {role.icon}
-                        <Badge
-                          className="font-semibold text-xs"
-                          variant={
-                            role.value === "admin" ? "default" : "secondary"
-                          }
-                        >
-                          {role.label}
-                        </Badge>
-                      </div>
+                      <Badge
+                        variant={
+                          role.value === "admin" ? "default" : "secondary"
+                        }
+                      >
+                        {role.value === "admin" ? (
+                          <ShieldCheck className="text-purple-600" />
+                        ) : (
+                          <UserIcon className="text-blue-600" />
+                        )}
+                        {role.value === "admin" ? "Admin" : "User"}
+                      </Badge>
                     </SelectItem>
                   ))}
                 </SelectGroup>
@@ -640,20 +660,13 @@ export function DataTable({
               <TooltipTrigger
                 render={
                   <span className="cursor-default font-medium text-sm">
-                    {new Intl.DateTimeFormat("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    }).format(date)}
+                    {shortDateFormat.format(date)}
                   </span>
                 }
               />
               <TooltipContent>
                 <p>
-                  {new Intl.DateTimeFormat("en-US", {
-                    dateStyle: "full",
-                    timeStyle: "short",
-                  }).format(date)}
+                  {fullDateFormat.format(date)}
                 </p>
               </TooltipContent>
             </Tooltip>
@@ -724,13 +737,9 @@ export function DataTable({
     setGlobalFilter("");
   };
 
-  const pageSizeItems = [
-    { label: "10", value: 10 },
-    { label: "20", value: 20 },
-    { label: "30", value: 30 },
-    { label: "40", value: 40 },
-    { label: "50", value: 50 },
-  ];
+  const filterableVisibleColumns = table
+    .getAllColumns()
+    .filter((column) => column.getCanFilter() && column.getIsVisible());
 
   return (
     <div className="w-full space-y-4">
@@ -813,22 +822,14 @@ export function DataTable({
       </div>
 
       {/* Column Filters */}
-      {table
-        .getAllColumns()
-        .filter((column) => column.getCanFilter() && column.getIsVisible())
-        .length > 0 && (
+      {filterableVisibleColumns.length > 0 && (
         <Card className="border-2 bg-linear-to-br from-background to-muted/10 p-4">
           <div className="mb-3 flex items-center gap-2">
             <Filter className="size-4 text-muted-foreground" />
             <h3 className="font-semibold text-sm">Advanced Filters</h3>
           </div>
           <div className="flex flex-wrap gap-4">
-            {table
-              .getAllColumns()
-              .filter(
-                (column) => column.getCanFilter() && column.getIsVisible(),
-              )
-              .map((column) => (
+            {filterableVisibleColumns.map((column) => (
                 <div className="flex flex-col space-y-1.5" key={column.id}>
                   <Label className="font-medium text-muted-foreground text-xs capitalize">
                     {column.id}

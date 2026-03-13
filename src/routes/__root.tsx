@@ -23,7 +23,7 @@ export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
 }>()({
   beforeLoad: async ({ context }) => {
-    const userSession = await context.queryClient.fetchQuery(
+    const userSession = await context.queryClient.ensureQueryData(
       useAuthQuery.user(),
     );
     return {
@@ -92,19 +92,21 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             </DirectionProvider>
           </main>
           <Toaster closeButton richColors theme="system" />
-          <TanStackDevtools
-            plugins={[
-              {
-                name: "TanStack Query",
-                render: <ReactQueryDevtoolsPanel />,
-              },
-              {
-                name: "TanStack Router",
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-              formDevtoolsPlugin(),
-            ]}
-          />
+          {import.meta.env.DEV && (
+            <TanStackDevtools
+              plugins={[
+                {
+                  name: "TanStack Query",
+                  render: <ReactQueryDevtoolsPanel />,
+                },
+                {
+                  name: "TanStack Router",
+                  render: <TanStackRouterDevtoolsPanel />,
+                },
+                formDevtoolsPlugin(),
+              ]}
+            />
+          )}
         </ThemeProvider>
         <Scripts />
       </body>

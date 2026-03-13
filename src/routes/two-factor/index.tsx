@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { TwoFactorTotpForm } from "@/components/form/two-factor-totp-form";
 import { Button } from "@/components/ui/button";
 import {
 	Card,

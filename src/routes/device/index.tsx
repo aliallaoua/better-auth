@@ -9,7 +9,7 @@ export const Route = createFileRoute("/device/")({
 			throw redirect({
 				to: "/login",
 				search: {
-					callbackUrl: location.href,
+					redirect: location.href,
 				},
 			});
 		}

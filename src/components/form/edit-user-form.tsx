@@ -2,7 +2,7 @@ import { formOptions } from "@tanstack/react-form";
 import { useRouter } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import { Edit } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,6 +30,7 @@ export function EditUserForm() {
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
 	const [shouldDeleteImage, setShouldDeleteImage] = useState<boolean>(false);
 
+	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { mutate: updateUserMutation, isPending } = useUpdateUserMutation();
 
 	const editUserFormOpts = formOptions({
@@ -101,17 +102,14 @@ export function EditUserForm() {
 		}
 	}, [open, data?.user]);
 
-	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (file) {
 			form.setFieldValue("image", file);
 			setShouldDeleteImage(false);
 
-			const reader = new FileReader();
-			reader.onloadend = () => {
-				setImagePreview(reader.result as string);
-			};
-			reader.readAsDataURL(file);
+			const base64 = await convertImageToBase64(file);
+			setImagePreview(base64);
 		}
 	};
 
@@ -120,9 +118,8 @@ export function EditUserForm() {
 		setImagePreview(null);
 		form.setFieldValue("image", null);
 
-		const fileInput = document.getElementById("image") as HTMLInputElement;
-		if (fileInput) {
-			fileInput.value = "";
+		if (fileInputRef.current) {
+			fileInputRef.current.value = "";
 		}
 	};
 
@@ -131,9 +128,8 @@ export function EditUserForm() {
 		setImagePreview(data?.user.image || null);
 		setShouldDeleteImage(false);
 
-		const fileInput = document.getElementById("image") as HTMLInputElement;
-		if (fileInput) {
-			fileInput.value = "";
+		if (fileInputRef.current) {
+			fileInputRef.current.value = "";
 		}
 	};
 
@@ -219,6 +215,7 @@ export function EditUserForm() {
 													/>
 												)} */}
 											<field.ImageField
+												ref={fileInputRef}
 												className="w-full text-muted-foreground"
 												id="image"
 												onChange={handleImageChange}

@@ -1,7 +1,8 @@
 import { formOptions } from "@tanstack/react-form";
 import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { convertImageToBase64 } from "@/lib/utils/convert-image";
 import {
 	Card,
 	CardContent,
@@ -21,6 +22,7 @@ export function SignUpForm({
 	...props
 }: React.ComponentProps<"div">) {
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
+	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { mutateAsync: signUpMutation } = useSignUpMutation();
 
 	const signUpFormOpts = formOptions({
@@ -50,25 +52,20 @@ export function SignUpForm({
 		},
 	});
 
-	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (file) {
 			form.setFieldValue("image", file);
-			const reader = new FileReader();
-			reader.onloadend = () => {
-				setImagePreview(reader.result as string);
-			};
-			reader.readAsDataURL(file);
+			const base64 = await convertImageToBase64(file);
+			setImagePreview(base64);
 		}
 	};
 
 	const clearImage = () => {
 		form.setFieldValue("image", null);
 		setImagePreview(null);
-		// Reset the file input
-		const fileInput = document.getElementById("image") as HTMLInputElement;
-		if (fileInput) {
-			fileInput.value = "";
+		if (fileInputRef.current) {
+			fileInputRef.current.value = "";
 		}
 	};
 
@@ -170,6 +167,7 @@ export function SignUpForm({
 													/>
 												)} */}
 												<field.ImageField
+													ref={fileInputRef}
 													className="w-full text-muted-foreground"
 													id="image"
 													label="Profile Image"

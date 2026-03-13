@@ -1,9 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
-import { Check, Loader2, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Spinner } from "@/components/ui/spinner";
 import { authClient, useSession } from "@/lib/auth-client";
 import { DeviceSchema } from "@/schema";
 
@@ -14,7 +15,7 @@ export const Route = createFileRoute("/device/approve/")({
 			throw redirect({
 				to: "/login",
 				search: {
-					callbackUrl: location.href,
+					redirect: location.href,
 				},
 			});
 		}
@@ -100,7 +101,7 @@ function ApproveComponent() {
 								disabled={isLoading}
 							>
 								{denyMutationIsPending ? (
-									<Loader2 className="h-4 w-4 animate-spin" />
+									<Spinner />
 								) : (
 									<>
 										<X className="mr-2 h-4 w-4" />
@@ -114,7 +115,7 @@ function ApproveComponent() {
 								disabled={isLoading}
 							>
 								{approveMutationIsPending ? (
-									<Loader2 className="h-4 w-4 animate-spin" />
+									<Spinner />
 								) : (
 									<>
 										<Check className="mr-2 h-4 w-4" />

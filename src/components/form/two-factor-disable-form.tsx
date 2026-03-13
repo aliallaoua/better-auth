@@ -1,5 +1,4 @@
 import { formOptions } from "@tanstack/react-form";
-import { useTransition } from "react";
 import { toast } from "sonner";
 import * as z from "zod";
 import { FieldGroup } from "@/components/ui/field";
@@ -10,15 +9,11 @@ const disableSchema = z.object({
 	password: z.string().min(8, "Password must be at least 8 characters."),
 });
 
-type DisableFormValues = z.infer<typeof disableSchema>;
-
 interface TwoFactorDisableFormProps {
 	onSuccess?: () => void;
 }
 
 export function TwoFactorDisableForm({ onSuccess }: TwoFactorDisableFormProps) {
-	const [loading, startTransition] = useTransition();
-
 	const formOpts = formOptions({
 		defaultValues: {
 			password: "",
@@ -26,11 +21,11 @@ export function TwoFactorDisableForm({ onSuccess }: TwoFactorDisableFormProps) {
 	});
 
 	const form = useAppForm({
-		...formOptions,
+		...formOpts,
 		validators: { onChange: disableSchema },
 		onSubmit: async ({ value }) => {
 			await authClient.twoFactor.disable({
-				password: data.password,
+				password: value.password,
 				fetchOptions: {
 					onSuccess() {
 						toast.success("2FA disabled successfully");

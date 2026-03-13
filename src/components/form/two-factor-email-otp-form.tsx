@@ -1,21 +1,15 @@
 import { formOptions } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
-import { CheckCircle2, Loader2, Mail } from "lucide-react";
+import { Loader2, Mail } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
+import { VerificationSuccess } from "@/components/verification-success";
 import { useAppForm } from "@/hooks/form";
 import { authClient } from "@/lib/auth-client";
-
-const otpSchema = z.object({
-	code: z
-		.string()
-		.length(6, "OTP code must be 6 digits.")
-		.regex(/^\d+$/, "OTP code must be digits only."),
-});
+import { TwoFactorOTPSchema } from "@/schema";
 
 interface TwoFactorEmailOtpFormProps {
 	userEmail?: string;
@@ -70,7 +64,7 @@ export function TwoFactorEmailOtpForm({
 	const form = useAppForm({
 		...formOpts,
 		validators: {
-			onChange: otpSchema,
+			onChange: TwoFactorOTPSchema,
 		},
 		onSubmit: async ({ value }) => {
 			verifyOtpMutation(value.code);
@@ -78,12 +72,7 @@ export function TwoFactorEmailOtpForm({
 	});
 
 	if (isSuccess && data?.data) {
-		return (
-			<div className="flex flex-col items-center justify-center space-y-2 py-4">
-				<CheckCircle2 className="h-12 w-12 text-green-500" />
-				<p className="font-semibold text-lg">Verification Successful</p>
-			</div>
-		);
+		return <VerificationSuccess />;
 	}
 
 	if (!isOtpSent) {

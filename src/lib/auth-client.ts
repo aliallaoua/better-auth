@@ -14,6 +14,10 @@ import { createAuthClient } from "better-auth/react";
 import { toast } from "sonner";
 import type { auth } from "./auth";
 
+export const AUTH_REDIRECT_FALLBACK = "/dashboard" as const;
+
+export const USER_ROLES = { ADMIN: "admin", USER: "user" } as const;
+
 export const authClient = createAuthClient({
 	plugins: [
 		organizationClient(),

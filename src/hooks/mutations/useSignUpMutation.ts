@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getRouteApi, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { AUTH_REDIRECT_FALLBACK } from "@/lib/auth-client";
 import { signUp } from "@/lib/auth-functions";
 
-const fallback = "/dashboard" as const;
+const fallback = AUTH_REDIRECT_FALLBACK;
 const routeApi = getRouteApi("/signup");
 
 const useSignUpMutation = () => {

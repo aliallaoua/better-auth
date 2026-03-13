@@ -1,7 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { X } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { DeviceResultPage } from "@/components/device-result-page";
 
 export const Route = createFileRoute("/device/denied/")({
 	component: DeniedComponent,
@@ -9,29 +8,11 @@ export const Route = createFileRoute("/device/denied/")({
 
 function DeniedComponent() {
 	return (
-		<div className="flex min-h-screen items-center justify-center p-4">
-			<Card className="w-full max-w-md p-6">
-				<div className="space-y-4 text-center">
-					<div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
-						<X className="h-6 w-6 text-red-600" />
-					</div>
-
-					<div>
-						<h1 className="font-bold text-2xl">Device Denied</h1>
-						<p className="mt-2 text-muted-foreground">
-							The device authorization request has been denied.
-						</p>
-					</div>
-
-					<p className="text-muted-foreground text-sm">
-						The device will not be able to access your account.
-					</p>
-
-					<Link to="/" className={buttonVariants({ className: "w-full" })}>
-						Return to Home
-					</Link>
-				</div>
-			</Card>
-		</div>
+		<DeviceResultPage
+			variant="denied"
+			icon={<X className="h-6 w-6 text-red-600" />}
+			title="Device Denied"
+			description="The device authorization request has been denied."
+		/>
 	);
 }
