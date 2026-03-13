@@ -21,7 +21,7 @@ import {
   UsersIcon,
 } from "lucide-react";
 import { NavDocuments } from "@/components/nav-documents";
-import { NavMain, NavMainProps } from "@/components/nav-main";
+import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
 import type { NavUserProps } from "@/components/nav-user";
 import { NavUser } from "@/components/nav-user";
@@ -34,6 +34,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import type { NavMainProps } from "@/components/nav-main";
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   user: NavUserProps["user"];
