@@ -165,7 +165,7 @@ function AdminDashboard() {
 		const a = document.createElement("a");
 		a.href = url;
 		a.download = `users-export-${new Date().toISOString().split("T")[0]}.csv`;
-		document.body.appendChild(a);
+		document.body.append(a);
 		a.click();
 		document.body.removeChild(a);
 		window.URL.revokeObjectURL(url);
@@ -173,7 +173,7 @@ function AdminDashboard() {
 	};
 
 	return (
-		<div className="mx-auto max-w-7xl space-y-5 px-4 py-6 sm:px-6 lg:px-8">
+		<div className="space-y-5 px-4 py-6 sm:px-6 lg:px-8">
 			{/* Header */}
 			<div className="flex items-center justify-between gap-4">
 				<div>

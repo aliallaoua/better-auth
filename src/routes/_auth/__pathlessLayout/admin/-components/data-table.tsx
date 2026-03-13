@@ -491,7 +491,7 @@ export function DataTable({
 					const isSelf = user.id === selfId;
 					return (
 						<div className="flex items-center gap-1.5">
-							<span className="max-w-[200px] truncate font-medium text-sm">
+							<span className="truncate font-medium text-sm">
 								{email}
 							</span>
 							{!user.emailVerified && (
@@ -780,8 +780,7 @@ export function DataTable({
 								.getAllColumns()
 								.filter(
 									(column) =>
-										typeof column.accessorFn !==
-											"undefined" &&
+										column.accessorFn !== undefined &&
 										column.getCanHide(),
 								)
 								.map((column) => (
@@ -828,7 +827,7 @@ export function DataTable({
 
 			{/* Table */}
 			<div className="overflow-hidden rounded-lg border">
-				<Table>
+				<Table className="table-fixed">
 					<TableHeader className="bg-muted/40">
 						{table.getHeaderGroups().map((headerGroup) => (
 							<TableRow key={headerGroup.id}>
@@ -836,6 +835,14 @@ export function DataTable({
 									<TableHead
 										key={header.id}
 										colSpan={header.colSpan}
+										style={{
+											width:
+												header.id === "select"
+													? 40
+													: header.id === "actions"
+														? 48
+														: undefined,
+										}}
 									>
 										{header.isPlaceholder
 											? null
