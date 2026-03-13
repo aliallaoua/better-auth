@@ -83,7 +83,7 @@
     "@types/react-dom": "^19.2.3",
     "@typescript/native-preview": "^7.0.0-dev.20260313.1",
     "@vitejs/plugin-react": "^6.0.1",
-    "babel-plugin-react-compiler": "^1.0.0",
+    "@rolldown/plugin-babel": "^0.2.1",
     "drizzle-kit": "^0.31.9",
     "jsdom": "^28.1.0",
     "oxfmt": "^0.40.0",
