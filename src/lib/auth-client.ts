@@ -45,6 +45,11 @@ export const authClient = createAuthClient({
 	},
 });
 
+export const USER_ROLES = {
+	ADMIN: "admin",
+	USER: "user",
+} as const;
+
 export const {
 	signUp,
 	signIn,

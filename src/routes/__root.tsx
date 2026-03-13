@@ -16,7 +16,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { useAuthQuery } from "@/hooks/queries/useAuthQueries";
 import appCss from "../styles.css?url";
 import { seo } from "../utils/seo";
-import { TooltipProvider } from "src/components/ui/tooltip";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { DirectionProvider } from "@/components/ui/direction";
 
 export const Route = createRootRouteWithContext<{
@@ -33,7 +33,7 @@ export const Route = createRootRouteWithContext<{
   head: () => ({
     meta: [
       {
-        charSet: "utf-8",
+        charSet: "utf8",
       },
       {
         name: "viewport",

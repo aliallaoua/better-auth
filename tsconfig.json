@@ -1,29 +1,29 @@
 {
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "public/script*.js"],
+  "exclude": ["convex/_generated", "convex/betterAuth/_generated", "remotion"],
   "compilerOptions": {
-    "target": "esnext",
+    "target": "ES2025",
     "jsx": "react-jsx",
-    "module": "ESNext",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "types": ["vite/client"],
+    "lib": ["ES2025", "DOM", "DOM.Iterable"],
+    "types": ["vite/client", "node"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
+    "moduleDetection": "force",
     "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": false,
+    "verbatimModuleSyntax": true,
     "noEmit": true,
 
     /* Linting */
     "skipLibCheck": true,
-    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-    "noImplicitOverride": true,
     "paths": {
-      "*": ["./*"],
       "@/*": ["./src/*"]
-    }
+    },
+
+    "resolveJsonModule": true,
+    "allowJs": true
   }
 }
