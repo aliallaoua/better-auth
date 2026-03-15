@@ -1,12 +1,12 @@
 import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import { useTheme } from "./theme-provider";
+import { useTheme } from "./ThemeProvider";
 import { Button } from "./ui/button";
 
 const themes = [
 	{
-		theme: "system",
+		theme: "auto",
 		icon: MonitorIcon,
 		label: "System theme",
 	},
@@ -27,7 +27,7 @@ interface ThemeSwitcherProps {
 }
 
 export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
-	const { setTheme, appTheme } = useTheme();
+	const { setTheme, resolvedTheme } = useTheme();
 
 	return (
 		<div
@@ -37,7 +37,7 @@ export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
 			)}
 		>
 			{themes.map(({ theme, icon: Icon, label }) => {
-				const isActiveTheme = appTheme === theme;
+				const isActiveTheme = resolvedTheme === theme;
 
 				return (
 					<Button

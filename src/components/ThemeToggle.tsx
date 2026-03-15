@@ -5,7 +5,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useTheme } from "./theme-provider";
+import { useTheme } from "./ThemeProvider";
 import { Button } from "./ui/button";
 
 export function ThemeToggle() {
@@ -49,7 +49,7 @@ export function ThemeToggle() {
 
 				<DropdownMenuItem
 					className="cursor-pointer"
-					onClick={() => setTheme("system")}
+					onClick={() => setTheme("auto")}
 				>
 					<MonitorIcon />
 					System

@@ -12,10 +12,10 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { useTheme } from "./theme-provider";
+import { useTheme } from "./ThemeProvider";
 
 const DevbarMenu = () => {
-	const { setTheme, appTheme } = useTheme();
+	const { setTheme, resolvedTheme } = useTheme();
 
 	return (
 		<DropdownMenu>
@@ -30,7 +30,7 @@ const DevbarMenu = () => {
 			<DropdownMenuContent align="end">
 				<DropdownMenuSub>
 					<DropdownMenuSubTrigger>
-						{appTheme === "light" ? (
+						{resolvedTheme === "light" ? (
 							<Sun className="mr-2 size-4" />
 						) : (
 							<Moon className="mr-2 size-4" />
@@ -47,7 +47,7 @@ const DevbarMenu = () => {
 								<Moon className="mr-2 size-4" />
 								Dark
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={() => setTheme("system")}>
+							<DropdownMenuItem onClick={() => setTheme("auto")}>
 								<Laptop className="mr-2 size-4" />
 								System
 							</DropdownMenuItem>

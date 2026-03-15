@@ -14,8 +14,8 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { routerConfig } from "@/utils/viewTransitionOptions";
-import { ThemeToggle } from "./theme-toggle";
-import UserButton from "./user-button";
+import UserButton from "./UserButton";
+import { ThemeToggle } from "./ThemeToggle";
 
 const menuItems = [
 	{ name: "Better Auth", href: "/dashboard" },
