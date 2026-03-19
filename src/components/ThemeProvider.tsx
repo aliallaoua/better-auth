@@ -1,6 +1,6 @@
 import { createClientOnlyFn, createIsomorphicFn } from "@tanstack/react-start";
 import type { ReactNode } from "react";
-import { createContext, useEffect, useState, use } from "react";
+import { createContext, use, useEffect, useState } from "react";
 import z from "zod";
 
 export const THEME_COLORS = {
@@ -62,7 +62,7 @@ const updateThemeClass = createClientOnlyFn((themeMode: ThemeMode) => {
 });
 
 const getNextTheme = createClientOnlyFn((current: ThemeMode): ThemeMode => {
-	const themes: ThemeMode[] =
+	const themes: Array<ThemeMode> =
 		getSystemTheme() === "dark"
 			? ["auto", "light", "dark"]
 			: ["auto", "dark", "light"];
