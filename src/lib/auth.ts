@@ -17,10 +17,9 @@ import {
 	twoFactor,
 } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
-import { eq } from "drizzle-orm";
 import { serverEnv } from "@/config/server-env";
 import { db } from "@/db/drizzle";
-import { member, schema } from "@/db/schema";
+import { schema } from "@/db/schema";
 import {
 	sendChangeEmailVerification,
 	sendDeleteAccountVerification,
@@ -29,8 +28,7 @@ import {
 	sendResetPasswordEmail,
 	sendVerificationEmail,
 } from "@/functions/send";
-import { i18n } from "@better-auth/i18n"
-
+import { i18n } from "@better-auth/i18n";
 
 const authOptions = {
 	appName: "Better Auth Demo",
@@ -127,14 +125,14 @@ const authOptions = {
 			},
 		}),
 		i18n({
-            translations: {
-                fr: {
-                    USER_NOT_FOUND: "Utilisateur non trouvé",
-                    INVALID_EMAIL_OR_PASSWORD: "Email ou mot de passe invalide",
-                    INVALID_PASSWORD: "Mot de passe invalide",
-                },
-            },
-        }),
+			translations: {
+				fr: {
+					USER_NOT_FOUND: "Utilisateur non trouvé",
+					INVALID_EMAIL_OR_PASSWORD: "Email ou mot de passe invalide",
+					INVALID_PASSWORD: "Mot de passe invalide",
+				},
+			},
+		}),
 
 		tanstackStartCookies(),
 	],
@@ -145,15 +143,13 @@ export const auth = betterAuth({
 	plugins: [
 		...(authOptions.plugins ?? []),
 		customSession(
-			async ({ user, session }) => {
-				return {
-					user: {
-						...user,
-						customField: "customField",
-					},
-					session,
-				};
-			},
+			async ({ user, session }) => ({
+				user: {
+					...user,
+					customField: "customField",
+				},
+				session,
+			}),
 			authOptions,
 			{ shouldMutateListDeviceSessionsEndpoint: true }
 		),
@@ -229,7 +225,7 @@ export const auth = betterAuth({
 			create: {
 				before: async (session) => {
 					const m = await db.query.member.findFirst({
-						where: eq(member.userId, session.userId ?? ""),
+						where: { userId: session.userId ?? "" },
 					});
 
 					return {

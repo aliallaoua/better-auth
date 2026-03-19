@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm";
+import { defineRelations } from "drizzle-orm";
 import {
 	boolean,
 	index,
@@ -284,136 +284,139 @@ export const oauthConsent = pgTable("oauth_consent", {
 	updatedAt: timestamp("updated_at"),
 });
 
-export const userRelations = relations(user, ({ many }) => ({
-	sessions: many(session),
-	accounts: many(account),
-	members: many(member),
-	invitations: many(invitation),
-	twoFactors: many(twoFactor),
-	passkeys: many(passkey),
-	oauthClients: many(oauthClient),
-	oauthRefreshTokens: many(oauthRefreshToken),
-	oauthAccessTokens: many(oauthAccessToken),
-	oauthConsents: many(oauthConsent),
-}));
-
-export const sessionRelations = relations(session, ({ one, many }) => ({
-	user: one(user, {
-		fields: [session.userId],
-		references: [user.id],
-	}),
-	oauthRefreshTokens: many(oauthRefreshToken),
-	oauthAccessTokens: many(oauthAccessToken),
-}));
-
-export const accountRelations = relations(account, ({ one }) => ({
-	user: one(user, {
-		fields: [account.userId],
-		references: [user.id],
-	}),
-}));
-
-export const organizationRelations = relations(organization, ({ many }) => ({
-	members: many(member),
-	invitations: many(invitation),
-}));
-
-export const memberRelations = relations(member, ({ one }) => ({
-	organization: one(organization, {
-		fields: [member.organizationId],
-		references: [organization.id],
-	}),
-	user: one(user, {
-		fields: [member.userId],
-		references: [user.id],
-	}),
-}));
-
-export const invitationRelations = relations(invitation, ({ one }) => ({
-	organization: one(organization, {
-		fields: [invitation.organizationId],
-		references: [organization.id],
-	}),
-	user: one(user, {
-		fields: [invitation.inviterId],
-		references: [user.id],
-	}),
-}));
-
-export const twoFactorRelations = relations(twoFactor, ({ one }) => ({
-	user: one(user, {
-		fields: [twoFactor.userId],
-		references: [user.id],
-	}),
-}));
-
-export const passkeyRelations = relations(passkey, ({ one }) => ({
-	user: one(user, {
-		fields: [passkey.userId],
-		references: [user.id],
-	}),
-}));
-
-export const oauthClientRelations = relations(oauthClient, ({ one, many }) => ({
-	user: one(user, {
-		fields: [oauthClient.userId],
-		references: [user.id],
-	}),
-	oauthRefreshTokens: many(oauthRefreshToken),
-	oauthAccessTokens: many(oauthAccessToken),
-	oauthConsents: many(oauthConsent),
-}));
-
-export const oauthRefreshTokenRelations = relations(
+const tables = {
+	user,
+	session,
+	account,
+	verification,
+	organization,
+	member,
+	invitation,
+	twoFactor,
+	passkey,
+	deviceCode,
+	jwks,
+	oauthClient,
 	oauthRefreshToken,
-	({ one, many }) => ({
-		oauthClient: one(oauthClient, {
-			fields: [oauthRefreshToken.clientId],
-			references: [oauthClient.clientId],
-		}),
-		session: one(session, {
-			fields: [oauthRefreshToken.sessionId],
-			references: [session.id],
-		}),
-		user: one(user, {
-			fields: [oauthRefreshToken.userId],
-			references: [user.id],
-		}),
-		oauthAccessTokens: many(oauthAccessToken),
-	})
-);
-
-export const oauthAccessTokenRelations = relations(
 	oauthAccessToken,
-	({ one }) => ({
-		oauthClient: one(oauthClient, {
-			fields: [oauthAccessToken.clientId],
-			references: [oauthClient.clientId],
-		}),
-		session: one(session, {
-			fields: [oauthAccessToken.sessionId],
-			references: [session.id],
-		}),
-		user: one(user, {
-			fields: [oauthAccessToken.userId],
-			references: [user.id],
-		}),
-		oauthRefreshToken: one(oauthRefreshToken, {
-			fields: [oauthAccessToken.refreshId],
-			references: [oauthRefreshToken.id],
-		}),
-	})
-);
+	oauthConsent,
+};
 
-export const oauthConsentRelations = relations(oauthConsent, ({ one }) => ({
-	oauthClient: one(oauthClient, {
-		fields: [oauthConsent.clientId],
-		references: [oauthClient.clientId],
-	}),
-	user: one(user, {
-		fields: [oauthConsent.userId],
-		references: [user.id],
-	}),
+export const relations = defineRelations(tables, (r) => ({
+	user: {
+		sessions: r.many.session(),
+		accounts: r.many.account(),
+		members: r.many.member(),
+		invitations: r.many.invitation(),
+		twoFactors: r.many.twoFactor(),
+		passkeys: r.many.passkey(),
+		oauthClients: r.many.oauthClient(),
+		oauthRefreshTokens: r.many.oauthRefreshToken(),
+		oauthAccessTokens: r.many.oauthAccessToken(),
+		oauthConsents: r.many.oauthConsent(),
+	},
+	session: {
+		user: r.one.user({
+			from: r.session.userId,
+			to: r.user.id,
+		}),
+		oauthRefreshTokens: r.many.oauthRefreshToken(),
+		oauthAccessTokens: r.many.oauthAccessToken(),
+	},
+	account: {
+		user: r.one.user({
+			from: r.account.userId,
+			to: r.user.id,
+		}),
+	},
+	organization: {
+		members: r.many.member(),
+		invitations: r.many.invitation(),
+	},
+	member: {
+		organization: r.one.organization({
+			from: r.member.organizationId,
+			to: r.organization.id,
+		}),
+		user: r.one.user({
+			from: r.member.userId,
+			to: r.user.id,
+		}),
+	},
+	invitation: {
+		organization: r.one.organization({
+			from: r.invitation.organizationId,
+			to: r.organization.id,
+		}),
+		user: r.one.user({
+			from: r.invitation.inviterId,
+			to: r.user.id,
+		}),
+	},
+	twoFactor: {
+		user: r.one.user({
+			from: r.twoFactor.userId,
+			to: r.user.id,
+		}),
+	},
+	passkey: {
+		user: r.one.user({
+			from: r.passkey.userId,
+			to: r.user.id,
+		}),
+	},
+	oauthClient: {
+		user: r.one.user({
+			from: r.oauthClient.userId,
+			to: r.user.id,
+		}),
+		oauthRefreshTokens: r.many.oauthRefreshToken(),
+		oauthAccessTokens: r.many.oauthAccessToken(),
+		oauthConsents: r.many.oauthConsent(),
+	},
+	oauthRefreshToken: {
+		oauthClient: r.one.oauthClient({
+			from: r.oauthRefreshToken.clientId,
+			to: r.oauthClient.clientId,
+		}),
+		session: r.one.session({
+			from: r.oauthRefreshToken.sessionId,
+			to: r.session.id,
+		}),
+		user: r.one.user({
+			from: r.oauthRefreshToken.userId,
+			to: r.user.id,
+		}),
+		oauthAccessTokens: r.many.oauthAccessToken(),
+	},
+	oauthAccessToken: {
+		oauthClient: r.one.oauthClient({
+			from: r.oauthAccessToken.clientId,
+			to: r.oauthClient.clientId,
+		}),
+		session: r.one.session({
+			from: r.oauthAccessToken.sessionId,
+			to: r.session.id,
+		}),
+		user: r.one.user({
+			from: r.oauthAccessToken.userId,
+			to: r.user.id,
+		}),
+		oauthRefreshToken: r.one.oauthRefreshToken({
+			from: r.oauthAccessToken.refreshId,
+			to: r.oauthRefreshToken.id,
+		}),
+	},
+	oauthConsent: {
+		oauthClient: r.one.oauthClient({
+			from: r.oauthConsent.clientId,
+			to: r.oauthClient.clientId,
+		}),
+		user: r.one.user({
+			from: r.oauthConsent.userId,
+			to: r.user.id,
+		}),
+	},
 }));
 
 export const schema = {
@@ -432,16 +435,4 @@ export const schema = {
 	oauthRefreshToken,
 	oauthAccessToken,
 	oauthConsent,
-	userRelations,
-	sessionRelations,
-	accountRelations,
-	organizationRelations,
-	memberRelations,
-	invitationRelations,
-	twoFactorRelations,
-	passkeyRelations,
-	oauthClientRelations,
-	oauthRefreshTokenRelations,
-	oauthAccessTokenRelations,
-	oauthConsentRelations,
 };
